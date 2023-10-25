@@ -175,14 +175,7 @@ class LoginVC: UIViewController {
 
 }
 
-
-#if DEBUG
-import SwiftUI
-
-@available(iOS 13 , *)
-struct LoginVC_Preview: PreviewProvider {
-    static var previews: some View {
-        LoginVC().showPreview()
-    }
+@available(iOS 17, *)
+#Preview {
+    LoginVC()
 }
-#endif
