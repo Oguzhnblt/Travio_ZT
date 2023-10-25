@@ -10,6 +10,7 @@
 		0FC28E342AE92BD7005387E9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC28E332AE92BD7005387E9 /* User.swift */; };
 		0FC28E362AE92C9F005387E9 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC28E352AE92C9F005387E9 /* Router.swift */; };
 		0FC28E392AE92E56005387E9 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0FC28E382AE92E56005387E9 /* Alamofire */; };
+		0FEAAD602AE944CD00B31030 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FEAAD5F2AE944CD00B31030 /* HomeVC.swift */; };
 		1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1214274E2ADC25E700CA1D10 /* SignUpVC.swift */; };
 		1255D8062ADAC7BD00FB6638 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1255D8052ADAC7BD00FB6638 /* AppDelegate.swift */; };
 		1255D8082ADAC7BD00FB6638 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1255D8072ADAC7BD00FB6638 /* SceneDelegate.swift */; };
@@ -43,6 +44,7 @@
 /* Begin PBXFileReference section */
 		0FC28E332AE92BD7005387E9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0FC28E352AE92C9F005387E9 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		0FEAAD5F2AE944CD00B31030 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		1214274E2ADC25E700CA1D10 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		1255D8022ADAC7BD00FB6638 /* Travio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Travio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1255D8052ADAC7BD00FB6638 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				1255D8132ADAC7BE00FB6638 /* Info.plist */,
 				0FC28E332AE92BD7005387E9 /* User.swift */,
 				0FC28E352AE92C9F005387E9 /* Router.swift */,
+				0FEAAD5F2AE944CD00B31030 /* HomeVC.swift */,
 			);
 			path = Travio;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1255D80A2ADAC7BD00FB6638 /* LoginVC.swift in Sources */,
+				0FEAAD602AE944CD00B31030 /* HomeVC.swift in Sources */,
 				1255D8062ADAC7BD00FB6638 /* AppDelegate.swift in Sources */,
 				0FC28E342AE92BD7005387E9 /* User.swift in Sources */,
 				0FC28E362AE92C9F005387E9 /* Router.swift in Sources */,
