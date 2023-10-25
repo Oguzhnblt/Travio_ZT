@@ -65,7 +65,7 @@ class SignUpVC: UIViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 12
         button.layer.backgroundColor = UIColor(named: "signUpColor")?.cgColor
-        //button.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
         
         button.isEnabled = false // Tüm alanlar dolmadan butonun aktif olmaması için
         return button
@@ -89,11 +89,34 @@ class SignUpVC: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.popViewController(animated: true)
     }
+    
+    @objc func signUpButtonTapped() {
+        
+    }
+    
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        // Check if all text fields are non-empty
+        let isAllFieldsFilled = !(usernameTextField.text?.isEmpty ?? true) &&
+                                !(emailTextField.text?.isEmpty ?? true) &&
+                                !(passwordTextField.text?.isEmpty ?? true) &&
+                                !(passwordConfirmTextField.text?.isEmpty ?? true)
+
+        // Enable or disable the "Sign Up" button based on the above check
+        signUpButton.isEnabled = isAllFieldsFilled
+        signUpButton.backgroundColor = isAllFieldsFilled ? UIColor(named: "backgroundColor") : UIColor.lightGray
+    }
    
+    private func didChange() {
+        usernameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+            emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+            passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+            passwordConfirmTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        didChange()
         setupViews()
     }
     
