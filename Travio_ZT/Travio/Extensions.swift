@@ -47,30 +47,30 @@ extension UIView {
     }
     
     @available(iOS 13, *)
-        private struct Preview: UIViewRepresentable {
-            typealias UIViewType = UIView
-            let view: UIView
-            func makeUIView(context: Context) -> UIView {
-                return view
-            }
-            
-            func updateUIView(_ uiView: UIView, context: Context) {
-                //
-            }
+    private struct Preview: UIViewRepresentable {
+        typealias UIViewType = UIView
+        let view: UIView
+        func makeUIView(context: Context) -> UIView {
+            return view
         }
         
-        @available(iOS 13, *)
-        func showPreview() -> some View {
-            // inject self (the current UIView) for the preview
-            Preview(view: self)
+        func updateUIView(_ uiView: UIView, context: Context) {
+            //
         }
+    }
+    
+    @available(iOS 13, *)
+    func showPreview() -> some View {
+        // inject self (the current UIView) for the preview
+        Preview(view: self)
+    }
     
     func shake() {
         let animation = CAKeyframeAnimation(keyPath: "transform.translation.y")
         animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
         animation.duration = 0.4
         animation.values = [-10.0, 5.0, -5.0, 0.0]
-
+        
         layer.add(animation, forKey: "shake")
     }
     
@@ -89,8 +89,8 @@ extension UIView {
         return label
     }
     
-    func roundCorners(corners: UIRectCorner, radius: CGFloat) {
-        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+    func roundAllCorners(radius: CGFloat) {
+        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: radius, height: radius))
         let mask = CAShapeLayer()
         mask.path = path.cgPath
         layer.mask = mask
@@ -104,7 +104,7 @@ extension UIView {
         layer.add(animation, forKey: "borderColor")
         layer.borderColor = toColor.cgColor
     }
-
+    
     func addDashedBorder(color: UIColor) {
         let color = color.cgColor
         
@@ -134,7 +134,7 @@ extension UIView {
     var globalPoint :CGPoint? {
         return self.superview?.convert(self.frame.origin, to: nil)
     }
-
+    
     var globalFrame: CGRect? {
         let rootView = UIApplication.shared.keyWindow?.rootViewController?.view
         return self.superview?.convert(self.frame, to: rootView)
@@ -151,42 +151,42 @@ extension UITextField {
     }
     
     var textType: TextType {
-            get {
-                if keyboardType == .emailAddress {
-                    return .emailAddress
-                } else if isSecureTextEntry {
-                    return .password
-                }
-                return .generic
+        get {
+            if keyboardType == .emailAddress {
+                return .emailAddress
+            } else if isSecureTextEntry {
+                return .password
             }
-            set {
-                switch newValue {
+            return .generic
+        }
+        set {
+            switch newValue {
                 case .emailAddress:
                     keyboardType = .emailAddress
                     autocorrectionType = .no
                     autocapitalizationType = .none
                     isSecureTextEntry = false
-
+                    
                 case .password:
                     keyboardType = .asciiCapable
                     autocorrectionType = .no
                     autocapitalizationType = .none
                     isSecureTextEntry = true
-
+                    
                 case .generic:
                     isSecureTextEntry = false
-                }
             }
         }
+    }
     
-   
+    
     
     var hasValidEmail: Bool {
-            
-            return text!.range(of: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}",
-                               options: String.CompareOptions.regularExpression,
-                               range: nil, locale: nil) != nil
-        }
+        
+        return text!.range(of: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}",
+                           options: String.CompareOptions.regularExpression,
+                           range: nil, locale: nil) != nil
+    }
     
     var leftViewTintColor: UIColor? {
         get {
@@ -214,54 +214,54 @@ extension UITextField {
 extension UIButton {
     
     func centerTextAndImage(imageAboveText: Bool = false, spacing: CGFloat) {
-            if imageAboveText {
-               
-                guard
-                    let imageSize = imageView?.image?.size,
-                    let text = titleLabel?.text,
-                    let font = titleLabel?.font else { return }
-
-                let titleSize = text.size(withAttributes: [.font: font])
-
-                let titleOffset = -(imageSize.height + spacing)
-                titleEdgeInsets = UIEdgeInsets(top: 0.0, left: -imageSize.width, bottom: titleOffset, right: 0.0)
-
-                let imageOffset = -(titleSize.height + spacing)
-                imageEdgeInsets = UIEdgeInsets(top: imageOffset, left: 0.0, bottom: 0.0, right: -titleSize.width)
-
-                let edgeOffset = abs(titleSize.height - imageSize.height) / 2.0
-                contentEdgeInsets = UIEdgeInsets(top: edgeOffset, left: 0.0, bottom: edgeOffset, right: 0.0)
-            } else {
-                let insetAmount = spacing / 2
-                imageEdgeInsets = UIEdgeInsets(top: 0, left: -insetAmount, bottom: 0, right: insetAmount)
-                titleEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: -insetAmount)
-                contentEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: insetAmount)
-            }
+        if imageAboveText {
+            
+            guard
+                let imageSize = imageView?.image?.size,
+                let text = titleLabel?.text,
+                let font = titleLabel?.font else { return }
+            
+            let titleSize = text.size(withAttributes: [.font: font])
+            
+            let titleOffset = -(imageSize.height + spacing)
+            titleEdgeInsets = UIEdgeInsets(top: 0.0, left: -imageSize.width, bottom: titleOffset, right: 0.0)
+            
+            let imageOffset = -(titleSize.height + spacing)
+            imageEdgeInsets = UIEdgeInsets(top: imageOffset, left: 0.0, bottom: 0.0, right: -titleSize.width)
+            
+            let edgeOffset = abs(titleSize.height - imageSize.height) / 2.0
+            contentEdgeInsets = UIEdgeInsets(top: edgeOffset, left: 0.0, bottom: edgeOffset, right: 0.0)
+        } else {
+            let insetAmount = spacing / 2
+            imageEdgeInsets = UIEdgeInsets(top: 0, left: -insetAmount, bottom: 0, right: insetAmount)
+            titleEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: -insetAmount)
+            contentEdgeInsets = UIEdgeInsets(top: 0, left: insetAmount, bottom: 0, right: insetAmount)
         }
-
+    }
+    
 }
 
 // MARK: - UIViewController
 extension UIViewController {
     
     @available(iOS 13, *)
-        private struct Preview: UIViewControllerRepresentable {
-             
-            let viewController: UIViewController
-            
-            func makeUIViewController(context: Context) -> UIViewController {
-                return viewController
-            }
-            
-            func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-             
-            }
+    private struct Preview: UIViewControllerRepresentable {
+        
+        let viewController: UIViewController
+        
+        func makeUIViewController(context: Context) -> UIViewController {
+            return viewController
         }
         
-        @available(iOS 13, *)
-        func showPreview() -> some View {
-            Preview(viewController: self)
+        func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+            
         }
+    }
+    
+    @available(iOS 13, *)
+    func showPreview() -> some View {
+        Preview(viewController: self)
+    }
     
     func addChild(this child: UIViewController, contentView:UIView ) {
         addChild(child)
@@ -273,31 +273,31 @@ extension UIViewController {
         
         
     }
-
-    func removeChildFromParent() {
     
+    func removeChildFromParent() {
+        
         guard parent != nil else {
             return
         }
-
+        
         willMove(toParent: nil)
         view.removeFromSuperview()
         removeFromParent()
     }
     
     
-//    func playLoading(){
-//        let view = BLLoadingIndicator()
-//        view.addLoading(to: self)
-//        self.view.bringSubviewToFront(view)
-//    }
-//
-//    func stopLoading(){
-//        self.view.subviews.forEach({ view in
-//            guard let loading = view as? BLLoadingIndicator else { return }
-//            loading.removeFromSuperview()
-//        })
-//    }
+    //    func playLoading(){
+    //        let view = BLLoadingIndicator()
+    //        view.addLoading(to: self)
+    //        self.view.bringSubviewToFront(view)
+    //    }
+    //
+    //    func stopLoading(){
+    //        self.view.subviews.forEach({ view in
+    //            guard let loading = view as? BLLoadingIndicator else { return }
+    //            loading.removeFromSuperview()
+    //        })
+    //    }
     
 }
 
@@ -307,32 +307,32 @@ extension String {
     func capitalizingFirstLetter() -> String {
         return prefix(1).capitalized + dropFirst()
     }
-
+    
     mutating func capitalizeFirstLetter() {
         self = self.capitalizingFirstLetter()
     }
     
     
     func maskToPhoneNumber() -> String {
-       let isMoreThanTenDigit = self.count > 10
-       _ = self.startIndex
-       var newstr = ""
-           if isMoreThanTenDigit {
-               newstr = "\(self.dropFirst(self.count - 10))"
-           }
-           else if self.count == 10{
-               newstr = "\(self)"
-           }
-           else {
-               return "number has only \(self.count) digits"
-           }
+        let isMoreThanTenDigit = self.count > 10
+        _ = self.startIndex
+        var newstr = ""
+        if isMoreThanTenDigit {
+            newstr = "\(self.dropFirst(self.count - 10))"
+        }
+        else if self.count == 10{
+            newstr = "\(self)"
+        }
+        else {
+            return "number has only \(self.count) digits"
+        }
         
-           if  newstr.count == 10 {
-               let internationalString = "\(newstr.dropLast(7)) \(newstr.dropLast(4).dropFirst(3)) \(newstr.dropFirst(6).dropLast(2)) \(newstr.dropFirst(8))"
-               newstr = internationalString
-           }
+        if  newstr.count == 10 {
+            let internationalString = "\(newstr.dropLast(7)) \(newstr.dropLast(4).dropFirst(3)) \(newstr.dropFirst(6).dropLast(2)) \(newstr.dropFirst(8))"
+            newstr = internationalString
+        }
         
-       return newstr
+        return newstr
     }
     
     /// It formats a String Value to Date easily.
@@ -343,17 +343,17 @@ extension String {
     /// .dateAndTime = "dd.MM.yyyy'T'HH:mm" 27.01.2021 14:00
     /// - Returns: Method returns formatted date from String that define by user.
     func formatToDate(formatType: FormatType = .localeStandard)-> Date?{
-
+        
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "tr")
         dateFormatter.timeZone = .current
         dateFormatter.dateFormat = formatType.rawValue
         let date = dateFormatter.date(from: self)
-
+        
         return date
-
+        
     }
-   
+    
 }
 
 // MARK: - User Defaults
@@ -363,7 +363,7 @@ extension UserDefaults {
         case tokenObject
         case currentUser
     }
-
+    
     func reset() {
         Keys.allCases.forEach { removeObject(forKey: $0.rawValue) }
     }
@@ -378,7 +378,7 @@ extension UserDefaults {
     
     func getEncodedObject<T:Codable>(key:Keys, object:T.Type) -> T?{
         if let data = UserDefaults.standard.data(forKey: key.rawValue), let dataObject = try? JSONDecoder().decode(object, from: data) {
-          return dataObject
+            return dataObject
         }
         return nil
     }
@@ -431,13 +431,13 @@ extension Optional {
 // MARK: - Array
 extension Array {
     
-  public subscript(safe index: Int) -> Element? {
-       guard startIndex <= index && index < endIndex else {
-           return nil
-       }
-       
-       return self[index]
-   }
+    public subscript(safe index: Int) -> Element? {
+        guard startIndex <= index && index < endIndex else {
+            return nil
+        }
+        
+        return self[index]
+    }
 }
 
 extension UIImageView{
@@ -451,30 +451,30 @@ extension UIImageView{
 
 // MARK: -UIImage
 extension UIImage {
-     
+    
     class func colorToImage(color: UIColor) -> UIImage {
         let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 2.0)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
-
+        
         context!.setFillColor(color.cgColor)
         context!.fill(rect)
-
+        
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-
+        
         return image!
     }
 }
 
 // MARK: - UITabBar
 extension UITabBar {
-//    override open func sizeThatFits(_ size: CGSize) -> CGSize {
-//        super.sizeThatFits(size)
-//        var sizeThatFits = super.sizeThatFits(size)
-//        sizeThatFits.height = 78
-//        return sizeThatFits
-//    }
+    //    override open func sizeThatFits(_ size: CGSize) -> CGSize {
+    //        super.sizeThatFits(size)
+    //        var sizeThatFits = super.sizeThatFits(size)
+    //        sizeThatFits.height = 78
+    //        return sizeThatFits
+    //    }
 }
 
 extension UIWindow {
@@ -499,74 +499,74 @@ extension UIView {
 
 
 class CustomLabelTextField: UITextField {
-
+    
     // MARK: - Properties
-
+    
     let customLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(named: "textColor")
         label.font = UIFont(name: "Poppins-Regular", size: 14)
         return label
     }()
-
+    
     var placeholderInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: -19, right: 0) {
         didSet {
             setNeedsLayout()
         }
     }
-
+    
     // MARK: - Initializers
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
-
+    
     // MARK: - Setup
-
+    
     private func commonInit() {
         setupLabel()
     }
-
+    
     private func setupLabel() {
         addSubview(customLabel)
-
+        
         customLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(12)
             make.top.equalTo(self.snp.top).offset(8)
         }
-
+        
         // Başlangıçta etiket görünür olacak
         customLabel.isHidden = false
     }
-
+    
     // MARK: - UITextField Overrides
-
+    
     override var placeholder: String? {
         didSet {
             customLabel.text = placeholder
         }
     }
-
+    
     override var text: String? {
         didSet {
             // Her zaman etiketi görünür yap
             customLabel.isHidden = false
         }
     }
-
+    
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: placeholderInsets)
     }
-
+    
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.inset(by: placeholderInsets)
     }
-
+    
 }
 

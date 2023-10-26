@@ -195,7 +195,14 @@ class SignUpVC: UIViewController {
     }
 }
 
-@available(iOS 17, *)
-#Preview {
-    SignUpVC()
+#if DEBUG
+import SwiftUI
+
+@available(iOS 13, *)
+struct SignUp_Preview: PreviewProvider {
+    static var previews: some View{
+         
+        SignUpVC().showPreview()
+    }
 }
+#endif
