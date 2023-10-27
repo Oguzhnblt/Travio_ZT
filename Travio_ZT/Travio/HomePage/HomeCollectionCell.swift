@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class HomeCell: UICollectionViewCell {
+class HomeCollectionCell: UICollectionViewCell {
     
      lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -40,9 +40,9 @@ class HomeCell: UICollectionViewCell {
     private func setupViews() {
         addSubviews(imageView,titleLabel,subtitleLabel)
         
-        imageView.frame = CGRect(x: 0, y: 0, width: 280, height: 178)
-        imageView.roundAllCorners(radius: 18)
         
+        imageView.frame = CGRect(x: 0, y: 0, width: 280, height: 178)
+        imageView.roundAllCorners(radius: 20)
         titleLabel.frame = CGRect(x: 16, y: 120, width: 280, height: 30)
         subtitleLabel.frame = CGRect(x: 16, y: 150, width: 280, height: 20)
     }
