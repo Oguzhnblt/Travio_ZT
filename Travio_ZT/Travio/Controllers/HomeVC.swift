@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 
+
 class HomeVC: UIViewController  {
     
     let popularPlacesId = "PopularPlacesHeader"
@@ -21,7 +22,8 @@ class HomeVC: UIViewController  {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: lay)
         collectionView.backgroundColor = .clear
-        collectionView.register(HomeCollectionCell.self, forCellWithReuseIdentifier: "homeCell")
+        
+        collectionView.register(PlacesCollectionViewCell.self, forCellWithReuseIdentifier: PlacesCollectionViewCell.identifier)
         
         collectionView.register(CategoryHeaderView.self, forSupplementaryViewOfKind: popularPlacesId, withReuseIdentifier: "popularPlaces")
         collectionView.register(CategoryHeaderView.self, forSupplementaryViewOfKind: newPlacesId, withReuseIdentifier: "newPlaces")
@@ -64,16 +66,36 @@ class HomeVC: UIViewController  {
         return imageView
     }()
     
+    lazy var addButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("See All", for: .normal)
+        button.setTitleColor(.background, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Poppins-Regular", size: 14)
+        button.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    var addButtonTappedAction: (() -> Void)?
+    
+    
+    @objc  func addButtonTapped() {
+        addButtonTappedAction?()
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        addButtonTappedAction = {
+            print("Button tapped")
+        }
     }
     
     private func setupViews() {
         
         self.view.addSubviews(loginView,imageView)
         loginView.addSubview(loginItemView)
-        loginItemView.addSubviews(collectionView)
+        loginItemView.addSubviews(collectionView,addButton)
         
         setupLayouts()
         
@@ -97,8 +119,15 @@ class HomeVC: UIViewController  {
             make.edges.equalToSuperview()
             make.left.right.equalTo(loginView).inset(24)
         })
+        
+        addButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(16)
+            make.top.bottom.equalToSuperview().offset(55)
+        }
     }
 }
+
+// MARK: -- COLLECTION VİEW
 
 extension HomeVC: UICollectionViewDelegateFlowLayout {
     
@@ -110,22 +139,27 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
 
 extension HomeVC: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2 // Section sayısı
+        return 1 // Section sayısı
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5 // Her bir section içindeki item sayısı
+        switch section {
+            case 1:
+                return popularPlacesMockData.count
+            default:
+                return popularPlacesMockData.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "homeCell", for: indexPath) as! HomeCollectionCell
         
-        cell.imageView.image = .imgColleseum
-        cell.titleLabel.text = "Colleseum"
-        cell.subtitleLabel.text = "Rome"
-        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlacesCollectionViewCell.identifier, for: indexPath) as! PlacesCollectionViewCell
+        cell.cellData = popularPlacesMockData[indexPath.row]
         return cell
+        
     }
+    
+    
     
     // Header Title eklemek için
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -146,62 +180,27 @@ extension HomeVC: UICollectionViewDataSource {
         }
         
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reuseIdentifier, for: indexPath) as! CategoryHeaderView
+        
         headerView.titleLabel.text = title
         return headerView
+        
     }
-    
 }
+
 
 extension HomeVC {
     
     func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { [self] (sectionNumber, env) -> NSCollectionLayoutSection? in
             switch sectionNumber {
-                case 0: return self.makePlacesLayout(elementKind: popularPlacesId)
-                case 1: return self.makePlacesLayout(elementKind: newPlacesId)
-                default: return self.makePlacesLayout(elementKind: popularPlacesId)
+                case 0:
+                    return HomePageLayout.shared.makePlacesLayout(elementKind: popularPlacesId)
+                case 1:
+                    return HomePageLayout.shared.makePlacesLayout(elementKind: newPlacesId)
+                default:
+                    return HomePageLayout.shared.makePlacesLayout(elementKind: popularPlacesId)
             }
         }
-    }
-    
-    private func makePlacesLayout(elementKind: String) -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9), heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .init(top: 0, leading: 0, bottom: 15, trailing: 0)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9), heightDimension:.fractionalWidth(0.7))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = .init(top: 55, leading: 15, bottom: 0, trailing: 2)
-        
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
-        section.boundarySupplementaryItems = [
-            NSCollectionLayoutBoundarySupplementaryItem(layoutSize: .init(widthDimension:.fractionalWidth(1), heightDimension: .estimated(44)), elementKind: elementKind, alignment: .topLeading)
-        ]
-        return section
-    }
-}
-
-class CategoryHeaderView: UICollectionReusableView {
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name: "Poppins-Regular", size: 20)
-        label.textColor = .black
-        return label
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        addSubview(titleLabel)
-        
-        titleLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(16)
-            make.top.bottom.equalToSuperview().offset(55)
-        }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 
