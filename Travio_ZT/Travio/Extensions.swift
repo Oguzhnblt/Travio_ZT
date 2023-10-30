@@ -82,7 +82,7 @@ extension UIView {
     
     func addLabel(text:String? = nil, fontSize: CGFloat = 14, fontType:FontType = .medium, color:UIColor = .black, align:NSTextAlignment = .left) ->UILabel {
         let label = UILabel()
-        label.font = UIFont(name: "AvenirNext-\(fontType.rawValue)", size: fontSize)
+        label.font = UIFont(name: "Poppins-SemiBold", size: fontSize)
         label.textColor = color
         label.text = text
         self.addSubview(label)
