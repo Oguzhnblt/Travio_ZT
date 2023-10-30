@@ -64,14 +64,14 @@ class LoginVC: UIViewController {
         return textField
     }
     
-    func createButton() -> UIButton {
+    private func createButton() -> UIButton {
         let button = UIButton(type: .system)
         button.setTitle("Login", for: .normal)
         button.titleLabel?.font = UIFont(name: "Poppins-SemiBold", size: 16)
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 12
         button.layer.backgroundColor = UIColor(named: "backgroundColor")?.cgColor
-        // button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(buttonLoginTapped), for: .touchUpInside)
         return button
     }
     
@@ -87,9 +87,11 @@ class LoginVC: UIViewController {
     @objc private func signUpTapped() {
         let vc = SignUpVC()
         self.navigationController?.pushViewController(vc, animated: true)
-        
-        //vc.modalPresentationStyle = .popover
-        //present(vc, animated: true, completion: nil)
+      
+    }
+    
+    @objc func buttonLoginTapped() {
+        // Home sayfasına gidecek.
     }
 
  
@@ -175,13 +177,13 @@ class LoginVC: UIViewController {
 
 }
 
-
 #if DEBUG
 import SwiftUI
 
-@available(iOS 13 , *)
+@available(iOS 13, *)
 struct LoginVC_Preview: PreviewProvider {
-    static var previews: some View {
+    static var previews: some View{
+         
         LoginVC().showPreview()
     }
 }

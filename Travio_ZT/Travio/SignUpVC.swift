@@ -54,6 +54,7 @@ class SignUpVC: UIViewController {
         textField.placeholder = placeholder
         textField.customLabel.text = title
         textField.isSecureTextEntry = isSecure
+        textField.autocapitalizationType = .none
         return textField
     }
     
@@ -65,13 +66,13 @@ class SignUpVC: UIViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 12
         button.layer.backgroundColor = UIColor(named: "signUpColor")?.cgColor
-        //button.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
         
-        button.isEnabled = false // Tüm alanlar dolmadan butonun aktif olmaması için
+        button.isEnabled = true // Tüm alanlar dolmadan butonun aktif olmaması için
         return button
     }()
     
-    private lazy var backButton: UIButton = {
+    private lazy var  backButton: UIButton = {
         let buttonImage = UIImage(named: "leftArrowIcon")
         let imageButton = UIButton(type: .system)
         imageButton.setImage(buttonImage, for: .normal)
@@ -89,11 +90,43 @@ class SignUpVC: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.popViewController(animated: true)
     }
-   
     
+    @objc func signUpButtonTapped() {
+        
+        guard let name = usernameTextField.text,
+              let email = emailTextField.text,
+              let password = passwordTextField.text
+        else {return}
+        let paramsSignUp = ["full_name" : name, "email" : email, "password" : password]
+        
+        NetworkingHelper.shared.fetchData(urlRequest: .register(params: paramsSignUp), callback:  { (result:Result<RequestModel,Error>) in
+        
+        print(result)
+    })
+
+    }
+    
+//    @objc private func textFieldDidChange(_ textField: UITextField) {
+//        let isAllFieldsFilled = !(usernameTextField.text?.isEmpty ?? true) &&
+//                                !(emailTextField.text?.isEmpty ?? true) &&
+//                                !(passwordTextField.text?.isEmpty ?? true) &&
+//                                !(passwordConfirmTextField.text?.isEmpty ?? true)
+//
+//        signUpButton.isEnabled = isAllFieldsFilled
+//        signUpButton.backgroundColor = isAllFieldsFilled ? UIColor(named: "backgroundColor") : UIColor.lightGray
+//    }
+//
+//    private func didChange() {
+//        usernameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+//            emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+//            passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+//            passwordConfirmTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+//
+//    }
+//
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        didChange()
         setupViews()
     }
     
@@ -106,6 +139,7 @@ class SignUpVC: UIViewController {
     private lazy var emailTextField = addTextField(title: "Email", placeholder: "deneme@example.com", keyboardType: .emailAddress, isSecure: false)
     private lazy var passwordTextField = addTextField(title: "Password", placeholder: "", keyboardType: .default, isSecure: true)
     private lazy var passwordConfirmTextField = addTextField(title: "Password Confirm", placeholder: "", keyboardType: .default, isSecure: true)
+    
     
     
     private func setupViews() {
@@ -174,14 +208,13 @@ class SignUpVC: UIViewController {
     }
 }
 
-
-
 #if DEBUG
 import SwiftUI
 
-@available(iOS 13 , *)
+@available(iOS 13, *)
 struct SignUpVC_Preview: PreviewProvider {
-    static var previews: some View {
+    static var previews: some View{
+         
         SignUpVC().showPreview()
     }
 }
