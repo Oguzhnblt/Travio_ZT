@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+struct RequestModel: Codable {
+    var full_name:String?
+    var email:String?
+    var password:String?
+   // var refresh_token:String?
+    //var pp_url:String?
+    //var new_password:String?
+    
+}
