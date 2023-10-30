@@ -13,12 +13,12 @@ class PlacesCollectionViewCell: UICollectionViewCell {
     static let identifier = "places"
     
     // Section içindeki item değişimini dinlemek için
-    var cellData: PopularPlacesModel? {
+    var cellData: PlacesModel? {
         didSet {
             guard let cellData = cellData else {
                 return
             }
-            imageView.image = UIImage(named: cellData.covere_img_url ?? "img_default")
+            imageView.image = UIImage(named: cellData.cover_img_url ?? "img_default")
             titleLabel.text = cellData.title
             subtitleLabel.text = cellData.place
         }
