@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0FC28E342AE92BD7005387E9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC28E332AE92BD7005387E9 /* User.swift */; };
+		0F34F45F2AEA580A007189BE /* NetworkingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F34F45E2AEA580A007189BE /* NetworkingHelper.swift */; };
+		0FB3C3512AEBB0A200B98803 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB3C3502AEBB0A200B98803 /* SettingsVC.swift */; };
+		0FB8116C2AEA7A2900B2DACA /* RequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB8116B2AEA7A2800B2DACA /* RequestModel.swift */; };
 		0FC28E362AE92C9F005387E9 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC28E352AE92C9F005387E9 /* Router.swift */; };
 		0FC28E392AE92E56005387E9 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0FC28E382AE92E56005387E9 /* Alamofire */; };
+		0FC9671D2AEA4B5D009FB26B /* MainTabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */; };
+		0FEAAD602AE944CD00B31030 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FEAAD5F2AE944CD00B31030 /* HomeVC.swift */; };
 		1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1214274E2ADC25E700CA1D10 /* SignUpVC.swift */; };
 		1255D8062ADAC7BD00FB6638 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1255D8052ADAC7BD00FB6638 /* AppDelegate.swift */; };
 		1255D8082ADAC7BD00FB6638 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1255D8072ADAC7BD00FB6638 /* SceneDelegate.swift */; };
@@ -43,8 +47,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0FC28E332AE92BD7005387E9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		0F34F45E2AEA580A007189BE /* NetworkingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingHelper.swift; sourceTree = "<group>"; };
+		0FB3C3502AEBB0A200B98803 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		0FB8116B2AEA7A2800B2DACA /* RequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestModel.swift; sourceTree = "<group>"; };
 		0FC28E352AE92C9F005387E9 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarVC.swift; sourceTree = "<group>"; };
+		0FEAAD5F2AE944CD00B31030 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		1214274E2ADC25E700CA1D10 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		1255D8022ADAC7BD00FB6638 /* Travio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Travio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1255D8052ADAC7BD00FB6638 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -120,8 +128,12 @@
 				1255D80E2ADAC7BE00FB6638 /* Assets.xcassets */,
 				1255D8102ADAC7BE00FB6638 /* LaunchScreen.storyboard */,
 				1255D8132ADAC7BE00FB6638 /* Info.plist */,
-				0FC28E332AE92BD7005387E9 /* User.swift */,
 				0FC28E352AE92C9F005387E9 /* Router.swift */,
+				0FEAAD5F2AE944CD00B31030 /* HomeVC.swift */,
+				0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */,
+				0F34F45E2AEA580A007189BE /* NetworkingHelper.swift */,
+				0FB8116B2AEA7A2800B2DACA /* RequestModel.swift */,
+				0FB3C3502AEBB0A200B98803 /* SettingsVC.swift */,
 			);
 			path = Travio;
 			sourceTree = "<group>";
@@ -260,10 +272,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FB3C3512AEBB0A200B98803 /* SettingsVC.swift in Sources */,
 				1255D80A2ADAC7BD00FB6638 /* LoginVC.swift in Sources */,
+<<<<<<< HEAD
 				125B445B2AE944F00047248D /* HomeVC.swift in Sources */,
+=======
+				0FEAAD602AE944CD00B31030 /* HomeVC.swift in Sources */,
+>>>>>>> f88ea6e6d0c975a2648bf0f4199d658ad254afb1
 				1255D8062ADAC7BD00FB6638 /* AppDelegate.swift in Sources */,
-				0FC28E342AE92BD7005387E9 /* User.swift in Sources */,
+				0FC9671D2AEA4B5D009FB26B /* MainTabbarVC.swift in Sources */,
+				0F34F45F2AEA580A007189BE /* NetworkingHelper.swift in Sources */,
+				0FB8116C2AEA7A2900B2DACA /* RequestModel.swift in Sources */,
 				0FC28E362AE92C9F005387E9 /* Router.swift in Sources */,
 				1255D8082ADAC7BD00FB6638 /* SceneDelegate.swift in Sources */,
 				1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */,

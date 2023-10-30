@@ -19,7 +19,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
+<<<<<<< HEAD
         let vc = HomeVC()
+=======
+        let vc = SettingsVC()
+>>>>>>> f88ea6e6d0c975a2648bf0f4199d658ad254afb1
         let rootViewController = UINavigationController(rootViewController: vc)
         
         window.rootViewController = rootViewController
