@@ -47,7 +47,7 @@ class SettingsCollectionViewCell: UICollectionViewCell {
     }()
     
     private lazy var button: UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "img_right_arrow"), for: .normal)
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button

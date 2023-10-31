@@ -54,10 +54,9 @@ class SettingsVC: UIViewController {
     }()
     
     private lazy var logoutButton: UIButton = {
-        let button = UIButton(type: .custom)
+        let button = UIButton()
         button.setImage(UIImage(named: "img_logout"), for: .normal)
         button.addTarget(self, action: #selector(buttonLogoutTapped), for: .touchUpInside)
-        button.sizeThatFits(CGSize(width: 30, height: 30))
         
         return button
     }()
@@ -76,6 +75,7 @@ class SettingsVC: UIViewController {
     }
     
     @objc func buttonLogoutTapped(){
+        print("Tıklandı")
     }
     
     private func createLabel(text: String, color: String, textSize: CGFloat, fontName: String, alignment: NSTextAlignment) -> UILabel {
@@ -109,21 +109,19 @@ class SettingsVC: UIViewController {
     
     
     func setupViews() {
-        self.view.addSubviews(settingsView, settingsItemView, settingsText, logoutButton)
+        self.view.addSubviews(settingsItemView,logoutButton,settingsText)
+        self.view.backgroundColor = .background
         settingsItemView.addSubviews(profileImage, profileText, editProfileButton,collectionView)
         
         setupLayout()
     }
     
     func setupLayout() {
-        
-        settingsView.snp.makeConstraints({make in
-            make.edges.equalToSuperview()
-        })
-        
+
         settingsItemView.snp.makeConstraints({make in
-            make.edges.equalToSuperview().offset(125)
+            make.top.bottom.equalToSuperview().offset(125)
             make.left.right.equalToSuperview()
+
         })
         
         settingsText.snp.makeConstraints({make in
@@ -131,6 +129,7 @@ class SettingsVC: UIViewController {
             make.top.equalToSuperview().offset(75)
         })
         
+        logoutButton.layer.zPosition = 10
         logoutButton.snp.makeConstraints({make in
             make.right.equalToSuperview().offset(-24)
             make.top.equalToSuperview().offset(75)
@@ -213,7 +212,7 @@ extension SettingsVC {
         
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.interGroupSpacing = 8
-        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 0, bottom: 350, trailing: 0)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 0, bottom: 200, trailing: 0)
        
         return layoutSection
     }
