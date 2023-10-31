@@ -125,10 +125,6 @@ class SettingsVC: UIViewController {
         })
         
         
-        
-        
-        
-        
         settingsItemStackView.snp.makeConstraints({stack in
             stack.left.right.equalTo(settingsItemView).inset(16)
             stack.top.equalTo(settingsItemView.snp.top).offset(218)
