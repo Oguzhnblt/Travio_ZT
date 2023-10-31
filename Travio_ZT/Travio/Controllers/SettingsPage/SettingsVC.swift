@@ -26,20 +26,17 @@ class SettingsVC: UIViewController {
     }()
     
     private lazy var profileImage : UIImageView = {
-        let img = UIImageView()
-        img.image = UIImage(named: "image_profile")
-        return img
-        
-        
+        let profileImage = UIImageView()
+        profileImage.image = UIImage(named: "image_profile")
+        return profileImage
     }()
     
     private lazy var logoutButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "img_logout"), for: .normal)
         button.addTarget(self, action: #selector(buttonLogoutTapped), for: .touchUpInside)
-        button.backgroundColor = .red
         button.sizeThatFits(CGSize(width: 30, height: 30))
-
+        
         return button
     }()
     
@@ -48,7 +45,7 @@ class SettingsVC: UIViewController {
         button.setTitle("Edit Profile", for: .normal)
         button.setTitleColor(.background, for: .normal)
         button.addTarget(self, action: #selector(buttonEditProfileTapped), for: .touchUpInside)
-
+        
         return button
     }()
     
@@ -68,12 +65,26 @@ class SettingsVC: UIViewController {
         return label
     }
     
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillProportionally
+        stackView.spacing = 8
+        return stackView
+    }()
     
     private lazy var settingsText = createLabel(text: "Settings", color: "textFieldBackgroundColor", textSize: 32, fontName: "Poppins-SemiBold", alignment: .center)
     private lazy var profileText = createLabel(text: "Bruce Wills", color: "textColor", textSize: 16, fontName: "Poppins-SemiBold", alignment: .center)
     
     private lazy var editProfileText = createLabel(text: "Edit Profile", color: "backgroundColor", textSize: 12, fontName: "Poppins-SemiBold", alignment: .center)
     
+//    private lazy var securitySettings = CustomView(icon: .userAlt, labelText: "Security Settings")
+//    private lazy var appDefaults = CustomView(icon: .appDefaults, labelText: "App Defaults")
+//    private lazy var myAddedPlaces = CustomView(icon: .mapPinIcon, labelText: "My Added Places")
+//    private lazy var helpSupport = CustomView(icon: .helpIcon, labelText: "Help & Support")
+//    private lazy var about = CustomView(icon: .aboutInfoIcon, labelText: "About")
+//    private lazy var terms = CustomView(icon: .termsIcon, labelText: "Terms of Use")
+//    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,12 +93,11 @@ class SettingsVC: UIViewController {
         
     }
     
-    private lazy var securitySettings = CustomView(icon: UIImage(systemName: "person.fill"), labelText: "Security Settings")
-    
     
     func setupViews() {
         self.view.addSubviews(settingsView, settingsItemView, settingsText, logoutButton)
         settingsItemView.addSubviews(profileImage, profileText, editProfileButton)
+    
         setupLayout()
     }
     
@@ -98,18 +108,18 @@ class SettingsVC: UIViewController {
         })
         
         settingsItemView.snp.makeConstraints({make in
-            make.edges.equalToSuperview().offset(125)
+            make.edges.equalToSuperview().offset(175)
             make.left.right.equalToSuperview()
         })
         
         settingsText.snp.makeConstraints({make in
             make.left.equalToSuperview().offset(20)
-            make.top.equalToSuperview().offset(60)
+            make.top.equalToSuperview().offset(95)
         })
         
         logoutButton.snp.makeConstraints({make in
             make.right.equalToSuperview().offset(-24)
-            make.bottom.equalTo(settingsItemView.snp.top).offset(-11)
+            make.top.equalToSuperview().offset(95)
         })
         
         profileImage.snp.makeConstraints({make in
@@ -126,7 +136,6 @@ class SettingsVC: UIViewController {
             make.top.equalTo(profileText.snp.bottom)
             make.centerX.equalToSuperview()
         })
-       
     }
 }
 
