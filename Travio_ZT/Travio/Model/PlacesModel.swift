@@ -8,6 +8,7 @@
 import Foundation
 
 struct PlacesModel {
+    
     var cover_img_url: String?
     var title: String?
     var place: String?
