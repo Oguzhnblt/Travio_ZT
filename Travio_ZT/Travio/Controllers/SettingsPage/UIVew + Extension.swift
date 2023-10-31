@@ -3,6 +3,13 @@ import SnapKit
 
 class CustomView: UIView {
     
+    convenience init(icon: UIImage?, labelText: String) {
+        self.init(frame: .zero)
+        
+        iconImageView.image = icon
+        label.text = labelText
+    }
+    
     lazy var backView: UIView = {
         let view = UIView()
         view.size(CGSize(width: 358, height: 54))
@@ -16,7 +23,6 @@ class CustomView: UIView {
     // Icon
     lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person.fill")
         imageView.tintColor = .black
         imageView.contentMode = .scaleAspectFit
         
@@ -26,8 +32,8 @@ class CustomView: UIView {
     // Text
     lazy var label: UILabel = {
         let label = UILabel()
-        label.text = "Security Settings"
         label.textAlignment = .left
+        label.font = UIFont(name: "Poppins-Regular", size: 14)
         return label
     }()
     
@@ -39,17 +45,10 @@ class CustomView: UIView {
         return button
     }()
     
-    // Seperator View
-    lazy var seperatorView: UIView = {
-        let seperator = UIView()
-        seperator.frame = .zero
-        return seperator
-    }()
-    
     
     // Horizontal Stack View
     lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [iconImageView, label,seperatorView, button])
+        let stackView = UIStackView(arrangedSubviews: [iconImageView, label, button])
         stackView.axis = .horizontal
         stackView.spacing = 8
         return stackView
@@ -69,15 +68,15 @@ class CustomView: UIView {
         
         addSubview(backView)
         backView.addSubview(stackView)
-
+        
         backView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-
+        
         stackView.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(16)
             make.centerY.equalToSuperview()
-
+            
         }
         
         button.snp.makeConstraints { buttonMake in

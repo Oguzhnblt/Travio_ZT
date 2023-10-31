@@ -127,6 +127,7 @@ class SettingsVC: UIViewController {
         
     }
     
+    private lazy var securitySettings = CustomView(icon: UIImage(systemName: "person.fill"), labelText: "Security Settings")
     
     
     //MARK: -- Component Actions
@@ -138,7 +139,7 @@ class SettingsVC: UIViewController {
     //MARK: -- UI Methods
     func setupViews() {
         self.view.addSubviews(settingsView, settingsItemView, settingsText, btnPower)
-        settingsItemView.addSubviews(settingsItemStackView, settingsImageTextStackView, labelMainView)
+        settingsItemView.addSubviews(settingsItemStackView, settingsImageTextStackView, labelMainView, securitySettings)
         labelMainView.addSubviews(labelStack)
         labelStack.addArrangedSubviews(labelIcon, labelText, labelButton)
         
@@ -148,6 +149,11 @@ class SettingsVC: UIViewController {
     }
     
     func setupLayout() {
+        
+        securitySettings.snp.makeConstraints({make in
+        
+            make.edges.equalToSuperview()
+        })
         
         labelIcon.snp.makeConstraints({icon in
             icon.leading.equalTo(labelStack.snp.leading).offset(16)
@@ -221,24 +227,8 @@ class SettingsVC: UIViewController {
             stack.top.equalTo(settingsItemView.snp.top).offset(24)
             
         })
-        
-        
-       
-        
-       
     }
-  
 }
-
-extension CustomView {
-    func configure(icon: UIImage, text: String) {
-        iconImageView.image = icon
-        label.text = text
-    }
-    
-    
-}
-
 
 #if DEBUG
 import SwiftUI
