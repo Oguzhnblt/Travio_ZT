@@ -12,18 +12,14 @@ class CustomView: UIView {
     
     lazy var backView: UIView = {
         let view = UIView()
-        view.size(CGSize(width: 358, height: 54))
         view.clipsToBounds = true
-        view.layer.cornerRadius = 16
-        view.backgroundColor = .content
-        
+        view.layer.cornerRadius = 16        
         return view
     }()
     
     // Icon
     lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.tintColor = .black
         imageView.contentMode = .scaleAspectFit
         
         return imageView
@@ -66,7 +62,7 @@ class CustomView: UIView {
     
     private func setupViews() {
         
-        addSubview(backView)
+        self.addSubview(backView)
         backView.addSubview(stackView)
         
         backView.snp.makeConstraints { make in

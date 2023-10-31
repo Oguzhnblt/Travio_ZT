@@ -46,6 +46,7 @@ class SignUpVC: UIViewController {
         return label
     }
     
+   
     private func addTextField(title: String, placeholder: String, keyboardType: UIKeyboardType, isSecure: Bool) -> CustomLabelTextField {
         let textField = CustomLabelTextField()
         textField.font = UIFont(name: "Poppins-Regular", size: 12)
