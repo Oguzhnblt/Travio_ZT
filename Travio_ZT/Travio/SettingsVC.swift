@@ -126,10 +126,8 @@ class SettingsVC: UIViewController {
     }
     
     private lazy var settingsItemStackView = createStackView(axis: .vertical, spacing: 8)
-    private lazy var settingsImageTextStackView = createStackView(axis: .vertical, spacing: 8)
     private lazy var settingsText = createLabel(text: "Settings", color: "textFieldBackgroundColor", textSize: 32, fontName: "Poppins-SemiBold", alignment: .center)
     private lazy var imageText = createLabel(text: "Bruce Wills", color: "textColor", textSize: 16, fontName: "Poppins-SemiBold", alignment: .center)
-    
     private lazy var editProfileText = createLabel(text: "Edit Profile", color: "backgroundColor", textSize: 12, fontName: "Poppins-SemiBold", alignment: .center)
     
     override func viewDidLoad() {
@@ -148,11 +146,9 @@ class SettingsVC: UIViewController {
     //MARK: -- UI Methods
     func setupViews() {
         self.view.addSubviews(settingsView, settingsItemView, settingsText, btnPower)
-        settingsItemView.addSubviews(settingsItemStackView, settingsImageTextStackView, labelMainView)
+        settingsItemView.addSubviews(settingsItemStackView, labelMainView,settingsImageView, imageText, editProfileText)
         labelMainView.addSubviews(labelStack)
         labelStack.addArrangedSubviews(labelIcon, labelText, labelButton)
-        
-        settingsImageTextStackView.addArrangedSubviews(settingsImageView, imageText, editProfileText)
         
         setupLayout()
     }
@@ -192,11 +188,13 @@ class SettingsVC: UIViewController {
         })
         
         imageText.snp.makeConstraints({text in
-            text.left.right.equalTo(settingsView).offset(150)
+            text.top.equalTo(settingsImageView.snp.bottom).offset(8)
+            text.leading.equalToSuperview().offset(150)
         })
         
         editProfileText.snp.makeConstraints({text in
-            text.left.right.equalTo(settingsView).offset(164)
+            text.leading.equalTo(settingsView).offset(164)
+            text.top.equalTo(imageText.snp.bottom).offset(8)
         })
         
         settingsImageView.snp.makeConstraints({image in
@@ -209,6 +207,7 @@ class SettingsVC: UIViewController {
             settingView.edges.equalToSuperview()
             settingView.top.equalTo(self.view.safeAreaLayoutGuide)
         })
+        
         
         settingsText.snp.makeConstraints({text in
             text.bottom.equalTo(settingsItemView.snp.top).offset(-53)
@@ -231,10 +230,7 @@ class SettingsVC: UIViewController {
 
         })
         
-        settingsImageTextStackView.snp.makeConstraints({stack in
-            stack.top.equalTo(settingsItemView.snp.top).offset(24)
-            
-        })
+      
         
         
        

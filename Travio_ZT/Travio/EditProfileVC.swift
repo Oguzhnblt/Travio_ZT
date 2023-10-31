@@ -28,7 +28,17 @@ class EditProfileVC: UIViewController {
         return label
     }
     
+    
     private lazy var editProfileText = createLabel(text: "Edit Profile", color: "textFieldBackgroundColor", textSize: 32, fontName: "Poppins-SemiBold", alignment: .center)
+    
+    
+    private lazy var imageText = createLabel(text: "Bruce Wills", color: "textColor", textSize: 24, fontName: "Poppins-SemiBold", alignment: .center)
+    private lazy var changePhotoText = createLabel(text: "Change Photo", color: "backgroundColor", textSize: 12, fontName: "Poppins-SemiBold", alignment: .center)
+    private lazy var editProfileImageView : UIImageView = {
+        let img = UIImageView()
+        img.image = UIImage(named: "image_3")
+        return img
+        }()
 
     
 
@@ -60,6 +70,20 @@ class EditProfileVC: UIViewController {
     
     @objc func saveButtonTapped(){}
     
+    private lazy var btnX:UIButton = {
+            let b = UIButton()
+
+            b.addTarget(self, action: #selector(btnXTapped), for: .touchUpInside)
+            b.contentHorizontalAlignment = .center
+            b.layer.cornerRadius = 8
+            b.centerTextAndImage(spacing: 8)
+            b.setImage(UIImage(named: "x_image"), for: .normal)
+            b.tintColor = .white
+            return b
+        }()
+    @objc func btnXTapped(){
+      }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,12 +96,36 @@ class EditProfileVC: UIViewController {
     
     
     private func setupViews(){
-        self.view.addSubviews(editProfileView, editProfileItemView, editProfileText)
-        editProfileItemView.addSubviews(saveButton, fullnameTextField, emailTextField)
+        self.view.addSubviews(editProfileView, editProfileItemView, editProfileText, btnX)
+        editProfileItemView.addSubviews(saveButton, fullnameTextField, emailTextField, editProfileImageView, imageText, changePhotoText)
         setupLayout()
     }
    
     private func setupLayout(){
+        
+        editProfileImageView.snp.makeConstraints({img in
+            img.width.equalTo(120)
+            img.height.equalTo(120)
+            img.top.equalTo(editProfileItemView.snp.top).offset(24)
+            img.leading.equalToSuperview().offset(135)
+            
+        })
+        
+        imageText.snp.makeConstraints({txt in
+            txt.top.equalTo(changePhotoText.snp.bottom).offset(7)
+            txt.leading.equalToSuperview().offset(128)
+        })
+        
+        changePhotoText.snp.makeConstraints({txt in
+            txt.top.equalTo(editProfileImageView.snp.bottom).offset(7)
+            txt.leading.equalToSuperview().offset(152)
+        })
+        
+        
+        btnX.snp.makeConstraints({btn in
+            btn.bottom.equalTo(editProfileItemView.snp.top).offset(-81)
+            btn.trailing.equalToSuperview().offset(-24)
+        })
         
         editProfileText.snp.makeConstraints({text in
             text.bottom.equalTo(editProfileItemView.snp.top).offset(-67)
@@ -104,7 +152,7 @@ class EditProfileVC: UIViewController {
             name.width.equalTo(342)
             name.leading.equalToSuperview().offset(24)
             name.trailing.equalToSuperview().offset(-24)
-            name.bottom.equalToSuperview().offset(-341)
+            name.top.equalTo(editProfileItemView.snp.top).offset(304)
             
         })
         
