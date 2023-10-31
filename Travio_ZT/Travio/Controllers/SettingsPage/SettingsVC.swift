@@ -11,6 +11,28 @@ import SnapKit
 
 class SettingsVC: UIViewController {
     
+    let cellDataArray: [SettingsCellData] = [
+        SettingsCellData(iconName: "user_alt", labelText: "Security Settings"),
+        SettingsCellData(iconName: "app_defaults", labelText: "App Defaults"),
+        SettingsCellData(iconName: "map_pin_icon", labelText: "My Added Places"),
+        SettingsCellData(iconName: "help_icon", labelText: "Help & Supports"),
+        SettingsCellData(iconName: "about_info_icon", labelText: "About"),
+        SettingsCellData(iconName: "terms_icon", labelText: "Terms of Use"),
+    ]
+    
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: settingsLayout())
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = .clear
+        
+        collectionView.register(SettingsCollectionViewCell.self, forCellWithReuseIdentifier: SettingsCollectionViewCell.identifier)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
+        return collectionView
+    }()
+    
     private lazy var settingsView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "backgroundColor")
@@ -78,26 +100,18 @@ class SettingsVC: UIViewController {
     
     private lazy var editProfileText = createLabel(text: "Edit Profile", color: "backgroundColor", textSize: 12, fontName: "Poppins-SemiBold", alignment: .center)
     
-//    private lazy var securitySettings = CustomView(icon: .userAlt, labelText: "Security Settings")
-//    private lazy var appDefaults = CustomView(icon: .appDefaults, labelText: "App Defaults")
-//    private lazy var myAddedPlaces = CustomView(icon: .mapPinIcon, labelText: "My Added Places")
-//    private lazy var helpSupport = CustomView(icon: .helpIcon, labelText: "Help & Support")
-//    private lazy var about = CustomView(icon: .aboutInfoIcon, labelText: "About")
-//    private lazy var terms = CustomView(icon: .termsIcon, labelText: "Terms of Use")
-//    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
-        
     }
     
     
     func setupViews() {
         self.view.addSubviews(settingsView, settingsItemView, settingsText, logoutButton)
-        settingsItemView.addSubviews(profileImage, profileText, editProfileButton)
-    
+        settingsItemView.addSubviews(profileImage, profileText, editProfileButton,collectionView)
+        
         setupLayout()
     }
     
@@ -108,18 +122,18 @@ class SettingsVC: UIViewController {
         })
         
         settingsItemView.snp.makeConstraints({make in
-            make.edges.equalToSuperview().offset(175)
+            make.edges.equalToSuperview().offset(125)
             make.left.right.equalToSuperview()
         })
         
         settingsText.snp.makeConstraints({make in
             make.left.equalToSuperview().offset(20)
-            make.top.equalToSuperview().offset(95)
+            make.top.equalToSuperview().offset(75)
         })
         
         logoutButton.snp.makeConstraints({make in
             make.right.equalToSuperview().offset(-24)
-            make.top.equalToSuperview().offset(95)
+            make.top.equalToSuperview().offset(75)
         })
         
         profileImage.snp.makeConstraints({make in
@@ -136,8 +150,76 @@ class SettingsVC: UIViewController {
             make.top.equalTo(profileText.snp.bottom)
             make.centerX.equalToSuperview()
         })
+        
+        collectionView.dropShadow()
+        collectionView.snp.makeConstraints({make in
+            make.centerX.equalToSuperview()
+            make.left.right.equalToSuperview().inset(16)
+            make.top.bottom.equalToSuperview().offset(218)
+        })
     }
 }
+
+extension SettingsVC: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return cellDataArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SettingsCollectionViewCell.identifier, for: indexPath) as! SettingsCollectionViewCell
+        
+        let data = cellDataArray[indexPath.item]
+        cell.configure(with: data)
+        
+        
+        switch indexPath.item {
+            case 0:
+                cell.buttonAction = {
+                    //                    let vc = HomeVC()
+                    //                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            case 1:
+                cell.buttonAction = {
+                    
+                }
+                
+            default:
+                break
+        }
+        
+        return cell
+    }
+}
+
+extension SettingsVC: UICollectionViewDelegate {
+    
+}
+
+extension SettingsVC {
+    
+    func settingsLayout() -> UICollectionViewCompositionalLayout {
+        return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
+            return self.settingLayouts()
+        }
+    }
+    
+    
+    func settingLayouts() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.15))
+        let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
+        
+        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+        layoutSection.interGroupSpacing = 8
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 0, bottom: 350, trailing: 0)
+       
+        return layoutSection
+    }
+    
+}
+
 
 #if DEBUG
 import SwiftUI
