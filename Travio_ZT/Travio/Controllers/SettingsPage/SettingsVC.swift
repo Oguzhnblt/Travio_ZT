@@ -100,21 +100,7 @@ class SettingsVC: UIViewController {
     @objc func btnLabelTapped(){
       }
     
-    
-    
-    
-    private func addTextField(title: String, placeholder: String, keyboardType: UIKeyboardType, isSecure: Bool) -> CustomLabelTextField {
-        let textField = CustomLabelTextField()
-        textField.font = UIFont(name: "Poppins-Regular", size: 12)
-        textField.backgroundColor = UIColor(named: "textFieldBackgroundColor")
-        textField.layer.cornerRadius = 16
-        textField.placeholder = placeholder
-        textField.customLabel.text = title
-        textField.isSecureTextEntry = isSecure
-        textField.autocapitalizationType = .none
-        return textField
-    }
-    
+  
     private func createLabel(text: String, color: String, textSize: CGFloat, fontName: String, alignment: NSTextAlignment) -> UILabel {
         let label = UILabel()
         label.text = text
@@ -125,6 +111,7 @@ class SettingsVC: UIViewController {
         return label
     }
     
+    
     private lazy var settingsItemStackView = createStackView(axis: .vertical, spacing: 8)
     private lazy var settingsImageTextStackView = createStackView(axis: .vertical, spacing: 8)
     private lazy var settingsText = createLabel(text: "Settings", color: "textFieldBackgroundColor", textSize: 32, fontName: "Poppins-SemiBold", alignment: .center)
@@ -132,12 +119,15 @@ class SettingsVC: UIViewController {
     
     private lazy var editProfileText = createLabel(text: "Edit Profile", color: "backgroundColor", textSize: 12, fontName: "Poppins-SemiBold", alignment: .center)
     
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
        setupViews()
-       
+        
     }
+    
+    
     
     //MARK: -- Component Actions
     
@@ -239,6 +229,16 @@ class SettingsVC: UIViewController {
     }
   
 }
+
+extension CustomView {
+    func configure(icon: UIImage, text: String) {
+        iconImageView.image = icon
+        label.text = text
+    }
+    
+    
+}
+
 
 #if DEBUG
 import SwiftUI

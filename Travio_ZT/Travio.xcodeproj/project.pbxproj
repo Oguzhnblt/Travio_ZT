@@ -15,6 +15,7 @@
 		0FC28E392AE92E56005387E9 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0FC28E382AE92E56005387E9 /* Alamofire */; };
 		0FC9671D2AEA4B5D009FB26B /* MainTabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */; };
 		1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1214274E2ADC25E700CA1D10 /* SignUpVC.swift */; };
+		12480C442AF0EC0B00549C42 /* UIVew + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12480C432AF0EC0B00549C42 /* UIVew + Extension.swift */; };
 		1248ED342AED311200777E98 /* HomePageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1248ED332AED311200777E98 /* HomePageLayout.swift */; };
 		1248ED382AED341000777E98 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1248ED372AED341000777E98 /* SectionHeaderView.swift */; };
 		1248ED3B2AED352700777E98 /* PlacesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1248ED3A2AED352700777E98 /* PlacesCollectionViewCell.swift */; };
@@ -58,6 +59,7 @@
 		0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarVC.swift; sourceTree = "<group>"; };
 		0FEAAD5F2AE944CD00B31030 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		1214274E2ADC25E700CA1D10 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		12480C432AF0EC0B00549C42 /* UIVew + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVew + Extension.swift"; sourceTree = "<group>"; };
 		1248ED332AED311200777E98 /* HomePageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageLayout.swift; sourceTree = "<group>"; };
 		1248ED372AED341000777E98 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		1248ED3A2AED352700777E98 /* PlacesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -106,6 +108,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		12480C422AF0EBE400549C42 /* SettingsPage */ = {
+			isa = PBXGroup;
+			children = (
+				0FB3C3502AEBB0A200B98803 /* SettingsVC.swift */,
+				12480C432AF0EC0B00549C42 /* UIVew + Extension.swift */,
+			);
+			path = SettingsPage;
+			sourceTree = "<group>";
+		};
 		1248ED322AED310400777E98 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,7 +185,6 @@
 				0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */,
 				0F34F45E2AEA580A007189BE /* NetworkingHelper.swift */,
 				0FB8116B2AEA7A2800B2DACA /* RequestModel.swift */,
-				0FB3C3502AEBB0A200B98803 /* SettingsVC.swift */,
 				0FB6BB1B2AF0D3E30051258D /* EditProfileVC.swift */,
 			);
 			path = Travio;
@@ -209,6 +219,7 @@
 		125B445C2AE971580047248D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				12480C422AF0EBE400549C42 /* SettingsPage */,
 				1248ED4C2AED51D300777E98 /* LoginPage */,
 				1248ED4B2AED51C700777E98 /* SignupPage */,
 				1248ED4A2AED519D00777E98 /* HomePage */,
@@ -328,6 +339,7 @@
 				1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */,
 				1248ED3B2AED352700777E98 /* PlacesCollectionViewCell.swift in Sources */,
 				1255D81A2ADACC6400FB6638 /* Extensions.swift in Sources */,
+				12480C442AF0EC0B00549C42 /* UIVew + Extension.swift in Sources */,
 				1248ED382AED341000777E98 /* SectionHeaderView.swift in Sources */,
 				0FB6BB1C2AF0D3E30051258D /* EditProfileVC.swift in Sources */,
 				1248ED342AED311200777E98 /* HomePageLayout.swift in Sources */,
