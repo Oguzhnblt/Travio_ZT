@@ -57,7 +57,6 @@
 		0FB8116B2AEA7A2800B2DACA /* RequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestModel.swift; sourceTree = "<group>"; };
 		0FC28E352AE92C9F005387E9 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarVC.swift; sourceTree = "<group>"; };
-		0FEAAD5F2AE944CD00B31030 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		1214274E2ADC25E700CA1D10 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		12480C432AF0EC0B00549C42 /* SettingsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCollectionViewCell.swift; sourceTree = "<group>"; };
 		1248ED332AED311200777E98 /* HomePageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageLayout.swift; sourceTree = "<group>"; };
@@ -180,9 +179,8 @@
 				1255D80E2ADAC7BE00FB6638 /* Assets.xcassets */,
 				1255D8102ADAC7BE00FB6638 /* LaunchScreen.storyboard */,
 				1255D8132ADAC7BE00FB6638 /* Info.plist */,
-				0FC28E352AE92C9F005387E9 /* Router.swift */,
-				0FEAAD5F2AE944CD00B31030 /* HomeVC.swift */,
 				0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */,
+				0FC28E352AE92C9F005387E9 /* Router.swift */,
 				0F34F45E2AEA580A007189BE /* NetworkingHelper.swift */,
 				0FB8116B2AEA7A2800B2DACA /* RequestModel.swift */,
 				0FB6BB1B2AF0D3E30051258D /* EditProfileVC.swift */,

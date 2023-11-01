@@ -33,11 +33,7 @@ class SettingsVC: UIViewController {
         return collectionView
     }()
     
-    private lazy var settingsView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(named: "backgroundColor")
-        return view
-    }()
+   
     private lazy var settingsItemView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "contentColor")
@@ -103,7 +99,7 @@ class SettingsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationController?.isNavigationBarHidden = true
         setupViews()
     }
     

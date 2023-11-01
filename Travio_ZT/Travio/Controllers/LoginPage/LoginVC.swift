@@ -123,7 +123,7 @@ class LoginVC: UIViewController {
         loginİtemStackView.addArrangedSubviews(emailTextField,passwordTextField)
         signUpStackView.addArrangedSubviews(accountLabel,signUpButton)
         
-        
+        p
         setupLayouts()
     }
     
