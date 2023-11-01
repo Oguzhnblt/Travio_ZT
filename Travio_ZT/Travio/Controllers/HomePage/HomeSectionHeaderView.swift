@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 
-class SectionHeaderView: UICollectionReusableView {
+class HomeSectionHeaderView: UICollectionReusableView {
     static let reuseIdentifier = "SectionHeader"
     
     let title = UILabel()

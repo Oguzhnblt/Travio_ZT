@@ -10,10 +10,9 @@ import SnapKit
 
 class SecuritySettingsVC: UIViewController {
     
-    
-    let popularPlacesId = "PopularPlacesHeader"
-    let newPlacesId = "NewPlacesHeader"
-    
+    let changePassword = "changePassword"
+    let privacy = "privacy"
+
     private lazy var collectionView: UICollectionView = {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: securitySettingsLayout())
@@ -21,7 +20,11 @@ class SecuritySettingsVC: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         
-        collectionView.register(PlacesCollectionViewCell.self, forCellWithReuseIdentifier: PlacesCollectionViewCell.identifier)
+        collectionView.register(SecuritySettingsHeaderView.self, forSupplementaryViewOfKind: changePassword, withReuseIdentifier: SecuritySettingsCollectionCell.identifier)
+        
+        collectionView.register(SecuritySettingsHeaderView.self, forSupplementaryViewOfKind: privacy, withReuseIdentifier: SecuritySettingsCollectionCell.identifier)
+
+        collectionView.register(SecuritySettingsCollectionCell.self, forCellWithReuseIdentifier: SecuritySettingsCollectionCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -39,12 +42,13 @@ class SecuritySettingsVC: UIViewController {
     }()
     
     private lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(.leftArrowIcon, for: .normal)
-        return button
+        let backButton = UIButton(type: .custom)
+        backButton.setImage(UIImage(named: "leftArrowIcon"), for: .normal)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return backButton
     }()
     
-    private lazy var loginItemView: UIView = {
+    private lazy var securityItemView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "contentColor")
         view.clipsToBounds = true
@@ -52,6 +56,10 @@ class SecuritySettingsVC: UIViewController {
         view.layer.maskedCorners = .layerMinXMinYCorner
         return view
     }()
+    
+    @objc func backButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,24 +69,24 @@ class SecuritySettingsVC: UIViewController {
     
     private func setupViews() {
         self.view.backgroundColor = .background
-        self.view.addSubviews(loginItemView,backButton, headerLabel)
-        loginItemView.addSubviews(collectionView)
+        self.view.addSubviews(securityItemView,backButton, headerLabel)
+        securityItemView.addSubviews(collectionView)
         
         setupLayouts()
     }
     
     private func setupLayouts() {
         backButton.snp.makeConstraints({make in
-            make.top.equalToSuperview().offset(60)
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(13)
             make.left.equalToSuperview().offset(24)
         })
         
         headerLabel.snp.makeConstraints({make in
-            make.top.equalToSuperview().offset(60)
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.centerX.equalToSuperview()
         })
         
-        loginItemView.snp.makeConstraints { make in
+        securityItemView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().offset(125)
             make.left.right.equalToSuperview()
         }
@@ -118,11 +126,11 @@ extension SecuritySettingsVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
             case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlacesCollectionViewCell.identifier, for: indexPath) as! PlacesCollectionViewCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecuritySettingsCollectionCell.identifier, for: indexPath) as! SecuritySettingsCollectionCell
                 cell.cellData = popularPlacesMockData[indexPath.row]
                 return cell
             default:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlacesCollectionViewCell.identifier, for: indexPath) as! PlacesCollectionViewCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecuritySettingsCollectionCell.identifier, for: indexPath) as! SecuritySettingsCollectionCell
                 cell.cellData = newPlacesMockData[indexPath.row]
                 return cell
                 
@@ -131,34 +139,16 @@ extension SecuritySettingsVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as! SectionHeaderView
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SecuritySettingsHeaderView.reuseIdentifier, for: indexPath) as! SecuritySettingsHeaderView
             
             let sectionTitles = ["Popular Places", "New Places"]
-            
-            if indexPath.section < sectionTitles.count {
-                header.title.text = sectionTitles[indexPath.section]
-                
-                switch indexPath.section {
-                    case 0:
-                        header.button.setTitle("See All", for: .normal)
-                        header.button.addTarget(self, action: #selector(seeAllPopular), for: .touchUpInside)
-                    case 1:
-                        header.button.setTitle("See All", for: .normal)
-                        header.button.addTarget(self, action: #selector(seeAllNew), for: .touchUpInside)
-                    default:
-                        header.button.setTitle("See All", for: .normal)
-                        header.button.addTarget(self, action: #selector(seeAllDefault), for: .touchUpInside)
-                }
-            } else {
-                header.title.text = "Unknown Section"
-                header.button.setTitle("See All", for: .normal)
-                header.button.addTarget(self, action: #selector(seeAllDefault), for: .touchUpInside)
-            }
+            header.title.text = sectionTitles[indexPath.section]
             
             return header
         }
         return UICollectionReusableView()
     }
+
     
     @objc func seeAllPopular() {
         //let seeAllVC = PopularPlacesVC()
@@ -180,7 +170,7 @@ extension SecuritySettingsVC {
     
     func securitySettingsLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (_, env) -> NSCollectionLayoutSection? in
-            return SecuritySettingsLayout.shared.securitySettingsLayout()
+            return SecuritySettingsLayout.shared.changePasswordLayout()
         }
     }
 }
