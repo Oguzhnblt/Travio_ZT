@@ -12,7 +12,7 @@ class SecuritySettingsVC: UIViewController {
     
     let changePassword = "changePassword"
     let privacy = "privacy"
-
+    
     private lazy var collectionView: UICollectionView = {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: securitySettingsLayout())
@@ -20,10 +20,8 @@ class SecuritySettingsVC: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         
-        collectionView.register(SecuritySettingsHeaderView.self, forSupplementaryViewOfKind: changePassword, withReuseIdentifier: "password")
+        collectionView.register(SecuritySettingsHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SecuritySettingsHeaderView.reuseIdentifier)
         
-        collectionView.register(SecuritySettingsHeaderView.self, forSupplementaryViewOfKind: privacy, withReuseIdentifier: "privacy")
-
         collectionView.register(SecuritySettingsCollectionCell.self, forCellWithReuseIdentifier: SecuritySettingsCollectionCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -93,7 +91,7 @@ class SecuritySettingsVC: UIViewController {
         
         collectionView.dropShadow()
         collectionView.snp.makeConstraints({make in
-            make.top.bottom.equalToSuperview()
+            make.top.bottom.equalToSuperview().offset(55)
             make.left.right.equalToSuperview().inset(16)
         })
     }
@@ -123,10 +121,14 @@ extension SecuritySettingsVC: UICollectionViewDataSource {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecuritySettingsCollectionCell.identifier, for: indexPath) as! SecuritySettingsCollectionCell
                 
+                cell.setupCell(with: "New Password")
+                
                 return cell
                 
             default:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecuritySettingsCollectionCell.identifier, for: indexPath) as! SecuritySettingsCollectionCell
+                
+                cell.setupCell(with: "New Password Confirm")
                 
                 return cell
                 
@@ -134,17 +136,20 @@ extension SecuritySettingsVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SecuritySettingsHeaderView.reuseIdentifier, for: indexPath) as! SecuritySettingsHeaderView
-            
-            let sectionTitles = ["Popular Places", "New Places"]
-            header.title.text = sectionTitles[indexPath.section]
-            
+        
+           switch indexPath.section {
+           case 0:
+               header.title.text = "Change Password"
+           case 1:
+               header.title.text = "Privacy"
+           default:
+               break
+           }
+           
             return header
         }
-        return UICollectionReusableView()
-    }
-
+    
     
     @objc func seeAllPopular() {
         //let seeAllVC = PopularPlacesVC()
