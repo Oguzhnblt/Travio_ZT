@@ -69,7 +69,8 @@ class SecuritySettingsVC: UIViewController {
     
     private func setupLayouts() {
         backButton.snp.makeConstraints({make in
-            make.right.equalTo(headerLabel.snp.left).offset(-24)
+            make.top.equalToSuperview().offset(60)
+            make.left.equalToSuperview().offset(24)
         })
         
         headerLabel.snp.makeConstraints({make in
