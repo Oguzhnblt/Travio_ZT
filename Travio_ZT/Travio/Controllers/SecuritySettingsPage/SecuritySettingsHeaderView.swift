@@ -36,7 +36,7 @@ class SecuritySettingsHeaderView: UICollectionReusableView {
     private func setupLayouts() {
         
         title.snp.makeConstraints({make in
-            make.edges.equalToSuperview()
+            make.centerX.equalToSuperview()
         })
         
     }

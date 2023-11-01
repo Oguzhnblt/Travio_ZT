@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class SecuritySettingsCollectionCell: UICollectionViewCell {
     
@@ -14,15 +15,17 @@ class SecuritySettingsCollectionCell: UICollectionViewCell {
     
     
     private lazy var backView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .content
-        view.clipsToBounds = true
-        
-        return view
+        let backView = UIView()
+        backView.clipsToBounds = true
+        backView.backgroundColor = .white
+        backView.layer.cornerRadius = 16
+        backView.frame.size = CGSize(width: frame.width, height: frame.height)
+        return backView
     }()
     
     lazy var textField: UITextField = {
         let textField = UITextField()
+        textField.placeholder = "Change Password"
         return textField
     }()
     
@@ -35,12 +38,20 @@ class SecuritySettingsCollectionCell: UICollectionViewCell {
         
         self.addSubviews(backView)
         backView.addSubview(textField)
+        
+        backView.snp.makeConstraints({make in
+            make.edges.equalToSuperview()
+        })
+        
+        textField.snp.makeConstraints({make in
+            make.edges.equalToSuperview()
+        })
        
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
-
 }
+
+

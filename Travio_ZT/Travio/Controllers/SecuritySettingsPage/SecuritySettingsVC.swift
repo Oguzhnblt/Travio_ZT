@@ -20,9 +20,9 @@ class SecuritySettingsVC: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         
-        collectionView.register(SecuritySettingsHeaderView.self, forSupplementaryViewOfKind: changePassword, withReuseIdentifier: SecuritySettingsCollectionCell.identifier)
+        collectionView.register(SecuritySettingsHeaderView.self, forSupplementaryViewOfKind: changePassword, withReuseIdentifier: "password")
         
-        collectionView.register(SecuritySettingsHeaderView.self, forSupplementaryViewOfKind: privacy, withReuseIdentifier: SecuritySettingsCollectionCell.identifier)
+        collectionView.register(SecuritySettingsHeaderView.self, forSupplementaryViewOfKind: privacy, withReuseIdentifier: "privacy")
 
         collectionView.register(SecuritySettingsCollectionCell.self, forCellWithReuseIdentifier: SecuritySettingsCollectionCell.identifier)
         collectionView.dataSource = self
@@ -94,7 +94,7 @@ class SecuritySettingsVC: UIViewController {
         collectionView.dropShadow()
         collectionView.snp.makeConstraints({make in
             make.top.bottom.equalToSuperview()
-            make.left.right.equalToSuperview().offset(16)
+            make.left.right.equalToSuperview().inset(16)
         })
     }
 }
@@ -115,7 +115,7 @@ extension SecuritySettingsVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

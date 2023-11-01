@@ -49,7 +49,7 @@
 		127249C32AF2282200CEAA64 /* SecuritySettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249C22AF2282200CEAA64 /* SecuritySettingsVC.swift */; };
 		127249C52AF2291600CEAA64 /* SecuritySettingsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249C42AF2291600CEAA64 /* SecuritySettingsCollectionCell.swift */; };
 		127249C72AF2298800CEAA64 /* SecuritySettingsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249C62AF2298800CEAA64 /* SecuritySettingsLayout.swift */; };
-		127249C92AF23CFE00CEAA64 /* SecuritySettingsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249C82AF23CFE00CEAA64 /* SecuritySettingsHeaderView.swift */; };
+		127249CB2AF24AFD00CEAA64 /* SecuritySettingsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249CA2AF24AFD00CEAA64 /* SecuritySettingsHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,7 +95,7 @@
 		127249C22AF2282200CEAA64 /* SecuritySettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsVC.swift; sourceTree = "<group>"; };
 		127249C42AF2291600CEAA64 /* SecuritySettingsCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsCollectionCell.swift; sourceTree = "<group>"; };
 		127249C62AF2298800CEAA64 /* SecuritySettingsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsLayout.swift; sourceTree = "<group>"; };
-		127249C82AF23CFE00CEAA64 /* SecuritySettingsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsHeaderView.swift; sourceTree = "<group>"; };
+		127249CA2AF24AFD00CEAA64 /* SecuritySettingsHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,10 +225,10 @@
 		127249C12AF2280200CEAA64 /* SecuritySettingsPage */ = {
 			isa = PBXGroup;
 			children = (
+				127249CA2AF24AFD00CEAA64 /* SecuritySettingsHeaderView.swift */,
 				127249C22AF2282200CEAA64 /* SecuritySettingsVC.swift */,
 				127249C42AF2291600CEAA64 /* SecuritySettingsCollectionCell.swift */,
 				127249C62AF2298800CEAA64 /* SecuritySettingsLayout.swift */,
-				127249C82AF23CFE00CEAA64 /* SecuritySettingsHeaderView.swift */,
 			);
 			path = SecuritySettingsPage;
 			sourceTree = "<group>";
@@ -340,8 +340,8 @@
 				127249C32AF2282200CEAA64 /* SecuritySettingsVC.swift in Sources */,
 				0F34F45F2AEA580A007189BE /* NetworkingHelper.swift in Sources */,
 				0FB8116C2AEA7A2900B2DACA /* RequestModel.swift in Sources */,
+				127249CB2AF24AFD00CEAA64 /* SecuritySettingsHeaderView.swift in Sources */,
 				1248ED3D2AED367200777E98 /* PlacesModel.swift in Sources */,
-				127249C92AF23CFE00CEAA64 /* SecuritySettingsHeaderView.swift in Sources */,
 				0FC28E362AE92C9F005387E9 /* Router.swift in Sources */,
 				127249C72AF2298800CEAA64 /* SecuritySettingsLayout.swift in Sources */,
 				1255D8082ADAC7BD00FB6638 /* SceneDelegate.swift in Sources */,
