@@ -10,13 +10,15 @@ import UIKit
 import SnapKit
 import MapKit
 
-class MapVC: UIViewController {
+class MapVC: UIViewController, CLLocationManagerDelegate {
     
     private lazy var mapView : MKMapView = {
         let map = MKMapView()
         map.showsUserLocation = true
         return map
     }()
+    
+    private var locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()

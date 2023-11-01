@@ -8,8 +8,8 @@
 import Foundation
 
 struct RegisterRequest : Codable {
-    var full_name:String?
-    var email: String?
-    var password: String?
+    var full_name:String
+    var email: String
+    var password: String
     
 }

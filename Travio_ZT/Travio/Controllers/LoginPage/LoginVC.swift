@@ -96,7 +96,7 @@ class LoginVC: UIViewController {
         else {return}
         
         let paramsLogin = ["email" : email, "password" : password]
-        NetworkingHelper.shared.fetchData(urlRequest: .login(params: paramsLogin), callback:  { (result:Result<LoginRequest,Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .login(params: paramsLogin), callback:  { (result:Result<LoginResponse,Error>) in
         
         print(result)
     })
