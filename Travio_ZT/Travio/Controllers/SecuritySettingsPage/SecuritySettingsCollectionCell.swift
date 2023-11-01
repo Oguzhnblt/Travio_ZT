@@ -9,11 +9,20 @@ import Foundation
 import UIKit
 
 class SecuritySettingsCollectionCell: UICollectionViewCell {
+    
     static let identifier = "securityCell"
     
     
-    lazy var textField: CustomLabelTextField = {
-        let textField = CustomLabelTextField()
+    private lazy var backView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .content
+        view.clipsToBounds = true
+        
+        return view
+    }()
+    
+    lazy var textField: UITextField = {
+        let textField = UITextField()
         return textField
     }()
     
@@ -24,6 +33,8 @@ class SecuritySettingsCollectionCell: UICollectionViewCell {
     
     private func setupViews() {
         
+        self.addSubviews(backView)
+        backView.addSubview(textField)
        
     }
     

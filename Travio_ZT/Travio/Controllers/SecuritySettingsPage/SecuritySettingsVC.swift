@@ -115,23 +115,19 @@ extension SecuritySettingsVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-            case 0:
-                return popularPlacesMockData.count
-            default:
-                return newPlacesMockData.count
-        }
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecuritySettingsCollectionCell.identifier, for: indexPath) as! SecuritySettingsCollectionCell
-                cell.cellData = popularPlacesMockData[indexPath.row]
+                
                 return cell
+                
             default:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecuritySettingsCollectionCell.identifier, for: indexPath) as! SecuritySettingsCollectionCell
-                cell.cellData = newPlacesMockData[indexPath.row]
+                
                 return cell
                 
         }
