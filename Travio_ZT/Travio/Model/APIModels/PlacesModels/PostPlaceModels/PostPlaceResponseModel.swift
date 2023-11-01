@@ -8,6 +8,6 @@
 import Foundation
 
 struct PostPlaceResponse: Codable {
-    var message: String
-    var status: String
+    var message: String?
+    var status: String?
 }

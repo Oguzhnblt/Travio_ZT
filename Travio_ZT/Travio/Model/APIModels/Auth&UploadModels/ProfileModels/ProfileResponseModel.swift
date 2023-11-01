@@ -8,11 +8,11 @@
 import Foundation
 
 struct ProfileResponse: Codable{
-    var full_name: String
-    var email: String
-    var pp_url: String
-    var role: String
-    var created_at: String
+    var full_name: String?
+    var email: String?
+    var pp_url: String?
+    var role: String?
+    var created_at: String?
     
     
 }

@@ -9,5 +9,5 @@ import Foundation
 
 struct ChangePasswordRequest: Codable {
     
-    var new_password: String
+    var new_password: String?
 }

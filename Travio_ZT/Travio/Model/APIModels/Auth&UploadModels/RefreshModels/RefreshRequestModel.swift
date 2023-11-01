@@ -8,5 +8,5 @@
 import Foundation
 
 struct RefreshRequest: Codable {
-    var refresh_token: String
+    var refresh_token: String?
 }

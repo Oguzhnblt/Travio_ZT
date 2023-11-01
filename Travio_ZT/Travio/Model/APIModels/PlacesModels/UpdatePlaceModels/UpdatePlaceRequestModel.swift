@@ -7,11 +7,11 @@
 
 import Foundation
 struct UpdatePlaceRequest: Codable {
-    var place: String
-    var title: String
-    var description: String
-    var cover_image_url: String
-    var latitude: Double
-    var longitude: Double
+    var place: String?
+    var title: String?
+    var description: String?
+    var cover_image_url: String?
+    var latitude: Double?
+    var longitude: Double?
     
 }

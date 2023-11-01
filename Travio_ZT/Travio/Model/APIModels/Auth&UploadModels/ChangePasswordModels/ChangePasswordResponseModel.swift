@@ -8,6 +8,6 @@
 import Foundation
 
 struct ChangePasswordResponse: Codable {
-    var message: String
-    var status: String
+    var message: String?
+    var status: String?
 }

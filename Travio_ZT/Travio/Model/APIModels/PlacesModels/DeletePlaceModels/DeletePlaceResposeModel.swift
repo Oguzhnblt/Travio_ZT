@@ -8,7 +8,7 @@
 import Foundation
 
 struct DeletePlaceResponse: Codable {
-    var message: String
-    var status: String
+    var message: String?
+    var status: String?
     
 }
