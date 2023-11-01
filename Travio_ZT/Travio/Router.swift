@@ -11,7 +11,6 @@ import Alamofire
 enum Router{
     case register(params:Parameters)
     case login(params: Parameters)
-    case refresh(params: Parameters)
         
         var baseURL:String {
             return "https://api.iosclass.live"
@@ -23,15 +22,13 @@ enum Router{
                 return "/v1/auth/register"
             case .login:
                 return "/v1/auth/login"
-            case .refresh:
-                return "/v1/auth/refresh"
             }
         }
         
         
         var method:HTTPMethod {
             switch self {
-            case .register, .login, .refresh:
+            case .register, .login:
                 return .post
             }
         }
@@ -39,7 +36,7 @@ enum Router{
         
         var headers:HTTPHeaders {
             switch self {
-            case .register, .login, .refresh:
+            case .register, .login:
                 return [:]
             }
         }
@@ -49,8 +46,6 @@ enum Router{
             case .register(let params):
                 return params
             case .login(let params):
-                return params
-            case .refresh(let params):
                 return params
             }
         }

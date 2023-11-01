@@ -35,7 +35,13 @@ class MainTabbarVC: UITabBarController {
            //         let selectedImageVisits = UIImage(systemName: "house.fill")
            //         myVisitsVC.tabBarItem = UITabBarItem(title: "Visits", image: imageVisits, selectedImage: selectedImageVisits)
             
-            return [homeNC]
+            let mapVC = MapVC()
+            let mapNC = UINavigationController(rootViewController: mapVC)
+            let imageMap = UIImage(named: "map")
+            let selectedImageMap = UIImage(named: "map")
+            mapVC.tabBarItem = UITabBarItem(title: "Map", image: imageMap, selectedImage: selectedImageMap)
+            
+            return [homeNC, mapNC]
         }
     
 
