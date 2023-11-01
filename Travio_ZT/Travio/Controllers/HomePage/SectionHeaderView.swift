@@ -47,12 +47,7 @@ class SectionHeaderView: UICollectionReusableView {
         
       
     }
-    
-    @objc func btns() {
-     print("tIKLANDI")
-    }
-   
-    
+  
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
