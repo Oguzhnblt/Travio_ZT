@@ -10,8 +10,8 @@ import SnapKit
 
 class SecuritySettingsVC: UIViewController {
     
-    let changePassword = "changePassword"
-    let privacy = "privacy"
+    lazy var password = ["New Password", "New Password Confirm"]
+    lazy var titles = ["Change Password", "Privacy"]
     
     private lazy var collectionView: UICollectionView = {
         
@@ -19,14 +19,12 @@ class SecuritySettingsVC: UIViewController {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
-        
         collectionView.register(SecuritySettingsHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SecuritySettingsHeaderView.reuseIdentifier)
-        
         collectionView.register(SecuritySettingsCollectionCell.self, forCellWithReuseIdentifier: SecuritySettingsCollectionCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
-        
         return collectionView
+        
     }()
     
     private lazy var headerLabel: UILabel = {
@@ -74,6 +72,12 @@ class SecuritySettingsVC: UIViewController {
     }
     
     private func setupLayouts() {
+        
+        securityItemView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().offset(125)
+            make.left.right.equalToSuperview()
+        }
+        
         backButton.snp.makeConstraints({make in
             make.top.equalTo(self.view.safeAreaLayoutGuide).offset(13)
             make.left.equalToSuperview().offset(24)
@@ -84,11 +88,7 @@ class SecuritySettingsVC: UIViewController {
             make.centerX.equalToSuperview()
         })
         
-        securityItemView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().offset(125)
-            make.left.right.equalToSuperview()
-        }
-        
+       
         collectionView.dropShadow()
         collectionView.snp.makeConstraints({make in
             make.top.bottom.equalToSuperview().offset(55)
@@ -109,46 +109,35 @@ extension SecuritySettingsVC: UICollectionViewDelegateFlowLayout {
 
 extension SecuritySettingsVC: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2 // Section sayısı
+        return 1 // Section sayısı
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.section {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecuritySettingsCollectionCell.identifier, for: indexPath) as! SecuritySettingsCollectionCell
-                
-                cell.setupCell(with: "New Password")
-                
-                return cell
-                
-            default:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecuritySettingsCollectionCell.identifier, for: indexPath) as! SecuritySettingsCollectionCell
-                
-                cell.setupCell(with: "New Password Confirm")
-                
-                return cell
-                
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecuritySettingsCollectionCell.identifier, for: indexPath) as! SecuritySettingsCollectionCell
+        
+        if indexPath.item == 0 {
+            
+            cell.label.text = password[0]
+        } else {
+            cell.label.text = password[1]
         }
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+            
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SecuritySettingsHeaderView.reuseIdentifier, for: indexPath) as! SecuritySettingsHeaderView
-        
-           switch indexPath.section {
-           case 0:
-               header.title.text = "Change Password"
-           case 1:
-               header.title.text = "Privacy"
-           default:
-               break
-           }
-           
+            
+            header.title.text = "Change Password"
+            
             return header
         }
+       
     
     
     @objc func seeAllPopular() {

@@ -14,7 +14,7 @@ class SecuritySettingsCollectionCell: UICollectionViewCell {
     
     private lazy var backView: UIView = {
         let view = UIView()
-        view.backgroundColor = .content
+        view.backgroundColor = .white
         view.clipsToBounds = true
         view.layer.cornerRadius = 16
         return view
@@ -24,8 +24,8 @@ class SecuritySettingsCollectionCell: UICollectionViewCell {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .black
+        label.font = UIFont(name: "Poppins-Regular", size: 14)
         label.textAlignment = .left
-        label.text = "New Password"
         return label
     }()
     
@@ -43,9 +43,7 @@ class SecuritySettingsCollectionCell: UICollectionViewCell {
         return stackView
     }()
     
-    func setupCell(with labelText: String) {
-        label.text = labelText
-    }
+
     
     private func setupViews() {
         contentView.addSubview(backView)
