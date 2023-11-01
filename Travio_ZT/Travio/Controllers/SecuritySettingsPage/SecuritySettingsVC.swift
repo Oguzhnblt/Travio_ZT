@@ -10,8 +10,6 @@ import SnapKit
 
 class SecuritySettingsVC: UIViewController {
     
-    lazy var password = ["New Password", "New Password Confirm"]
-    lazy var titles = ["Change Password", "Privacy"]
     
     private lazy var collectionView: UICollectionView = {
         
@@ -19,8 +17,13 @@ class SecuritySettingsVC: UIViewController {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
+        
         collectionView.register(SecuritySettingsHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SecuritySettingsHeaderView.reuseIdentifier)
-        collectionView.register(SecuritySettingsCollectionCell.self, forCellWithReuseIdentifier: SecuritySettingsCollectionCell.identifier)
+        
+        collectionView.register(ChangePasswordCell.self, forCellWithReuseIdentifier: ChangePasswordCell.identifier)
+        
+        collectionView.register(PrivacyCell.self, forCellWithReuseIdentifier: PrivacyCell.identifier)
+        
         collectionView.dataSource = self
         collectionView.delegate = self
         return collectionView
@@ -44,6 +47,17 @@ class SecuritySettingsVC: UIViewController {
         return backButton
     }()
     
+    private lazy var saveButton: UIButton = {
+    
+        let saveButton = UIButton(type: .custom)
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        saveButton.size(CGSize(width: 342, height: 54))
+        saveButton.layer.cornerRadius = 12
+        saveButton.backgroundColor = .background
+        return saveButton
+    }()
+    
     private lazy var securityItemView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "contentColor")
@@ -57,6 +71,10 @@ class SecuritySettingsVC: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    @objc func saveButtonTapped() {
+     print("tık")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -66,7 +84,7 @@ class SecuritySettingsVC: UIViewController {
     private func setupViews() {
         self.view.backgroundColor = .background
         self.view.addSubviews(securityItemView,backButton, headerLabel)
-        securityItemView.addSubviews(collectionView)
+        securityItemView.addSubviews(collectionView, saveButton)
         
         setupLayouts()
     }
@@ -91,9 +109,15 @@ class SecuritySettingsVC: UIViewController {
        
         collectionView.dropShadow()
         collectionView.snp.makeConstraints({make in
-            make.top.bottom.equalToSuperview().offset(55)
+            make.top.bottom.equalToSuperview()
             make.left.right.equalToSuperview().inset(16)
         })
+        
+        saveButton.snp.makeConstraints({ make in
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            make.bottom.equalTo(securityItemView.snp.top).offset(647)
+            make.left.right.equalToSuperview().inset(24)
+           })
     }
 }
 
@@ -109,50 +133,62 @@ extension SecuritySettingsVC: UICollectionViewDelegateFlowLayout {
 
 extension SecuritySettingsVC: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1 // Section sayısı
+        return 2 // Section sayısı
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        switch section {
+            case 0:
+                return 2
+            default:
+                return 3
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecuritySettingsCollectionCell.identifier, for: indexPath) as! SecuritySettingsCollectionCell
-        
-        if indexPath.item == 0 {
-            
-            cell.label.text = password[0]
-        } else {
-            cell.label.text = password[1]
+        switch indexPath.section {
+            case 0:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChangePasswordCell.identifier, for: indexPath) as! ChangePasswordCell
+                
+                let label = ["New Password", "New Password Confirm"]
+                
+                if indexPath.item < label.count {
+                    cell.label.text = label[indexPath.item]
+                }
+                
+                return cell
+                
+            case 1:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PrivacyCell.identifier, for: indexPath) as! PrivacyCell
+                
+                let label = ["Camera", "Photo Library", "Location"]
+                
+                if indexPath.item < label.count {
+                    cell.label.text = label[indexPath.item]
+                }
+                
+                return cell
+            default: 
+                break
         }
         
-        return cell
+        return UICollectionViewCell()
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-            
+        if kind == UICollectionView.elementKindSectionHeader {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SecuritySettingsHeaderView.reuseIdentifier, for: indexPath) as! SecuritySettingsHeaderView
             
-            header.title.text = "Change Password"
+            let label = ["Change Password", "Privacy"]
             
+            if indexPath.section < label.count {
+                header.title.text = label[indexPath.section]
+            }
+    
             return header
         }
-       
-    
-    
-    @objc func seeAllPopular() {
-        //let seeAllVC = PopularPlacesVC()
-        //navigationController?.pushViewController(seeAllVC, animated: true)
-    }
-    
-    @objc func seeAllNew() {
-        print( "Handle the action for See All New")
-        
-    }
-    
-    @objc func seeAllDefault() {
-        print( "Handle the action for See All Default")
-        
+        return UICollectionReusableView()
     }
 }
 
@@ -160,7 +196,7 @@ extension SecuritySettingsVC {
     
     func securitySettingsLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (_, env) -> NSCollectionLayoutSection? in
-            return SecuritySettingsLayout.shared.changePasswordLayout()
+            return SecuritySettingsLayout.shared.securitySettingsPage()
         }
     }
 }

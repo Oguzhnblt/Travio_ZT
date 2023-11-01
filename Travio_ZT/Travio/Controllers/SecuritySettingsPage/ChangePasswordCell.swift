@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class SecuritySettingsCollectionCell: UICollectionViewCell {
+class ChangePasswordCell: UICollectionViewCell {
     
     static let identifier = "securityCell"
     

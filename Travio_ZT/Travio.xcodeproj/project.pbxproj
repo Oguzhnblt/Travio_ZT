@@ -47,9 +47,10 @@
 		1255D8702ADB155E00FB6638 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D85D2ADB155E00FB6638 /* Poppins-MediumItalic.ttf */; };
 		125B445B2AE944F00047248D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125B445A2AE944F00047248D /* HomeVC.swift */; };
 		127249C32AF2282200CEAA64 /* SecuritySettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249C22AF2282200CEAA64 /* SecuritySettingsVC.swift */; };
-		127249C52AF2291600CEAA64 /* SecuritySettingsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249C42AF2291600CEAA64 /* SecuritySettingsCollectionCell.swift */; };
+		127249C52AF2291600CEAA64 /* ChangePasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249C42AF2291600CEAA64 /* ChangePasswordCell.swift */; };
 		127249C72AF2298800CEAA64 /* SecuritySettingsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249C62AF2298800CEAA64 /* SecuritySettingsLayout.swift */; };
 		127249CF2AF2880300CEAA64 /* SecuritySettingsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249CE2AF2880300CEAA64 /* SecuritySettingsHeaderView.swift */; };
+		127249D12AF2BF4700CEAA64 /* PrivacyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249D02AF2BF4700CEAA64 /* PrivacyCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,9 +94,10 @@
 		1255D85D2ADB155E00FB6638 /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
 		125B445A2AE944F00047248D /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		127249C22AF2282200CEAA64 /* SecuritySettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsVC.swift; sourceTree = "<group>"; };
-		127249C42AF2291600CEAA64 /* SecuritySettingsCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsCollectionCell.swift; sourceTree = "<group>"; };
+		127249C42AF2291600CEAA64 /* ChangePasswordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordCell.swift; sourceTree = "<group>"; };
 		127249C62AF2298800CEAA64 /* SecuritySettingsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsLayout.swift; sourceTree = "<group>"; };
 		127249CE2AF2880300CEAA64 /* SecuritySettingsHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsHeaderView.swift; sourceTree = "<group>"; };
+		127249D02AF2BF4700CEAA64 /* PrivacyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,7 +229,8 @@
 			children = (
 				127249CE2AF2880300CEAA64 /* SecuritySettingsHeaderView.swift */,
 				127249C22AF2282200CEAA64 /* SecuritySettingsVC.swift */,
-				127249C42AF2291600CEAA64 /* SecuritySettingsCollectionCell.swift */,
+				127249C42AF2291600CEAA64 /* ChangePasswordCell.swift */,
+				127249D02AF2BF4700CEAA64 /* PrivacyCell.swift */,
 				127249C62AF2298800CEAA64 /* SecuritySettingsLayout.swift */,
 			);
 			path = SecuritySettingsPage;
@@ -338,6 +341,7 @@
 				1255D8062ADAC7BD00FB6638 /* AppDelegate.swift in Sources */,
 				0FC9671D2AEA4B5D009FB26B /* MainTabbarVC.swift in Sources */,
 				127249C32AF2282200CEAA64 /* SecuritySettingsVC.swift in Sources */,
+				127249D12AF2BF4700CEAA64 /* PrivacyCell.swift in Sources */,
 				0F34F45F2AEA580A007189BE /* NetworkingHelper.swift in Sources */,
 				0FB8116C2AEA7A2900B2DACA /* RequestModel.swift in Sources */,
 				127249CF2AF2880300CEAA64 /* SecuritySettingsHeaderView.swift in Sources */,
@@ -346,7 +350,7 @@
 				127249C72AF2298800CEAA64 /* SecuritySettingsLayout.swift in Sources */,
 				1255D8082ADAC7BD00FB6638 /* SceneDelegate.swift in Sources */,
 				1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */,
-				127249C52AF2291600CEAA64 /* SecuritySettingsCollectionCell.swift in Sources */,
+				127249C52AF2291600CEAA64 /* ChangePasswordCell.swift in Sources */,
 				1248ED3B2AED352700777E98 /* PlacesCollectionViewCell.swift in Sources */,
 				1255D81A2ADACC6400FB6638 /* Extensions.swift in Sources */,
 				1248ED382AED341000777E98 /* HomeSectionHeaderView.swift in Sources */,
