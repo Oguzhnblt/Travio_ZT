@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 class LoginVC: UIViewController {
+    private let viewModel = LoginViewModel()
     
     private func createStackView(axis: NSLayoutConstraint.Axis, spacing: CGFloat ) -> UIStackView {
         let stackView = UIStackView()
@@ -91,7 +92,21 @@ class LoginVC: UIViewController {
     }
     
     @objc func buttonLoginTapped() {
-        // Home sayfasına gidecek.
+        guard let email = emailTextField.text,
+                       let password = passwordTextField.text
+                       else {return}
+                viewModel.email = email
+                 viewModel.password = password
+
+                 viewModel.login { [weak self] result in
+                     
+                     print(result)
+                 }
+             
+             
+                
+            
+
     }
 
  

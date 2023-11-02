@@ -11,6 +11,7 @@ import UIKit
 import SnapKit
 
 class SignUpVC: UIViewController {
+    private lazy var viewModel: SignUpViewModel = SignUpViewModel()
     
     private func createStackView(axis: NSLayoutConstraint.Axis, spacing: CGFloat ) -> UIStackView {
         let stackView = UIStackView()
@@ -90,6 +91,7 @@ class SignUpVC: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         self.navigationController?.popViewController(animated: true)
     }
+    
     
     @objc func signUpButtonTapped() {
         
