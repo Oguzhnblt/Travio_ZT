@@ -95,8 +95,8 @@ class SecuritySettingsVC: UIViewController {
        
         newPassword.dropShadow()
         newPassword.snp.makeConstraints({make in
-            make.top.bottom.equalToSuperview().inset(330)
-            make.left.right.equalToSuperview().inset(16)
+            make.top.bottom.equalToSuperview()
+            make.left.right.equalToSuperview()
         })
         
         saveButton.snp.makeConstraints({ make in
