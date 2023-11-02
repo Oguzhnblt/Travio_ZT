@@ -5,168 +5,67 @@
 //  Created by Oğuz on 2.11.2023.
 //
 
-import Foundation
 import UIKit
 import SnapKit
 
 class HelpSupportVC: UIViewController {
     
-    let cellDataArray: [HelpSupportData] = [
-        HelpSupportData(iconName: "user_alt", labelText: "How can I create a new account on Travio?"),
-        HelpSupportData(iconName: "app_defaults", labelText: "App Defaults"),
-        HelpSupportData(iconName: "map_pin_icon", labelText: "My Added Places"),
-        HelpSupportData(iconName: "help_icon", labelText: "Help & Supports"),
-        HelpSupportData(iconName: "about_info_icon", labelText: "About"),
-        HelpSupportData(iconName: "terms_icon", labelText: "Terms of Use"),
-    ]
-    
-    private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: settingsLayout())
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .clear
-        
-        collectionView.register(HelpSupportCell.self, forCellWithReuseIdentifier: HelpSupportCell.identifier)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        
-        return collectionView
-    }()
-    
-    
-    private lazy var helpSupportItemView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(named: "contentColor")
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 80
-        view.layer.maskedCorners = .layerMinXMinYCorner
-        return view
-    }()
- 
-    
-    private lazy var logoutButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "img_logout"), for: .normal)
-        button.addTarget(self, action: #selector(buttonLogoutTapped), for: .touchUpInside)
-        
-        return button
-    }()
-   
-    
-    
-    @objc func buttonLogoutTapped(){
-        print("Tıklandı")
-    }
-    
-    private func createLabel(text: String, color: String, textSize: CGFloat, fontName: String, alignment: NSTextAlignment) -> UILabel {
-        let label = UILabel()
-        label.text = text
-        label.textColor = UIColor(named: color)
-        label.textAlignment = alignment
-        label.font = UIFont(name: fontName, size: textSize)
-        return label
-    }
-    
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.distribution = .fillProportionally
-        stackView.spacing = 8
-        return stackView
-    }()
-    
-    private lazy var labelText = createLabel(text: "Help&Support", color: "textFieldBackgroundColor", textSize: 32, fontName: "Poppins-SemiBold", alignment: .center)
-    private lazy var faqText = createLabel(text: "Bruce Wills", color: "textColor", textSize: 16, fontName: "Poppins-SemiBold", alignment: .center)
-  
+    var stackView: UIStackView!
+    var textView: UITextView!
+    var toggleButton: UIButton!
+
+    var isExpanded = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = true
+        self.view.backgroundColor = .red
         setupViews()
+        setupConstraints()
     }
-    
-    
+
     func setupViews() {
-        self.view.addSubviews(helpSupportItemView,logoutButton,labelText)
-        self.view.backgroundColor = .background
-        helpSupportItemView.addSubviews(faqText,collectionView)
-        
-        setupLayout()
+        stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        view.addSubview(stackView)
+
+        textView = UITextView()
+        textView.isScrollEnabled = false
+        textView.layer.cornerRadius = 16
+
+        toggleButton = UIButton(type: .system)
+        toggleButton.setTitle("Toggle", for: .normal)
+        toggleButton.addTarget(self, action: #selector(toggleButtonTapped), for: .touchUpInside)
+        stackView.addArrangedSubviews(textView,toggleButton)
     }
-    
-    func setupLayout() {
-        
-        helpSupportItemView.snp.makeConstraints({make in
-            make.top.bottom.equalToSuperview().offset(125)
-            make.left.right.equalToSuperview()
-            
-        })
-        
-        labelText.snp.makeConstraints({make in
-            make.left.equalToSuperview().offset(20)
-            make.top.equalToSuperview().offset(75)
-        })
-        
-        faqText.snp.makeConstraints({make in
-            make.bottom.equalTo(collectionView.snp.top).offset(30)
-        })
-        
-        logoutButton.layer.zPosition = 10
-        logoutButton.snp.makeConstraints({make in
-            make.right.equalToSuperview().offset(-24)
-            make.top.equalToSuperview().offset(75)
-        })
-       
-        collectionView.dropShadow()
-        collectionView.snp.makeConstraints({make in
-            make.top.bottom.equalToSuperview().offset(0)
-            make.left.right.equalToSuperview().inset(16)
-        })
-    }
-}
 
+    func setupConstraints() {
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
 
-extension HelpSupportVC: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cellDataArray.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HelpSupportCell.identifier, for: indexPath) as! HelpSupportCell
-        
-        let data = cellDataArray[indexPath.item]
-        cell.configure(with: data)
-        return cell
-    }
-}
+        textView.snp.makeConstraints { make in
+            make.height.equalTo(50) // Initial height
+        }
 
-
-extension HelpSupportVC: UICollectionViewDelegate {
-    
-}
-
-extension HelpSupportVC {
-    
-    func settingsLayout() -> UICollectionViewCompositionalLayout {
-        return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
-            return self.settingLayouts()
+        toggleButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(16) // Align to the right
         }
     }
-    
-    
-    func settingLayouts() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.15))
-        let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
-        
-        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-        layoutSection.interGroupSpacing = 8
-        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 0, bottom: 200, trailing: 0)
-        
-        return layoutSection
+
+    @objc func toggleButtonTapped() {
+        isExpanded.toggle()
+
+        let newHeight: CGFloat = isExpanded ? 200 : 50
+        UIView.animate(withDuration: 0.5, animations: {
+            self.textView.snp.updateConstraints { make in
+                make.height.equalTo(newHeight)
+            }
+            self.view.layoutIfNeeded()
+        })
     }
-    
+
 }
 
 
