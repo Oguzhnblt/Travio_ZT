@@ -7,11 +7,12 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class HelpSupportVC: UIViewController {
     
     let cellDataArray: [HelpSupportData] = [
-        HelpSupportData(iconName: "user_alt", labelText: "Security Settings"),
+        HelpSupportData(iconName: "user_alt", labelText: "How can I create a new account on Travio?"),
         HelpSupportData(iconName: "app_defaults", labelText: "App Defaults"),
         HelpSupportData(iconName: "map_pin_icon", labelText: "My Added Places"),
         HelpSupportData(iconName: "help_icon", labelText: "Help & Supports"),
@@ -25,7 +26,7 @@ class HelpSupportVC: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         
-        collectionView.register(SettingsCollectionViewCell.self, forCellWithReuseIdentifier: SettingsCollectionViewCell.identifier)
+        collectionView.register(HelpSupportCell.self, forCellWithReuseIdentifier: HelpSupportCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -33,7 +34,7 @@ class HelpSupportVC: UIViewController {
     }()
     
     
-    private lazy var settingsItemView: UIView = {
+    private lazy var helpSupportItemView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "contentColor")
         view.clipsToBounds = true
@@ -41,12 +42,7 @@ class HelpSupportVC: UIViewController {
         view.layer.maskedCorners = .layerMinXMinYCorner
         return view
     }()
-    
-    private lazy var profileImage : UIImageView = {
-        let profileImage = UIImageView()
-        profileImage.image = UIImage(named: "image_profile")
-        return profileImage
-    }()
+ 
     
     private lazy var logoutButton: UIButton = {
         let button = UIButton()
@@ -55,19 +51,8 @@ class HelpSupportVC: UIViewController {
         
         return button
     }()
+   
     
-    private lazy var editProfileButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Edit Profile", for: .normal)
-        button.setTitleColor(.background, for: .normal)
-        button.addTarget(self, action: #selector(buttonEditProfileTapped), for: .touchUpInside)
-        
-        return button
-    }()
-    
-    @objc func buttonEditProfileTapped() {
-        
-    }
     
     @objc func buttonLogoutTapped(){
         print("Tıklandı")
@@ -90,12 +75,9 @@ class HelpSupportVC: UIViewController {
         return stackView
     }()
     
-    private lazy var settingsText = createLabel(text: "Settings", color: "textFieldBackgroundColor", textSize: 32, fontName: "Poppins-SemiBold", alignment: .center)
-    private lazy var profileText = createLabel(text: "Bruce Wills", color: "textColor", textSize: 16, fontName: "Poppins-SemiBold", alignment: .center)
-    
-    private lazy var editProfileText = createLabel(text: "Edit Profile", color: "backgroundColor", textSize: 12, fontName: "Poppins-SemiBold", alignment: .center)
-    
-    
+    private lazy var labelText = createLabel(text: "Help&Support", color: "textFieldBackgroundColor", textSize: 32, fontName: "Poppins-SemiBold", alignment: .center)
+    private lazy var faqText = createLabel(text: "Bruce Wills", color: "textColor", textSize: 16, fontName: "Poppins-SemiBold", alignment: .center)
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
@@ -104,24 +86,28 @@ class HelpSupportVC: UIViewController {
     
     
     func setupViews() {
-        self.view.addSubviews(settingsItemView,logoutButton,settingsText)
+        self.view.addSubviews(helpSupportItemView,logoutButton,labelText)
         self.view.backgroundColor = .background
-        settingsItemView.addSubviews(profileImage, profileText, editProfileButton,collectionView)
+        helpSupportItemView.addSubviews(faqText,collectionView)
         
         setupLayout()
     }
     
     func setupLayout() {
         
-        settingsItemView.snp.makeConstraints({make in
+        helpSupportItemView.snp.makeConstraints({make in
             make.top.bottom.equalToSuperview().offset(125)
             make.left.right.equalToSuperview()
             
         })
         
-        settingsText.snp.makeConstraints({make in
+        labelText.snp.makeConstraints({make in
             make.left.equalToSuperview().offset(20)
             make.top.equalToSuperview().offset(75)
+        })
+        
+        faqText.snp.makeConstraints({make in
+            make.bottom.equalTo(collectionView.snp.top).offset(30)
         })
         
         logoutButton.layer.zPosition = 10
@@ -129,27 +115,11 @@ class HelpSupportVC: UIViewController {
             make.right.equalToSuperview().offset(-24)
             make.top.equalToSuperview().offset(75)
         })
-        
-        profileImage.snp.makeConstraints({make in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(24)
-        })
-        
-        profileText.snp.makeConstraints({make in
-            make.top.equalTo(profileImage.snp.bottom).offset(8)
-            make.centerX.equalToSuperview()
-        })
-        
-        editProfileButton.snp.makeConstraints({make in
-            make.top.equalTo(profileText.snp.bottom)
-            make.centerX.equalToSuperview()
-        })
-        
+       
         collectionView.dropShadow()
         collectionView.snp.makeConstraints({make in
-            make.centerX.equalToSuperview()
+            make.top.bottom.equalToSuperview().offset(0)
             make.left.right.equalToSuperview().inset(16)
-            make.top.bottom.equalToSuperview().offset(218)
         })
     }
 }
@@ -161,27 +131,10 @@ extension HelpSupportVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SettingsCollectionViewCell.identifier, for: indexPath) as! SettingsCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HelpSupportCell.identifier, for: indexPath) as! HelpSupportCell
         
         let data = cellDataArray[indexPath.item]
         cell.configure(with: data)
-        
-        
-        switch indexPath.item {
-            case 0:
-                cell.buttonAction = {
-                    //                    let vc = HomeVC()
-                    //                    self.navigationController?.pushViewController(vc, animated: true)
-                }
-            case 1:
-                cell.buttonAction = {
-                    
-                }
-                
-            default:
-                break
-        }
-        
         return cell
     }
 }
