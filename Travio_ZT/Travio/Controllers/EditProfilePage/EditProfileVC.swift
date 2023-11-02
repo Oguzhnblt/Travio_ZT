@@ -78,7 +78,7 @@ class EditProfileVC: UIViewController {
         return cell
     }()
     
-    private lazy var stackView: UIStackView = {
+    private lazy var cellStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.spacing = 8
@@ -87,6 +87,35 @@ class EditProfileVC: UIViewController {
         
         return stack
     }()
+    
+    private lazy var fullNameField: TextFieldCell = {
+        let field = TextFieldCell()
+        field.fieldLabel.text = "Full Name"
+        field.textField.placeholder = "bilge_adam"
+        
+        return field
+    }()
+    
+    private lazy var emailField: TextFieldCell = {
+        let field = TextFieldCell()
+        field.fieldLabel.text = "Email"
+        field.textField.placeholder = "deneme@example.com"
+        
+        return field
+    }()
+    
+    private lazy var fieldStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 8
+        stack.distribution = .fillEqually
+        stack.alignment = .center
+        
+        return stack
+    }()
+    
+    
+    
  
     @objc func exitButtonTapped() {
         
@@ -104,8 +133,10 @@ class EditProfileVC: UIViewController {
    
       
         self.view.addSubviews(editProfileItemView, headerLabel, exitButton)
-        stackView.addArrangedSubviews(signCell,adminCell)
-        editProfileItemView.addSubviews(profileImage, changePhotoButton, profileName,stackView)
+        
+        cellStackView.addArrangedSubviews(signCell,adminCell)
+        
+        editProfileItemView.addSubviews(profileImage, changePhotoButton, profileName,cellStackView,fullNameField,emailField)
         
         setupLayouts()
         
@@ -145,9 +176,21 @@ class EditProfileVC: UIViewController {
             make.left.right.equalToSuperview()
         })
         
-        stackView.dropShadow()
-        stackView.snp.makeConstraints({make in
+        cellStackView.dropShadow()
+        cellStackView.snp.makeConstraints({make in
             make.top.equalTo(profileName.snp.bottom).offset(21)
+            make.left.right.equalToSuperview().inset(24)
+        })
+        
+        fullNameField.dropShadow()
+        fullNameField.snp.makeConstraints({make in
+            make.top.equalTo(cellStackView.snp.bottom).offset(21)
+            make.left.right.equalToSuperview().inset(24)
+        })
+        
+        emailField.dropShadow()
+        emailField.snp.makeConstraints({make in
+            make.top.equalTo(fullNameField.snp.bottom).offset(21)
             make.left.right.equalToSuperview().inset(24)
         })
       
