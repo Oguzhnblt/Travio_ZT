@@ -41,7 +41,7 @@ class EditProfileVC: UIViewController {
         button.setTitle("Change Photo", for: .normal)
         button.setTitleColor(.background, for: .normal)
         button.titleLabel?.font = UIFont(name: "Poppins-Regular", size: 12)
-
+        
         return button
     }()
     
@@ -53,7 +53,7 @@ class EditProfileVC: UIViewController {
         
         return label
     }()
-        
+    
     private lazy var editProfileItemView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "contentColor")
@@ -63,34 +63,35 @@ class EditProfileVC: UIViewController {
         return view
     }()
     
-
-   
+    
+ 
+    
+    
+    
     @objc func exitButtonTapped() {
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-   
-
         setupViews()
         navigationController?.navigationBar.isHidden = true
+  
     }
     
     private func setupViews() {
         self.view.backgroundColor = .background
+   
+      
         self.view.addSubviews(editProfileItemView, headerLabel, exitButton)
-        editProfileItemView.addSubviews(profileImage, changePhotoButton, profileName, CustomView.view)
-        
-        
-        
+        editProfileItemView.addSubviews(profileImage, changePhotoButton, profileName)
         
         setupLayouts()
         
     }
     
     private func setupLayouts() {
-               
+        
         headerLabel.snp.makeConstraints({make in
             make.top.equalTo(self.view.safeAreaLayoutGuide).offset(10)
             make.left.equalToSuperview().offset(24)
@@ -99,7 +100,7 @@ class EditProfileVC: UIViewController {
         exitButton.snp.makeConstraints({make in
             make.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
             make.right.equalToSuperview().offset(-24)
-
+            
         })
         
         editProfileItemView.snp.makeConstraints { make in
@@ -122,17 +123,9 @@ class EditProfileVC: UIViewController {
             make.top.equalTo(changePhotoButton.snp.bottom)
             make.left.right.equalToSuperview()
         })
-        
-        CustomView.view.configure(text: "1 Kasım 2023", image: .imgSign)
-        CustomView.view.snp.makeConstraints({make in
-            make.top.equalTo(profileName.snp.bottom)
-            make.left.right.equalToSuperview()
-        })
-        
-        
+    
     }
 }
-
 
 
 #if DEBUG
