@@ -10,26 +10,7 @@ import SnapKit
 
 class SecuritySettingsVC: UIViewController {
     
-    
-    private lazy var collectionView: UICollectionView = {
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: securitySettingsLayout())
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .clear
-        
-        collectionView.register(SecuritySettingsHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SecuritySettingsHeaderView.reuseIdentifier)
-        
-        collectionView.register(ChangePasswordCell.self, forCellWithReuseIdentifier: ChangePasswordCell.identifier)
-        
-        collectionView.register(PrivacyCell.self, forCellWithReuseIdentifier: PrivacyCell.identifier)
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        return collectionView
-        
-    }()
-    
+
     private lazy var headerLabel: UILabel = {
         let headerLabel = UILabel()
         headerLabel.textColor = .black
@@ -67,12 +48,13 @@ class SecuritySettingsVC: UIViewController {
         return view
     }()
     
+    private lazy var newPassword = ChangePasswordCell.field.configure(text:"New Password", fieldText: "")
+    
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
     }
     
     @objc func saveButtonTapped() {
-     print("tık")
     }
     
     override func viewDidLoad() {
@@ -84,7 +66,7 @@ class SecuritySettingsVC: UIViewController {
     private func setupViews() {
         self.view.backgroundColor = .background
         self.view.addSubviews(securityItemView,backButton, headerLabel)
-        securityItemView.addSubviews(collectionView, saveButton)
+        securityItemView.addSubviews(saveButton)
         
         setupLayouts()
     }
@@ -121,85 +103,6 @@ class SecuritySettingsVC: UIViewController {
     }
 }
 
-// MARK: -- COLLECTION VİEW
-
-extension SecuritySettingsVC: UICollectionViewDelegateFlowLayout {
-    
-    // Her bir item'in boyutu
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
-    }
-}
-
-extension SecuritySettingsVC: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2 // Section sayısı
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-            case 0:
-                return 2
-            default:
-                return 3
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.section {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChangePasswordCell.identifier, for: indexPath) as! ChangePasswordCell
-                
-                let label = ["New Password", "New Password Confirm"]
-                
-                if indexPath.item < label.count {
-                    cell.label.text = label[indexPath.item]
-                }
-                
-                return cell
-                
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PrivacyCell.identifier, for: indexPath) as! PrivacyCell
-                
-                let label = ["Camera", "Photo Library", "Location"]
-                
-                if indexPath.item < label.count {
-                    cell.label.text = label[indexPath.item]
-                }
-                
-                return cell
-            default: 
-                break
-        }
-        
-        return UICollectionViewCell()
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SecuritySettingsHeaderView.reuseIdentifier, for: indexPath) as! SecuritySettingsHeaderView
-            
-            let label = ["Change Password", "Privacy"]
-            
-            if indexPath.section < label.count {
-                header.title.text = label[indexPath.section]
-            }
-    
-            return header
-        }
-        return UICollectionReusableView()
-    }
-}
-
-extension SecuritySettingsVC {
-    
-    func securitySettingsLayout() -> UICollectionViewCompositionalLayout {
-        return UICollectionViewCompositionalLayout { (_, env) -> NSCollectionLayoutSection? in
-            return SecuritySettingsLayout.shared.securitySettingsPage()
-        }
-    }
-}
 
 
 #if DEBUG

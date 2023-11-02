@@ -10,7 +10,7 @@ import SnapKit
 
 class ChangePasswordCell: UICollectionViewCell {
     
-    static let identifier = "securityCell"
+    static let field = ChangePasswordCell()
     
     private lazy var backView: UIView = {
         let view = UIView()
@@ -20,7 +20,7 @@ class ChangePasswordCell: UICollectionViewCell {
         return view
     }()
     
-    let label: UILabel = {
+    lazy var label: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .black
@@ -29,7 +29,7 @@ class ChangePasswordCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var textField: UITextField = {
+     lazy var textField: UITextField = {
         let textField = UITextField()
         textField.layer.cornerRadius = 8.0
         textField.layer.borderColor = UIColor.gray.cgColor
@@ -43,6 +43,10 @@ class ChangePasswordCell: UICollectionViewCell {
         return stackView
     }()
     
+    func configure(text: String, fieldText: String) {
+        label.text = text
+        textField.text = fieldText
+    }
 
     
     private func setupViews() {

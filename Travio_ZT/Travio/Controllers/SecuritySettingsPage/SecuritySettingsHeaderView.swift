@@ -19,7 +19,6 @@ class SecuritySettingsHeaderView: UICollectionReusableView {
         
         title.textColor = .background
         title.font = UIFont(name: "Poppins-SemiBold", size: 16)
-        title.size(CGSize(width: frame.width, height: frame.height))
         
         addSubview(title)
         
