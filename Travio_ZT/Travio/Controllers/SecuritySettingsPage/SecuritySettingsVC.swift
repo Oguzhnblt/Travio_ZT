@@ -48,8 +48,12 @@ class SecuritySettingsVC: UIViewController {
         return view
     }()
     
-    private lazy var newPassword = ChangePasswordCell.field.configure(text:"New Password", fieldText: "")
-    
+    private lazy var newPassword: ChangePasswordCell = {
+        let tf = ChangePasswordCell()
+        tf.label.text = "Full Name"
+        
+        return tf
+    }()
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -66,7 +70,7 @@ class SecuritySettingsVC: UIViewController {
     private func setupViews() {
         self.view.backgroundColor = .background
         self.view.addSubviews(securityItemView,backButton, headerLabel)
-        securityItemView.addSubviews(saveButton)
+        securityItemView.addSubviews(saveButton, newPassword)
         
         setupLayouts()
     }
@@ -89,9 +93,9 @@ class SecuritySettingsVC: UIViewController {
         })
         
        
-        collectionView.dropShadow()
-        collectionView.snp.makeConstraints({make in
-            make.top.bottom.equalToSuperview()
+        newPassword.dropShadow()
+        newPassword.snp.makeConstraints({make in
+            make.top.bottom.equalToSuperview().inset(330)
             make.left.right.equalToSuperview().inset(16)
         })
         
