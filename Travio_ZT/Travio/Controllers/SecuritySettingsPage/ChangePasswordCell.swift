@@ -22,7 +22,6 @@ class ChangePasswordCell: UIView {
     
     lazy var label: UILabel = {
         let label = UILabel()
-        label.textAlignment = .center
         label.textColor = .black
         label.font = UIFont(name: "Poppins-Regular", size: 14)
         label.textAlignment = .left
