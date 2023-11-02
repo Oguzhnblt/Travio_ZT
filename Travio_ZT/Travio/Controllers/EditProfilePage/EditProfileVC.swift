@@ -63,11 +63,31 @@ class EditProfileVC: UIViewController {
         return view
     }()
     
+    private lazy var adminCell: EditingProfileCell = {
+        let cell = EditingProfileCell()
+        cell.label.text = "Admin"
+        cell.signImage.image = .imgAdmin
+        
+        return cell
+    }()
     
+    private lazy var signCell: EditingProfileCell = {
+        let cell = EditingProfileCell()
+        cell.label.text = "2 Kasım 2023"
+        cell.signImage.image = .imgSign
+        return cell
+    }()
+    
+    private lazy var stackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.spacing = 8
+        stack.distribution = .fillEqually
+        stack.alignment = .center
+        
+        return stack
+    }()
  
-    
-    
-    
     @objc func exitButtonTapped() {
         
     }
@@ -84,7 +104,8 @@ class EditProfileVC: UIViewController {
    
       
         self.view.addSubviews(editProfileItemView, headerLabel, exitButton)
-        editProfileItemView.addSubviews(profileImage, changePhotoButton, profileName)
+        stackView.addArrangedSubviews(signCell,adminCell)
+        editProfileItemView.addSubviews(profileImage, changePhotoButton, profileName,stackView)
         
         setupLayouts()
         
@@ -123,7 +144,13 @@ class EditProfileVC: UIViewController {
             make.top.equalTo(changePhotoButton.snp.bottom)
             make.left.right.equalToSuperview()
         })
-    
+        
+        stackView.dropShadow()
+        stackView.snp.makeConstraints({make in
+            make.top.equalTo(profileName.snp.bottom).offset(21)
+            make.left.right.equalToSuperview().inset(24)
+        })
+      
     }
 }
 
