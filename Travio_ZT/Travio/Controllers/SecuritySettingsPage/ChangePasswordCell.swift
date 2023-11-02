@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class ChangePasswordCell: UICollectionViewCell {
+class ChangePasswordCell: UIView {
     
     static let field = ChangePasswordCell()
     
@@ -50,7 +50,7 @@ class ChangePasswordCell: UICollectionViewCell {
 
     
     private func setupViews() {
-        contentView.addSubview(backView)
+        self.addSubview(backView)
         backView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
         }

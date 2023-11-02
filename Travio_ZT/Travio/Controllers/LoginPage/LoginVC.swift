@@ -53,7 +53,7 @@ class LoginVC: UIViewController {
         return label
     }
     
-    private func addTextField(title: String, placeholder: String, keyboardType: UIKeyboardType, isSecure: Bool) -> CustomLabelTextField {
+    private func addTextField(title: String, placeholder: String, isSecure: Bool) -> CustomLabelTextField {
         let textField = CustomLabelTextField()
         textField.font = UIFont(name: "Poppins-Regular", size: 12)
         textField.backgroundColor = UIColor(named: "textFieldBackgroundColor")
@@ -108,9 +108,9 @@ class LoginVC: UIViewController {
     private lazy var welcomeLabelText = createLabel(text: "Welcome to Travio", color: "textColor" , textSize: 24, fontName: "Poppins-Regular", alignment: .center)
     private lazy var accountLabel = createLabel(text: "Don’t have any account?", color: "textColor" , textSize: 14, fontName: "Poppins-SemiBold", alignment: .center)
     
-    private lazy var emailTextField = addTextField(title: "Email", placeholder: "deneme@example.com", keyboardType: .emailAddress, isSecure: false)
+    private lazy var emailTextField = addTextField(title: "Email", placeholder: "deneme@example.com", isSecure: false)
     
-    private lazy var passwordTextField = addTextField(title: "Password", placeholder: "************", keyboardType: .default, isSecure: true)
+    private lazy var passwordTextField = addTextField(title: "Password", placeholder: "************", isSecure: true)
     
     private lazy var loginButton = createButton()
     

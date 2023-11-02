@@ -10,7 +10,7 @@ import SnapKit
 
 class SecuritySettingsVC: UIViewController {
     
-
+    
     private lazy var headerLabel: UILabel = {
         let headerLabel = UILabel()
         headerLabel.textColor = .black
@@ -21,6 +21,15 @@ class SecuritySettingsVC: UIViewController {
         return headerLabel
     }()
     
+    private func fieldLabel(title: String) -> UILabel{
+        let fieldLabel = UILabel()
+        fieldLabel.textColor = .background
+        fieldLabel.text = title
+        fieldLabel.font = UIFont(name: "Poppins-SemiBold", size: 16)
+        
+        return fieldLabel
+    }
+    
     private lazy var backButton: UIButton = {
         let backButton = UIButton(type: .custom)
         backButton.setImage(UIImage(named: "leftArrowIcon"), for: .normal)
@@ -29,7 +38,7 @@ class SecuritySettingsVC: UIViewController {
     }()
     
     private lazy var saveButton: UIButton = {
-    
+        
         let saveButton = UIButton(type: .custom)
         saveButton.setTitle("Save", for: .normal)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
@@ -50,15 +59,50 @@ class SecuritySettingsVC: UIViewController {
     
     private lazy var newPassword: ChangePasswordCell = {
         let tf = ChangePasswordCell()
-        tf.label.text = "Full Name"
-        
+        tf.label.text = "New Password"
         return tf
     }()
+    
+    private lazy var newPasswordConfirm: ChangePasswordCell = {
+        let tf = ChangePasswordCell()
+        tf.label.text = " New Password Confirm"
+        return tf
+    }()
+    
+    private func PrivacySettings(text: String, isOn: Bool) -> PrivacyCell {
+        let cell = PrivacyCell()
+        cell.label.text = text
+        cell.toggleSwitch.isOn = isOn
+        return cell
+    }
+    
+    private func stackView() -> UIStackView  {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 8
+        stack.distribution = .fill
+        
+        return stack
+    }
+    
+    private lazy var passwordStack = stackView()
+    private lazy var privacyStack = stackView()
+    
+    private lazy var changePasswordLabel = fieldLabel(title: "Change Password")
+    private lazy var privacyLabel = fieldLabel(title: "Privacy")
+    
+    private lazy var camera = PrivacySettings(text: "Camera", isOn: false)
+    private lazy var photoLibrary = PrivacySettings(text: "Photo Library", isOn: false)
+    private lazy var location = PrivacySettings(text: "Location", isOn: false)
+    
+    
+    
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
     }
     
     @objc func saveButtonTapped() {
+        
     }
     
     override func viewDidLoad() {
@@ -70,7 +114,11 @@ class SecuritySettingsVC: UIViewController {
     private func setupViews() {
         self.view.backgroundColor = .background
         self.view.addSubviews(securityItemView,backButton, headerLabel)
-        securityItemView.addSubviews(saveButton, newPassword)
+        
+        privacyStack.addArrangedSubviews(camera,photoLibrary,location)
+        passwordStack.addArrangedSubviews(newPassword,newPasswordConfirm)
+        
+        securityItemView.addSubviews(saveButton, passwordStack,privacyStack, changePasswordLabel, privacyLabel)
         
         setupLayouts()
     }
@@ -92,20 +140,36 @@ class SecuritySettingsVC: UIViewController {
             make.centerX.equalToSuperview()
         })
         
-       
-        newPassword.dropShadow()
-        newPassword.snp.makeConstraints({make in
-            make.top.bottom.equalToSuperview()
-            make.left.right.equalToSuperview()
+        
+        passwordStack.dropShadow()
+        passwordStack.snp.makeConstraints({make in
+            make.top.equalToSuperview().offset(55)
+            make.left.right.equalToSuperview().inset(24)
+        })
+        
+        privacyStack.dropShadow()
+        privacyStack.snp.makeConstraints({make in
+            make.top.equalTo(passwordStack.snp.bottom).offset(40)
+            make.left.right.equalToSuperview().inset(24)
+
         })
         
         saveButton.snp.makeConstraints({ make in
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
             make.bottom.equalTo(securityItemView.snp.top).offset(647)
             make.left.right.equalToSuperview().inset(24)
-           })
-    }
-}
+        })
+        
+        changePasswordLabel.snp.makeConstraints({make in
+            make.bottom.equalTo(passwordStack.snp.top)
+            make.left.equalToSuperview().offset(36)
+        })
+        
+        privacyLabel.snp.makeConstraints({make in
+            make.bottom.equalTo(privacyStack.snp.top)
+            make.left.equalToSuperview().offset(36)
+        })
+    }}
 
 
 

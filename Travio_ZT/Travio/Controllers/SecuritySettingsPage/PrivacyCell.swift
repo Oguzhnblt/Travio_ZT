@@ -8,9 +8,8 @@
 import UIKit
 import SnapKit
 
-class PrivacyCell: UICollectionViewCell {
+class PrivacyCell: UIView {
     
-    static let identifier = "privacyCell"
     
     private lazy var backView: UIView = {
         let view = UIView()
@@ -20,7 +19,7 @@ class PrivacyCell: UICollectionViewCell {
         return view
     }()
     
-    let label: UILabel = {
+    lazy var label: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.textColor = .black
@@ -28,18 +27,19 @@ class PrivacyCell: UICollectionViewCell {
         return label
     }()
     
-    let toggleSwitch: UISwitch = {
+    lazy var toggleSwitch: UISwitch = {
         let toggle = UISwitch()
         toggle.isOn = false
         return toggle
     }()
     
     private func setupViews() {
-        contentView.addSubview(backView)
+        self.addSubview(backView)
         
         let stackView = UIStackView(arrangedSubviews: [label, UIView(), toggleSwitch])
         stackView.axis = .horizontal
         stackView.spacing = 8 
+        stackView.alignment = .center
         backView.addSubview(stackView)
         
         backView.snp.makeConstraints { make in
@@ -47,14 +47,20 @@ class PrivacyCell: UICollectionViewCell {
         }
         
         stackView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(8)
-            make.trailing.equalToSuperview().offset(-8)
+            make.top.bottom.equalToSuperview()
+            make.left.right.equalToSuperview().inset(8)
+            make.height.equalTo(74)
         }
         
         toggleSwitch.snp.makeConstraints { make in
-            make.width.equalTo(50)
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview()
         }
+    }
+    
+    func configure(text: String, isOn: Bool) {
+        label.text = text
+        toggleSwitch.isOn = isOn
     }
     
     override init(frame: CGRect) {
