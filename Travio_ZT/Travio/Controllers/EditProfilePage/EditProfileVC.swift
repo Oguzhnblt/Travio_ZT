@@ -114,8 +114,22 @@ class EditProfileVC: UIViewController {
         return stack
     }()
     
+    private lazy var saveButton: UIButton = {
+    
+        let saveButton = UIButton(type: .custom)
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        saveButton.size(CGSize(width: 342, height: 51))
+        saveButton.layer.cornerRadius = 12
+        saveButton.backgroundColor = .background
+        return saveButton
+    }()
     
     
+    
+    @objc func saveButtonTapped() {
+        
+    }
  
     @objc func exitButtonTapped() {
         
@@ -136,7 +150,7 @@ class EditProfileVC: UIViewController {
         
         cellStackView.addArrangedSubviews(signCell,adminCell)
         
-        editProfileItemView.addSubviews(profileImage, changePhotoButton, profileName,cellStackView,fullNameField,emailField)
+        editProfileItemView.addSubviews(profileImage, changePhotoButton, profileName,cellStackView,fullNameField,emailField,saveButton)
         
         setupLayouts()
         
@@ -191,6 +205,11 @@ class EditProfileVC: UIViewController {
         emailField.dropShadow()
         emailField.snp.makeConstraints({make in
             make.top.equalTo(fullNameField.snp.bottom).offset(21)
+            make.left.right.equalToSuperview().inset(24)
+        })
+        
+        saveButton.snp.makeConstraints({make in
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
             make.left.right.equalToSuperview().inset(24)
         })
       
