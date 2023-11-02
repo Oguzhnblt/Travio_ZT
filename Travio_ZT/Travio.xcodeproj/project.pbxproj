@@ -47,7 +47,6 @@
 		1255D8702ADB155E00FB6638 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D85D2ADB155E00FB6638 /* Poppins-MediumItalic.ttf */; };
 		125B445B2AE944F00047248D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125B445A2AE944F00047248D /* HomeVC.swift */; };
 		12E1FD562AF3926A00B89F81 /* HelpSupportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E1FD552AF3926A00B89F81 /* HelpSupportVC.swift */; };
-		12E1FD582AF3932800B89F81 /* HelpSupportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E1FD572AF3932800B89F81 /* HelpSupportCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,7 +90,6 @@
 		1255D85D2ADB155E00FB6638 /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
 		125B445A2AE944F00047248D /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		12E1FD552AF3926A00B89F81 /* HelpSupportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportVC.swift; sourceTree = "<group>"; };
-		12E1FD572AF3932800B89F81 /* HelpSupportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,7 +220,6 @@
 			isa = PBXGroup;
 			children = (
 				12E1FD552AF3926A00B89F81 /* HelpSupportVC.swift */,
-				12E1FD572AF3932800B89F81 /* HelpSupportCell.swift */,
 			);
 			name = HelpSupport;
 			sourceTree = "<group>";
@@ -335,7 +332,6 @@
 				0FB8116C2AEA7A2900B2DACA /* RequestModel.swift in Sources */,
 				1248ED3D2AED367200777E98 /* PlacesModel.swift in Sources */,
 				0FC28E362AE92C9F005387E9 /* Router.swift in Sources */,
-				12E1FD582AF3932800B89F81 /* HelpSupportCell.swift in Sources */,
 				1255D8082ADAC7BD00FB6638 /* SceneDelegate.swift in Sources */,
 				1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */,
 				1248ED3B2AED352700777E98 /* PlacesCollectionViewCell.swift in Sources */,
