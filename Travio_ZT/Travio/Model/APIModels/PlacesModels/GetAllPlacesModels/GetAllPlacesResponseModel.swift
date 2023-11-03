@@ -7,13 +7,12 @@
 
 import Foundation
 
-struct GetAllPlacesResponse: Codable {
 
-    struct Data: Codable {
+struct GetAllPlacesData: Codable {
             var count: Int?
             var places: [Place]?
         }
-
-        var data: Data?
+struct GetAllPlacesResponse: Codable {
+        var data: GetAllPlacesData?
         var status: String?
 }

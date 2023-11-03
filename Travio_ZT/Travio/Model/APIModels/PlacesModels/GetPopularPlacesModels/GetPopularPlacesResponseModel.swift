@@ -8,11 +8,12 @@
 import Foundation
 
 struct GetPopularPlacesResponse: Codable {
-    struct Data: Codable {
-           var count: Int?
-           var places: [Place]?
-       }
+        let data: PopularPlacesData
+        let status: String
+    }
 
-       var data: Data?
-       var status: String?
-}
+    struct PopularPlacesData: Codable {
+        let count: Int
+        let places: [Place]
+    }
+

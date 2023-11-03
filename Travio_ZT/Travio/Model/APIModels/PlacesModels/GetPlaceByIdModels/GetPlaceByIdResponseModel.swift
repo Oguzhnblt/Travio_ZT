@@ -2,12 +2,11 @@
 
 import Foundation
 
-struct GetPlaceByIdResponse: Codable {
-    struct Data: Codable {
+struct GetPlaceByIdData: Codable {
            var place: Place?
        }
-
-       var data: Data?
+struct GetPlaceByIdResponse: Codable {
+       var data: GetPlaceByIdData?
        var status: String?
 }
 

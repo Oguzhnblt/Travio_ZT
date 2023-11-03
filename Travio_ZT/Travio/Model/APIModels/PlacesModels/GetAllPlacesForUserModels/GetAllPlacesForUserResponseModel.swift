@@ -6,12 +6,12 @@
 //
 
 import Foundation
-struct GetAllPlacesForUserResponse: Codable {
-    struct Data: Codable {
+struct GetAllPlacesForUserData: Codable {
             let count: Int?
             let places: [Place]?
         }
 
-        let data: Data?
+struct getAllPlacesForUserResponse: Codable{
+        let data: GetAllPlacesForUserData?
         let status: String?
 }

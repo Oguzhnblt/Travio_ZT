@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct GetLastPlacesResponse: Codable {
-    struct Data: Codable {
+
+    struct GetLastPlacesData: Codable {
            var count: Int?
            var places: [Place]?
        }
-
-       var data: Data?
+struct GetLastPlacesResponse: Codable {
+       var data: GetLastPlacesData?
        var status: String?
 }

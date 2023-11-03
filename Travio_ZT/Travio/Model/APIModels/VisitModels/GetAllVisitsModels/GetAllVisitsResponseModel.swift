@@ -6,12 +6,12 @@
 //
 
 import Foundation
-struct GetAllVisitsResponse: Codable {
-    struct Data: Codable {
+
+    struct GetAllVisitsData: Codable {
             var count: Int?
             var visits: [Visit]
         }
-
-        var data: Data?
+struct GetAllVisitsResponse: Codable {
+        var data: GetAllVisitsData?
         var status: String?
 }

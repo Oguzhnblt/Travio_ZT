@@ -6,12 +6,12 @@
 //
 
 import Foundation
-struct GetAllGalleryByPlaceIdResponse: Codable {
-    struct Data: Codable {
+
+    struct GetAllGalleryByPlaceIdData: Codable {
             var count: Int?
             var images: [Image]?
         }
-
-        let data: Data?
+struct GetAllGalleryByPlaceIdResponse: Codable {
+        let data: GetAllGalleryByPlaceIdData?
         let status: String?
 }

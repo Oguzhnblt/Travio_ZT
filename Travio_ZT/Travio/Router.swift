@@ -12,7 +12,23 @@ enum Router{
     case register(params:Parameters)
     case login(params: Parameters)
     case refresh(params: Parameters)
-        
+    case upload(image: Data)
+    case profile
+    case editProfile(params: Parameters)
+    case changePassword(params: Parameters)
+    case postPlace(params: Parameters)
+    case updatePlace(placeId: String, params: Parameters)
+    case deletePlace(placeId: String)
+    case getAllPlaces
+    case getPlaceById(placeId: String)
+    case getAllPlacesForUser
+    case getPopularPlaces(limit: Int)
+    case getLastPlaces(limit: Int)
+    case postGalleryImage(params: Parameters)
+    case deleteGalleryImage(placeId: String, imageId: String)
+    case getAllGalleryByPlaceId(placeId: String)
+    
+
         var baseURL:String {
             return "https://api.iosclass.live"
         }
@@ -25,22 +41,65 @@ enum Router{
                 return "/v1/auth/login"
             case .refresh:
                 return "/v1/auth/refresh"
+            case .upload:
+                return "/upload"
+            case .profile:
+                return "/v1/me"
+            case .editProfile:
+                return "/v1/edit-profile"
+            case .changePassword:
+                return "/v1/change-password"
+            case .postPlace:
+                return "/v1/places"
+            case .updatePlace(let placeId, _):
+                return "/v1/places/\(placeId)"
+            case .deletePlace(let placeId):
+                return "/v1/places/\(placeId)"
+            case .getAllPlaces:
+                    return "/v1/places"
+            case .getPlaceById(let placeId):
+                    return "/v1/places/\(placeId)"
+            case .getAllPlacesForUser:
+                    return "/v1/places/user"
+            case .getPopularPlaces:
+                 return "/v1/places/popular"
+            case .getLastPlaces:
+                return "/v1/places/last"
+            case .postGalleryImage:
+                return "/v1/galleries"
+            case .deleteGalleryImage(let placeId, let imageId):
+                return "/v1/galleries/\(placeId)/\(imageId)"
+            case .getAllGalleryByPlaceId(let placeId):
+                return "/v1/galleries/\(placeId)"
+                
+                
+                
+                
             }
         }
         
         
         var method:HTTPMethod {
             switch self {
-            case .register, .login, .refresh:
+            case .register, .login, .refresh, .upload, .postPlace, .postGalleryImage:
                 return .post
+            case .profile, .getAllPlaces, .getPlaceById, .getAllPlacesForUser, .getPopularPlaces, .getLastPlaces, .getAllGalleryByPlaceId:
+                return .get
+            case .editProfile, .changePassword, .updatePlace:
+                return .put
+            case .deletePlace, .deleteGalleryImage:
+                return .delete
+                
             }
         }
         
         
         var headers:HTTPHeaders {
             switch self {
-            case .register, .login, .refresh:
+            case .register, .login, .refresh, .upload, .getPlaceById, .getPopularPlaces, .getLastPlaces, .getAllGalleryByPlaceId:
                 return [:]
+            case .profile, .editProfile, .changePassword, .postPlace, .updatePlace, .deletePlace, .getAllPlaces, .getAllPlacesForUser, .postGalleryImage, .deleteGalleryImage:
+                return["Authorization": "Bearer access_token"]
             }
         }
         
@@ -52,7 +111,27 @@ enum Router{
                 return params
             case .refresh(let params):
                 return params
-            }
+            case .upload(let image):
+                return nil
+            case .profile, .deletePlace, .getAllPlaces, .getPlaceById, .getAllPlacesForUser,.deleteGalleryImage, .getAllGalleryByPlaceId:
+                return nil
+            case .editProfile(let params):
+                return params
+            case .changePassword(let params):
+                return params
+            case .postPlace(let params):
+                return params
+            case .updatePlace(_ , let params):
+                return params
+            case .postGalleryImage(let params):
+                return params
+            case .getPopularPlaces(limit: let limit):
+                        let limited = min(limit, 20)
+                        return ["limit": limited]
+            case .getLastPlaces(limit: let limit):
+                        let limited = min(limit, 20)
+                        return ["limit": limited]
+                }
         }
         
         
@@ -68,7 +147,7 @@ enum Router{
             
             let encoding:ParameterEncoding = {
                 switch method {
-                case .post:
+                case .post, .put, .delete :
                     return JSONEncoding.default
                 default:
                     return URLEncoding.default
@@ -81,3 +160,4 @@ enum Router{
         
         
 }
+
