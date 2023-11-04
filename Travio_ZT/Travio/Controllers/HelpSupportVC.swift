@@ -11,7 +11,7 @@ class HelpSupportVC: UIViewController {
     private lazy var headerLabel: UILabel = {
         let headerLabel = UILabel()
         headerLabel.textColor = .black
-        headerLabel.text = "Security Settings"
+        headerLabel.text = "Help&Support"
         headerLabel.textColor = .white
         headerLabel.font = UIFont(name: "Poppins-SemiBold", size: 32)
         
@@ -22,7 +22,7 @@ class HelpSupportVC: UIViewController {
         let fieldLabel = UILabel()
         fieldLabel.textColor = .background
         fieldLabel.text = title
-        fieldLabel.font = UIFont(name: "Poppins-SemiBold", size: 16)
+        fieldLabel.font = UIFont(name: "Poppins-SemiBold", size: 24)
         
         return fieldLabel
     }
@@ -34,16 +34,7 @@ class HelpSupportVC: UIViewController {
         return backButton
     }()
     
-    private lazy var saveButton: UIButton = {
-        
-        let saveButton = UIButton(type: .custom)
-        saveButton.setTitle("Save", for: .normal)
-        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-        saveButton.size(CGSize(width: 342, height: 54))
-        saveButton.layer.cornerRadius = 12
-        saveButton.backgroundColor = .background
-        return saveButton
-    }()
+   
     
     private lazy var securityItemView: UIView = {
         let view = UIView()
@@ -56,16 +47,12 @@ class HelpSupportVC: UIViewController {
     
     private lazy var newPassword: HelpSupportCell = {
         let tf = HelpSupportCell()
-        tf.
+        tf.label.text = "New Password"
+        tf.subtitleLabel.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
         return tf
     }()
     
-    private lazy var newPasswordConfirm: HelpSupportCell = {
-        let tf = HelpSupportCell()
-        return tf
-    }()
-  
-    
+   
     private func stackView() -> UIStackView  {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -76,20 +63,15 @@ class HelpSupportVC: UIViewController {
     }
     
     private lazy var passwordStack = stackView()
-    private lazy var privacyStack = stackView()
     
-    private lazy var changePasswordLabel = fieldLabel(title: "Change Password")
-    private lazy var privacyLabel = fieldLabel(title: "Privacy")
+    private lazy var changePasswordLabel = fieldLabel(title: "FAQ")
     
   
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func saveButtonTapped() {
-        
-        
-    }
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,9 +83,9 @@ class HelpSupportVC: UIViewController {
         self.view.backgroundColor = .background
         self.view.addSubviews(securityItemView,backButton, headerLabel)
         
-        passwordStack.addArrangedSubviews(newPassword,newPasswordConfirm)
+        passwordStack.addArrangedSubviews(newPassword)
         
-        securityItemView.addSubviews(saveButton, passwordStack, changePasswordLabel)
+        securityItemView.addSubviews(passwordStack, changePasswordLabel)
         
         setupLayouts()
     }
@@ -132,11 +114,6 @@ class HelpSupportVC: UIViewController {
             make.left.right.equalToSuperview().inset(24)
         })
     
-        saveButton.snp.makeConstraints({ make in
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
-            make.bottom.equalTo(securityItemView.snp.top).offset(647)
-            make.left.right.equalToSuperview().inset(24)
-        })
         
         changePasswordLabel.snp.makeConstraints({make in
             make.bottom.equalTo(passwordStack.snp.top)
