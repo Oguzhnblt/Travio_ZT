@@ -8,56 +8,161 @@ class HelpSupportVC: UIViewController {
     
     var isExpanded = false
     
+    private lazy var headerLabel: UILabel = {
+        let headerLabel = UILabel()
+        headerLabel.textColor = .black
+        headerLabel.text = "Security Settings"
+        headerLabel.textColor = .white
+        headerLabel.font = UIFont(name: "Poppins-SemiBold", size: 32)
+        
+        return headerLabel
+    }()
+    
+    private func fieldLabel(title: String) -> UILabel{
+        let fieldLabel = UILabel()
+        fieldLabel.textColor = .background
+        fieldLabel.text = title
+        fieldLabel.font = UIFont(name: "Poppins-SemiBold", size: 16)
+        
+        return fieldLabel
+    }
+    
+    private lazy var backButton: UIButton = {
+        let backButton = UIButton(type: .custom)
+        backButton.setImage(UIImage(named: "leftArrowIcon"), for: .normal)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return backButton
+    }()
+    
+    private lazy var saveButton: UIButton = {
+        
+        let saveButton = UIButton(type: .custom)
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        saveButton.size(CGSize(width: 342, height: 54))
+        saveButton.layer.cornerRadius = 12
+        saveButton.backgroundColor = .background
+        return saveButton
+    }()
+    
+    private lazy var securityItemView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: "contentColor")
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 80
+        view.layer.maskedCorners = .layerMinXMinYCorner
+        return view
+    }()
+    
+    private lazy var newPassword: HelpSupportCell = {
+        let tf = HelpSupportCell()
+        tf.label.text = "New Password"
+        return tf
+    }()
+    
+    private lazy var newPasswordConfirm: HelpSupportCell = {
+        let tf = HelpSupportCell()
+        tf.label.text = " New Password Confirm"
+        return tf
+    }()
+  
+    
+    private func stackView() -> UIStackView  {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 8
+        stack.distribution = .fill
+        
+        return stack
+    }
+    
+    private lazy var passwordStack = stackView()
+    private lazy var privacyStack = stackView()
+    
+    private lazy var changePasswordLabel = fieldLabel(title: "Change Password")
+    private lazy var privacyLabel = fieldLabel(title: "Privacy")
+    
+    private lazy var camera = PrivacySettings(text: "Camera", isOn: false)
+    private lazy var photoLibrary = PrivacySettings(text: "Photo Library", isOn: false)
+    private lazy var location = PrivacySettings(text: "Location", isOn: false)
+    
+    
+    
+    @objc func backButtonTapped() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func saveButtonTapped() {
+        
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        setupConstraints()
+        navigationController?.navigationBar.isHidden = true
     }
     
-    func setupViews() {
-        stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 8
-        view.addSubview(stackView)
+    private func setupViews() {
+        self.view.backgroundColor = .background
+        self.view.addSubviews(securityItemView,backButton, headerLabel)
         
-        textView = UIView()
-        textView.layer.cornerRadius = 16
-        textView.backgroundColor = .background
+        privacyStack.addArrangedSubviews(camera,photoLibrary,location)
+        passwordStack.addArrangedSubviews(newPassword,newPasswordConfirm)
         
-        toggleButton = UIButton(type: .system)
-        toggleButton.setTitle("Toggle", for: .normal)
-        toggleButton.addTarget(self, action: #selector(toggleButtonTapped), for: .touchUpInside)
-        view.addSubview(toggleButton)
-        stackView.addArrangedSubviews(textView)
+        securityItemView.addSubviews(saveButton, passwordStack,privacyStack, changePasswordLabel, privacyLabel)
+        
+        setupLayouts()
     }
     
-    func setupConstraints() {
-        stackView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
-            make.leading.trailing.equalToSuperview().inset(16)
+    private func setupLayouts() {
+        
+        securityItemView.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().offset(125)
+            make.left.right.equalToSuperview()
         }
         
-        textView.snp.makeConstraints { make in
-            make.height.equalTo(50) // Initial height
-        }
-        
-        toggleButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(16) // Align to the right
-        }
-    }
-    
-    @objc func toggleButtonTapped() {
-        isExpanded.toggle()
-        
-        let newHeight: CGFloat = isExpanded ? 200 : 50
-        UIView.animate(withDuration: 0.5, animations: {
-            self.textView.snp.updateConstraints { make in
-                make.height.equalTo(newHeight)
-            }
-            self.view.layoutIfNeeded()
+        backButton.snp.makeConstraints({make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(13)
+            make.left.equalToSuperview().offset(24)
         })
-    }
-}
+        
+        headerLabel.snp.makeConstraints({make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.centerX.equalToSuperview()
+        })
+        
+        
+        passwordStack.dropShadow()
+        passwordStack.snp.makeConstraints({make in
+            make.top.equalToSuperview().offset(55)
+            make.left.right.equalToSuperview().inset(24)
+        })
+        
+        privacyStack.dropShadow()
+        privacyStack.snp.makeConstraints({make in
+            make.top.equalTo(passwordStack.snp.bottom).offset(40)
+            make.left.right.equalToSuperview().inset(24)
+
+        })
+        
+        saveButton.snp.makeConstraints({ make in
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            make.bottom.equalTo(securityItemView.snp.top).offset(647)
+            make.left.right.equalToSuperview().inset(24)
+        })
+        
+        changePasswordLabel.snp.makeConstraints({make in
+            make.bottom.equalTo(passwordStack.snp.top)
+            make.left.equalToSuperview().offset(36)
+        })
+        
+        privacyLabel.snp.makeConstraints({make in
+            make.bottom.equalTo(privacyStack.snp.top)
+            make.left.equalToSuperview().offset(36)
+        })
+    }}
+
 
 #if DEBUG
 import SwiftUI
