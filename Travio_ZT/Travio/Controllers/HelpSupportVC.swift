@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 class HelpSupportVC: UIViewController {
-    var stackView: UIStackView!
+    
     var textView: UIView!
     var toggleButton: UIButton!
     
@@ -56,13 +56,12 @@ class HelpSupportVC: UIViewController {
     
     private lazy var newPassword: HelpSupportCell = {
         let tf = HelpSupportCell()
-        tf.label.text = "New Password"
+        tf.
         return tf
     }()
     
     private lazy var newPasswordConfirm: HelpSupportCell = {
         let tf = HelpSupportCell()
-        tf.label.text = " New Password Confirm"
         return tf
     }()
   
@@ -82,12 +81,7 @@ class HelpSupportVC: UIViewController {
     private lazy var changePasswordLabel = fieldLabel(title: "Change Password")
     private lazy var privacyLabel = fieldLabel(title: "Privacy")
     
-    private lazy var camera = PrivacySettings(text: "Camera", isOn: false)
-    private lazy var photoLibrary = PrivacySettings(text: "Photo Library", isOn: false)
-    private lazy var location = PrivacySettings(text: "Location", isOn: false)
-    
-    
-    
+  
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -107,10 +101,9 @@ class HelpSupportVC: UIViewController {
         self.view.backgroundColor = .background
         self.view.addSubviews(securityItemView,backButton, headerLabel)
         
-        privacyStack.addArrangedSubviews(camera,photoLibrary,location)
         passwordStack.addArrangedSubviews(newPassword,newPasswordConfirm)
         
-        securityItemView.addSubviews(saveButton, passwordStack,privacyStack, changePasswordLabel, privacyLabel)
+        securityItemView.addSubviews(saveButton, passwordStack, changePasswordLabel)
         
         setupLayouts()
     }
@@ -138,14 +131,7 @@ class HelpSupportVC: UIViewController {
             make.top.equalToSuperview().offset(55)
             make.left.right.equalToSuperview().inset(24)
         })
-        
-        privacyStack.dropShadow()
-        privacyStack.snp.makeConstraints({make in
-            make.top.equalTo(passwordStack.snp.bottom).offset(40)
-            make.left.right.equalToSuperview().inset(24)
-
-        })
-        
+    
         saveButton.snp.makeConstraints({ make in
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
             make.bottom.equalTo(securityItemView.snp.top).offset(647)
@@ -156,11 +142,7 @@ class HelpSupportVC: UIViewController {
             make.bottom.equalTo(passwordStack.snp.top)
             make.left.equalToSuperview().offset(36)
         })
-        
-        privacyLabel.snp.makeConstraints({make in
-            make.bottom.equalTo(privacyStack.snp.top)
-            make.left.equalToSuperview().offset(36)
-        })
+       
     }}
 
 
