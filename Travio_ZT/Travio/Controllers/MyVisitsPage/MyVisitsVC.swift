@@ -7,26 +7,19 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class MyVisitsVC: UIViewController {
     
-    
-    let popularPlacesId = "PopularPlacesHeader"
-    let newPlacesId = "NewPlacesHeader"
-    
     private lazy var collectionView: UICollectionView = {
         
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: myVisitsLayout())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         
-        
-        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
-        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: popularPlacesId, withReuseIdentifier: "popularPlaces")
-        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: newPlacesId, withReuseIdentifier: "newPlaces")
-        
-        collectionView.register(PlacesCollectionViewCell.self, forCellWithReuseIdentifier: PlacesCollectionViewCell.identifier)
+ 
+        collectionView.register(MyVisitsViewCell.self, forCellWithReuseIdentifier: MyVisitsViewCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -41,16 +34,11 @@ class MyVisitsVC: UIViewController {
         
         return headerLabel
     }()
-    
-    private lazy var loginView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(named: "backgroundColor")
-        return view
-    }()
+
     
     private lazy var loginItemView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: "contentColor")
+        view.backgroundColor = .content
         view.clipsToBounds = true
         view.layer.cornerRadius = 80
         view.layer.maskedCorners = .layerMinXMinYCorner
@@ -71,9 +59,8 @@ class MyVisitsVC: UIViewController {
     }
     
     private func setupViews() {
-        
-        self.view.addSubviews(loginView,imageView)
-        loginView.addSubview(loginItemView)
+        self.view.backgroundColor = .background
+        self.view.addSubviews(loginItemView, imageView)
         loginItemView.addSubviews(collectionView)
         
         
@@ -82,29 +69,21 @@ class MyVisitsVC: UIViewController {
     }
     
     private func setupLayouts() {
-        loginView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        imageView.snp.makeConstraints({make in
-            make.top.equalTo(loginView).offset(73)
-            make.left.equalTo(loginView).offset(16)
-        })
-        
+     
         loginItemView.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(125)
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview().offset(125)
+            make.left.right.equalToSuperview()
         }
+        
         collectionView.dropShadow()
         collectionView.snp.makeConstraints({make in
-            make.top.bottom.equalToSuperview()
-            make.left.right.equalToSuperview().offset(12)
+            make.top.bottom.equalToSuperview().offset(45)
+            make.left.right.equalToSuperview().inset(24)
         })
     }
 }
 
 // MARK: -- COLLECTION VİEW
-
 extension MyVisitsVC: UICollectionViewDelegateFlowLayout {
     
     // Her bir item'in boyutu
@@ -119,71 +98,13 @@ extension MyVisitsVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-            case 0:
-                return popularPlacesMockData.count
-            default:
-                return newPlacesMockData.count
-        }
+        return newPlacesMockData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.section {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlacesCollectionViewCell.identifier, for: indexPath) as! PlacesCollectionViewCell
-                cell.cellData = popularPlacesMockData[indexPath.row]
-                return cell
-            default:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlacesCollectionViewCell.identifier, for: indexPath) as! PlacesCollectionViewCell
-                cell.cellData = newPlacesMockData[indexPath.row]
-                return cell
-                
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as! SectionHeaderView
-            
-            let sectionTitles = ["Popular Places", "New Places"]
-            
-            if indexPath.section < sectionTitles.count {
-                header.title.text = sectionTitles[indexPath.section]
-                
-                switch indexPath.section {
-                    case 0:
-                        header.button.setTitle("See All", for: .normal)
-                        header.button.addTarget(self, action: #selector(seeAllPopular), for: .touchUpInside)
-                    case 1:
-                        header.button.setTitle("See All", for: .normal)
-                        header.button.addTarget(self, action: #selector(seeAllNew), for: .touchUpInside)
-                    default:
-                        header.button.setTitle("See All", for: .normal)
-                        header.button.addTarget(self, action: #selector(seeAllDefault), for: .touchUpInside)
-                }
-            } else {
-                header.title.text = "Unknown Section"
-                header.button.setTitle("See All", for: .normal)
-                header.button.addTarget(self, action: #selector(seeAllDefault), for: .touchUpInside)
-            }
-            
-            return header
-        }
-        return UICollectionReusableView()
-    }
-    
-    @objc func seeAllPopular() {
-        //let seeAllVC = PopularPlacesVC()
-        //navigationController?.pushViewController(seeAllVC, animated: true)
-    }
-    
-    @objc func seeAllNew() {
-        print( "Handle the action for See All New")
-        
-    }
-    
-    @objc func seeAllDefault() {
-        print( "Handle the action for See All Default")
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyVisitsViewCell.identifier, for: indexPath) as! MyVisitsViewCell
+        cell.cellData = newPlacesMockData[indexPath.row]
+        return cell
         
     }
 }
@@ -191,15 +112,24 @@ extension MyVisitsVC: UICollectionViewDataSource {
 
 extension MyVisitsVC {
     
-    func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
+   private func myVisitsLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
-            switch sectionNumber {
-                case 0:
-                    return HomePageLayout.shared.makePlacesLayout()
-                default:
-                    return HomePageLayout.shared.makePlacesLayout()
-            }
+            return self.myVisitsLayouts()
         }
+    }
+    
+    private func myVisitsLayouts() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.25))
+        let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
+
+        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+        layoutSection.orthogonalScrollingBehavior  = .none
+
+        return layoutSection
     }
 }
 
