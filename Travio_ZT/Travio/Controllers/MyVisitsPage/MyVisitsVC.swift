@@ -16,8 +16,6 @@ class MyVisitsVC: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: myVisitsLayout())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = .clear
-        
  
         collectionView.register(MyVisitsViewCell.self, forCellWithReuseIdentifier: MyVisitsViewCell.identifier)
         collectionView.dataSource = self
@@ -28,30 +26,23 @@ class MyVisitsVC: UIViewController {
     
     private lazy var headerLabel: UILabel = {
         let headerLabel = UILabel()
-        headerLabel.textColor = .black
-        headerLabel.font = UIFont(name: "Poppins-Regular", size: 20)
-        headerLabel.frame = CGRect(x: 0, y: 0, width: 149, height: 30)
+        headerLabel.textColor = .white
+        headerLabel.text = "My Visits"
+        headerLabel.font = UIFont(name: "Poppins-SemiBold", size: 32)
         
         return headerLabel
     }()
 
     
-    private lazy var loginItemView: UIView = {
+    private lazy var myVisitsItemView: UIView = {
         let view = UIView()
-        view.backgroundColor = .content
+        view.backgroundColor = .white
         view.clipsToBounds = true
         view.layer.cornerRadius = 80
         view.layer.maskedCorners = .layerMinXMinYCorner
         return view
     }()
-    
-    private lazy var imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "homePage_icon")
-        
-        return imageView
-    }()
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -60,8 +51,8 @@ class MyVisitsVC: UIViewController {
     
     private func setupViews() {
         self.view.backgroundColor = .background
-        self.view.addSubviews(loginItemView, imageView)
-        loginItemView.addSubviews(collectionView)
+        self.view.addSubviews(headerLabel,myVisitsItemView)
+        myVisitsItemView.addSubviews(collectionView)
         
         
         setupLayouts()
@@ -70,12 +61,16 @@ class MyVisitsVC: UIViewController {
     
     private func setupLayouts() {
      
-        loginItemView.snp.makeConstraints { make in
+        myVisitsItemView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().offset(125)
             make.left.right.equalToSuperview()
         }
         
-        collectionView.dropShadow()
+        headerLabel.snp.makeConstraints({make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.left.equalToSuperview().offset(24)
+        })
+        
         collectionView.snp.makeConstraints({make in
             make.top.bottom.equalToSuperview().offset(45)
             make.left.right.equalToSuperview().inset(24)
@@ -94,16 +89,16 @@ extension MyVisitsVC: UICollectionViewDelegateFlowLayout {
 
 extension MyVisitsVC: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2 // Section sayısı
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return newPlacesMockData.count
+        return popularPlacesMockData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyVisitsViewCell.identifier, for: indexPath) as! MyVisitsViewCell
-        cell.cellData = newPlacesMockData[indexPath.row]
+        cell.cellData = popularPlacesMockData[indexPath.row]
         return cell
         
     }
@@ -121,16 +116,20 @@ extension MyVisitsVC {
     private func myVisitsLayouts() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
 
-        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.25))
+
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.33))
         let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
 
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-        layoutSection.orthogonalScrollingBehavior  = .none
+        layoutSection.orthogonalScrollingBehavior = .none
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 150, trailing: 0)
+
+        layoutSection.interGroupSpacing = 16
 
         return layoutSection
     }
+
 }
 
 

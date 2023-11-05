@@ -26,6 +26,14 @@ class MyVisitsViewCell: UICollectionViewCell {
             subtitleLabel.text = cellData.place
         }
     }
+    
+    private lazy var backView: UIView = {
+       let view = UIView()
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 16
+        view.dropShadow()
+        return view
+    }()
 
      lazy var imageView: UIImageView = {
         let imageView = UIImageView()
@@ -36,6 +44,7 @@ class MyVisitsViewCell: UICollectionViewCell {
    private lazy var imageIconView: UIImageView = {
         let imageIconView = UIImageView()
         imageIconView.contentMode = .scaleAspectFit
+       imageIconView.size(CGSize(width: 9, height: 12))
         imageIconView.image = .imgPin
         return imageIconView
     }()
@@ -61,24 +70,29 @@ class MyVisitsViewCell: UICollectionViewCell {
     
     private func setupViews() {
         
-        let iconSubtitleStackView = UIStackView(arrangedSubviews: [imageIconView, subtitleLabel])
-        iconSubtitleStackView.axis = .horizontal
-        iconSubtitleStackView.spacing = 0
-        iconSubtitleStackView.alignment = .center
-
-        let verticalStackView = UIStackView(arrangedSubviews: [titleLabel, iconSubtitleStackView])
-        verticalStackView.axis = .vertical
-        verticalStackView.spacing = 0
-
-        addSubviews(imageView, verticalStackView)
+        lazy var subtitleStackView = UIStackView(arrangedSubviews: [imageIconView, subtitleLabel])
+        subtitleStackView.spacing = 4
+        
+        lazy var innerStackView = UIStackView(arrangedSubviews: [titleLabel, subtitleStackView])
+        innerStackView.axis = .vertical
+        innerStackView.spacing = 8
+        
+        addSubviews(backView)
+        backView.addSubview(imageView)
+        imageView.addSubview(innerStackView)
+        
+        backView.dropShadow()
+        backView.snp.makeConstraints({make in
+            make.edges.equalToSuperview()
+        })
 
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
 
-        verticalStackView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(16)
-            make.bottom.equalToSuperview().offset(-30)
+        innerStackView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(8)
+            make.bottom.equalToSuperview().offset(-8)
         }
     }
 
