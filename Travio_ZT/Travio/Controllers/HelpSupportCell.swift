@@ -9,80 +9,76 @@ import Foundation
 import UIKit
 import SnapKit
 
-class HelpSupportCell: UIView {
+class HelpSupportCell: UICollectionViewCell {
     
-    
-    static let field = HelpSupportCell()
-    
-    private lazy var backView: UIView = {
+    lazy var backView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.clipsToBounds = true
         view.layer.cornerRadius = 16
-
+        
         return view
     }()
     
-    lazy var label: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
         label.font = UIFont(name: "Poppins-Regular", size: 14)
-        label.textAlignment = .left
+        label.numberOfLines = 0
         return label
     }()
     
-    lazy var subtitleLabel: UILabel = {
+    let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .gray
         label.font = UIFont(name: "Poppins-Regular", size: 10)
         label.numberOfLines = 0
-        label.textAlignment = .left
+        label.textColor = .gray
         return label
     }()
     
-    lazy var toogle: UIButton = {
-        let toggleButton = UIButton(type: .system)
-        toggleButton.setTitle("Toggle", for: .normal)
-        return toggleButton
+    let iconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "img_arrow")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
-    
-    
-    
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [label, subtitleLabel])
-        stackView.axis = .vertical
-        stackView.spacing = 10
-        return stackView
-    }()
-    
-    func configure(title: String, subtitle: String ) {
-        label.text = title
-        subtitleLabel.text = subtitle
-    }
-    
-    
-    private func setupViews() {
-        self.addSubview(backView)
-        
-        backView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(8)
-            make.height.equalTo(60) // Initial height
-
-        }
-        
-        backView.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(8)
-        }
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
+        setupUI()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        setupUI()
+    }
+    
+    func setupUI() {
+        addSubview(backView)
+        backView.dropShadow()
+        backView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+        }
+        
+        backView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(8)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().inset(16)
+        }
+        
+        // Add the iconImageView
+        backView.addSubview(iconImageView)
+        iconImageView.snp.makeConstraints { (make) in
+            make.centerY.equalTo(titleLabel)
+            make.leading.equalTo(titleLabel.snp.trailing).offset(8) // Adjust the offset as needed
+            make.trailing.lessThanOrEqualToSuperview().inset(16)
+            make.width.height.equalTo(15) // Set the width and height as per your icon size
+        }
+        
+        backView.addSubview(subtitleLabel)
+        subtitleLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(titleLabel.snp.bottom).offset(4)
+            make.leading.trailing.bottom.equalToSuperview().inset(16)
+        }
     }
 }
 

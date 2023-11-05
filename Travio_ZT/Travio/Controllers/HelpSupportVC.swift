@@ -1,132 +1,83 @@
 import UIKit
 import SnapKit
 
-class HelpSupportVC: UIViewController {
+class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    var textView: UIView!
-    var toggleButton: UIButton!
+    private var selectedIndexPath: IndexPath?
+    private var isExpanded: Bool = false
     
-    var isExpanded = false
+    private lazy var cellReuseIdentifier = "cell"
+    private lazy var expandedHeight: CGFloat = 160
+    private lazy var collapsedHeight: CGFloat = 55
     
-    private lazy var headerLabel: UILabel = {
-        let headerLabel = UILabel()
-        headerLabel.textColor = .black
-        headerLabel.text = "Help&Support"
-        headerLabel.textColor = .white
-        headerLabel.font = UIFont(name: "Poppins-SemiBold", size: 32)
+    private lazy var collectionView: UICollectionView = {
         
-        return headerLabel
-    }()
-    
-    private func fieldLabel(title: String) -> UILabel{
-        let fieldLabel = UILabel()
-        fieldLabel.textColor = .background
-        fieldLabel.text = title
-        fieldLabel.font = UIFont(name: "Poppins-SemiBold", size: 24)
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 8
+        layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         
-        return fieldLabel
-    }
-    
-    private lazy var backButton: UIButton = {
-        let backButton = UIButton(type: .custom)
-        backButton.setImage(UIImage(named: "leftArrowIcon"), for: .normal)
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        return backButton
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(HelpSupportCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
+        collectionView.backgroundColor = .white
+        return collectionView
     }()
     
-   
-    
-    private lazy var securityItemView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(named: "contentColor")
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 80
-        view.layer.maskedCorners = .layerMinXMinYCorner
-        return view
-    }()
-    
-    private lazy var newPassword: HelpSupportCell = {
-        let tf = HelpSupportCell()
-        tf.label.text = "New Password"
-        tf.subtitleLabel.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-        return tf
-    }()
-    
-   
-    private func stackView() -> UIStackView  {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 8
-        stack.distribution = .fill
-        
-        return stack
-    }
-    
-    private lazy var passwordStack = stackView()
-    
-    private lazy var changePasswordLabel = fieldLabel(title: "FAQ")
-    
-  
-    @objc func backButtonTapped() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-  
+    private lazy var 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
-        navigationController?.navigationBar.isHidden = true
+        setupUI()
     }
     
-    private func setupViews() {
-        self.view.backgroundColor = .background
-        self.view.addSubviews(securityItemView,backButton, headerLabel)
-        
-        passwordStack.addArrangedSubviews(newPassword)
-        
-        securityItemView.addSubviews(passwordStack, changePasswordLabel)
-        
-        setupLayouts()
-    }
-    
-    private func setupLayouts() {
-        
-        securityItemView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().offset(125)
-            make.left.right.equalToSuperview()
+    private func setupUI() {
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
         }
-        
-        backButton.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(13)
-            make.left.equalToSuperview().offset(24)
-        })
-        
-        headerLabel.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide)
-            make.centerX.equalToSuperview()
-        })
-        
-        
-        passwordStack.dropShadow()
-        passwordStack.snp.makeConstraints({make in
-            make.top.equalToSuperview().offset(55)
-            make.left.right.equalToSuperview().inset(24)
-        })
+    }
     
+    // MARK: - UICollectionViewDataSource
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return helpItems.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        changePasswordLabel.snp.makeConstraints({make in
-            make.bottom.equalTo(passwordStack.snp.top)
-            make.left.equalToSuperview().offset(36)
-        })
-       
-    }}
-
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! HelpSupportCell
+        
+        let item = helpItems[indexPath.item]
+        cell.titleLabel.text = item.title
+        cell.subtitleLabel.text = item.subtitle
+        
+        return cell
+    }
+    
+    // MARK: - UICollectionViewDelegateFlowLayout
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.width - 16, height: indexPath == selectedIndexPath  ? expandedHeight : collapsedHeight)
+    }
+    
+    // MARK: - UICollectionViewDelegate
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if selectedIndexPath == indexPath {
+            selectedIndexPath = nil
+        } else {
+            selectedIndexPath = indexPath
+        }
+        collectionView.performBatchUpdates(nil, completion: nil)
+    }
+}
 
 #if DEBUG
 import SwiftUI
 
-@available(iOS 13, *)
+@available(iOS 13 , *)
 struct HelpSupportVC_Preview: PreviewProvider {
     static var previews: some View {
         HelpSupportVC().showPreview()
