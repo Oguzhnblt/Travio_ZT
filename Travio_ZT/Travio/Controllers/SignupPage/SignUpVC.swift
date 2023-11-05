@@ -72,7 +72,7 @@ class SignUpVC: UIViewController {
         return button
     }()
     
-    private lazy var  backButton: UIButton = {
+    private lazy var backButton: UIButton = {
         let buttonImage = UIImage(named: "leftArrowIcon")
         let imageButton = UIButton(type: .system)
         imageButton.setImage(buttonImage, for: .normal)

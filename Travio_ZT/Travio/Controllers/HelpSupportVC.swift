@@ -8,14 +8,14 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     
     private lazy var cellReuseIdentifier = "cell"
     private lazy var expandedHeight: CGFloat = 160
-    private lazy var collapsedHeight: CGFloat = 55
+    private lazy var collapsedHeight: CGFloat = 45
     
     private lazy var collectionView: UICollectionView = {
         
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 8
-        layout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        layout.minimumLineSpacing = 12
+        layout.sectionInset = UIEdgeInsets(top: 85, left: 0, bottom: 250, right: 0)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
@@ -27,10 +27,25 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     
     private lazy var headerLabel: UILabel = {
         let headerLabel = UILabel()
-        headerLabel.textColor = .black
-        headerLabel.text = "Edit Profile"
         headerLabel.textColor = .white
+        headerLabel.text = "Help&Support"
         headerLabel.font = UIFont(name: "Poppins-SemiBold", size: 32)
+        
+        return headerLabel
+    }()
+    
+    private lazy var backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(.leftArrowIcon, for: .normal)
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var contentLabel: UILabel = {
+        let headerLabel = UILabel()
+        headerLabel.textColor = .background
+        headerLabel.text = "FAQ"
+        headerLabel.font = UIFont(name: "Poppins-SemiBold", size: 24)
         
         return headerLabel
     }()
@@ -44,6 +59,10 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         return view
     }()
     
+    @objc private func backButtonTapped() {
+        
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,11 +71,26 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     
     private func setupUI() {
         self.view.backgroundColor = .background
-        self.view.addSubviews(helpSuppportItemView, headerLabel)
+        self.view.addSubviews(backButton,headerLabel,helpSuppportItemView, contentLabel)
         
+        backButton.snp.makeConstraints({make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(10)
+            make.right.equalTo(headerLabel.snp.left)
+            make.left.equalToSuperview()
+        })
+        
+        headerLabel.snp.makeConstraints({make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.left.equalToSuperview().offset(72)
+        })
+        
+        contentLabel.snp.makeConstraints({make in
+            make.top.equalTo(helpSuppportItemView.snp.top).offset(44)
+            make.left.equalToSuperview().offset(24)
+        })
         helpSuppportItemView.snp.makeConstraints({make in
-        
-            make.top.bottom.equalToSuperview().offset(125)
+            
+            make.top.bottom.equalToSuperview().offset(165)
             make.left.right.equalToSuperview()
         })
         
@@ -88,7 +122,9 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     // MARK: - UICollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width - 16, height: indexPath == selectedIndexPath  ? expandedHeight : collapsedHeight)
+        
+        let isExpanded = indexPath == selectedIndexPath
+        return CGSize(width: collectionView.bounds.width - 16, height: isExpanded  ? expandedHeight : collapsedHeight)
     }
     
     // MARK: - UICollectionViewDelegate
@@ -102,6 +138,7 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         collectionView.performBatchUpdates(nil, completion: nil)
     }
 }
+ 
 
 #if DEBUG
 import SwiftUI
