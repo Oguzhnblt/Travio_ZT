@@ -55,7 +55,8 @@ class HelpSupportCell: UICollectionViewCell {
         addSubview(backView)
         backView.dropShadow()
         backView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+            make.top.bottom.equalToSuperview()
+            make.left.right.equalToSuperview().inset(8)
         }
         
         backView.addSubview(titleLabel)

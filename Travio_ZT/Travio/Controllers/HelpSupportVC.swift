@@ -25,7 +25,25 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         return collectionView
     }()
     
-    private lazy var 
+    private lazy var headerLabel: UILabel = {
+        let headerLabel = UILabel()
+        headerLabel.textColor = .black
+        headerLabel.text = "Edit Profile"
+        headerLabel.textColor = .white
+        headerLabel.font = UIFont(name: "Poppins-SemiBold", size: 32)
+        
+        return headerLabel
+    }()
+    
+    private lazy var helpSuppportItemView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .content
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 80
+        view.layer.maskedCorners = .layerMinXMinYCorner
+        return view
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,9 +51,20 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     }
     
     private func setupUI() {
-        view.addSubview(collectionView)
+        self.view.backgroundColor = .background
+        self.view.addSubviews(helpSuppportItemView, headerLabel)
+        
+        helpSuppportItemView.snp.makeConstraints({make in
+        
+            make.top.bottom.equalToSuperview().offset(125)
+            make.left.right.equalToSuperview()
+        })
+        
+        helpSuppportItemView.addSubview(collectionView)
+        
         collectionView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.left.right.equalToSuperview()
         }
     }
     
