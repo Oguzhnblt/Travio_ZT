@@ -13,7 +13,6 @@
 		0FC28E362AE92C9F005387E9 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC28E352AE92C9F005387E9 /* Router.swift */; };
 		0FC28E392AE92E56005387E9 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0FC28E382AE92E56005387E9 /* Alamofire */; };
 		0FC9671D2AEA4B5D009FB26B /* MainTabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */; };
-		0FEAAD602AE944CD00B31030 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FEAAD5F2AE944CD00B31030 /* HomeVC.swift */; };
 		1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1214274E2ADC25E700CA1D10 /* SignUpVC.swift */; };
 		1248ED342AED311200777E98 /* HomePageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1248ED332AED311200777E98 /* HomePageLayout.swift */; };
 		1248ED382AED341000777E98 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1248ED372AED341000777E98 /* SectionHeaderView.swift */; };
@@ -47,6 +46,7 @@
 		1255D86F2ADB155E00FB6638 /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D85C2ADB155E00FB6638 /* Poppins-Italic.ttf */; };
 		1255D8702ADB155E00FB6638 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D85D2ADB155E00FB6638 /* Poppins-MediumItalic.ttf */; };
 		125B445B2AE944F00047248D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125B445A2AE944F00047248D /* HomeVC.swift */; };
+		FF077BB72AF808D900EB99FE /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF077BB62AF808D900EB99FE /* MapVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +89,7 @@
 		1255D85C2ADB155E00FB6638 /* Poppins-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Italic.ttf"; sourceTree = "<group>"; };
 		1255D85D2ADB155E00FB6638 /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
 		125B445A2AE944F00047248D /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		FF077BB62AF808D900EB99FE /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +175,7 @@
 				0F34F45E2AEA580A007189BE /* NetworkingHelper.swift */,
 				0FB8116B2AEA7A2800B2DACA /* RequestModel.swift */,
 				0FB3C3502AEBB0A200B98803 /* SettingsVC.swift */,
+				FF077BB62AF808D900EB99FE /* MapVC.swift */,
 			);
 			path = Travio;
 			sourceTree = "<group>";
@@ -321,12 +323,12 @@
 				0F34F45F2AEA580A007189BE /* NetworkingHelper.swift in Sources */,
 				0FB8116C2AEA7A2900B2DACA /* RequestModel.swift in Sources */,
 				1248ED3D2AED367200777E98 /* PlacesModel.swift in Sources */,
-				0FC28E342AE92BD7005387E9 /* User.swift in Sources */,
 				0FC28E362AE92C9F005387E9 /* Router.swift in Sources */,
 				1255D8082ADAC7BD00FB6638 /* SceneDelegate.swift in Sources */,
 				1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */,
 				1248ED3B2AED352700777E98 /* PlacesCollectionViewCell.swift in Sources */,
 				1255D81A2ADACC6400FB6638 /* Extensions.swift in Sources */,
+				FF077BB72AF808D900EB99FE /* MapVC.swift in Sources */,
 				1248ED382AED341000777E98 /* SectionHeaderView.swift in Sources */,
 				1248ED342AED311200777E98 /* HomePageLayout.swift in Sources */,
 			);
@@ -475,6 +477,8 @@
 				DEVELOPMENT_TEAM = K97JL7U478;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Travio/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Near me requires location so it can offer nearby points of interests.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Near me requires location so it can offer nearby points of interests.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -505,6 +509,8 @@
 				DEVELOPMENT_TEAM = K97JL7U478;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Travio/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Near me requires location so it can offer nearby points of interests.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Near me requires location so it can offer nearby points of interests.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
