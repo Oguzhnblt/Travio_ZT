@@ -29,12 +29,18 @@ class MainTabbarVC: UITabBarController {
                     let imageHome =  UIImage(systemName: "house")
                     let selectedImageHome = UIImage(systemName: "house.fill")
                     homeVC.tabBarItem = UITabBarItem(title: "Home", image: imageHome, selectedImage: selectedImageHome)
+            let settingsVC = SettingsVC()
+            let settingsNC = UINavigationController(rootViewController: settingsVC)
+            let imageSettings =  UIImage(named: "menu")
+            let selectedImageSettings = UIImage(named:"menu")
+            settingsVC.tabBarItem = UITabBarItem(title: "Menu", image: imageSettings, selectedImage: selectedImageSettings)
            // let myVisitsVC = MyVisitsVC()
            //         let MyVisitsNC = UINavigationController(rootViewController: myVisitsVC)
            //         let imageVisits =  UIImage(systemName: "house")
            //         let selectedImageVisits = UIImage(systemName: "house.fill")
            //         myVisitsVC.tabBarItem = UITabBarItem(title: "Visits", image: imageVisits, selectedImage: selectedImageVisits)
             
+            return [homeNC, settingsNC]
             let mapVC = MapVC()
             let mapNC = UINavigationController(rootViewController: mapVC)
             let imageMap = UIImage(named: "map")

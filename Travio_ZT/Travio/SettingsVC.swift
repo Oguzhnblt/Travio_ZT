@@ -42,6 +42,67 @@ class SettingsVC: UIViewController {
         
     }()
     
+    private lazy var labelMainView : UIView = {
+        let main = UIView()
+        main.backgroundColor = UIColor(named: "textFieldBackgroundColor")
+        main.layer.cornerRadius = 16
+        return main
+        }()
+    private lazy var labelStack : UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.alignment = .center
+        stack.spacing = 0
+        
+        return stack
+    }()
+    private lazy var labelIcon : UIImageView = {
+        let img = UIImageView()
+        img.image = UIImage(named: "user_alt")
+        img.contentMode = .scaleAspectFit
+        
+        
+        return img
+    }()
+   
+    
+    
+    
+    private lazy var labelText : UILabel = {
+        let label = UILabel()
+        label.text = "Security Settings"
+        label.font = UIFont(name: "Poppins-Regular", size: 14)
+        label.textAlignment = .left
+        return label
+    }()
+    
+    private lazy var btnPower:UIButton = {
+            let b = UIButton()
+
+            b.addTarget(self, action: #selector(btnPowerTapped), for: .touchUpInside)
+            b.contentHorizontalAlignment = .center
+            b.layer.cornerRadius = 8
+            b.centerTextAndImage(spacing: 8)
+            b.setImage(UIImage(named: "power"), for: .normal)
+            b.tintColor = .white
+            return b
+        }()
+    @objc func btnPowerTapped(){
+      }
+    
+    private lazy var labelButton: UIButton = {
+        let b = UIButton()
+        b.addTarget(self, action: #selector(btnLabelTapped), for: .touchUpInside)
+        b.setImage(UIImage(named: "vector"), for: .normal)
+        return b
+        
+    }()
+    @objc func btnLabelTapped(){
+      }
+    
+    
+    
+    
     private func addTextField(title: String, placeholder: String, keyboardType: UIKeyboardType, isSecure: Bool) -> CustomLabelTextField {
         let textField = CustomLabelTextField()
         textField.font = UIFont(name: "Poppins-Regular", size: 12)
@@ -65,10 +126,8 @@ class SettingsVC: UIViewController {
     }
     
     private lazy var settingsItemStackView = createStackView(axis: .vertical, spacing: 8)
-    private lazy var settingsImageTextStackView = createStackView(axis: .vertical, spacing: 8)
     private lazy var settingsText = createLabel(text: "Settings", color: "textFieldBackgroundColor", textSize: 32, fontName: "Poppins-SemiBold", alignment: .center)
     private lazy var imageText = createLabel(text: "Bruce Wills", color: "textColor", textSize: 16, fontName: "Poppins-SemiBold", alignment: .center)
-    
     private lazy var editProfileText = createLabel(text: "Edit Profile", color: "backgroundColor", textSize: 12, fontName: "Poppins-SemiBold", alignment: .center)
     
     override func viewDidLoad() {
@@ -86,21 +145,56 @@ class SettingsVC: UIViewController {
     
     //MARK: -- UI Methods
     func setupViews() {
-        self.view.addSubviews(settingsView, settingsItemView, settingsText)
-        settingsItemView.addSubviews(settingsItemStackView, settingsImageTextStackView)
-        settingsImageTextStackView.addArrangedSubviews(settingsImageView, imageText, editProfileText)
+        self.view.addSubviews(settingsView, settingsItemView, settingsText, btnPower)
+        settingsItemView.addSubviews(settingsItemStackView, labelMainView,settingsImageView, imageText, editProfileText)
+        labelMainView.addSubviews(labelStack)
+        labelStack.addArrangedSubviews(labelIcon, labelText, labelButton)
         
         setupLayout()
     }
     
     func setupLayout() {
         
+        labelIcon.snp.makeConstraints({icon in
+            icon.leading.equalTo(labelStack.snp.leading).offset(16)
+            icon.size.equalTo(20)
+            icon.right.equalTo(labelText.snp.left).offset(-8)
+        
+        })
+        labelButton.snp.makeConstraints({btn in
+            btn.trailing.equalTo(labelStack.snp.trailing).offset(-16)
+        })
+        
+        
+        btnPower.snp.makeConstraints({btn in
+            btn.bottom.equalTo(settingsItemView.snp.top).offset(-61)
+            btn.trailing.equalToSuperview().offset(-24)
+        })
+        
+    
+        
+        labelMainView.snp.makeConstraints({ make in
+            make.centerX.centerY.equalToSuperview()
+                        make.width.equalTo(358)
+                        make.height.equalTo(54)
+        })
+        
+        labelStack.snp.makeConstraints({ stack in
+            stack.top.equalToSuperview().offset(17)
+            stack.bottom.equalToSuperview().offset(-15)
+            stack.leading.equalToSuperview().offset(16.5)
+            stack.trailing.equalToSuperview().offset(-16.5)
+            
+        })
+        
         imageText.snp.makeConstraints({text in
-            text.left.right.equalTo(settingsView).offset(150)
+            text.top.equalTo(settingsImageView.snp.bottom).offset(8)
+            text.leading.equalToSuperview().offset(150)
         })
         
         editProfileText.snp.makeConstraints({text in
-            text.left.right.equalTo(settingsView).offset(164)
+            text.leading.equalTo(settingsView).offset(164)
+            text.top.equalTo(imageText.snp.bottom).offset(8)
         })
         
         settingsImageView.snp.makeConstraints({image in
@@ -113,6 +207,7 @@ class SettingsVC: UIViewController {
             settingView.edges.equalToSuperview()
             settingView.top.equalTo(self.view.safeAreaLayoutGuide)
         })
+        
         
         settingsText.snp.makeConstraints({text in
             text.bottom.equalTo(settingsItemView.snp.top).offset(-53)
@@ -135,10 +230,9 @@ class SettingsVC: UIViewController {
 
         })
         
-        settingsImageTextStackView.snp.makeConstraints({stack in
-            stack.left.right.equalTo(settingsItemView).inset(135)
-            stack.top.equalTo(settingsItemView.snp.top).offset(24)
-        })
+      
+        
+        
        
         
        

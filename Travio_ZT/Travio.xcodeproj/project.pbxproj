@@ -21,6 +21,7 @@
 		0F6E232B2AF236B800F843C6 /* LoginRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6E232A2AF236B800F843C6 /* LoginRequestModel.swift */; };
 		0F6E232D2AF2373C00F843C6 /* LoginResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6E232C2AF2373C00F843C6 /* LoginResponseModel.swift */; };
 		0FB3C3512AEBB0A200B98803 /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB3C3502AEBB0A200B98803 /* SettingsVC.swift */; };
+		0FB6BB1C2AF0D3E30051258D /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB1B2AF0D3E30051258D /* EditProfileVC.swift */; };
 		0FB6BB1E2AF125810051258D /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6BB1D2AF125810051258D /* MapVC.swift */; };
 		0FB84E032AF285080071A559 /* PostPlaceRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB84E022AF285080071A559 /* PostPlaceRequestModel.swift */; };
 		0FB84E052AF286CC0071A559 /* PostPlaceResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB84E042AF286CC0071A559 /* PostPlaceResponseModel.swift */; };
@@ -33,6 +34,7 @@
 		0FC28E392AE92E56005387E9 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0FC28E382AE92E56005387E9 /* Alamofire */; };
 		0FC9671D2AEA4B5D009FB26B /* MainTabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */; };
 		1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1214274E2ADC25E700CA1D10 /* SignUpVC.swift */; };
+		12480C442AF0EC0B00549C42 /* SettingsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12480C432AF0EC0B00549C42 /* SettingsCollectionViewCell.swift */; };
 		123F863E2AF5C62900E8F7B1 /* HelpSupportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123F863D2AF5C62900E8F7B1 /* HelpSupportCell.swift */; };
 		1248ED342AED311200777E98 /* HomePageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1248ED332AED311200777E98 /* HomePageLayout.swift */; };
 		1248ED382AED341000777E98 /* HomeSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1248ED372AED341000777E98 /* HomeSectionHeaderView.swift */; };
@@ -119,6 +121,7 @@
 		0F6E232A2AF236B800F843C6 /* LoginRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestModel.swift; sourceTree = "<group>"; };
 		0F6E232C2AF2373C00F843C6 /* LoginResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponseModel.swift; sourceTree = "<group>"; };
 		0FB3C3502AEBB0A200B98803 /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		0FB6BB1B2AF0D3E30051258D /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
 		0FB6BB1D2AF125810051258D /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		0FB84E022AF285080071A559 /* PostPlaceRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPlaceRequestModel.swift; sourceTree = "<group>"; };
 		0FB84E042AF286CC0071A559 /* PostPlaceResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPlaceResponseModel.swift; sourceTree = "<group>"; };
@@ -131,6 +134,7 @@
 		0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarVC.swift; sourceTree = "<group>"; };
 		0FEAAD5F2AE944CD00B31030 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		1214274E2ADC25E700CA1D10 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
+		12480C432AF0EC0B00549C42 /* SettingsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCollectionViewCell.swift; sourceTree = "<group>"; };
 		123F863D2AF5C62900E8F7B1 /* HelpSupportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportCell.swift; sourceTree = "<group>"; };
 		1248ED332AED311200777E98 /* HomePageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageLayout.swift; sourceTree = "<group>"; };
 		1248ED372AED341000777E98 /* HomeSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSectionHeaderView.swift; sourceTree = "<group>"; };
@@ -216,6 +220,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		12480C422AF0EBE400549C42 /* SettingsPage */ = {
+			isa = PBXGroup;
+			children = (
+				0FB3C3502AEBB0A200B98803 /* SettingsVC.swift */,
+				12480C432AF0EC0B00549C42 /* SettingsCollectionViewCell.swift */,
+			);
+			path = SettingsPage;
+			sourceTree = "<group>";
+		};
 		0FB84DF62AF282470071A559 /* APIModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -420,8 +433,10 @@
 				0FC28E352AE92C9F005387E9 /* Router.swift */,
 				0FEAAD5F2AE944CD00B31030 /* HomeVC.swift */,
 				0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */,
+				0FC28E352AE92C9F005387E9 /* Router.swift */,
 				0F34F45E2AEA580A007189BE /* NetworkingHelper.swift */,
 				0FB8116B2AEA7A2800B2DACA /* RequestModel.swift */,
+				0FB6BB1B2AF0D3E30051258D /* EditProfileVC.swift */,
 				0FB3C3502AEBB0A200B98803 /* SettingsVC.swift */,
 				0FB6BB1D2AF125810051258D /* MapVC.swift */,
 			);
@@ -457,6 +472,7 @@
 		125B445C2AE971580047248D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				12480C422AF0EBE400549C42 /* SettingsPage */,
 				127249C12AF2280200CEAA64 /* SecuritySettingsPage */,
 				12A0093F2AEFA56400D2AD14 /* PopularPlacesPage */,
 				12B02A7B2AF8105C0098DF1D /* PlaceDetailsPage */,
@@ -803,6 +819,7 @@
 				1248ED3B2AED352700777E98 /* PlacesCollectionViewCell.swift in Sources */,
 				127806282AF7EC740085D31F /* MyVisitsVC.swift in Sources */,
 				1255D81A2ADACC6400FB6638 /* Extensions.swift in Sources */,
+				12480C442AF0EC0B00549C42 /* SettingsCollectionViewCell.swift in Sources */,
 				1248ED382AED341000777E98 /* HomeSectionHeaderView.swift in Sources */,
 				0F6E23292AF235D400F843C6 /* RegisterResponseModel.swift in Sources */,
 				0F5CB31F2AF277C900B9F13F /* EditProfileRequestModel.swift in Sources */,
@@ -820,6 +837,7 @@
 				12E1FD562AF3926A00B89F81 /* HelpSupportVC.swift in Sources */,
 				123F863E2AF5C62900E8F7B1 /* HelpSupportCell.swift in Sources */,
 				1248ED382AED341000777E98 /* SectionHeaderView.swift in Sources */,
+				0FB6BB1C2AF0D3E30051258D /* EditProfileVC.swift in Sources */,
 				12A009432AEFA5A900D2AD14 /* PopularPlacesViewCell.swift in Sources */,
 				127249D42AF2CDC700CEAA64 /* EditProfileVC.swift in Sources */,
 				1248ED342AED311200777E98 /* HomePageLayout.swift in Sources */,
@@ -994,6 +1012,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TARGETED_DEVICE_FAMILY = "1,2";

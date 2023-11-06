@@ -35,7 +35,7 @@ class PlacesCollectionViewCell: UICollectionViewCell {
 
      lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
