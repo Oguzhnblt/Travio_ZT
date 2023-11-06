@@ -8,9 +8,23 @@ import Foundation
 import UIKit
 import SnapKit
 
+protocol PlaceTopViewDelegate: AnyObject {
+    func placeTopView(_ placeTopView: PlaceTopView, didChangePageTo index: Int)
+}
+
 class PlaceTopView: UICollectionViewCell {
     
     static let identifier = "topView"
+    
+    weak var delegate: PlaceTopViewDelegate?
+    
+    
+    var currentPage: Int = 0 {
+        didSet {
+            pageControl.currentPage = currentPage
+            delegate?.placeTopView(self, didChangePageTo: currentPage)
+        }
+    }
     
     var cellData: PlacesModel? {
         didSet {
@@ -20,18 +34,7 @@ class PlaceTopView: UICollectionViewCell {
             imageView.image = UIImage(named: cellData.cover_img_url ?? "img_default")
         }
     }
-    
-    var currentPage: Int = 0 {
-        didSet {
-            pageControl.currentPage = currentPage
-        }
-    }
-    
-    func setCurrentPage(_ currentPage: Int) {
-        self.currentPage = currentPage
-    }
-    
-    
+   
     private lazy var backView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
@@ -46,6 +49,7 @@ class PlaceTopView: UICollectionViewCell {
     
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
+        pageControl.backgroundStyle = .prominent
         pageControl.currentPageIndicatorTintColor = .white
         pageControl.pageIndicatorTintColor = .gray
         pageControl.numberOfPages = newPlacesMockData.count

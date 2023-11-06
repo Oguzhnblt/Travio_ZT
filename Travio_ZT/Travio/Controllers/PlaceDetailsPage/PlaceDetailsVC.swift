@@ -9,10 +9,12 @@ import Foundation
 import UIKit
 import SnapKit
 
-class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
+class PlaceDetailsVC: UIViewController, UICollectionViewDelegate, PlaceTopViewDelegate {
     
     let placeTopView = PlaceTopView()
-
+    var currentSelectedItem: Int = 0
+    
+    
     private lazy var collectionView: UICollectionView = {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: myVisitsLayout())
@@ -30,7 +32,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         return collectionView
     }()
     
-  
+    
     
     
     override func viewDidLoad() {
@@ -81,6 +83,10 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceTopView.identifier, for: indexPath) as! PlaceTopView
                 cell.cellData = newPlacesMockData[indexPath.row]
+                
+                cell.delegate = self
+                cell.currentPage = indexPath.item
+                
                 return cell
             case 1:
                 
@@ -97,17 +103,14 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
 }
 
 extension PlaceDetailsVC {
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        let visibleIndexPaths = collectionView.indexPathsForVisibleItems
-        if let firstIndex = visibleIndexPaths.first {
-            placeTopView.setCurrentPage(firstIndex.item)
-        }
+    
+    func placeTopView(_ placeTopView: PlaceTopView, didChangePageTo index: Int) {
+        currentSelectedItem = index
     }
 }
 
 
 extension PlaceDetailsVC {
-    
     
     private func myVisitsLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
@@ -118,29 +121,29 @@ extension PlaceDetailsVC {
     private func myVisitsLayouts(for section: Int) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-
+        
         var layoutGroupSize: NSCollectionLayoutSize
         var orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior
-
+        
         switch section {
-        case 0:
-            layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.25))
-            orthogonalScrollingBehavior = .groupPagingCentered
-        case 1:
-            layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.4))
-            orthogonalScrollingBehavior = .none
-        default:
-            Swift.fatalError("Unexpected section: \(section)")
+            case 0:
+                layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.25))
+                orthogonalScrollingBehavior = .groupPagingCentered
+            case 1:
+                layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.4))
+                orthogonalScrollingBehavior = .none
+            default:
+                Swift.fatalError("Unexpected section: \(section)")
         }
-
+        
         let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
-
+        
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.orthogonalScrollingBehavior = orthogonalScrollingBehavior
-
+        
         return layoutSection
     }
-
+    
 }
 
 
