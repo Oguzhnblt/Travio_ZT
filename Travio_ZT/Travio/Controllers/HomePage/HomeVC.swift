@@ -23,9 +23,9 @@ class HomeVC: UIViewController {
         collectionView.backgroundColor = .clear
         
         
-        collectionView.register(HomeSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HomeSectionHeaderView.reuseIdentifier)
-        collectionView.register(HomeSectionHeaderView.self, forSupplementaryViewOfKind: "popularPlacesId", withReuseIdentifier: "popularPlaces")
-        collectionView.register(HomeSectionHeaderView.self, forSupplementaryViewOfKind: "newPlacesId", withReuseIdentifier: "newPlaces")
+        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
+        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: "popularPlacesId", withReuseIdentifier: "popularPlaces")
+        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: "newPlacesId", withReuseIdentifier: "newPlaces")
         
         collectionView.register(PlacesCollectionViewCell.self, forCellWithReuseIdentifier: PlacesCollectionViewCell.identifier)
         collectionView.dataSource = self
@@ -144,7 +144,7 @@ extension HomeVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HomeSectionHeaderView.reuseIdentifier, for: indexPath) as! HomeSectionHeaderView
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as! SectionHeaderView
             
             let sectionTitles = ["Popular Places", "New Places", "Büşra", "oğuzhan"]
             
