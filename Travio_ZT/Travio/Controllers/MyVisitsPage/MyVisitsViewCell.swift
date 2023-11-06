@@ -28,28 +28,28 @@ class MyVisitsViewCell: UICollectionViewCell {
     }
     
     private lazy var backView: UIView = {
-       let view = UIView()
+        let view = UIView()
         view.clipsToBounds = true
         view.layer.cornerRadius = 16
         view.dropShadow()
         return view
     }()
-
-     lazy var imageView: UIImageView = {
+    
+    lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
-   private lazy var imageIconView: UIImageView = {
+    private lazy var imageIconView: UIImageView = {
         let imageIconView = UIImageView()
         imageIconView.contentMode = .scaleAspectFit
-       imageIconView.size(CGSize(width: 9, height: 12))
+        imageIconView.sizeThatFits(CGSize(width: 9, height: 12))
         imageIconView.image = .imgPin
         return imageIconView
     }()
     
-     lazy var titleLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Poppins-SemiBold", size: 24)
         label.textColor = .white
@@ -85,18 +85,18 @@ class MyVisitsViewCell: UICollectionViewCell {
         backView.snp.makeConstraints({make in
             make.edges.equalToSuperview()
         })
-
+        
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-
+        
         innerStackView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(8)
             make.bottom.equalToSuperview().offset(-8)
         }
     }
-
-
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

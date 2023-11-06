@@ -42,7 +42,6 @@ class SecuritySettingsVC: UIViewController {
         let saveButton = UIButton(type: .custom)
         saveButton.setTitle("Save", for: .normal)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-        saveButton.size(CGSize(width: 342, height: 54))
         saveButton.layer.cornerRadius = 12
         saveButton.backgroundColor = .background
         return saveButton

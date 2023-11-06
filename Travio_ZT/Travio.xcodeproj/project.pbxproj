@@ -84,6 +84,7 @@
 		12F85D832AF9123500FB7CBD /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D822AF9123500FB7CBD /* SectionHeaderView.swift */; };
 		12F85D872AF9148000FB7CBD /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D862AF9148000FB7CBD /* SignUpViewModel.swift */; };
 		12F85D892AF9149E00FB7CBD /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D882AF9149E00FB7CBD /* LoginViewModel.swift */; };
+		12F85D8B2AF915C200FB7CBD /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D8A2AF915C200FB7CBD /* SettingsVC.swift */; };
 		FF0B44B42AF2A74800586EA7 /* GetPlaceByIdResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B44B32AF2A74800586EA7 /* GetPlaceByIdResponseModel.swift */; };
 		FF0B44B62AF2AAAB00586EA7 /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B44B52AF2AAAB00586EA7 /* PlaceModel.swift */; };
 		FF0B44B92AF2AD6A00586EA7 /* GetAllPlacesForUserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B44B82AF2AD6A00586EA7 /* GetAllPlacesForUserResponseModel.swift */; };
@@ -180,6 +181,7 @@
 		12F85D822AF9123500FB7CBD /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		12F85D862AF9148000FB7CBD /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		12F85D882AF9149E00FB7CBD /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		12F85D8A2AF915C200FB7CBD /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		FF0B44B32AF2A74800586EA7 /* GetPlaceByIdResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPlaceByIdResponseModel.swift; sourceTree = "<group>"; };
 		FF0B44B52AF2AAAB00586EA7 /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
 		FF0B44B82AF2AD6A00586EA7 /* GetAllPlacesForUserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllPlacesForUserResponseModel.swift; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				12480C432AF0EC0B00549C42 /* SettingsCollectionViewCell.swift */,
+				12F85D8A2AF915C200FB7CBD /* SettingsVC.swift */,
 			);
 			path = SettingsPage;
 			sourceTree = "<group>";
@@ -831,6 +834,7 @@
 				12E1FD562AF3926A00B89F81 /* HelpSupportVC.swift in Sources */,
 				123F863E2AF5C62900E8F7B1 /* HelpSupportCell.swift in Sources */,
 				12A009432AEFA5A900D2AD14 /* PopularPlacesViewCell.swift in Sources */,
+				12F85D8B2AF915C200FB7CBD /* SettingsVC.swift in Sources */,
 				127249D42AF2CDC700CEAA64 /* EditProfileVC.swift in Sources */,
 				1248ED342AED311200777E98 /* HomePageLayout.swift in Sources */,
 				FF9BD5572AF2F19A0072BBA0 /* DeleteGalleryImageResponseModel.swift in Sources */,

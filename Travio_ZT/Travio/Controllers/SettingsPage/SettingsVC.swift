@@ -1,11 +1,10 @@
 //
-//
 //  SettingsVC.swift
 //  Travio
 //
-//  Created by web3406 on 27.10.2023.
+//  Created by Oğuz on 6.11.2023.
 //
-//
+
 import UIKit
 import SnapKit
 

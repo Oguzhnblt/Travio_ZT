@@ -36,14 +36,14 @@ class PopularPlacesViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 16
         imageView.clipsToBounds = true
-        imageView.size(CGSize(width: 90, height: 90))
+        imageView.sizeThatFits(CGSize(width: 90, height: 90))
         return imageView
     }()
     
     private lazy var imageIconView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .imgPinBlack
-        imageView.size(CGSize(width: 9, height: 12))
+        imageView.sizeThatFits(CGSize(width: 9, height: 12))
         return imageView
     }()
     
