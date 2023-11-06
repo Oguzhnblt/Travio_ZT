@@ -11,8 +11,9 @@ import SnapKit
 
 class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
-    
-    private lazy var topCollectionView: UICollectionView = {
+    let placeTopView = PlaceTopView()
+
+    private lazy var collectionView: UICollectionView = {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: myVisitsLayout())
         collectionView.showsVerticalScrollIndicator = false
@@ -20,7 +21,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         
         collectionView.register(PlaceTopView.self, forCellWithReuseIdentifier: PlaceTopView.identifier)
         collectionView.register(PlaceBottomView.self, forCellWithReuseIdentifier: PlaceBottomView.identifier)
-
+        
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -29,23 +30,8 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         return collectionView
     }()
     
-    private lazy var pageControl: UIPageControl = {
-        let pageControl = UIPageControl()
-        pageControl.currentPage = 0
-        pageControl.numberOfPages = newPlacesMockData.count
-        pageControl.pageIndicatorTintColor = .gray
-        pageControl.currentPageIndicatorTintColor = UIColor.black
-        pageControl.addTarget(self, action: #selector(pageControlChanged(_:)), for: .valueChanged)
-        
-        return pageControl
-    }()
+  
     
-    @objc private func pageControlChanged(_ sender: UIPageControl) {
-        let selectedPage = sender.currentPage
-        let indexPath = IndexPath(item: selectedPage, section: 0)
-        topCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +41,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
     private func setupViews() {
         self.view.backgroundColor = .white
-        self.view.addSubviews(topCollectionView, pageControl)
+        self.view.addSubviews(collectionView)
         
         
         
@@ -64,14 +50,9 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
     private func setupLayouts() {
         
-        topCollectionView.snp.makeConstraints({ make in
-            make.top.bottom.equalToSuperview()
+        collectionView.snp.makeConstraints({ make in
+            make.top.bottom.equalToSuperview().offset(-60)
             make.left.right.equalToSuperview()
-        })
-        
-        pageControl.snp.makeConstraints({ make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(250)
-            make.left.equalToSuperview().offset(120)
         })
         
         
@@ -106,7 +87,7 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceBottomView.identifier, for: indexPath) as! PlaceBottomView
                 cell.placeTitle.text = "İstanbul"
                 cell.dateTitle.text = "22 Eylül 2023"
-                cell.authorTitle.text = "by @oguzhanbolat"
+                cell.authorTitle.text = "by added @oguzhanbolat"
                 return cell
                 
             default:
@@ -119,7 +100,7 @@ extension PlaceDetailsVC {
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let visibleIndexPaths = collectionView.indexPathsForVisibleItems
         if let firstIndex = visibleIndexPaths.first {
-            pageControl.currentPage = firstIndex.item
+            placeTopView.setCurrentPage(firstIndex.item)
         }
     }
 }
@@ -127,28 +108,41 @@ extension PlaceDetailsVC {
 
 extension PlaceDetailsVC {
     
+    
     private func myVisitsLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
-            return self.myVisitsLayouts()
+            return self.myVisitsLayouts(for: sectionNumber)
         }
     }
     
-    private func myVisitsLayouts() -> NSCollectionLayoutSection {
+    private func myVisitsLayouts(for section: Int) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        
-        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.33))
+
+        var layoutGroupSize: NSCollectionLayoutSize
+        var orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior
+
+        switch section {
+        case 0:
+            layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.25))
+            orthogonalScrollingBehavior = .groupPagingCentered
+        case 1:
+            layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.4))
+            orthogonalScrollingBehavior = .none
+        default:
+            Swift.fatalError("Unexpected section: \(section)")
+        }
+
         let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
-        
+
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-        layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
-        
-        
+        layoutSection.orthogonalScrollingBehavior = orthogonalScrollingBehavior
+
         return layoutSection
     }
-    
+
 }
+
 
 
 #if DEBUG

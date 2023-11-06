@@ -17,15 +17,13 @@ class PlaceBottomView: UICollectionViewCell {
 
     private lazy var backView: UIView = {
         let view = UIView()
-        view.backgroundColor = .red
-        view.layer.cornerRadius = 10
+        view.layer.cornerRadius = 16
         return view
     }()
     
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
-        mapView.backgroundColor = .green
-        mapView.layer.cornerRadius = 10
+        mapView.layer.cornerRadius = 16
         return mapView
     }()
 
@@ -57,6 +55,7 @@ class PlaceBottomView: UICollectionViewCell {
         
         return stackView
     }()
+    
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -79,9 +78,11 @@ class PlaceBottomView: UICollectionViewCell {
             make.top.equalTo(backView.snp.top).offset(24)
             make.left.equalToSuperview().offset(24)
         }
-        
+
         mapView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(stackView.snp.bottom).offset(8)
+            make.left.right.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview()
         }
     }
 
