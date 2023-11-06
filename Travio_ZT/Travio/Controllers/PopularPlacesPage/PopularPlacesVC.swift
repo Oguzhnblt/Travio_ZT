@@ -10,9 +10,10 @@ import SnapKit
 
 class PopularPlacesVC: UIViewController {
     
+    private var isSorted = false
     private lazy var collectionView: UICollectionView = {
         
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: popularPlacesLayout())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
@@ -46,23 +47,14 @@ class PopularPlacesVC: UIViewController {
         return backButton
     }()
     
-    private lazy var sortDownToUpButton: UIButton = {
+    private lazy var sortButton: UIButton = {
         let sort = UIButton(type: .custom)
         sort.setImage(UIImage(named: "img_down_sort"), for: .normal)
         sort.addTarget(self, action: #selector(sortDown), for: .touchUpInside)
-
-
-       return sort
+        
+        
+        return sort
     }()
-    
-    private lazy var sortUpToDownButton: UIButton = {
-        let sort = UIButton(type: .custom)
-        sort.setImage(UIImage(named: "img_up_sort"), for: .normal)
-        sort.addTarget(self, action: #selector(sortUp), for: .touchUpInside)
-       return sort
-    }()
-    
-    
     
     private func createLabel(text: String,textSize: CGFloat, fontName: String) -> UILabel {
         let label = UILabel()
@@ -81,13 +73,23 @@ class PopularPlacesVC: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    // MARK: Sorting
+    
     @objc func sortDown() {
+        isSorted.toggle()
         
+        let imageName = isSorted ? "img_up_sort" : "img_down_sort"
+        sortButton.setImage(UIImage(named: imageName), for: .normal)
+        
+        if isSorted {
+            popularPlacesMockData.sort { $0.title!.localizedCompare($1.title!) == .orderedAscending }
+        } else {
+            popularPlacesMockData.sort { $0.title!.localizedCompare($1.title!) == .orderedDescending }
+        }
+        
+        collectionView.reloadData()
     }
     
-    @objc func sortUp() {
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,7 +102,7 @@ class PopularPlacesVC: UIViewController {
         
         self.view.addSubviews(popularPlacesView,titlelabel, backButton)
         popularPlacesView.addSubview(popularPlacesItemView)
-        popularPlacesItemView.addSubviews(collectionView,sortUpToDownButton,sortDownToUpButton)
+        popularPlacesItemView.addSubviews(collectionView,sortButton)
         
         
         setupLayouts()
@@ -109,16 +111,9 @@ class PopularPlacesVC: UIViewController {
     
     private func setupLayouts() {
         
-        sortUpToDownButton.snp.makeConstraints({make in
-            make.right.equalToSuperview().offset(-24)
-            make.top.equalToSuperview().offset(24)
-        })
-        
-        sortDownToUpButton.snp.makeConstraints({make in
+        sortButton.snp.makeConstraints({make in
             make.right.equalToSuperview().offset(-69)
             make.top.equalToSuperview().offset(24)
-
-
         })
         
         backButton.snp.makeConstraints({make in
@@ -185,18 +180,31 @@ extension PopularPlacesVC: UICollectionViewDataSource {
             cell.imageView.image = UIImage(named: "img_default")
         }
         
-        
-        
         return cell
     }
 }
 
 extension PopularPlacesVC {
     
-    func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
-        let section = HomePageLayout.shared.popularPlacesLayout()
+    func popularPlacesLayout() -> UICollectionViewCompositionalLayout {
+        let section = popularPlacesLayouts()
         return UICollectionViewCompositionalLayout(section: section)
     }
+    
+    func popularPlacesLayouts() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 0)
+        
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(110))
+        let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
+        
+        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+        layoutSection.orthogonalScrollingBehavior  = .none
+        
+        return layoutSection
+    }
+    
 }
 
 #if DEBUG

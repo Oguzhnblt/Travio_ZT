@@ -31,7 +31,6 @@ class MyVisitsViewCell: UICollectionViewCell {
         let view = UIView()
         view.clipsToBounds = true
         view.layer.cornerRadius = 16
-        view.dropShadow()
         return view
     }()
     
@@ -44,7 +43,6 @@ class MyVisitsViewCell: UICollectionViewCell {
     private lazy var imageIconView: UIImageView = {
         let imageIconView = UIImageView()
         imageIconView.contentMode = .scaleAspectFit
-        imageIconView.sizeThatFits(CGSize(width: 9, height: 12))
         imageIconView.image = .imgPin
         return imageIconView
     }()
@@ -71,11 +69,13 @@ class MyVisitsViewCell: UICollectionViewCell {
     private func setupViews() {
         
         lazy var subtitleStackView = UIStackView(arrangedSubviews: [imageIconView, subtitleLabel])
-        subtitleStackView.spacing = 4
+        subtitleStackView.spacing = 2
+        subtitleStackView.distribution = .fillProportionally
         
         lazy var innerStackView = UIStackView(arrangedSubviews: [titleLabel, subtitleStackView])
         innerStackView.axis = .vertical
-        innerStackView.spacing = 8
+        innerStackView.spacing = 4
+        innerStackView.distribution = .fillProportionally
         
         addSubviews(backView)
         backView.addSubview(imageView)

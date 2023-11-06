@@ -39,7 +39,7 @@ class SecuritySettingsVC: UIViewController {
     
     private lazy var saveButton: UIButton = {
         
-        let saveButton = UIButton(type: .custom)
+        let saveButton = UIButton()
         saveButton.setTitle("Save", for: .normal)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.layer.cornerRadius = 12
@@ -155,8 +155,8 @@ class SecuritySettingsVC: UIViewController {
         })
         
         saveButton.snp.makeConstraints({ make in
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
-            make.bottom.equalTo(securityItemView.snp.top).offset(647)
+            make.top.equalToSuperview().offset(580)
+            make.height.equalTo(54)
             make.left.right.equalToSuperview().inset(24)
         })
         

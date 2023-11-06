@@ -36,14 +36,12 @@ class PopularPlacesViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 16
         imageView.clipsToBounds = true
-        imageView.sizeThatFits(CGSize(width: 90, height: 90))
         return imageView
     }()
     
     private lazy var imageIconView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .imgPinBlack
-        imageView.sizeThatFits(CGSize(width: 9, height: 12))
         return imageView
     }()
     
@@ -61,7 +59,7 @@ class PopularPlacesViewCell: UICollectionViewCell {
         
         backView.snp.makeConstraints({make in
             make.top.equalToSuperview().offset(55)
-            make.left.right.equalToSuperview().inset(24)
+            make.left.right.equalToSuperview().inset(16)
         })
         
         lazy var subtitleStackView = UIStackView(arrangedSubviews: [imageIconView, subtitleLabel])
@@ -79,6 +77,15 @@ class PopularPlacesViewCell: UICollectionViewCell {
         outerStackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        imageView.snp.makeConstraints({make in
+            make.size.equalTo(90)
+        })
+        
+        imageIconView.snp.makeConstraints({make in
+            make.width.equalTo(12)
+            make.height.equalTo(18)
+        })
     }
     
     required init?(coder: NSCoder) {
