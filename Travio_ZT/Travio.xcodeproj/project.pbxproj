@@ -47,6 +47,7 @@
 		1255D86F2ADB155E00FB6638 /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D85C2ADB155E00FB6638 /* Poppins-Italic.ttf */; };
 		1255D8702ADB155E00FB6638 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D85D2ADB155E00FB6638 /* Poppins-MediumItalic.ttf */; };
 		125B445B2AE944F00047248D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125B445A2AE944F00047248D /* HomeVC.swift */; };
+		FF077BB72AF808D900EB99FE /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF077BB62AF808D900EB99FE /* MapVC.swift */; };
 		127806202AF7CC260085D31F /* HelpSupportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1278061F2AF7CC260085D31F /* HelpSupportModel.swift */; };
 		12E1FD562AF3926A00B89F81 /* HelpSupportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E1FD552AF3926A00B89F81 /* HelpSupportVC.swift */; };
 		127249D42AF2CDC700CEAA64 /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249D32AF2CDC700CEAA64 /* EditProfileVC.swift */; };
@@ -95,6 +96,7 @@
 		1255D85C2ADB155E00FB6638 /* Poppins-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Italic.ttf"; sourceTree = "<group>"; };
 		1255D85D2ADB155E00FB6638 /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
 		125B445A2AE944F00047248D /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		FF077BB62AF808D900EB99FE /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		1278061F2AF7CC260085D31F /* HelpSupportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportModel.swift; sourceTree = "<group>"; };
 		12E1FD552AF3926A00B89F81 /* HelpSupportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportVC.swift; sourceTree = "<group>"; };
 		127249D32AF2CDC700CEAA64 /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 				0F34F45E2AEA580A007189BE /* NetworkingHelper.swift */,
 				0FB8116B2AEA7A2800B2DACA /* RequestModel.swift */,
 				0FB3C3502AEBB0A200B98803 /* SettingsVC.swift */,
+				FF077BB62AF808D900EB99FE /* MapVC.swift */,
 			);
 			path = Travio;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */,
 				1248ED3B2AED352700777E98 /* PlacesCollectionViewCell.swift in Sources */,
 				1255D81A2ADACC6400FB6638 /* Extensions.swift in Sources */,
+				FF077BB72AF808D900EB99FE /* MapVC.swift in Sources */,
 				12E1FD562AF3926A00B89F81 /* HelpSupportVC.swift in Sources */,
 				123F863E2AF5C62900E8F7B1 /* HelpSupportCell.swift in Sources */,
 				1248ED382AED341000777E98 /* SectionHeaderView.swift in Sources */,
@@ -513,6 +517,8 @@
 				DEVELOPMENT_TEAM = K97JL7U478;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Travio/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Near me requires location so it can offer nearby points of interests.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Near me requires location so it can offer nearby points of interests.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -543,6 +549,8 @@
 				DEVELOPMENT_TEAM = K97JL7U478;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Travio/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Near me requires location so it can offer nearby points of interests.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Near me requires location so it can offer nearby points of interests.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
