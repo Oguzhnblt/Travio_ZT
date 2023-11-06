@@ -23,7 +23,7 @@ class SectionHeaderView: UICollectionReusableView {
         title.textColor = .black
         title.font = UIFont(name: "Poppins-Regular", size: 20)
         
-        button.setTitleColor(.background, for: .normal)
+        button.setTitleColor(UIColor(named: "background"), for: .normal)
         button.titleLabel?.font = UIFont(name: "Poppins-Regular", size: 14)
         
         
