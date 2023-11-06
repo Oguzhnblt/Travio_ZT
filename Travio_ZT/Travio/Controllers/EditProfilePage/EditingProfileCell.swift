@@ -15,7 +15,6 @@ class EditingProfileCell: UIView {
         view.backgroundColor = .white
         view.clipsToBounds = true
         view.layer.cornerRadius = 16
-        view.size(CGSize(width: 163, height: 54))
         return view
     }()
     

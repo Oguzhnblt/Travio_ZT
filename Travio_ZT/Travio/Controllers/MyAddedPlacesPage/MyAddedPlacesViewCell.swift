@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import UIKit
 
 class MyAddedPlacesViewCell: UICollectionViewCell {
     
@@ -35,14 +36,12 @@ class MyAddedPlacesViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 16
         imageView.clipsToBounds = true
-        imageView.size(CGSize(width: 90, height: 90))
         return imageView
     }()
     
     private lazy var imageIconView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = .imgPin
-        imageView.size(CGSize(width: 13, height: 18))
         // FIXME: --
         imageView.backgroundColor = .black
         return imageView

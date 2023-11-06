@@ -30,7 +30,7 @@ class EditProfileVC: UIViewController {
     
     private lazy var profileImage: UIImageView = {
         let image = UIImageView()
-        image.image = .image3
+        image.image = UIImage(named: "img_profile")
         image.contentMode = .scaleAspectFit
         
         return image
@@ -119,7 +119,6 @@ class EditProfileVC: UIViewController {
         let saveButton = UIButton(type: .custom)
         saveButton.setTitle("Save", for: .normal)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-        saveButton.size(CGSize(width: 342, height: 51))
         saveButton.layer.cornerRadius = 12
         saveButton.backgroundColor = .background
         return saveButton
