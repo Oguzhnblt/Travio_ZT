@@ -14,11 +14,10 @@ protocol PlaceTopViewDelegate: AnyObject {
 
 class PlaceTopView: UICollectionViewCell {
     
-    static let identifier = "topView"
-    
     weak var delegate: PlaceTopViewDelegate?
     
-    
+    static let identifier = "topView"
+        
     var currentPage: Int = 0 {
         didSet {
             pageControl.currentPage = currentPage
