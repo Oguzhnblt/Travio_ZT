@@ -33,7 +33,7 @@ class PlacesCollectionViewCell: UICollectionViewCell {
    private lazy var imageIconView: UIImageView = {
         let imageIconView = UIImageView()
         imageIconView.contentMode = .scaleAspectFit
-        imageIconView.image = .imgPin
+        imageIconView.image = UIImage(named: "image_pin")
         return imageIconView
     }()
     

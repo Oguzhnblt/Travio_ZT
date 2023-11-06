@@ -94,14 +94,13 @@ class SignUpVC: UIViewController {
     
     
     @objc func signUpButtonTapped() {
-        
         guard let name = usernameTextField.text,
               let email = emailTextField.text,
               let password = passwordTextField.text
         else {return}
         let paramsSignUp = ["full_name" : name, "email" : email, "password" : password]
         
-        NetworkingHelper.shared.fetchData(urlRequest: .register(params: paramsSignUp), callback:  { (result:Result<RequestModel,Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .register(params: paramsSignUp), callback:  { (result:Result<RegisterRequest,Error>) in
         
         print(result)
     })

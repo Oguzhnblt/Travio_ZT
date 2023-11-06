@@ -93,20 +93,17 @@ class LoginVC: UIViewController {
     
     @objc func buttonLoginTapped() {
         guard let email = emailTextField.text,
-                       let password = passwordTextField.text
-                       else {return}
-                viewModel.email = email
-                 viewModel.password = password
-
-                 viewModel.login { [weak self] result in
-                     
-                     print(result)
-                 }
-             
-             
-                
-            
-
+              let password = passwordTextField.text
+        else {return}
+        
+        let paramsLogin = ["email" : email, "password" : password]
+        NetworkingHelper.shared.fetchData(urlRequest: .login(params: paramsLogin), callback:  { (result:Result<LoginResponse,Error>) in
+        
+        print(result)
+    })
+        
+        // Home sayfasına gidecek.
+        
     }
 
  
