@@ -47,7 +47,7 @@ class SignUpVC: UIViewController {
         return label
     }
     
-   
+    
     private func addTextField(title: String, placeholder: String, keyboardType: UIKeyboardType, isSecure: Bool) -> CustomLabelTextField {
         let textField = CustomLabelTextField()
         textField.font = UIFont(name: "Poppins-Regular", size: 12)
@@ -60,7 +60,7 @@ class SignUpVC: UIViewController {
         return textField
     }
     
-  
+    
     private lazy var signUpButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
@@ -87,6 +87,14 @@ class SignUpVC: UIViewController {
         return imageButton
     }()
     
+    private lazy var passwordMatchWarningLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(named: "backgroundColor")
+        label.font = UIFont(name: "Poppins-Regular", size: 12)
+        label.textAlignment = .center
+        return label
+    }()
+    
     
     @objc private func backButtonTapped() {
         self.navigationController?.isNavigationBarHidden = true
@@ -95,40 +103,64 @@ class SignUpVC: UIViewController {
     
     
     @objc func signUpButtonTapped() {
-        guard let name = usernameTextField.text,
-              let email = emailTextField.text,
-              let password = passwordTextField.text
-        else {return}
-        let paramsSignUp = ["full_name" : name, "email" : email, "password" : password]
+        guard let name = usernameTextField.text, !name.isEmpty,
+              let email = emailTextField.text, !email.isEmpty,
+              let password = passwordTextField.text, !password.isEmpty,
+              let confirmPassword = passwordConfirmTextField.text, !confirmPassword.isEmpty
+        else {
+            showAlert(message: "Email ve şifre boş bırakılamaz.")
+            return
+        }
         
-        NetworkingHelper.shared.fetchData(urlRequest: .register(params: paramsSignUp), callback:  { (result:Result<RegisterRequest,Error>) in
+        let paramsSignUp = ["full_name": name, "email": email, "password": password]
         
-        print(result)
-    })
-
+        viewModel.signUp(params: paramsSignUp, completion: { result in
+            switch result {
+                case .success(_):
+                    self.showAlertSuccess(message:"Kayıt başarılı.")
+                case .failure(_):
+                    self.showAlertError(message: "Zaten var olan bir kullanıcı")
+            }
+        })
     }
     
-//    @objc private func textFieldDidChange(_ textField: UITextField) {
-//        let isAllFieldsFilled = !(usernameTextField.text?.isEmpty ?? true) &&
-//                                !(emailTextField.text?.isEmpty ?? true) &&
-//                                !(passwordTextField.text?.isEmpty ?? true) &&
-//                                !(passwordConfirmTextField.text?.isEmpty ?? true)
-//
-//        signUpButton.isEnabled = isAllFieldsFilled
-//        signUpButton.backgroundColor = isAllFieldsFilled ? UIColor(named: "backgroundColor") : UIColor.lightGray
-//    }
-//
-//    private func didChange() {
-//        usernameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-//            emailTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-//            passwordTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-//            passwordConfirmTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-//
-//    }
-//
+    
+    // MARK: ShowAlert
+    
+    private func showAlert(message: String) {
+        let alertController = UIAlertController(title: "Mesaj", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Tamam", style: .default)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func showAlertSuccess(message: String) {
+        let alertController = UIAlertController(title: "Mesaj", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Tamam", style: .default) { [weak self] _ in
+            self?.navigateToLoginViewController()
+        }
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func showAlertError(message: String) {
+        let alertController = UIAlertController(title: "Mesaj", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Tamam", style: .default)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func navigateToLoginViewController() {
+        if let navigationController = navigationController {
+            navigationController.popViewController(animated: true)
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        didChange()
         setupViews()
     }
     
@@ -201,7 +233,7 @@ class SignUpVC: UIViewController {
             button.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-23)
         })
         
-      
+        
         backButton.snp.makeConstraints({button in
             button.centerY.equalTo(signUpText)
             button.left.equalTo(loginItemStackView).offset(12)
@@ -216,7 +248,7 @@ import SwiftUI
 @available(iOS 13, *)
 struct SignUpVC_Preview: PreviewProvider {
     static var previews: some View{
-         
+        
         SignUpVC().showPreview()
     }
 }

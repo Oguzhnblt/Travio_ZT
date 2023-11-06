@@ -383,6 +383,7 @@
 		1248ED4B2AED51C700777E98 /* SignupPage */ = {
 			isa = PBXGroup;
 			children = (
+				12F85D862AF9148000FB7CBD /* SignUpViewModel.swift */,
 				1214274E2ADC25E700CA1D10 /* SignUpVC.swift */,
 			);
 			path = SignupPage;
@@ -417,7 +418,6 @@
 		1255D8042ADAC7BD00FB6638 /* Travio */ = {
 			isa = PBXGroup;
 			children = (
-				12F85D852AF9146400FB7CBD /* ViewModel */,
 				1255D8052ADAC7BD00FB6638 /* AppDelegate.swift */,
 				1255D8072ADAC7BD00FB6638 /* SceneDelegate.swift */,
 				1248ED322AED310400777E98 /* Model */,
@@ -543,14 +543,6 @@
 				1278061F2AF7CC260085D31F /* HelpSupportModel.swift */,
 			);
 			name = HelpSupport;
-			sourceTree = "<group>";
-		};
-		12F85D852AF9146400FB7CBD /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				12F85D862AF9148000FB7CBD /* SignUpViewModel.swift */,
-			);
-			name = ViewModel;
 			sourceTree = "<group>";
 		};
 		FF0B44B22AF2A71300586EA7 /* GetPlaceByIdModels */ = {
