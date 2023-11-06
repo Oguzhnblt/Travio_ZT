@@ -69,13 +69,11 @@ class MyVisitsViewCell: UICollectionViewCell {
     private func setupViews() {
         
         lazy var subtitleStackView = UIStackView(arrangedSubviews: [imageIconView, subtitleLabel])
-        subtitleStackView.spacing = 2
-        subtitleStackView.distribution = .fillProportionally
+        subtitleStackView.spacing = 4
         
         lazy var innerStackView = UIStackView(arrangedSubviews: [titleLabel, subtitleStackView])
         innerStackView.axis = .vertical
-        innerStackView.spacing = 4
-        innerStackView.distribution = .fillProportionally
+        innerStackView.spacing = 8
         
         addSubviews(backView)
         backView.addSubview(imageView)
@@ -94,6 +92,11 @@ class MyVisitsViewCell: UICollectionViewCell {
             make.left.right.equalToSuperview().inset(8)
             make.bottom.equalToSuperview().offset(-8)
         }
+        
+        imageIconView.snp.makeConstraints({make in
+            make.width.equalTo(9)
+            make.height.equalTo(12)
+        })
     }
     
     
