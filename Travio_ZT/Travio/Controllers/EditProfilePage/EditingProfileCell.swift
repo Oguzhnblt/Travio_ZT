@@ -3,7 +3,6 @@
 //  Travio
 //
 //  Created by Oğuz on 2.11.2023.
-//
 
 import UIKit
 import SnapKit
@@ -12,7 +11,7 @@ class EditingProfileCell: UIView {
     
     private lazy var backView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .content
         view.clipsToBounds = true
         view.layer.cornerRadius = 16
         return view
@@ -29,6 +28,7 @@ class EditingProfileCell: UIView {
     let signImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
+    
         return image
     }()
     
@@ -42,6 +42,9 @@ class EditingProfileCell: UIView {
         
         backView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(8)
+            make.width.equalTo(164)
+            make.height.equalTo(54)
+
         }
         
         stackView.snp.makeConstraints { make in
