@@ -108,7 +108,7 @@ class SignUpVC: UIViewController {
               let password = passwordTextField.text, !password.isEmpty,
               let confirmPassword = passwordConfirmTextField.text, !confirmPassword.isEmpty
         else {
-            showAlert(message: "Email ve şifre boş bırakılamaz.")
+            showAlert(message: "Lütfen tüm alanları doldurunuz.")
             return
         }
         
@@ -128,14 +128,14 @@ class SignUpVC: UIViewController {
     // MARK: ShowAlert
     
     private func showAlert(message: String) {
-        let alertController = UIAlertController(title: "Mesaj", message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Uyarı", message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Tamam", style: .default)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
     
     private func showAlertSuccess(message: String) {
-        let alertController = UIAlertController(title: "Mesaj", message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Başarılı", message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Tamam", style: .default) { [weak self] _ in
             self?.navigateToLoginViewController()
         }
@@ -144,7 +144,7 @@ class SignUpVC: UIViewController {
     }
     
     private func showAlertError(message: String) {
-        let alertController = UIAlertController(title: "Mesaj", message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Hata", message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Tamam", style: .default)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)

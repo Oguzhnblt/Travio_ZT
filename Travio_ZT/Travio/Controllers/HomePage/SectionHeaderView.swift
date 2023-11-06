@@ -38,10 +38,8 @@ class SectionHeaderView: UICollectionReusableView {
         }
         
         button.snp.makeConstraints({make in
-        
-            make.left.equalTo(title.snp.left).offset(300)
+            make.left.right.equalToSuperview().offset(290)
             make.top.bottom.equalToSuperview()
-            make.width.equalTo(60)
         })
         
       

@@ -7,8 +7,6 @@
 
 import Foundation
 
-
-
 class SignUpViewModel {
     
     func signUp(params: [String: Any], completion: @escaping (Result<RegisterResponse, Error>) -> Void) {

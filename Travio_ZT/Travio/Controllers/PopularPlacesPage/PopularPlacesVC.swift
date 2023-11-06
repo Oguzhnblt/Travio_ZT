@@ -137,16 +137,15 @@ class PopularPlacesVC: UIViewController {
         
         collectionView.dropShadow()
         collectionView.snp.makeConstraints({make in
-            make.top.bottom.equalToSuperview().offset(10)
-            make.left.right.equalToSuperview()
-            
+            make.top.bottom.equalToSuperview().offset(35)
+            make.left.right.equalToSuperview().inset(16)
+
         })
     }
 }
 
 extension PopularPlacesVC: UICollectionViewDelegateFlowLayout {
     
-    // Her bir item'in boyutu
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
@@ -194,13 +193,13 @@ extension PopularPlacesVC {
     func popularPlacesLayouts() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 0)
         
-        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(110))
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.3))
         let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
         
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.orthogonalScrollingBehavior  = .none
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 90, trailing: 0)
         
         return layoutSection
     }
