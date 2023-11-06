@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class PlacesCollectionViewCell: UICollectionViewCell {
     
@@ -23,10 +24,18 @@ class PlacesCollectionViewCell: UICollectionViewCell {
             subtitleLabel.text = cellData.place
         }
     }
+    
+    private lazy var backView: UIView = {
+        let backView = UIView()
+        backView.clipsToBounds = true
+        backView.layer.cornerRadius = 16
+        backView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+        return backView
+    }()
 
      lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleToFill
         return imageView
     }()
     
@@ -39,7 +48,7 @@ class PlacesCollectionViewCell: UICollectionViewCell {
     
      lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-SemiBold", size: 24)
+        label.font = UIFont(name: "Poppins-SemiBold", size: 20)
         label.textColor = .white
         return label
     }()
@@ -57,17 +66,39 @@ class PlacesCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupViews() {
-        addSubviews(imageView,titleLabel,subtitleLabel, imageIconView)
+        addSubviews(backView)
+        backView.addSubviews(imageView,titleLabel,subtitleLabel,imageIconView)
         
-        
-        imageView.frame = CGRect(x: 0, y: 0, width: 280, height: 178)
-        imageView.roundAllCorners(radius: 20)
-        
-        titleLabel.frame = CGRect(x: 16, y: 120, width: 280, height: 30)
-        
-        imageIconView.frame = CGRect(x: 16, y: 153, width: 9, height: 12)
-        subtitleLabel.frame = CGRect(x: 31, y: 150, width: 280, height: 21)
+        setupLayouts()
     }
+    
+    private func setupLayouts() {
+        
+        imageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).offset(-60)
+            make.left.equalToSuperview().offset(16)
+        }
+
+        subtitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom)
+            make.left.equalToSuperview().offset(31)
+
+        }
+        
+        imageIconView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom)
+            make.bottom.equalToSuperview().offset(-8)
+            make.left.equalToSuperview().offset(16)
+
+        }
+
+    }
+
+        
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

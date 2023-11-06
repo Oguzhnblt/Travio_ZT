@@ -81,14 +81,13 @@ class HomeVC: UIViewController {
         setupLayouts()
         
     }
-    
     private func setupLayouts() {
         loginView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
         imageView.snp.makeConstraints({make in
-            make.top.equalTo(loginView).offset(73)
+            make.top.equalTo(loginView).offset(110)
             make.left.equalTo(loginView).offset(16)
         })
         
@@ -99,8 +98,9 @@ class HomeVC: UIViewController {
         collectionView.dropShadow()
         collectionView.snp.makeConstraints({make in
             make.top.bottom.equalToSuperview()
-            make.left.right.equalToSuperview().offset(12)
+            make.left.right.equalToSuperview().offset(24)
         })
+        
     }
 }
 
@@ -116,7 +116,7 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
 
 extension HomeVC: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2 // Section sayısı
+        return 4 // Section sayısı
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -146,22 +146,15 @@ extension HomeVC: UICollectionViewDataSource {
         if kind == UICollectionView.elementKindSectionHeader {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as! SectionHeaderView
             
-            let sectionTitles = ["Popular Places", "New Places"]
+            let sectionTitles = ["Popular Places", "New Places", "Büşra", "oğuzhan"]
             
             if indexPath.section < sectionTitles.count {
                 header.title.text = sectionTitles[indexPath.section]
                 
-                switch indexPath.section {
-                    case 0:
-                        header.button.setTitle("See All", for: .normal)
-                        header.button.addTarget(self, action: #selector(seeAllPopular), for: .touchUpInside)
-                    case 1:
-                        header.button.setTitle("See All", for: .normal)
-                        header.button.addTarget(self, action: #selector(seeAllNew), for: .touchUpInside)
-                    default:
-                        header.button.setTitle("See All", for: .normal)
-                        header.button.addTarget(self, action: #selector(seeAllDefault), for: .touchUpInside)
-                }
+                
+                header.button.setTitle("See All", for: .normal)
+                header.button.addTarget(self, action: #selector(seeAllPopular), for: .touchUpInside)
+                
             } else {
                 header.title.text = "Unknown Section"
                 header.button.setTitle("See All", for: .normal)
@@ -174,8 +167,8 @@ extension HomeVC: UICollectionViewDataSource {
     }
     
     @objc func seeAllPopular() {
-        //let seeAllVC = PopularPlacesVC()
-        //navigationController?.pushViewController(seeAllVC, animated: true)
+        let seeAllVC = PopularPlacesVC()
+        navigationController?.pushViewController(seeAllVC, animated: true)
     }
     
     @objc func seeAllNew() {
