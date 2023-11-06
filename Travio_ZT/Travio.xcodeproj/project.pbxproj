@@ -28,6 +28,7 @@
 		0FB84E0A2AF287BA0071A559 /* UpdatePlaceResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB84E092AF287BA0071A559 /* UpdatePlaceResponseModel.swift */; };
 		0FB84E0D2AF288180071A559 /* DeletePlaceResposeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB84E0C2AF288180071A559 /* DeletePlaceResposeModel.swift */; };
 		0FB84E122AF289160071A559 /* GetAllPlacesResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB84E112AF289160071A559 /* GetAllPlacesResponseModel.swift */; };
+		0FB8116C2AEA7A2900B2DACA /* RequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB8116B2AEA7A2800B2DACA /* RequestModel.swift */; };
 		0FC28E362AE92C9F005387E9 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC28E352AE92C9F005387E9 /* Router.swift */; };
 		0FC28E392AE92E56005387E9 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0FC28E382AE92E56005387E9 /* Alamofire */; };
 		0FC9671D2AEA4B5D009FB26B /* MainTabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */; };
@@ -65,6 +66,9 @@
 		1255D86F2ADB155E00FB6638 /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D85C2ADB155E00FB6638 /* Poppins-Italic.ttf */; };
 		1255D8702ADB155E00FB6638 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D85D2ADB155E00FB6638 /* Poppins-MediumItalic.ttf */; };
 		125B445B2AE944F00047248D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125B445A2AE944F00047248D /* HomeVC.swift */; };
+		12B02A7D2AF8106F0098DF1D /* PlaceDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B02A7C2AF8106F0098DF1D /* PlaceDetailsVC.swift */; };
+		12B02A7F2AF812010098DF1D /* PlaceTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B02A7E2AF812010098DF1D /* PlaceTopView.swift */; };
+		12B02A812AF82A930098DF1D /* PlaceBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B02A802AF82A930098DF1D /* PlaceBottomView.swift */; };
 		FF0B44B42AF2A74800586EA7 /* GetPlaceByIdResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B44B32AF2A74800586EA7 /* GetPlaceByIdResponseModel.swift */; };
 		FF0B44B62AF2AAAB00586EA7 /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B44B52AF2AAAB00586EA7 /* PlaceModel.swift */; };
 		FF0B44B92AF2AD6A00586EA7 /* GetAllPlacesForUserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B44B82AF2AD6A00586EA7 /* GetAllPlacesForUserResponseModel.swift */; };
@@ -154,6 +158,9 @@
 		1255D85C2ADB155E00FB6638 /* Poppins-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Italic.ttf"; sourceTree = "<group>"; };
 		1255D85D2ADB155E00FB6638 /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
 		125B445A2AE944F00047248D /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		12B02A7C2AF8106F0098DF1D /* PlaceDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsVC.swift; sourceTree = "<group>"; };
+		12B02A7E2AF812010098DF1D /* PlaceTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTopView.swift; sourceTree = "<group>"; };
+		12B02A802AF82A930098DF1D /* PlaceBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceBottomView.swift; sourceTree = "<group>"; };
 		FF0B44B32AF2A74800586EA7 /* GetPlaceByIdResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPlaceByIdResponseModel.swift; sourceTree = "<group>"; };
 		FF0B44B52AF2AAAB00586EA7 /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
 		FF0B44B82AF2AD6A00586EA7 /* GetAllPlacesForUserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllPlacesForUserResponseModel.swift; sourceTree = "<group>"; };
@@ -437,6 +444,7 @@
 		125B445C2AE971580047248D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				12B02A7B2AF8105C0098DF1D /* PlaceDetailsPage */,
 				127806262AF7EC640085D31F /* MyVisitsPage */,
 				127806212AF7E28E0085D31F /* MyAddedPlacesPage */,
 				12E1FD542AF3925900B89F81 /* HelpSupport */,
@@ -446,6 +454,16 @@
 				1248ED4A2AED519D00777E98 /* HomePage */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		12B02A7B2AF8105C0098DF1D /* PlaceDetailsPage */ = {
+			isa = PBXGroup;
+			children = (
+				12B02A7C2AF8106F0098DF1D /* PlaceDetailsVC.swift */,
+				12B02A7E2AF812010098DF1D /* PlaceTopView.swift */,
+				12B02A802AF82A930098DF1D /* PlaceBottomView.swift */,
+			);
+			path = PlaceDetailsPage;
 			sourceTree = "<group>";
 		};
 		FF0B44B22AF2A71300586EA7 /* GetPlaceByIdModels */ = {
@@ -713,6 +731,8 @@
 				0FB84E0D2AF288180071A559 /* DeletePlaceResposeModel.swift in Sources */,
 				127806202AF7CC260085D31F /* HelpSupportModel.swift in Sources */,
 				125B445B2AE944F00047248D /* HomeVC.swift in Sources */,
+				12B02A812AF82A930098DF1D /* PlaceBottomView.swift in Sources */,
+				12B02A7D2AF8106F0098DF1D /* PlaceDetailsVC.swift in Sources */,
 				1255D8062ADAC7BD00FB6638 /* AppDelegate.swift in Sources */,
 				0F6E23272AF2343200F843C6 /* RegisterRequestModel.swift in Sources */,
 				FF0B44B42AF2A74800586EA7 /* GetPlaceByIdResponseModel.swift in Sources */,
@@ -730,6 +750,7 @@
 				1248ED3D2AED367200777E98 /* PlacesModel.swift in Sources */,
 				127249DC2AF3014500CEAA64 /* EditingProfileCell.swift in Sources */,
 				0FC28E362AE92C9F005387E9 /* Router.swift in Sources */,
+				12B02A7F2AF812010098DF1D /* PlaceTopView.swift in Sources */,
 				FF9BD56A2AF2F86B0072BBA0 /* GetVisitByIdResponseModel.swift in Sources */,
 				0FB84E052AF286CC0071A559 /* PostPlaceResponseModel.swift in Sources */,
 				FF0B44BC2AF2AFE600586EA7 /* GetPopularPlacesResponseModel.swift in Sources */,
@@ -933,6 +954,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -965,7 +987,6 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
