@@ -30,7 +30,7 @@ class EditProfileVC: UIViewController {
     
     private lazy var profileImage: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "img_profile")
+        image.image = .imgProfile
         image.contentMode = .scaleAspectFit
         
         return image
@@ -67,6 +67,7 @@ class EditProfileVC: UIViewController {
         let cell = EditingProfileCell()
         cell.label.text = "Admin"
         cell.signImage.image = .imgAdmin
+        
         return cell
     }()
     
@@ -209,6 +210,9 @@ class EditProfileVC: UIViewController {
         saveButton.snp.makeConstraints({make in
             make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
             make.left.right.equalToSuperview().inset(24)
+            make.width.equalTo(342)
+            make.height.equalTo(51)
+
         })
       
     }
