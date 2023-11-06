@@ -67,7 +67,6 @@ class EditProfileVC: UIViewController {
         let cell = EditingProfileCell()
         cell.label.text = "Admin"
         cell.signImage.image = .imgAdmin
-        
         return cell
     }()
     

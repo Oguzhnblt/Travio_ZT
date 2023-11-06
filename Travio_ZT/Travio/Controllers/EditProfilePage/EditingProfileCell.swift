@@ -29,7 +29,6 @@ class EditingProfileCell: UIView {
     let signImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFit
-    
         return image
     }()
     
