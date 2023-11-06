@@ -62,6 +62,7 @@ class LoginVC: UIViewController {
         textField.placeholder = placeholder
         textField.customLabel.text = title
         textField.isSecureTextEntry = isSecure
+        textField.autocapitalizationType = .none
         return textField
     }
     
@@ -88,25 +89,40 @@ class LoginVC: UIViewController {
     @objc private func signUpTapped() {
         let vc = SignUpVC()
         self.navigationController?.pushViewController(vc, animated: true)
-      
+        
     }
     
-    @objc func buttonLoginTapped() {
-        guard let email = emailTextField.text,
-              let password = passwordTextField.text
-        else {return}
-        
+    @objc private func buttonLoginTapped() {
+        guard let email = emailTextField.text, !email.isEmpty,
+              let password = passwordTextField.text, !password.isEmpty else {
+            showAlert(message: "Email ve şifre boş bırakılamaz.")
+            return
+        }
+
         let paramsLogin = ["email" : email, "password" : password]
-        NetworkingHelper.shared.fetchData(urlRequest: .login(params: paramsLogin), callback:  { (result:Result<LoginResponse,Error>) in
-        
-        print(result)
-    })
-        
-        // Home sayfasına gidecek.
-        
+        viewModel.login(params: paramsLogin, completion: {result in
+            switch result {
+                case .success(_):
+                    self.navigateToHomeVC()
+                case .failure(_):
+                    self.showAlert(message: "Email ve şifre hatalı.")
+            }
+        })
     }
 
- 
+    private func navigateToHomeVC() {
+        let homeVC = HomeVC()
+        navigationController?.pushViewController(homeVC, animated: true)
+    }
+    
+    private func showAlert(message: String) {
+        let alertController = UIAlertController(title: "Hata", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Tamam", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -155,19 +171,19 @@ class LoginVC: UIViewController {
         loginItemView.snp.makeConstraints { viewField in
             viewField.width.height.equalToSuperview()
         }
-
+        
         welcomeLabelText.snp.makeConstraints { text in
             text.top.equalTo(loginItemView).offset(64)
             text.leading.trailing.equalTo(loginItemView)
         }
-
-
+        
+        
         emailTextField.snp.makeConstraints { $0.height.equalTo(74) }
         emailTextField.snp.makeConstraints { $0.width.equalTo(392) }
         
         passwordTextField.snp.makeConstraints { $0.height.equalTo(74) }
         passwordTextField.snp.makeConstraints { $0.width.equalTo(392) }
-
+        
         loginİtemStackView.dropShadow()
         loginİtemStackView.snp.makeConstraints { textField in
             textField.top.equalTo(welcomeLabelText.snp.bottom).offset(41)
@@ -180,13 +196,13 @@ class LoginVC: UIViewController {
             button.height.equalTo(54)
             button.width.equalTo(342)
         }
-
+        
         signUpStackView.snp.makeConstraints { sign in
             sign.centerX.equalToSuperview()
             sign.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
-
+    
 }
 
 #if DEBUG
@@ -195,7 +211,7 @@ import SwiftUI
 @available(iOS 13, *)
 struct LoginVC_Preview: PreviewProvider {
     static var previews: some View{
-         
+        
         LoginVC().showPreview()
     }
 }

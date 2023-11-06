@@ -7,7 +7,7 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     private var isExpanded: Bool = false
     
     private lazy var cellReuseIdentifier = "cell"
-    private lazy var expandedHeight: CGFloat = 160
+    private lazy var expandedHeight: CGFloat = 150
     private lazy var collapsedHeight: CGFloat = 45
     
     private lazy var collectionView: UICollectionView = {
@@ -123,7 +123,7 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let isExpanded = indexPath == selectedIndexPath
+        let isExpanded = selectedIndexPath == indexPath
         return CGSize(width: collectionView.bounds.width - 16, height: isExpanded  ? expandedHeight : collapsedHeight)
     }
     

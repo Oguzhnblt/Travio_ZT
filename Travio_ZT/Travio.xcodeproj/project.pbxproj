@@ -392,6 +392,7 @@
 			isa = PBXGroup;
 			children = (
 				1255D8092ADAC7BD00FB6638 /* LoginVC.swift */,
+				12F85D882AF9149E00FB7CBD /* LoginViewModel.swift */,
 			);
 			path = LoginPage;
 			sourceTree = "<group>";
@@ -548,7 +549,6 @@
 			isa = PBXGroup;
 			children = (
 				12F85D862AF9148000FB7CBD /* SignUpViewModel.swift */,
-				12F85D882AF9149E00FB7CBD /* LoginViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -1009,7 +1009,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};

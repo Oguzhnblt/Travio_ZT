@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 
 class SignUpVC: UIViewController {
-    private lazy var viewModel: SignUpViewModel = SignUpViewModel()
+    private lazy var viewModel = SignUpViewModel()
     
     private func createStackView(axis: NSLayoutConstraint.Axis, spacing: CGFloat ) -> UIStackView {
         let stackView = UIStackView()
