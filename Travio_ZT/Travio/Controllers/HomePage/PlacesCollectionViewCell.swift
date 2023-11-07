@@ -8,21 +8,18 @@
 import Foundation
 import UIKit
 import SnapKit
+import Kingfisher
 
 class PlacesCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "places"
     
-    // Section içindeki item değişimini dinlemek için
-    var cellData: PlacesModel? {
-        didSet {
-            guard let cellData = cellData else {
-                return
-            }
-            imageView.image = UIImage(named: cellData.cover_img_url ?? "img_default")
-            titleLabel.text = cellData.title
-            subtitleLabel.text = cellData.place
-        }
+    func configure(with place: Place) {
+        if let url = URL(string: place.cover_image_url!) {
+            imageView.kf.setImage(with: url)
+        }        
+        titleLabel.text = place.title
+        subtitleLabel.text = place.place
     }
     
     private lazy var backView: UIView = {
@@ -32,21 +29,21 @@ class PlacesCollectionViewCell: UICollectionViewCell {
         backView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         return backView
     }()
-
-     lazy var imageView: UIImageView = {
+    
+    lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
-   private lazy var imageIconView: UIImageView = {
+    private lazy var imageIconView: UIImageView = {
         let imageIconView = UIImageView()
         imageIconView.contentMode = .scaleAspectFit
         imageIconView.image = UIImage(named: "image_pin")
         return imageIconView
     }()
     
-     lazy var titleLabel: UILabel = {
+    lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "Poppins-SemiBold", size: 20)
         label.textColor = .white
@@ -77,28 +74,28 @@ class PlacesCollectionViewCell: UICollectionViewCell {
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-
+        
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(-60)
             make.left.equalToSuperview().offset(16)
         }
-
+        
         subtitleLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom)
             make.left.equalToSuperview().offset(31)
-
+            
         }
         
         imageIconView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom)
             make.bottom.equalToSuperview().offset(-8)
             make.left.equalToSuperview().offset(16)
-
+            
         }
-
-    }
-
         
+    }
+    
+    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

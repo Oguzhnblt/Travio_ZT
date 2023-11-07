@@ -33,13 +33,13 @@ enum Router{
     case deleteVisitByPlaceId(placeId: String)
     case checkVisitByPlaceId(placeId: String)
     
-
-        var baseURL:String {
-            return "https://api.iosclass.live"
-        }
-        
-        var path:String {
-            switch self {
+    
+    var baseURL:String {
+        return "https://api.iosclass.live"
+    }
+    
+    var path:String {
+        switch self {
             case .register:
                 return "/v1/auth/register"
             case .login:
@@ -61,13 +61,13 @@ enum Router{
             case .deletePlace(let placeId):
                 return "/v1/places/\(placeId)"
             case .getAllPlaces:
-                    return "/v1/places"
+                return "/v1/places"
             case .getPlaceById(let placeId):
-                    return "/v1/places/\(placeId)"
+                return "/v1/places/\(placeId)"
             case .getAllPlacesForUser:
-                    return "/v1/places/user"
+                return "/v1/places/user"
             case .getPopularPlaces:
-                 return "/v1/places/popular"
+                return "/v1/places/popular"
             case .getLastPlaces:
                 return "/v1/places/last"
             case .postGalleryImage:
@@ -90,12 +90,12 @@ enum Router{
                 
                 
                 
-            }
         }
-        
-        
-        var method:HTTPMethod {
-            switch self {
+    }
+    
+    
+    var method:HTTPMethod {
+        switch self {
             case .register, .login, .refresh, .upload, .postPlace, .postGalleryImage, .postVisit:
                 return .post
             case .profile, .getAllPlaces, .getPlaceById, .getAllPlacesForUser, .getPopularPlaces, .getAllVisits,.getVisitById, .getLastPlaces, .getAllGalleryByPlaceId:
@@ -105,21 +105,21 @@ enum Router{
             case .deletePlace, .deleteGalleryImage, .deleteVisitByPlaceId,.checkVisitByPlaceId:
                 return .delete
                 
-            }
         }
-        
-        
-        var headers:HTTPHeaders {
-            switch self {
+    }
+    
+    
+    var headers:HTTPHeaders {
+        switch self {
             case .register, .login, .refresh, .upload, .getPlaceById, .getPopularPlaces, .getLastPlaces, .getAllGalleryByPlaceId:
                 return [:]
             case .profile, .editProfile, .changePassword, .postPlace, .updatePlace, .deletePlace, .getAllPlaces, .getAllPlacesForUser, .postGalleryImage, .deleteGalleryImage, .postVisit, .getAllVisits, .getVisitById,.deleteVisitByPlaceId,.checkVisitByPlaceId:
                 return["Authorization": "Bearer access_token"]
-            }
         }
-        
-        var parameters:Parameters? {
-            switch self {
+    }
+    
+    var parameters:Parameters? {
+        switch self {
             case .register(let params):
                 return params
             case .login(let params):
@@ -141,40 +141,40 @@ enum Router{
             case .postGalleryImage(let params):
                 return params
             case .getPopularPlaces(limit: let limit):
-                        let limited = min(limit, 20)
-                        return ["limit": limited]
+                let limited = min(limit, 20)
+                return ["limit": limited]
             case .getLastPlaces(limit: let limit):
-                        let limited = min(limit, 20)
-                        return ["limit": limited]
+                let limited = min(limit, 20)
+                return ["limit": limited]
             case .postVisit(let params):
-                        return params
-                }
+                return params
         }
-        
-        
     }
+    
+    
+}
 
-    extension Router:URLRequestConvertible {
+extension Router:URLRequestConvertible {
+    
+    func asURLRequest() throws -> URLRequest {
+        let url = try baseURL.asURL()
+        var urlRequest = URLRequest(url: url.appendingPathComponent(path))
+        urlRequest.httpMethod = method.rawValue
+        urlRequest.headers = headers
         
-        func asURLRequest() throws -> URLRequest {
-            let url = try baseURL.asURL()
-            var urlRequest = URLRequest(url: url.appendingPathComponent(path))
-            urlRequest.httpMethod = method.rawValue
-            urlRequest.headers = headers
-            
-            let encoding:ParameterEncoding = {
-                switch method {
+        let encoding:ParameterEncoding = {
+            switch method {
                 case .post, .put, .delete :
                     return JSONEncoding.default
                 default:
                     return URLEncoding.default
-                }
-            }()
-            
-            return try encoding.encode(urlRequest, with: parameters)
-        }
+            }
+        }()
         
-        
-        
+        return try encoding.encode(urlRequest, with: parameters)
+    }
+    
+    
+    
 }
 

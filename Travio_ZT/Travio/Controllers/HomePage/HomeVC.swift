@@ -11,7 +11,9 @@ import SnapKit
 
 class HomeVC: UIViewController {
     
-    
+    let viewModel = HomeVM()
+    var popularPlaces = [Place]()
+
     let popularPlacesId = "PopularPlacesHeader"
     let newPlacesId = "NewPlacesHeader"
     
@@ -69,7 +71,19 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
         setupViews()
         navigationController?.navigationBar.isHidden = true
+        
+        popularPlacesData()
     }
+    
+    private func popularPlacesData() {
+        viewModel.dataTransfer = { [weak self] place in
+            self?.popularPlaces = place
+            self?.collectionView.reloadData()
+        }
+        viewModel.popularPlaces()
+    }
+
+
     
     private func setupViews() {
         
@@ -108,7 +122,6 @@ class HomeVC: UIViewController {
 
 extension HomeVC: UICollectionViewDelegateFlowLayout {
     
-    // Her bir item'in boyutu
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
@@ -116,13 +129,13 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
 
 extension HomeVC: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4 // Section sayısı
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
             case 0:
-                return popularPlacesMockData.count
+                return popularPlaces.count
             default:
                 return newPlacesMockData.count
         }
@@ -132,11 +145,13 @@ extension HomeVC: UICollectionViewDataSource {
         switch indexPath.section {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlacesCollectionViewCell.identifier, for: indexPath) as! PlacesCollectionViewCell
-                cell.cellData = popularPlacesMockData[indexPath.row]
+                let object = popularPlaces[indexPath.item]
+                cell.configure(with: object)
+                
+                
                 return cell
             default:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlacesCollectionViewCell.identifier, for: indexPath) as! PlacesCollectionViewCell
-                cell.cellData = newPlacesMockData[indexPath.row]
                 return cell
                 
         }
@@ -146,7 +161,7 @@ extension HomeVC: UICollectionViewDataSource {
         if kind == UICollectionView.elementKindSectionHeader {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as! SectionHeaderView
             
-            let sectionTitles = ["Popular Places", "New Places", "Büşra", "oğuzhan"]
+            let sectionTitles = ["Popular Places", "New Places"]
             
             if indexPath.section < sectionTitles.count {
                 header.title.text = sectionTitles[indexPath.section]

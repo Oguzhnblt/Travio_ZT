@@ -101,6 +101,9 @@ class LoginVC: UIViewController {
         
         viewModel.login(email: email, password: password)
         
+        viewModel.navigateToViewController = {
+            self.navigateToHomeVC()
+        }
         viewModel.showAlertFailure = { message in
             self.showAlert(message: message)
         }

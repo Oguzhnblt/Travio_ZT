@@ -11,6 +11,8 @@ class LoginViewModel {
     
     var showAlertSuccess: ((String) -> Void)?
     var showAlertFailure: ((String) -> Void)?
+    var navigateToViewController: (() -> Void)?
+
     
     
     func login(email: String, password: String) {
@@ -24,8 +26,8 @@ class LoginViewModel {
         NetworkingHelper.shared.fetchData(urlRequest: .login(params: params)) { [weak self] (result: Result<LoginResponse, Error>) in
             switch result {
                 case .success(_):
-                    self?.showAlertSuccess!("Login successful")
-                    
+                    self?.showAlertSuccess?("Login successful")
+                    self?.navigateToViewController?()
                 case .failure(_):
                     self?.showAlertFailure!("Email ve şifre hatalı.")
             }
