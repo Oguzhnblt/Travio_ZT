@@ -9,15 +9,25 @@ import Foundation
 
 class SignUpViewModel {
     
-    func signUp(params: [String: Any], completion: @escaping (Result<RegisterResponse, Error>) -> Void) {
-        NetworkingHelper.shared.fetchData(urlRequest: .register(params: params)) { (result: Result<RegisterResponse, Error>) in
+    var showAlertSuccess: ((String) -> Void)?
+    var showAlertFailure: ((String) -> Void)?
+    
+    
+    func signUp(fullName: String,email: String, password: String) {
+        guard !fullName.isEmpty, !email.isEmpty, !password.isEmpty
+        else {
+            showAlertFailure?("Lütfen tüm alanları doldurunuz.")
+            return
+        }
+        
+        let params = ["full_name": fullName,"email": email,"password": password]
+        
+        NetworkingHelper.shared.fetchData(urlRequest: .register(params: params)) { [weak self] (result: Result<RegisterResponse, Error>) in
             switch result {
-            case .success(let success):
-                // completion(.success(success))
-                completion(.success(success))
-            case .failure(let failure):
-                // completion(.failure(failure))
-                completion(.failure(failure))
+                case .success(_):
+                    self?.showAlertSuccess!("Login successful")
+                case .failure(_):
+                    self?.showAlertFailure!("Email ve şifre hatalı.")
             }
         }
     }

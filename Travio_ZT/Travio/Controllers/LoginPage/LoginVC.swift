@@ -93,23 +93,19 @@ class LoginVC: UIViewController {
     }
     
     @objc private func buttonLoginTapped() {
-        guard let email = emailTextField.text, !email.isEmpty,
-              let password = passwordTextField.text, !password.isEmpty else {
-            showAlert(message: "Email ve şifre boş bırakılamaz.")
-            return
+        
+        guard let email = emailTextField.text,
+              let password = passwordTextField.text
+                
+        else {return}
+        
+        viewModel.login(email: email, password: password)
+        
+        viewModel.showAlertFailure = { message in
+            self.showAlert(message: message)
         }
-
-        let paramsLogin = ["email" : email, "password" : password]
-        viewModel.login(params: paramsLogin, completion: {result in
-            switch result {
-                case .success(_):
-                    self.navigateToHomeVC()
-                case .failure(_):
-                    self.showAlert(message: "Email ve şifre hatalı.")
-            }
-        })
     }
-
+    
     private func navigateToHomeVC() {
         let homeVC = HomeVC()
         navigationController?.pushViewController(homeVC, animated: true)

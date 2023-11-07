@@ -103,25 +103,17 @@ class SignUpVC: UIViewController {
     
     
     @objc func signUpButtonTapped() {
-        guard let name = usernameTextField.text, !name.isEmpty,
-              let email = emailTextField.text, !email.isEmpty,
-              let password = passwordTextField.text, !password.isEmpty,
-              let confirmPassword = passwordConfirmTextField.text, !confirmPassword.isEmpty
-        else {
-            showAlert(message: "Lütfen tüm alanları doldurunuz.")
-            return
+        
+        guard let fullName = usernameTextField.text,
+              let email = emailTextField.text,
+              let password = passwordTextField.text
+        else {return}
+        
+        viewModel.signUp(fullName: fullName, email: email, password: password)
+        
+        viewModel.showAlertFailure = { message in
+            self.showAlert(message: message)
         }
-        
-        let paramsSignUp = ["full_name": name, "email": email, "password": password]
-        
-        viewModel.signUp(params: paramsSignUp, completion: { result in
-            switch result {
-                case .success(_):
-                    self.showAlertSuccess(message:"Kayıt başarılı.")
-                case .failure(_):
-                    self.showAlertError(message: "Zaten var olan bir kullanıcı")
-            }
-        })
     }
     
     
@@ -133,23 +125,7 @@ class SignUpVC: UIViewController {
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
-    
-    private func showAlertSuccess(message: String) {
-        let alertController = UIAlertController(title: "Başarılı", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Tamam", style: .default) { [weak self] _ in
-            self?.navigateToLoginViewController()
-        }
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    private func showAlertError(message: String) {
-        let alertController = UIAlertController(title: "Hata", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Tamam", style: .default)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    
+   
     private func navigateToLoginViewController() {
         if let navigationController = navigationController {
             navigationController.popViewController(animated: true)
