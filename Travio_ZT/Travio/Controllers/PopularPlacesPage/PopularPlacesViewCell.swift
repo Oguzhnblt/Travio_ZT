@@ -15,7 +15,7 @@ class PopularPlacesViewCell: UICollectionViewCell {
     private lazy var backView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
-        view.backgroundColor = .content
+        view.backgroundColor = UIColor(named: "content")
         view.layer.cornerRadius = 16
         return view
     }()
@@ -41,7 +41,8 @@ class PopularPlacesViewCell: UICollectionViewCell {
     
     private lazy var imageIconView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = .imgPinBlack
+        imageView.image = UIImage(named: "imgPinBlack")
+        imageView.sizeThatFits(CGSize(width: 9, height: 12))
         return imageView
     }()
     

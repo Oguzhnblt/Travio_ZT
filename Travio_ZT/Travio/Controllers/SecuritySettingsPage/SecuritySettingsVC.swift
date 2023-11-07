@@ -23,7 +23,7 @@ class SecuritySettingsVC: UIViewController {
     
     private func fieldLabel(title: String) -> UILabel{
         let fieldLabel = UILabel()
-        fieldLabel.textColor = .background
+        fieldLabel.textColor = UIColor(named: "background")
         fieldLabel.text = title
         fieldLabel.font = UIFont(name: "Poppins-SemiBold", size: 16)
         
@@ -43,7 +43,7 @@ class SecuritySettingsVC: UIViewController {
         saveButton.setTitle("Save", for: .normal)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.layer.cornerRadius = 12
-        saveButton.backgroundColor = .background
+        saveButton.backgroundColor = UIColor(named: "background")
         return saveButton
     }()
     
@@ -112,7 +112,7 @@ class SecuritySettingsVC: UIViewController {
     }
     
     private func setupViews() {
-        self.view.backgroundColor = .background
+        self.view.backgroundColor = UIColor(named: "background")
         self.view.addSubviews(securityItemView,backButton, headerLabel)
         
         privacyStack.addArrangedSubviews(camera,photoLibrary,location)

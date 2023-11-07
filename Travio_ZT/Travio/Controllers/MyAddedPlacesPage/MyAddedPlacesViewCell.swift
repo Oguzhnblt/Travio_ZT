@@ -15,7 +15,7 @@ class MyAddedPlacesViewCell: UICollectionViewCell {
     private lazy var backView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
-        view.backgroundColor = .content
+        view.backgroundColor = UIColor(named: "content")
         view.layer.cornerRadius = 16
         return view
     }()
@@ -41,7 +41,7 @@ class MyAddedPlacesViewCell: UICollectionViewCell {
     
     private lazy var imageIconView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = .imgPin
+        imageView.image = UIImage(named: "imgPin")
         // FIXME: --
         imageView.backgroundColor = .black
         return imageView

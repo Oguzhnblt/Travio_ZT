@@ -31,6 +31,7 @@ class MyVisitsViewCell: UICollectionViewCell {
         let view = UIView()
         view.clipsToBounds = true
         view.layer.cornerRadius = 16
+        view.dropShadow()
         return view
     }()
     
@@ -93,11 +94,6 @@ class MyVisitsViewCell: UICollectionViewCell {
             make.left.right.equalToSuperview().inset(8)
             make.bottom.equalToSuperview().offset(-8)
         }
-        
-        imageIconView.snp.makeConstraints({make in
-            make.width.equalTo(9)
-            make.height.equalTo(12)
-        })
     }
     
     

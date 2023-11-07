@@ -43,8 +43,12 @@ class MyVisitsViewCell: UICollectionViewCell {
     private lazy var imageIconView: UIImageView = {
         let imageIconView = UIImageView()
         imageIconView.contentMode = .scaleAspectFit
+<<<<<<< HEAD
+        imageIconView.image = .imgPin
+=======
         imageIconView.sizeThatFits(CGSize(width: 9, height: 12))
         imageIconView.image = UIImage(named: "imgPin")
+>>>>>>> sprint3/xcodeversion
         return imageIconView
     }()
     

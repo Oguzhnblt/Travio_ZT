@@ -36,14 +36,14 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     
     private lazy var backButton: UIButton = {
         let button = UIButton()
-        button.setImage(.leftArrowIcon, for: .normal)
+        button.setImage(UIImage(named: "leftArrowIcon"), for: .normal)
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var contentLabel: UILabel = {
         let headerLabel = UILabel()
-        headerLabel.textColor = .background
+        headerLabel.textColor = UIColor(named: "background")
         headerLabel.text = "FAQ"
         headerLabel.font = UIFont(name: "Poppins-SemiBold", size: 24)
         
@@ -52,7 +52,7 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     
     private lazy var helpSuppportItemView: UIView = {
         let view = UIView()
-        view.backgroundColor = .content
+        view.backgroundColor = UIColor(named: "content")
         view.clipsToBounds = true
         view.layer.cornerRadius = 80
         view.layer.maskedCorners = .layerMinXMinYCorner
@@ -70,7 +70,7 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     }
     
     private func setupUI() {
-        self.view.backgroundColor = .background
+        self.view.backgroundColor = UIColor(named: "background")
         self.view.addSubviews(backButton,headerLabel,helpSuppportItemView, contentLabel)
         
         backButton.snp.makeConstraints({make in

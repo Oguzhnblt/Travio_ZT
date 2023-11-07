@@ -43,8 +43,7 @@ class MyVisitsViewCell: UICollectionViewCell {
     private lazy var imageIconView: UIImageView = {
         let imageIconView = UIImageView()
         imageIconView.contentMode = .scaleAspectFit
-        imageIconView.sizeThatFits(CGSize(width: 9, height: 12))
-        imageIconView.image = UIImage(named: "imgPin")
+        imageIconView.image = .imgPin
         return imageIconView
     }()
     

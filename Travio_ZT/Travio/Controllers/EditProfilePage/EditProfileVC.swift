@@ -23,7 +23,7 @@ class EditProfileVC: UIViewController {
     
     private lazy var exitButton: UIButton = {
         let button = UIButton()
-        button.setImage(.imgExit, for: .normal)
+        button.setImage(UIImage(named: "img_exit"), for: .normal)
         button.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -39,7 +39,7 @@ class EditProfileVC: UIViewController {
     private lazy var changePhotoButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("Change Photo", for: .normal)
-        button.setTitleColor(.background, for: .normal)
+        button.setTitleColor(UIColor(named: "background"), for: .normal)
         button.titleLabel?.font = UIFont(name: "Poppins-Regular", size: 12)
         
         return button
@@ -66,7 +66,7 @@ class EditProfileVC: UIViewController {
     private lazy var adminCell: EditingProfileCell = {
         let cell = EditingProfileCell()
         cell.label.text = "Admin"
-        cell.signImage.image = .imgAdmin
+        cell.signImage.image = UIImage(named: "imgAdmin")
         
         return cell
     }()
@@ -74,7 +74,7 @@ class EditProfileVC: UIViewController {
     private lazy var signCell: EditingProfileCell = {
         let cell = EditingProfileCell()
         cell.label.text = "2 Kasım 2023"
-        cell.signImage.image = .imgSign
+        cell.signImage.image = UIImage(named: "imgSign")
         return cell
     }()
     
@@ -120,7 +120,7 @@ class EditProfileVC: UIViewController {
         saveButton.setTitle("Save", for: .normal)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.layer.cornerRadius = 12
-        saveButton.backgroundColor = .background
+        saveButton.backgroundColor = UIColor(named: "background")
         return saveButton
     }()
     
@@ -142,7 +142,7 @@ class EditProfileVC: UIViewController {
     }
     
     private func setupViews() {
-        self.view.backgroundColor = .background
+        self.view.backgroundColor = UIColor(named: "background")
    
       
         self.view.addSubviews(editProfileItemView, headerLabel, exitButton)

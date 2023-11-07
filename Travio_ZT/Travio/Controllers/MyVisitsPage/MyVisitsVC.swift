@@ -50,7 +50,7 @@ class MyVisitsVC: UIViewController {
     }
     
     private func setupViews() {
-        self.view.backgroundColor = .background
+        self.view.backgroundColor = UIColor(named: "background")
         self.view.addSubviews(headerLabel,myVisitsItemView)
         myVisitsItemView.addSubviews(collectionView)
         

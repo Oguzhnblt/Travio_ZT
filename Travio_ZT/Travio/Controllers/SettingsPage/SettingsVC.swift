@@ -59,7 +59,7 @@ class SettingsVC: UIViewController {
     private lazy var editProfileButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Edit Profile", for: .normal)
-        button.setTitleColor(.background, for: .normal)
+        button.setTitleColor(UIColor(named: "background"), for: .normal)
         button.addTarget(self, action: #selector(buttonEditProfileTapped), for: .touchUpInside)
         
         return button
@@ -105,7 +105,7 @@ class SettingsVC: UIViewController {
     
     func setupViews() {
         self.view.addSubviews(settingsItemView,logoutButton,settingsText)
-        self.view.backgroundColor = .background
+        self.view.backgroundColor = UIColor(named: "background")
         settingsItemView.addSubviews(profileImage, profileText, editProfileButton,collectionView)
         
         setupLayout()
