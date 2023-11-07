@@ -17,9 +17,7 @@ class SectionHeaderView: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        let separator = UIView(frame: .zero)
-        
+                
         title.textColor = .black
         title.font = UIFont(name: "Poppins-Regular", size: 20)
         
@@ -27,21 +25,17 @@ class SectionHeaderView: UICollectionReusableView {
         button.titleLabel?.font = UIFont(name: "Poppins-Regular", size: 14)
         
         
-        let stackView = UIStackView(arrangedSubviews: [title ,separator, button])
+        let stackView = UIStackView(arrangedSubviews: [title, button])
         stackView.axis = .horizontal
+        stackView.alignment = .center
         addSubview(stackView)
       
         stackView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(20)
-            make.top.bottom.equalToSuperview().offset(25)
+            make.top.equalToSuperview().offset(50)
+            make.bottom.equalToSuperview()
+            make.left.equalToSuperview().offset(4)
+            make.right.equalToSuperview()
         }
-        
-        button.snp.makeConstraints({make in
-            make.left.right.equalToSuperview().offset(290)
-            make.top.bottom.equalToSuperview()
-        })
-        
-      
     }
    
     required init?(coder: NSCoder) {

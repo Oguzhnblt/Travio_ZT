@@ -10,6 +10,9 @@ import SnapKit
 
 class PopularPlacesVC: UIViewController {
     
+    let viewModel = PopularPlacesVM()
+    var popularPlaces = [Place]()
+    
     private var isSorted = false
     private lazy var collectionView: UICollectionView = {
         
@@ -82,9 +85,9 @@ class PopularPlacesVC: UIViewController {
         sortButton.setImage(UIImage(named: imageName), for: .normal)
         
         if isSorted {
-            popularPlacesMockData.sort { $0.title!.localizedCompare($1.title!) == .orderedAscending }
+            popularPlaces.sort { $0.title!.localizedCompare($1.title!) == .orderedAscending }
         } else {
-            popularPlacesMockData.sort { $0.title!.localizedCompare($1.title!) == .orderedDescending }
+            popularPlaces.sort { $0.title!.localizedCompare($1.title!) == .orderedDescending }
         }
         
         collectionView.reloadData()
@@ -95,7 +98,18 @@ class PopularPlacesVC: UIViewController {
         super.viewDidLoad()
         setupViews()
         navigationController?.navigationBar.isHidden = true
+        popularPlacesData()
     }
+    
+    private func popularPlacesData() {
+        viewModel.dataTransfer = { [weak self] place in
+            self?.popularPlaces = place
+            self?.collectionView.reloadData()
+        }
+        viewModel.popularPlaces(limit: 10)
+    }
+    
+    
     
     
     private func setupViews() {
@@ -158,27 +172,15 @@ extension PopularPlacesVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return popularPlacesMockData.count
+        return popularPlaces.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "popularCell", for: indexPath) as! PopularPlacesViewCell
         
-        let place = popularPlacesMockData[indexPath.row]
-        
-        cell.titleLabel.text = place.title
-        cell.subtitleLabel.text = place.place
-        
-        // FIXME: -- Mock data ile işlem yapmayı bitirdiğinde burayı düzelt.
-        // Eğer place.cover_img_url boş bir dize veya sadece boşluk içeriyorsa veya dosya asset içinde yoksa
-        
-        if let imgUrl = place.cover_img_url, !imgUrl.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
-           let image = UIImage(named: imgUrl) {
-            cell.imageView.image = image
-        } else {
-            cell.imageView.image = UIImage(named: "img_default")
-        }
-        
+        let object = popularPlaces[indexPath.item]
+        cell.configure(with: object)
+      
         return cell
     }
 }

@@ -1,14 +1,14 @@
 //
-//  HomePagePlacesModel.swift
+//  PopularPlacesVM.swift
 //  Travio
 //
-//  Created by Oğuz on 7.11.2023.
+//  Created by Oğuz on 8.11.2023.
 //
 
 import Foundation
 
-class HomeVM {
-        
+class PopularPlacesVM {
+    
     var dataTransfer: (([Place]) -> Void)?
     
     func popularPlaces(limit: Int) {
@@ -16,17 +16,6 @@ class HomeVM {
             switch result {
                 case .success(let object):
                     self.dataTransfer?((object.data?.places!)!)
-                case .failure(let failure):
-                    print("Error: \(failure.localizedDescription)")
-            }
-        }
-    }
-    
-    func newPlaces() {
-        NetworkingHelper.shared.fetchData(urlRequest: .getLastPlaces(limit: 2)) { [self] (result: Result<GetLastPlacesResponse, Error>) in
-            switch result {
-                case .success(let object):
-                    self.dataTransfer?((object.data?.places)!)
                 case .failure(let failure):
                     print("Error: \(failure.localizedDescription)")
             }

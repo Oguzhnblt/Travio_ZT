@@ -70,7 +70,6 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
         setupViews()
         navigationController?.navigationBar.isHidden = true
-        
         popularPlacesData()
     }
     
@@ -79,7 +78,7 @@ class HomeVC: UIViewController {
             self?.popularPlaces = place
             self?.collectionView.reloadData()
         }
-        viewModel.popularPlaces()
+        viewModel.popularPlaces(limit: 2)
     }
    
     private func setupViews() {
@@ -98,7 +97,7 @@ class HomeVC: UIViewController {
         }
         
         imageView.snp.makeConstraints({make in
-            make.top.equalTo(homeView).offset(110)
+            make.top.equalTo(homeView).offset(80)
             make.left.equalTo(homeView).offset(16)
         })
         
@@ -108,8 +107,9 @@ class HomeVC: UIViewController {
         }
         collectionView.dropShadow()
         collectionView.snp.makeConstraints({make in
-            make.top.bottom.equalToSuperview()
-            make.left.right.equalToSuperview().offset(0)
+            make.top.equalToSuperview().offset(10)
+            make.bottom.equalToSuperview()
+            make.left.right.equalToSuperview()
         })
         
     }

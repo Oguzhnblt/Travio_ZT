@@ -10,12 +10,19 @@ import SnapKit
 
 class PopularPlacesViewCell: UICollectionViewCell {
     
-    // MARK: - UI Components
+    func configure(with place: Place) {
+        if let url = URL(string: place.cover_image_url!) {
+            imageView.kf.setImage(with: url)
+        }
+        titleLabel.text = place.title
+        subtitleLabel.text = place.place
+    }
+    
     
     private lazy var backView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
-        view.backgroundColor = UIColor(named: "content")
+        view.backgroundColor = UIColor(named: "contentColor")
         view.layer.cornerRadius = 16
         return view
     }()
@@ -41,8 +48,7 @@ class PopularPlacesViewCell: UICollectionViewCell {
     
     private lazy var imageIconView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "imgPinBlack")
-        imageView.sizeThatFits(CGSize(width: 9, height: 12))
+        imageView.image = UIImage(named: "img_pin_black")
         return imageView
     }()
     

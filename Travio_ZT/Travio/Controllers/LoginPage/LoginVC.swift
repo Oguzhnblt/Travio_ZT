@@ -110,8 +110,10 @@ class LoginVC: UIViewController {
     }
     
     private func navigateToHomeVC() {
-        let homeVC = HomeVC()
-        navigationController?.pushViewController(homeVC, animated: true)
+        let homeVC = HomeVC() 
+        let navigationController = UINavigationController(rootViewController: homeVC)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.present(navigationController, animated: true, completion: nil)
     }
     
     private func showAlert(message: String) {
