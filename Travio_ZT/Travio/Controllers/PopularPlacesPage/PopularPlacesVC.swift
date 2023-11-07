@@ -152,7 +152,7 @@ class PopularPlacesVC: UIViewController {
         collectionView.dropShadow()
         collectionView.snp.makeConstraints({make in
             make.top.bottom.equalToSuperview().offset(35)
-            make.left.right.equalToSuperview().inset(16)
+            make.left.right.equalToSuperview().inset(8)
 
         })
     }

@@ -32,8 +32,8 @@
 		0FC9671D2AEA4B5D009FB26B /* MainTabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */; };
 		1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1214274E2ADC25E700CA1D10 /* SignUpVC.swift */; };
 		122DB68A2AFADD2C001CDE5A /* PopularPlacesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122DB6892AFADD2C001CDE5A /* PopularPlacesVM.swift */; };
+		122DB68C2AFAE01B001CDE5A /* PlacesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122DB68B2AFAE01B001CDE5A /* PlacesModel.swift */; };
 		123F4FD92AFA22B300E0C525 /* HomeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123F4FD82AFA22B300E0C525 /* HomeVM.swift */; };
-		123F4FDB2AFA283F00E0C525 /* PlacesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123F4FDA2AFA283F00E0C525 /* PlacesModel.swift */; };
 		123F863E2AF5C62900E8F7B1 /* HelpSupportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123F863D2AF5C62900E8F7B1 /* HelpSupportCell.swift */; };
 		12480C442AF0EC0B00549C42 /* SettingsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12480C432AF0EC0B00549C42 /* SettingsCollectionViewCell.swift */; };
 		1248ED342AED311200777E98 /* HomePageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1248ED332AED311200777E98 /* HomePageLayout.swift */; };
@@ -132,8 +132,8 @@
 		0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarVC.swift; sourceTree = "<group>"; };
 		1214274E2ADC25E700CA1D10 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		122DB6892AFADD2C001CDE5A /* PopularPlacesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularPlacesVM.swift; sourceTree = "<group>"; };
+		122DB68B2AFAE01B001CDE5A /* PlacesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesModel.swift; sourceTree = "<group>"; };
 		123F4FD82AFA22B300E0C525 /* HomeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVM.swift; sourceTree = "<group>"; };
-		123F4FDA2AFA283F00E0C525 /* PlacesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesModel.swift; sourceTree = "<group>"; };
 		123F863D2AF5C62900E8F7B1 /* HelpSupportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportCell.swift; sourceTree = "<group>"; };
 		12480C432AF0EC0B00549C42 /* SettingsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCollectionViewCell.swift; sourceTree = "<group>"; };
 		1248ED332AED311200777E98 /* HomePageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageLayout.swift; sourceTree = "<group>"; };
@@ -377,7 +377,7 @@
 		1248ED4A2AED519D00777E98 /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
-				123F4FDA2AFA283F00E0C525 /* PlacesModel.swift */,
+				122DB68B2AFAE01B001CDE5A /* PlacesModel.swift */,
 				1248ED3A2AED352700777E98 /* PlacesCollectionViewCell.swift */,
 				1248ED332AED311200777E98 /* HomePageLayout.swift */,
 				125B445A2AE944F00047248D /* HomeVC.swift */,
@@ -806,7 +806,6 @@
 				12B02A7F2AF812010098DF1D /* PlaceTopView.swift in Sources */,
 				FF9BD56A2AF2F86B0072BBA0 /* GetVisitByIdResponseModel.swift in Sources */,
 				0FB84E052AF286CC0071A559 /* PostPlaceResponseModel.swift in Sources */,
-				123F4FDB2AFA283F00E0C525 /* PlacesModel.swift in Sources */,
 				FF0B44BC2AF2AFE600586EA7 /* GetPopularPlacesResponseModel.swift in Sources */,
 				0FB84E082AF287840071A559 /* UpdatePlaceRequestModel.swift in Sources */,
 				1278062A2AF7EC840085D31F /* MyVisitsViewCell.swift in Sources */,
@@ -838,6 +837,7 @@
 				12E1FD562AF3926A00B89F81 /* HelpSupportVC.swift in Sources */,
 				123F863E2AF5C62900E8F7B1 /* HelpSupportCell.swift in Sources */,
 				12A009432AEFA5A900D2AD14 /* PopularPlacesViewCell.swift in Sources */,
+				122DB68C2AFAE01B001CDE5A /* PlacesModel.swift in Sources */,
 				12F85D8B2AF915C200FB7CBD /* SettingsVC.swift in Sources */,
 				127249D42AF2CDC700CEAA64 /* EditProfileVC.swift in Sources */,
 				1248ED342AED311200777E98 /* HomePageLayout.swift in Sources */,
