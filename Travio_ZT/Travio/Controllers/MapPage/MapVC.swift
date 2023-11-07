@@ -5,6 +5,18 @@ import MapKit
 class MapVC: UIViewController {
     
     var locationManager: CLLocationManager?
+    private lazy var collectionView: UICollectionView = {
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: mapLayout())
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+ 
+        collectionView.register(MapViewCell.self, forCellWithReuseIdentifier: MapViewCell.identifier)
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
+        return collectionView
+    }()
     
     private lazy var mapView: MKMapView = {
         let map = MKMapView()
@@ -31,6 +43,7 @@ class MapVC: UIViewController {
     
     func setupViews() {
         self.view.addSubview(mapView)
+        self.view.addSubview(collectionView)
         setupLayout()
     }
     
@@ -38,7 +51,13 @@ class MapVC: UIViewController {
         mapView.snp.makeConstraints({ map in
             map.top.bottom.equalToSuperview()
             map.left.right.equalToSuperview()
-        })
+            })
+        collectionView.snp.makeConstraints({ make in
+               make.top.equalToSuperview().offset(565)
+               make.bottom.equalToSuperview().offset(-101)
+               make.left.equalToSuperview()
+               make.right.equalToSuperview()
+           })
     }
     
     private func checkLocationAuthorization() {
@@ -126,6 +145,61 @@ extension MapVC: MKMapViewDelegate {
         return nil
     }
 }
+
+extension MapVC: UICollectionViewDelegateFlowLayout {
+    
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+    }
+}
+
+extension MapVC: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return popularPlacesMockData.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MapViewCell.identifier, for: indexPath) as! MapViewCell
+        cell.cellData = popularPlacesMockData[indexPath.row]
+        return cell
+        
+    }
+}
+
+extension MapVC {
+
+   private func mapLayout() -> UICollectionViewCompositionalLayout {
+        return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
+            return self.mapLayouts()
+        }
+    }
+
+    private func mapLayouts() -> NSCollectionLayoutSection {
+       
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7), heightDimension: .fractionalHeight(1))
+        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+
+
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7), heightDimension: .fractionalHeight(1))
+        let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitem: layoutItem, count: 1)
+
+        
+        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+        layoutSection.orthogonalScrollingBehavior = .groupPaging
+
+        
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+        layoutSection.interGroupSpacing = 16
+
+        return layoutSection
+    }
+}
+
 
 
 
