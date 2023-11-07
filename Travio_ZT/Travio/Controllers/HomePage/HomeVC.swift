@@ -44,13 +44,13 @@ class HomeVC: UIViewController {
         return headerLabel
     }()
     
-    private lazy var loginView: UIView = {
+    private lazy var homeView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "backgroundColor")
         return view
     }()
     
-    private lazy var loginItemView: UIView = {
+    private lazy var homeItemView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "contentColor")
         view.clipsToBounds = true
@@ -81,30 +81,28 @@ class HomeVC: UIViewController {
         }
         viewModel.popularPlaces()
     }
-
-
-    
+   
     private func setupViews() {
         
-        self.view.addSubviews(loginView,imageView)
-        loginView.addSubview(loginItemView)
-        loginItemView.addSubviews(collectionView)
+        self.view.addSubviews(homeView,imageView)
+        homeView.addSubview(homeItemView)
+        homeItemView.addSubviews(collectionView)
         
         
         setupLayouts()
         
     }
     private func setupLayouts() {
-        loginView.snp.makeConstraints { make in
+        homeView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
         imageView.snp.makeConstraints({make in
-            make.top.equalTo(loginView).offset(110)
-            make.left.equalTo(loginView).offset(16)
+            make.top.equalTo(homeView).offset(110)
+            make.left.equalTo(homeView).offset(16)
         })
         
-        loginItemView.snp.makeConstraints { make in
+        homeItemView.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide).offset(125)
             make.edges.equalToSuperview()
         }
@@ -227,3 +225,5 @@ struct HomeVC_Preview: PreviewProvider {
     }
 }
 #endif
+
+

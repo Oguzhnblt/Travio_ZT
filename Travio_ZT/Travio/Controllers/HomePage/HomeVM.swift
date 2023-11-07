@@ -15,8 +15,18 @@ class HomeVM {
         NetworkingHelper.shared.fetchData(urlRequest: .getPopularPlaces(limit: 10)) { [self] (result: Result<GetPopularPlacesResponse, Error>) in
             switch result {
                 case .success(let object):
-                    self.dataTransfer?(object.data.places)
-                    print(object)
+                    self.dataTransfer?((object.data?.places!)!)
+                case .failure(let failure):
+                    print("Error: \(failure.localizedDescription)")
+            }
+        }
+    }
+    
+    func newPlaces() {
+        NetworkingHelper.shared.fetchData(urlRequest: .getLastPlaces(limit: 2)) { [self] (result: Result<GetLastPlacesResponse, Error>) in
+            switch result {
+                case .success(let object):
+                    self.dataTransfer?((object.data?.places)!)
                 case .failure(let failure):
                     print("Error: \(failure.localizedDescription)")
             }
