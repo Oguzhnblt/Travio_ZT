@@ -23,13 +23,12 @@ class SectionHeaderView: UICollectionReusableView {
         title.textColor = .black
         title.font = UIFont(name: "Poppins-Regular", size: 20)
         
-        button.setTitleColor(UIColor(named: "background"), for: .normal)
+        button.setTitleColor(UIColor(named: "backgroundColor"), for: .normal)
         button.titleLabel?.font = UIFont(name: "Poppins-Regular", size: 14)
         
         
         let stackView = UIStackView(arrangedSubviews: [title ,separator, button])
         stackView.axis = .horizontal
-        stackView.spacing = 16
         addSubview(stackView)
       
         stackView.snp.makeConstraints { make in
@@ -44,12 +43,7 @@ class SectionHeaderView: UICollectionReusableView {
         
       
     }
-    
-    @objc func btns() {
-     print("tIKLANDI")
-    }
    
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

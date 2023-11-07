@@ -12,7 +12,7 @@ class HomeVM {
     var dataTransfer: (([Place]) -> Void)?
     
     func popularPlaces() {
-        NetworkingHelper.shared.fetchData(urlRequest: .getPopularPlaces(limit: 2)) { [self] (result: Result<GetPopularPlacesResponse, Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .getPopularPlaces(limit: 10)) { [self] (result: Result<GetPopularPlacesResponse, Error>) in
             switch result {
                 case .success(let object):
                     self.dataTransfer?(object.data.places)

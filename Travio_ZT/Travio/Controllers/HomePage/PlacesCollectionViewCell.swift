@@ -26,7 +26,6 @@ class PlacesCollectionViewCell: UICollectionViewCell {
         let backView = UIView()
         backView.clipsToBounds = true
         backView.layer.cornerRadius = 16
-        backView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         return backView
     }()
     
@@ -39,7 +38,7 @@ class PlacesCollectionViewCell: UICollectionViewCell {
     private lazy var imageIconView: UIImageView = {
         let imageIconView = UIImageView()
         imageIconView.contentMode = .scaleAspectFit
-        imageIconView.image = UIImage(named: "image_pin")
+        imageIconView.image = UIImage(named: "img_pin")
         return imageIconView
     }()
     
@@ -70,6 +69,9 @@ class PlacesCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupLayouts() {
+        backView.snp.makeConstraints({make in
+            make.edges.equalToSuperview()
+        })
         
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -88,17 +90,13 @@ class PlacesCollectionViewCell: UICollectionViewCell {
         
         imageIconView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom)
-            make.bottom.equalToSuperview().offset(-8)
+            make.bottom.equalToSuperview().offset(-16)
             make.left.equalToSuperview().offset(16)
             
         }
-        
     }
-    
-    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
 }

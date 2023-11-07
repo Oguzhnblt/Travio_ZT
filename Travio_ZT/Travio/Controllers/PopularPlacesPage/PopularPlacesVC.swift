@@ -59,7 +59,7 @@ class PopularPlacesVC: UIViewController {
     private func createLabel(text: String,textSize: CGFloat, fontName: String) -> UILabel {
         let label = UILabel()
         label.text = text
-        label.textColor = UIColor(named: "textFieldBackground")
+        label.textColor = UIColor(named: "textFieldBackgroundColor")
         label.numberOfLines = 1
         label.textAlignment = .center
         label.font = UIFont(name: fontName, size: textSize)

@@ -40,7 +40,6 @@ class HomeVC: UIViewController {
         let headerLabel = UILabel()
         headerLabel.textColor = .black
         headerLabel.font = UIFont(name: "Poppins-Regular", size: 20)
-        headerLabel.frame = CGRect(x: 0, y: 0, width: 149, height: 30)
         
         return headerLabel
     }()
@@ -112,7 +111,7 @@ class HomeVC: UIViewController {
         collectionView.dropShadow()
         collectionView.snp.makeConstraints({make in
             make.top.bottom.equalToSuperview()
-            make.left.right.equalToSuperview().offset(24)
+            make.left.right.equalToSuperview().offset(0)
         })
         
     }
@@ -137,7 +136,7 @@ extension HomeVC: UICollectionViewDataSource {
             case 0:
                 return popularPlaces.count
             default:
-                return newPlacesMockData.count
+                return popularPlaces.count
         }
     }
     
@@ -145,13 +144,16 @@ extension HomeVC: UICollectionViewDataSource {
         switch indexPath.section {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlacesCollectionViewCell.identifier, for: indexPath) as! PlacesCollectionViewCell
+                
                 let object = popularPlaces[indexPath.item]
                 cell.configure(with: object)
-                
                 
                 return cell
             default:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlacesCollectionViewCell.identifier, for: indexPath) as! PlacesCollectionViewCell
+                
+                let object = popularPlaces[indexPath.item]
+                cell.configure(with: object)
                 return cell
                 
         }
