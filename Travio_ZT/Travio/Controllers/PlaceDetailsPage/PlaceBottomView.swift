@@ -14,6 +14,20 @@ class PlaceBottomView: UICollectionViewCell {
     
     static let identifier = "bottomView"
 
+    private lazy var scrollView: UIView = {
+        let scrollView = UIView()
+        scrollView.clipsToBounds = true
+        return scrollView
+    }()
+
+    private lazy var textLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        label.font = UIFont(name: "Poppins-Regular", size: 12)
+        label.numberOfLines = 0
+        return label
+    }()
 
     private lazy var backView: UIView = {
         let view = UIView()
@@ -72,7 +86,8 @@ class PlaceBottomView: UICollectionViewCell {
             make.edges.equalToSuperview()
         }
 
-        backView.addSubviews(stackView, mapView)
+        backView.addSubviews(stackView, mapView, scrollView)
+        scrollView.addSubview(textLabel)
 
         stackView.snp.makeConstraints { make in
             make.top.equalTo(backView.snp.top).offset(24)
@@ -84,6 +99,16 @@ class PlaceBottomView: UICollectionViewCell {
             make.left.right.equalToSuperview().inset(16)
             make.bottom.equalToSuperview()
         }
+        
+        scrollView.snp.makeConstraints({make in
+            make.top.equalTo(mapView.snp.bottom).offset(8)
+            make.left.right.equalToSuperview().inset(16)
+        })
+        
+        textLabel.snp.makeConstraints({make in
+            make.top.bottom.equalToSuperview().offset(16)
+            make.left.right.equalToSuperview()
+        })
     }
 
 }

@@ -8,23 +8,10 @@ import Foundation
 import UIKit
 import SnapKit
 
-protocol PlaceTopViewDelegate: AnyObject {
-    func placeTopView(_ placeTopView: PlaceTopView, didChangePageTo index: Int)
-}
-
 class PlaceTopView: UICollectionViewCell {
-    
-    weak var delegate: PlaceTopViewDelegate?
     
     static let identifier = "topView"
         
-    var currentPage: Int = 0 {
-        didSet {
-            pageControl.currentPage = currentPage
-            delegate?.placeTopView(self, didChangePageTo: currentPage)
-        }
-    }
-    
     var cellData: PlacesModel? {
         didSet {
             guard let cellData = cellData else {
@@ -46,14 +33,6 @@ class PlaceTopView: UICollectionViewCell {
         return imageView
     }()
     
-    private lazy var pageControl: UIPageControl = {
-        let pageControl = UIPageControl()
-        pageControl.backgroundStyle = .prominent
-        pageControl.currentPageIndicatorTintColor = .white
-        pageControl.pageIndicatorTintColor = .gray
-        pageControl.numberOfPages = newPlacesMockData.count
-        return pageControl
-    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -61,7 +40,7 @@ class PlaceTopView: UICollectionViewCell {
     }
     
     private func setupViews() {
-        addSubviews(backView, pageControl)
+        addSubviews(backView)
         
         backView.addSubview(imageView)
         
@@ -71,11 +50,6 @@ class PlaceTopView: UICollectionViewCell {
         
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-        }
-        
-        pageControl.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().offset(70)
-            make.left.right.equalToSuperview()
         }
     }
     

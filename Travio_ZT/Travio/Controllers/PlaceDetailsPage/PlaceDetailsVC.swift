@@ -9,10 +9,9 @@ import Foundation
 import UIKit
 import SnapKit
 
-class PlaceDetailsVC: UIViewController, UICollectionViewDelegate, PlaceTopViewDelegate {
+class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
     let placeTopView = PlaceTopView()
-    var currentSelectedItem: Int = 0
     
     
     private lazy var collectionView: UICollectionView = {
@@ -84,8 +83,6 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceTopView.identifier, for: indexPath) as! PlaceTopView
                 cell.cellData = newPlacesMockData[indexPath.row]
                 
-                cell.delegate = self
-                cell.currentPage = indexPath.item
                 
                 return cell
             case 1:
@@ -101,14 +98,6 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
         }
     }
 }
-
-extension PlaceDetailsVC {
-    
-    func placeTopView(_ placeTopView: PlaceTopView, didChangePageTo index: Int) {
-        currentSelectedItem = index
-    }
-}
-
 
 extension PlaceDetailsVC {
     
