@@ -1,3 +1,10 @@
+//
+//  MapVC.swift
+//  Travio
+//
+//  Created by Oğuz on 8.11.2023.
+//
+
 import UIKit
 import SnapKit
 import MapKit
@@ -13,7 +20,6 @@ class MapVC: UIViewController {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: mapLayout())
         collectionView.backgroundColor = UIColor.clear
-        collectionView.backgroundView = UIView.init(frame: CGRect.zero)
         
         collectionView.isScrollEnabled = false
         collectionView.register(MapViewCell.self, forCellWithReuseIdentifier: MapViewCell.identifier)

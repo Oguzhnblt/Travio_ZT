@@ -41,7 +41,7 @@ class MainTabbarVC: UITabBarController {
            //         myVisitsVC.tabBarItem = UITabBarItem(title: "Visits", image: imageVisits, selectedImage: selectedImageVisits)
             
             return [homeNC, settingsNC]
-            let mapVC = MapVC()
+            let mapVC = LoginVC()
             let mapNC = UINavigationController(rootViewController: mapVC)
             let imageMap = UIImage(named: "map")
             let selectedImageMap = UIImage(named: "map")
