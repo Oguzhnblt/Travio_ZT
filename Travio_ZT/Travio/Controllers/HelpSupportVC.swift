@@ -19,6 +19,7 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.isScrollEnabled = false
         collectionView.register(HelpSupportCell.self, forCellWithReuseIdentifier: HelpSupportCell.cellReuseIdentifier)
         collectionView.backgroundColor = .white
         return collectionView
@@ -59,7 +60,7 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     }()
     
     @objc private func backButtonTapped() {
-        
+        self.navigationController?.popViewController(animated: true)
     }
     
     

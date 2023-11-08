@@ -30,7 +30,7 @@ class EditProfileVC: UIViewController {
     
     private lazy var profileImage: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "imgProfile")
+        image.image = UIImage(named: "img_profile")
         image.contentMode = .scaleAspectFit
         
         return image
@@ -39,7 +39,7 @@ class EditProfileVC: UIViewController {
     private lazy var changePhotoButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setTitle("Change Photo", for: .normal)
-        button.setTitleColor(UIColor(named: "background"), for: .normal)
+        button.setTitleColor(UIColor(named: "backgroundColor"), for: .normal)
         button.titleLabel?.font = UIFont(name: "Poppins-Regular", size: 12)
         
         return button
@@ -66,7 +66,7 @@ class EditProfileVC: UIViewController {
     private lazy var adminCell: EditingProfileCell = {
         let cell = EditingProfileCell()
         cell.label.text = "Admin"
-        cell.signImage.image = UIImage(named: "imgAdmin")
+        cell.signImage.image = UIImage(named: "img_admin")
         
         return cell
     }()
@@ -74,7 +74,7 @@ class EditProfileVC: UIViewController {
     private lazy var signCell: EditingProfileCell = {
         let cell = EditingProfileCell()
         cell.label.text = "2 Kasım 2023"
-        cell.signImage.image = UIImage(named: "imgSign")
+        cell.signImage.image = UIImage(named: "img_sign")
         return cell
     }()
     
@@ -120,7 +120,7 @@ class EditProfileVC: UIViewController {
         saveButton.setTitle("Save", for: .normal)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.layer.cornerRadius = 12
-        saveButton.backgroundColor = UIColor(named: "background")
+        saveButton.backgroundColor = UIColor(named: "backgroundColor")
         return saveButton
     }()
     
@@ -142,7 +142,7 @@ class EditProfileVC: UIViewController {
     }
     
     private func setupViews() {
-        self.view.backgroundColor = UIColor(named: "background")
+        self.view.backgroundColor = UIColor(named: "backgroundColor")
    
       
         self.view.addSubviews(editProfileItemView, headerLabel, exitButton)
@@ -158,18 +158,18 @@ class EditProfileVC: UIViewController {
     private func setupLayouts() {
         
         headerLabel.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(10)
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.left.equalToSuperview().offset(24)
         })
         
         exitButton.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(16)
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.right.equalToSuperview().offset(-24)
             
         })
         
         editProfileItemView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().offset(135)
+            make.edges.equalTo(self.view.safeAreaLayoutGuide).offset(80)
             make.left.right.equalToSuperview()
         }
         

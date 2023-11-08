@@ -32,7 +32,7 @@ class SettingsVC: UIViewController {
         return collectionView
     }()
     
-   
+    
     private lazy var settingsItemView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "contentColor")
@@ -44,7 +44,7 @@ class SettingsVC: UIViewController {
     
     private lazy var profileImage : UIImageView = {
         let profileImage = UIImageView()
-        profileImage.image = UIImage(named: "image_profile")
+        profileImage.image = UIImage(named: "img_profile")
         return profileImage
     }()
     
@@ -105,29 +105,28 @@ class SettingsVC: UIViewController {
     
     func setupViews() {
         self.view.addSubviews(settingsItemView,logoutButton,settingsText)
-        self.view.backgroundColor = UIColor(named: "background")
+        self.view.backgroundColor = UIColor(named: "backgroundColor")
         settingsItemView.addSubviews(profileImage, profileText, editProfileButton,collectionView)
         
         setupLayout()
     }
     
     func setupLayout() {
-
+        
         settingsItemView.snp.makeConstraints({make in
-            make.top.bottom.equalToSuperview().offset(125)
+            make.top.bottom.equalToSuperview().offset(135)
             make.left.right.equalToSuperview()
-
+            
         })
         
         settingsText.snp.makeConstraints({make in
             make.left.equalToSuperview().offset(20)
-            make.top.equalToSuperview().offset(75)
+            make.top.equalToSuperview().offset(85)
         })
         
-        logoutButton.layer.zPosition = 10
         logoutButton.snp.makeConstraints({make in
             make.right.equalToSuperview().offset(-24)
-            make.top.equalToSuperview().offset(75)
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(-10)
         })
         
         profileImage.snp.makeConstraints({make in
@@ -147,8 +146,7 @@ class SettingsVC: UIViewController {
         
         collectionView.dropShadow()
         collectionView.snp.makeConstraints({make in
-            make.centerX.equalToSuperview()
-            make.left.right.equalToSuperview().inset(16)
+            make.left.right.equalToSuperview()
             make.top.bottom.equalToSuperview().offset(218)
         })
     }
@@ -165,23 +163,30 @@ extension SettingsVC: UICollectionViewDataSource {
         let data = cellDataArray[indexPath.item]
         cell.configure(with: data)
         
-        
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.item {
             case 0:
-                cell.buttonAction = {
-                    //                    let vc = HomeVC()
-                    //                    self.navigationController?.pushViewController(vc, animated: true)
-                }
+                let securitySettings = SecuritySettingsVC()
+                navigationController?.pushViewController(securitySettings, animated: true)
             case 1:
-                cell.buttonAction = {
-                    
-                }
+                let editProfile = EditProfileVC()
+                navigationController?.pushViewController(editProfile, animated: true)
+            case 2:
+                let myAdded = MyAddedPlacesVC()
+                navigationController?.pushViewController(myAdded, animated: true)
+            case 3:
+                let helpSupport = HelpSupportVC()
+                navigationController?.pushViewController(helpSupport, animated: true)
+            case 4: break
+                //                let about = AboutVC()
+                //                navigationController?.pushViewController(about, animated: true)
+            default: break
+                //                let termsOfUse = TermsOfUse()
+                //                navigationController?.pushViewController(termsOfUse, animated: true)
                 
-            default:
-                break
         }
-        
-        return cell
     }
 }
 
@@ -207,8 +212,8 @@ extension SettingsVC {
         
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.interGroupSpacing = 8
-        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 0, bottom: 200, trailing: 0)
-       
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 16, bottom: 200, trailing: 16)
+        
         return layoutSection
     }
     

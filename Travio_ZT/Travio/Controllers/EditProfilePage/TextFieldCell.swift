@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class TextFieldCell: UIView {
     
@@ -43,6 +44,8 @@ class TextFieldCell: UIView {
     
     private func setupViews() {
         self.addSubview(backView)
+        
+        backView.dropShadow()
         backView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(8)
         }

@@ -15,7 +15,7 @@ class MyAddedPlacesViewCell: UICollectionViewCell {
     private lazy var backView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
-        view.backgroundColor = UIColor(named: "content")
+        view.backgroundColor = UIColor(named: "contentColor")
         view.layer.cornerRadius = 16
         return view
     }()
@@ -28,7 +28,7 @@ class MyAddedPlacesViewCell: UICollectionViewCell {
     
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-Regular", size: 14)
+        label.font = UIFont(name: "Poppins-Thin", size: 14)
         return label
     }()
     
@@ -41,9 +41,7 @@ class MyAddedPlacesViewCell: UICollectionViewCell {
     
     private lazy var imageIconView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "imgPin")
-        // FIXME: --
-        imageView.backgroundColor = .black
+        imageView.image = UIImage(named: "img_pin_black")
         return imageView
     }()
     
@@ -61,7 +59,7 @@ class MyAddedPlacesViewCell: UICollectionViewCell {
         
         backView.snp.makeConstraints({make in
             make.top.equalToSuperview().offset(55)
-            make.left.right.equalToSuperview().inset(24)
+            make.left.right.equalToSuperview().inset(16)
         })
         
         lazy var subtitleStackView = UIStackView(arrangedSubviews: [imageIconView, subtitleLabel])
@@ -79,12 +77,18 @@ class MyAddedPlacesViewCell: UICollectionViewCell {
         outerStackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-
+        
+        imageView.snp.makeConstraints({make in
+            make.size.equalTo(90)
+        })
+        
+        imageIconView.snp.makeConstraints({make in
+            make.width.equalTo(12)
+            make.height.equalTo(18)
+        })
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
 }

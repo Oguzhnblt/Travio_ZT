@@ -23,7 +23,7 @@ class SecuritySettingsVC: UIViewController {
     
     private func fieldLabel(title: String) -> UILabel{
         let fieldLabel = UILabel()
-        fieldLabel.textColor = UIColor(named: "background")
+        fieldLabel.textColor = UIColor(named: "backgroundColor")
         fieldLabel.text = title
         fieldLabel.font = UIFont(name: "Poppins-SemiBold", size: 16)
         
@@ -43,7 +43,7 @@ class SecuritySettingsVC: UIViewController {
         saveButton.setTitle("Save", for: .normal)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.layer.cornerRadius = 12
-        saveButton.backgroundColor = UIColor(named: "background")
+        saveButton.backgroundColor = UIColor(named: "backgroundColor")
         return saveButton
     }()
     
@@ -78,7 +78,7 @@ class SecuritySettingsVC: UIViewController {
     private func stackView() -> UIStackView  {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 8
+        stack.spacing = 4
         stack.distribution = .fill
         
         return stack
@@ -112,7 +112,7 @@ class SecuritySettingsVC: UIViewController {
     }
     
     private func setupViews() {
-        self.view.backgroundColor = UIColor(named: "background")
+        self.view.backgroundColor = UIColor(named: "backgroundColor")
         self.view.addSubviews(securityItemView,backButton, headerLabel)
         
         privacyStack.addArrangedSubviews(camera,photoLibrary,location)
@@ -126,18 +126,19 @@ class SecuritySettingsVC: UIViewController {
     private func setupLayouts() {
         
         securityItemView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().offset(125)
+            make.top.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(55)
             make.left.right.equalToSuperview()
         }
         
         backButton.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(13)
-            make.left.equalToSuperview().offset(24)
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(10)
+            make.right.equalTo(headerLabel.snp.left)
+            make.left.equalToSuperview()
         })
         
         headerLabel.snp.makeConstraints({make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
-            make.centerX.equalToSuperview()
+            make.left.equalToSuperview().offset(72)
         })
         
         
@@ -149,13 +150,13 @@ class SecuritySettingsVC: UIViewController {
         
         privacyStack.dropShadow()
         privacyStack.snp.makeConstraints({make in
-            make.top.equalTo(passwordStack.snp.bottom).offset(40)
+            make.top.equalTo(passwordStack.snp.bottom).offset(30)
             make.left.right.equalToSuperview().inset(24)
 
         })
         
         saveButton.snp.makeConstraints({ make in
-            make.top.equalToSuperview().offset(580)
+            make.top.equalToSuperview().offset(550)
             make.height.equalTo(54)
             make.left.right.equalToSuperview().inset(24)
         })

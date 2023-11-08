@@ -145,7 +145,7 @@ class PopularPlacesVC: UIViewController {
         })
         
         popularPlacesItemView.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(125)
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(80)
             make.edges.equalToSuperview()
         }
         

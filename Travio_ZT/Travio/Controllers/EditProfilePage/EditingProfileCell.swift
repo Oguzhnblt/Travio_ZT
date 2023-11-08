@@ -11,7 +11,7 @@ class EditingProfileCell: UIView {
     
     private lazy var backView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: "content")
+        view.backgroundColor = .white
         view.clipsToBounds = true
         view.layer.cornerRadius = 16
         return view
@@ -40,6 +40,7 @@ class EditingProfileCell: UIView {
         stackView.spacing = 8
         backView.addSubview(stackView)
         
+        backView.dropShadow()
         backView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(8)
             make.width.equalTo(164)

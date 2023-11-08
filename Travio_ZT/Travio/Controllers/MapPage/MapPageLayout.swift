@@ -28,7 +28,7 @@ class MapPageLayout {
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.orthogonalScrollingBehavior  = .groupPaging
         layoutSection.interGroupSpacing = 18
-        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 18, bottom: 650, trailing: 18)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 18, bottom: 700, trailing: 18)
         
         return layoutSection
         

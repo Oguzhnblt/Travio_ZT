@@ -50,7 +50,7 @@ class MyVisitsVC: UIViewController {
     }
     
     private func setupViews() {
-        self.view.backgroundColor = UIColor(named: "background")
+        self.view.backgroundColor = UIColor(named: "backgroundColor")
         self.view.addSubviews(headerLabel,myVisitsItemView)
         myVisitsItemView.addSubviews(collectionView)
         
@@ -67,7 +67,7 @@ class MyVisitsVC: UIViewController {
         }
         
         headerLabel.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(-24)
             make.left.equalToSuperview().offset(24)
         })
         

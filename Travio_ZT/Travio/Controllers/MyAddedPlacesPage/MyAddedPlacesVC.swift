@@ -60,7 +60,7 @@ class MyAddedPlacesVC: UIViewController {
     private func createLabel(text: String,textSize: CGFloat, fontName: String) -> UILabel {
         let label = UILabel()
         label.text = text
-        label.textColor = UIColor(named: "textFieldBackground")
+        label.textColor = UIColor(named: "textFieldBackgroundColor")
         label.numberOfLines = 1
         label.textAlignment = .center
         label.font = UIFont(name: fontName, size: textSize)
@@ -135,7 +135,7 @@ class MyAddedPlacesVC: UIViewController {
         })
         
         myAddedPlacesItemView.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(125)
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(80)
             make.edges.equalToSuperview()
         }
         
@@ -207,7 +207,7 @@ extension MyAddedPlacesVC {
         let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
        
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-       layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 60, trailing: 0)
+       layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 100, trailing: 0)
         layoutSection.orthogonalScrollingBehavior  = .none
 
         return layoutSection

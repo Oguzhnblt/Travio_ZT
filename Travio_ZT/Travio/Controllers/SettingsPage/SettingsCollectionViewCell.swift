@@ -27,7 +27,7 @@ class SettingsCollectionViewCell: UICollectionViewCell {
         let backView = UIView()
         backView.clipsToBounds = true
         backView.backgroundColor = .white
-        backView.layer.cornerRadius = 16
+        backView.layer.cornerRadius = 20
         backView.frame.size = CGSize(width: frame.width, height: frame.height)
         return backView
     }()
@@ -46,15 +46,14 @@ class SettingsCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private lazy var button: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: "img_right_arrow"), for: .normal)
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        return button
+    private lazy var icon: UIImageView = {
+        let icon = UIImageView()
+        icon.image = UIImage(named: "img_right_arrow")
+        return icon
     }()
     
     private lazy var horizontalStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [iconImageView, label, UIView(), button])
+        let stackView = UIStackView(arrangedSubviews: [iconImageView, label, UIView(), icon])
         stackView.axis = .horizontal
         stackView.spacing = 8
         return stackView
@@ -74,6 +73,7 @@ class SettingsCollectionViewCell: UICollectionViewCell {
     
     private func setupLayouts() {
         
+
         horizontalStackView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.right.equalToSuperview().inset(16)
