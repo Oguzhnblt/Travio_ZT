@@ -4,7 +4,11 @@ import MapKit
 
 class MapVC: UIViewController {
     
-    var locationManager: CLLocationManager?
+    let viewModel = MapVM()
+    private lazy var mapPlaces = [Place]()
+    
+    private var locationManager: CLLocationManager?
+    
     private lazy var collectionView: UICollectionView = {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: mapLayout())
@@ -33,8 +37,16 @@ class MapVC: UIViewController {
     override func viewDidLoad() {
         setupViews()
         super.viewDidLoad()
-        
+        mapData()
         location()
+    }
+    
+    private func mapData() {
+        viewModel.dataTransfer = { place in
+            self.mapPlaces = place
+            
+            
+        }
     }
     
     private func location() {
