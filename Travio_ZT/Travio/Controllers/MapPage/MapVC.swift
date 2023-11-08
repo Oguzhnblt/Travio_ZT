@@ -18,7 +18,7 @@ class MapVC: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: mapLayout())
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: MapPageLayout.shared.mapLayout())
         collectionView.backgroundColor = UIColor.clear
         
         collectionView.register(MapViewCell.self, forCellWithReuseIdentifier: MapViewCell.identifier)
@@ -51,7 +51,7 @@ class MapVC: UIViewController {
             self?.mapPlaces = place
             self?.collectionView.reloadData()
         }
-        viewModel.mapPlaces(limit: 10)
+        viewModel.mapPlaces()
     }
     
     private func location() {
@@ -59,7 +59,6 @@ class MapVC: UIViewController {
         locationManager?.delegate = self
         
         locationManager?.requestWhenInUseAuthorization()
-        locationManager?.requestAlwaysAuthorization()
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         mapView.addGestureRecognizer(longPressGesture)
@@ -75,7 +74,7 @@ class MapVC: UIViewController {
             let locationInView = gesture.location(in: mapView)
             let coordinate = mapView.convert(locationInView, toCoordinateFrom: mapView)
             
-            //            mapView.removeAnnotations(mapView.annotations)
+            //mapView.removeAnnotations(mapView.annotations)
             addCustomPinToMap(at: coordinate)
             
             showPopup()
@@ -94,13 +93,15 @@ class MapVC: UIViewController {
         loginVC.modalPresentationStyle = .popover
         
         if let popover = loginVC.popoverPresentationController {
-            popover.sourceView = mapView
-            popover.sourceRect = CGRect(x: mapView.bounds.midX, y: mapView.bounds.midY, width: accessibilityFrame.width, height: accessibilityFrame.height)
+            popover.sourceView = view
+            popover.sourceRect = view.bounds
             popover.permittedArrowDirections = []
             
             present(loginVC, animated: true)
         }
     }
+
+
     
     private func checkLocationAuthorization() {
         guard let locationManager = locationManager, let location = locationManager.location else { return }
@@ -120,7 +121,7 @@ class MapVC: UIViewController {
     
     
     func addCustomPinToMap(at coordinate: CLLocationCoordinate2D) {
-        let customAnnotation = CustomAnnotation(coordinate: coordinate)
+        let customAnnotation = MapAnnotation(coordinate: coordinate)
         mapView.addAnnotation(customAnnotation)
     }
     
@@ -159,12 +160,12 @@ extension MapVC: CLLocationManagerDelegate {
 extension MapVC: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is CustomAnnotation {
-            let senderAnnotation = annotation as! CustomAnnotation
-            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: CustomAnnotation.identifier)
+        if annotation is MapAnnotation {
+            let senderAnnotation = annotation as! MapAnnotation
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MapAnnotation.identifier)
             
             if annotationView == nil {
-                annotationView = MKAnnotationView(annotation: senderAnnotation, reuseIdentifier: CustomAnnotation.identifier)
+                annotationView = MKAnnotationView(annotation: senderAnnotation, reuseIdentifier: MapAnnotation.identifier)
                 annotationView?.canShowCallout = true
             }
             
@@ -215,31 +216,6 @@ extension MapVC: UICollectionViewDataSource {
         }
 }
 
-extension MapVC {
-    
-    private func mapLayout() -> UICollectionViewCompositionalLayout {
-        return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
-            return self.mapLayouts()
-        }
-    }
-    
-    private func mapLayouts() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.75), heightDimension: .fractionalHeight(1))
-        let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
-        
-        
-        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-        layoutSection.orthogonalScrollingBehavior  = .groupPaging
-        layoutSection.interGroupSpacing = 18
-        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 18, bottom: 650, trailing: 18)
-        
-        return layoutSection
-        
-    }
-}
 
 #if DEBUG
 import SwiftUI

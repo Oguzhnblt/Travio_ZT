@@ -11,7 +11,7 @@ class MapVM {
     
     var dataTransfer: (([Place]) -> Void)?
     
-    func mapPlaces(limit: Int) {
+    func mapPlaces() {
         NetworkingHelper.shared.fetchData(urlRequest: .getAllPlaces) { [self] (result: Result<GetAllPlacesResponse, Error>) in
             switch result {
                 case .success(let object):
