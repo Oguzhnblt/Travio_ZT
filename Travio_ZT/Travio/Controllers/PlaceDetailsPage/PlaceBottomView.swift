@@ -78,17 +78,17 @@ class PlaceBottomView: UICollectionViewCell {
         
         placeTitle.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
-            make.left.right.equalToSuperview().inset(16)
+            make.left.right.equalToSuperview().inset(24)
         }
         
         dateTitle.snp.makeConstraints { make in
             make.top.equalTo(placeTitle.snp.bottom).offset(8)
-            make.left.right.equalToSuperview().inset(16)
+            make.left.right.equalToSuperview().inset(24)
         }
         
         authorTitle.snp.makeConstraints { make in
             make.top.equalTo(dateTitle.snp.bottom).offset(8)
-            make.left.right.equalToSuperview().inset(16)
+            make.left.right.equalToSuperview().inset(24)
         }
         
         mapView.snp.makeConstraints { make in
@@ -99,7 +99,7 @@ class PlaceBottomView: UICollectionViewCell {
         }
         
         descriptionView.snp.makeConstraints { make in
-            make.top.equalTo(mapView.snp.bottom)
+            make.top.equalTo(mapView.snp.bottom).offset(30)
             make.left.right.equalToSuperview().inset(16)
             make.bottom.equalToSuperview()
         }

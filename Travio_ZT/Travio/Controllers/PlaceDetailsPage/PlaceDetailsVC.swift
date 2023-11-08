@@ -70,7 +70,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         
         pageControl.snp.makeConstraints({ make in
             make.left.right.equalToSuperview()
-            make.top.equalToSuperview().offset(90)
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(120)
             })
     }
 }
