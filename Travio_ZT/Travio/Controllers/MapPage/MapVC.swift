@@ -8,8 +8,10 @@ class MapVC: UIViewController {
     private lazy var collectionView: UICollectionView = {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: mapLayout())
+        collectionView.backgroundView = UIView.init(frame: CGRect.zero)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.backgroundColor = UIColor.clear
         
         collectionView.register(MapViewCell.self, forCellWithReuseIdentifier: MapViewCell.identifier)
         collectionView.dataSource = self
@@ -44,25 +46,7 @@ class MapVC: UIViewController {
         mapView.addGestureRecognizer(tapGesture)
     }
     
-    func setupViews() {
-        self.view.addSubviews(mapView)
-        mapView.addSubviews(collectionView)
-        setupLayout()
-    }
-    
-    func setupLayout() {
-        mapView.snp.makeConstraints({ map in
-            map.top.bottom.equalToSuperview()
-            map.left.right.equalToSuperview()
-        })
-        
-        collectionView.snp.makeConstraints({ make in
-            make.top.equalToSuperview().offset(500)
-            make.bottom.equalToSuperview().offset(-20)
-            make.left.right.equalToSuperview().inset(16)
-        })
-    }
-    
+   
     private func checkLocationAuthorization() {
         guard let locationManager = locationManager,
               let location = locationManager.location else { return }
@@ -80,17 +64,16 @@ class MapVC: UIViewController {
     }
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
-        
         if gesture.state == .ended {
             let locationInView = gesture.location(in: mapView)
             let coordinate = mapView.convert(locationInView, toCoordinateFrom: mapView)
-            
+
             mapView.removeAnnotations(mapView.annotations)
             addCustomPinToMap(at: coordinate)
             showPopup()
-            
         }
     }
+
     
     func showPopup(){
         let screenHeight = UIScreen.main.bounds.height
@@ -113,6 +96,25 @@ class MapVC: UIViewController {
         let customAnnotation = CustomAnnotation(coordinate: coordinate)
         mapView.addAnnotation(customAnnotation)
     }
+    
+    func setupViews() {
+        self.view.addSubviews(mapView)
+        mapView.addSubviews(collectionView)
+        setupLayout()
+    }
+    
+    func setupLayout() {
+            mapView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+
+            collectionView.snp.makeConstraints { make in
+                make.top.bottom.equalToSuperview().offset(500)
+                make.left.right.equalToSuperview()
+            }
+        }
+
+    
     
 }
 
@@ -186,17 +188,20 @@ extension MapVC {
     }
     
     private func mapLayouts() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalWidth(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.7))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        
+
         let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: .fractionalWidth(1))
         let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
-        
+    
+
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.orthogonalScrollingBehavior  = .groupPaging
-        layoutSection.interGroupSpacing = 16
-        
+        layoutSection.interGroupSpacing = 18
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 18, bottom: 0, trailing: 18)
+
         return layoutSection
+        
     }
 }
 

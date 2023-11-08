@@ -24,16 +24,13 @@ class MapViewCell: UICollectionViewCell {
         }
     }
         
-    private lazy var backView: UIView = {
-        let backView = UIView()
-        backView.clipsToBounds = true
-        backView.layer.cornerRadius = 16
-        return backView
-    }()
-    
+   
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.backgroundColor = .clear
+        imageView.layer.cornerRadius = 16
         return imageView
     }()
     
@@ -64,17 +61,14 @@ class MapViewCell: UICollectionViewCell {
     }
     
     private func setupViews() {
-        addSubviews(backView)
-        backView.addSubviews(imageView,titleLabel,subtitleLabel,imageIconView)
+        addSubviews(imageView)
+        imageView.addSubviews(titleLabel,subtitleLabel,imageIconView)
         
         setupLayouts()
     }
     
     private func setupLayouts() {
-        backView.snp.makeConstraints({make in
-            make.edges.equalToSuperview()
-        })
-        
+       
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
