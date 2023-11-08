@@ -29,7 +29,6 @@ class MapViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .clear
         imageView.layer.cornerRadius = 16
         return imageView
     }()

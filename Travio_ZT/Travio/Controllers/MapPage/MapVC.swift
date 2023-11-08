@@ -8,11 +8,8 @@ class MapVC: UIViewController {
     private lazy var collectionView: UICollectionView = {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: mapLayout())
-        collectionView.backgroundView = UIView.init(frame: CGRect.zero)
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = UIColor.clear
-        
+        collectionView.isScrollEnabled = false
         collectionView.register(MapViewCell.self, forCellWithReuseIdentifier: MapViewCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -46,7 +43,7 @@ class MapVC: UIViewController {
         mapView.addGestureRecognizer(tapGesture)
     }
     
-   
+    
     private func checkLocationAuthorization() {
         guard let locationManager = locationManager,
               let location = locationManager.location else { return }
@@ -67,13 +64,13 @@ class MapVC: UIViewController {
         if gesture.state == .ended {
             let locationInView = gesture.location(in: mapView)
             let coordinate = mapView.convert(locationInView, toCoordinateFrom: mapView)
-
+            
             mapView.removeAnnotations(mapView.annotations)
             addCustomPinToMap(at: coordinate)
             showPopup()
         }
     }
-
+    
     
     func showPopup(){
         let screenHeight = UIScreen.main.bounds.height
@@ -98,24 +95,19 @@ class MapVC: UIViewController {
     }
     
     func setupViews() {
-        self.view.addSubviews(mapView)
-        mapView.addSubviews(collectionView)
+        self.view.addSubviews(mapView, collectionView)
         setupLayout()
     }
     
     func setupLayout() {
-            mapView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-
-            collectionView.snp.makeConstraints { make in
-                make.top.bottom.equalToSuperview().offset(500)
-                make.left.right.equalToSuperview()
-            }
+        mapView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
-
-    
-    
+        
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
 }
 
 extension MapVC: CLLocationManagerDelegate {
@@ -188,23 +180,22 @@ extension MapVC {
     }
     
     private func mapLayouts() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.7))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-
-        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: .fractionalWidth(1))
+        
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.75), heightDimension: .fractionalHeight(1))
         let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
-    
-
+        
+        
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.orthogonalScrollingBehavior  = .groupPaging
         layoutSection.interGroupSpacing = 18
-        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 18, bottom: 0, trailing: 18)
-
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 500, leading: 18, bottom: 30, trailing: 18)
+        
         return layoutSection
         
     }
 }
-
 
 #if DEBUG
 import SwiftUI
@@ -216,6 +207,3 @@ struct MapVC_Preview: PreviewProvider {
     }
 }
 #endif
-
-
-
