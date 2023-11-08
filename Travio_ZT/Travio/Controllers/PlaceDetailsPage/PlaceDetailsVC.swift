@@ -11,6 +11,8 @@ import SnapKit
 
 class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
+    private lazy var isBookmarked = true
+
     let placeTopView = PlaceTopView()
     
     
@@ -26,7 +28,6 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = .white
         
         return collectionView
     }()
@@ -48,6 +49,39 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
     
+    private lazy var bookmarkButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "icon_bookmark"), for: .normal)
+        button.addTarget(self, action: #selector(bookMarkTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc private func bookMarkTapped() {
+        isBookmarked.toggle()
+
+        if isBookmarked {
+            print("Item removed from bookmarks!")
+
+        } else {
+            print("Item bookmarked!")
+
+        }
+
+        let image = isBookmarked ? UIImage(named: "icon_bookmark") : UIImage(named: "icon_bookmark_fill")
+        bookmarkButton.setImage(image, for: .normal)
+    }
+  
+    private lazy var backButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "img_place_back"), for: .normal)
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc private func backButtonTapped() {
+        // Geri
+    }
+    
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +91,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
     private func setupViews() {
         self.view.backgroundColor = .white
-        self.view.addSubviews(collectionView, pageControl)
+        self.view.addSubviews(collectionView, pageControl, bookmarkButton, backButton)
         setupLayouts()
     }
     
@@ -67,6 +101,17 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
             make.top.bottom.equalToSuperview().offset(-60)
             make.left.right.equalToSuperview()
         })
+        
+        bookmarkButton.snp.makeConstraints({make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.right.equalToSuperview().offset(-30)
+        })
+        
+        backButton.snp.makeConstraints({make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.left.equalToSuperview().offset(24)
+        })
+        
         
         pageControl.snp.makeConstraints({ make in
             make.left.right.equalToSuperview()

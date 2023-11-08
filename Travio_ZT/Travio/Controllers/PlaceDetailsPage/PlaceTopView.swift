@@ -11,6 +11,7 @@ import SnapKit
 class PlaceTopView: UICollectionViewCell {
     
     static let identifier = "topView"
+    
         
     var cellData: PlacesModel? {
         didSet {
@@ -26,7 +27,8 @@ class PlaceTopView: UICollectionViewCell {
         view.clipsToBounds = true
         return view
     }()
-    
+   
+   
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -42,7 +44,7 @@ class PlaceTopView: UICollectionViewCell {
     private func setupViews() {
         addSubviews(backView)
         
-        backView.addSubview(imageView)
+        backView.addSubviews(imageView)
         
         backView.snp.makeConstraints({ make in
             make.edges.equalToSuperview()
@@ -51,6 +53,7 @@ class PlaceTopView: UICollectionViewCell {
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
