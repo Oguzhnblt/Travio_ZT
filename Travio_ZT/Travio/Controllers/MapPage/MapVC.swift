@@ -21,7 +21,6 @@ class MapVC: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: mapLayout())
         collectionView.backgroundColor = UIColor.clear
         
-        collectionView.isScrollEnabled = false
         collectionView.register(MapViewCell.self, forCellWithReuseIdentifier: MapViewCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -48,12 +47,12 @@ class MapVC: UIViewController {
     }
     
     private func mapData() {
-           viewModel.dataTransfer = { [weak self] place in
-               self?.mapPlaces = place
-               self?.collectionView.reloadData()
-           }
+        viewModel.dataTransfer = { [weak self] place in
+            self?.mapPlaces = place
+            self?.collectionView.reloadData()
+        }
         viewModel.mapPlaces(limit: 10)
-       }
+    }
     
     private func location() {
         locationManager = CLLocationManager()
@@ -76,7 +75,7 @@ class MapVC: UIViewController {
             let locationInView = gesture.location(in: mapView)
             let coordinate = mapView.convert(locationInView, toCoordinateFrom: mapView)
             
-            mapView.removeAnnotations(mapView.annotations)
+            //            mapView.removeAnnotations(mapView.annotations)
             addCustomPinToMap(at: coordinate)
             
             showPopup()
@@ -126,8 +125,7 @@ class MapVC: UIViewController {
     }
     
     func setupViews() {
-        self.view.addSubviews(mapView)
-        mapView.addSubviews(collectionView)
+        self.view.addSubviews(mapView, collectionView)
         setupLayout()
     }
     
@@ -202,10 +200,19 @@ extension MapVC: UICollectionViewDataSource {
         let object = mapPlaces[indexPath.item]
         
         cell.configure(with: object)
-
+        
         return cell
         
     }
+    
+    // Cell'e tıklandığında ilgili koordinata git
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            let selectedPlace = mapPlaces[indexPath.item]
+            let targetCoordinate = CLLocationCoordinate2D(latitude: selectedPlace.latitude!, longitude: selectedPlace.longitude!)
+            
+            mapView.setCenter(targetCoordinate, animated: false)
+        }
 }
 
 extension MapVC {
