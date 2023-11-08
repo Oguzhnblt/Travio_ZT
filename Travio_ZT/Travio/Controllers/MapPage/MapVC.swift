@@ -36,18 +36,18 @@ class MapVC: UIViewController {
     
     override func viewDidLoad() {
         setupViews()
-        super.viewDidLoad()
         mapData()
+        super.viewDidLoad()
         location()
     }
     
     private func mapData() {
-        viewModel.dataTransfer = { place in
-            self.mapPlaces = place
-            
-            
-        }
-    }
+           viewModel.dataTransfer = { [weak self] place in
+               self?.mapPlaces = place
+               self?.collectionView.reloadData()
+           }
+        viewModel.mapPlaces(limit: 10)
+       }
     
     private func location() {
         locationManager = CLLocationManager()
@@ -188,12 +188,15 @@ extension MapVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return popularPlacesMockData.count
+        return mapPlaces.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MapViewCell.identifier, for: indexPath) as! MapViewCell
-        cell.cellData = popularPlacesMockData[indexPath.row]
+        let object = mapPlaces[indexPath.item]
+        
+        cell.configure(with: object)
+
         return cell
         
     }

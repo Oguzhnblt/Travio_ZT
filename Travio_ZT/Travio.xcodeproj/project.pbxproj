@@ -82,6 +82,7 @@
 		12B02A7F2AF812010098DF1D /* PlaceTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B02A7E2AF812010098DF1D /* PlaceTopView.swift */; };
 		12B02A812AF82A930098DF1D /* PlaceBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B02A802AF82A930098DF1D /* PlaceBottomView.swift */; };
 		12B3630A2AFC002C00B84AEF /* MapVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B363092AFC002C00B84AEF /* MapVM.swift */; };
+		12B3630D2AFC15CA00B84AEF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 12B3630C2AFC15CA00B84AEF /* Kingfisher */; };
 		12E1FD502AF38AAB00B89F81 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */; };
 		12E1FD562AF3926A00B89F81 /* HelpSupportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E1FD552AF3926A00B89F81 /* HelpSupportVC.swift */; };
 		12F85D832AF9123500FB7CBD /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D822AF9123500FB7CBD /* SectionHeaderView.swift */; };
@@ -212,6 +213,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12B3630D2AFC15CA00B84AEF /* Kingfisher in Frameworks */,
 				0FC28E392AE92E56005387E9 /* Alamofire in Frameworks */,
 				1255D81D2ADACD7500FB6638 /* SnapKit in Frameworks */,
 				1255D8202ADACF2900FB6638 /* TinyConstraints in Frameworks */,
@@ -704,6 +706,7 @@
 				1255D81C2ADACD7500FB6638 /* SnapKit */,
 				1255D81F2ADACF2900FB6638 /* TinyConstraints */,
 				0FC28E382AE92E56005387E9 /* Alamofire */,
+				12B3630C2AFC15CA00B84AEF /* Kingfisher */,
 			);
 			productName = Travio;
 			productReference = 1255D8022ADAC7BD00FB6638 /* Travio.app */;
@@ -737,6 +740,7 @@
 				1255D81B2ADACD7500FB6638 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				1255D81E2ADACF2900FB6638 /* XCRemoteSwiftPackageReference "TinyConstraints" */,
 				0FC28E372AE92E56005387E9 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				12B3630B2AFC15CA00B84AEF /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 1255D8032ADAC7BD00FB6638 /* Products */;
 			projectDirPath = "";
@@ -1105,6 +1109,14 @@
 				minimumVersion = 4.0.2;
 			};
 		};
+		12B3630B2AFC15CA00B84AEF /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.10.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1122,6 +1134,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1255D81E2ADACF2900FB6638 /* XCRemoteSwiftPackageReference "TinyConstraints" */;
 			productName = TinyConstraints;
+		};
+		12B3630C2AFC15CA00B84AEF /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12B3630B2AFC15CA00B84AEF /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

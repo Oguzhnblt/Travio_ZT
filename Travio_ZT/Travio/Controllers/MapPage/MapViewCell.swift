@@ -8,21 +8,19 @@
 import Foundation
 import UIKit
 import SnapKit
+import Kingfisher
 
 
 class MapViewCell: UICollectionViewCell {
     static let identifier = "mapCell"
     
-    var cellData: PlacesModel? {
-        didSet {
-            guard let cellData = cellData else {
-                return
-            }
-            imageView.image = UIImage(named: cellData.cover_img_url ?? "img_default")
-            titleLabel.text = cellData.title
-            subtitleLabel.text = cellData.place
-        }
-    }
+    func configure(with place: Place) {
+           if let url = URL(string: place.cover_image_url!) {
+               imageView.kf.setImage(with: url)
+           }
+           titleLabel.text = place.title
+           subtitleLabel.text = place.place
+       }
         
    
     lazy var imageView: UIImageView = {
