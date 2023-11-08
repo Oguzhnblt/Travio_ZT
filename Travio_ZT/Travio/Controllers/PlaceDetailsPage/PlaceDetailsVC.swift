@@ -19,7 +19,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: myVisitsLayout())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-        
+        collectionView.isScrollEnabled = false
         collectionView.register(PlaceTopView.self, forCellWithReuseIdentifier: PlaceTopView.identifier)
         collectionView.register(PlaceBottomView.self, forCellWithReuseIdentifier: PlaceBottomView.identifier)
         
@@ -31,9 +31,24 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         return collectionView
     }()
     
+    private lazy var pageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        pageControl.currentPage = 0
+        pageControl.numberOfPages = newPlacesMockData.count
+        pageControl.backgroundStyle = .prominent
+        pageControl.currentPageIndicatorTintColor = .white
+        pageControl.pageIndicatorTintColor = .gray
+        pageControl.addTarget(self, action: #selector(pageControlValueChanged), for: .valueChanged)
+
+        return pageControl
+    }()
     
+    @objc private func pageControlValueChanged() {
+        let indexPath = IndexPath(item: pageControl.currentPage, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+    }
     
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -42,10 +57,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
     private func setupViews() {
         self.view.backgroundColor = .white
-        self.view.addSubviews(collectionView)
-        
-        
-        
+        self.view.addSubviews(collectionView, pageControl)
         setupLayouts()
     }
     
@@ -56,9 +68,13 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
             make.left.right.equalToSuperview()
         })
         
-        
+        pageControl.snp.makeConstraints({ make in
+            make.left.right.equalToSuperview()
+            make.top.equalToSuperview().offset(90)
+            })
     }
 }
+
 extension PlaceDetailsVC: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -83,7 +99,6 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceTopView.identifier, for: indexPath) as! PlaceTopView
                 cell.cellData = newPlacesMockData[indexPath.row]
                 
-                
                 return cell
             case 1:
                 
@@ -101,6 +116,13 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
 
 extension PlaceDetailsVC {
     
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+            let visibleIndexPaths = collectionView.indexPathsForVisibleItems
+            if let firstIndex = visibleIndexPaths.first {
+                pageControl.currentPage = firstIndex.item
+            }
+        }
+   
     private func myVisitsLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
             return self.myVisitsLayouts(for: sectionNumber)
@@ -119,7 +141,7 @@ extension PlaceDetailsVC {
                 layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.25))
                 orthogonalScrollingBehavior = .groupPagingCentered
             case 1:
-                layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.4))
+                layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
                 orthogonalScrollingBehavior = .none
             default:
                 Swift.fatalError("Unexpected section: \(section)")
