@@ -9,6 +9,8 @@ class MapVC: UIViewController {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: mapLayout())
         collectionView.backgroundColor = UIColor.clear
+        collectionView.backgroundView = UIView.init(frame: CGRect.zero)
+        
         collectionView.isScrollEnabled = false
         collectionView.register(MapViewCell.self, forCellWithReuseIdentifier: MapViewCell.identifier)
         collectionView.dataSource = self
@@ -21,13 +23,17 @@ class MapVC: UIViewController {
         let map = MKMapView()
         map.showsUserLocation = true
         map.overrideUserInterfaceStyle = .dark
+        map.isScrollEnabled = true
+        map.isZoomEnabled = true
         map.delegate = self
         return map
     }()
     
     
     override func viewDidLoad() {
+        setupViews()
         super.viewDidLoad()
+        
         location()
     }
     
@@ -37,16 +43,51 @@ class MapVC: UIViewController {
         
         locationManager?.requestWhenInUseAuthorization()
         locationManager?.requestAlwaysAuthorization()
-        setupViews()
+        
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        mapView.addGestureRecognizer(longPressGesture)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         mapView.addGestureRecognizer(tapGesture)
+        
+        
+    }
+    
+    @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            let locationInView = gesture.location(in: mapView)
+            let coordinate = mapView.convert(locationInView, toCoordinateFrom: mapView)
+            
+            mapView.removeAnnotations(mapView.annotations)
+            addCustomPinToMap(at: coordinate)
+            
+            showPopup()
+        }
+    }
+    
+    @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+        if gesture.state == .ended {
+            mapView.removeAnnotations(mapView.annotations)
+        }
     }
     
     
+    func showPopup() {
+        let loginVC = LoginVC()
+        loginVC.modalPresentationStyle = .popover
+        
+        if let popover = loginVC.popoverPresentationController {
+            popover.sourceView = mapView
+            popover.sourceRect = CGRect(x: mapView.bounds.midX, y: mapView.bounds.midY, width: accessibilityFrame.width, height: accessibilityFrame.height)
+            popover.permittedArrowDirections = []
+            
+            present(loginVC, animated: true)
+        }
+    }
+    
     private func checkLocationAuthorization() {
-        guard let locationManager = locationManager,
-              let location = locationManager.location else { return }
+        guard let locationManager = locationManager, let location = locationManager.location else { return }
+        
         switch locationManager.authorizationStatus {
             case .authorizedWhenInUse, .authorizedAlways:
                 let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 750, longitudinalMeters: 750)
@@ -60,34 +101,6 @@ class MapVC: UIViewController {
         }
     }
     
-    @objc func handleTap(_ gesture: UITapGestureRecognizer) {
-        if gesture.state == .ended {
-            let locationInView = gesture.location(in: mapView)
-            let coordinate = mapView.convert(locationInView, toCoordinateFrom: mapView)
-            
-            mapView.removeAnnotations(mapView.annotations)
-            addCustomPinToMap(at: coordinate)
-            showPopup()
-        }
-    }
-    
-    
-    func showPopup(){
-        let screenHeight = UIScreen.main.bounds.height
-        let popupHeight = screenHeight * 0.9
-        
-        
-        let loginVC = LoginVC()
-        loginVC.view.frame = CGRect(x: 0, y: screenHeight, width: self.view.frame.width, height: popupHeight)
-        self.view.addSubview(loginVC.view)
-        
-        
-        UIView.animate(withDuration: 0.3) {
-            loginVC.view.frame = CGRect(x: 0, y: screenHeight - popupHeight, width: self.view.frame.width, height: popupHeight)
-        }
-    }
-    
-    
     
     func addCustomPinToMap(at coordinate: CLLocationCoordinate2D) {
         let customAnnotation = CustomAnnotation(coordinate: coordinate)
@@ -95,7 +108,8 @@ class MapVC: UIViewController {
     }
     
     func setupViews() {
-        self.view.addSubviews(mapView, collectionView)
+        self.view.addSubviews(mapView)
+        mapView.addSubviews(collectionView)
         setupLayout()
     }
     
@@ -105,12 +119,14 @@ class MapVC: UIViewController {
         }
         
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview().offset(600)
+            make.left.right.equalToSuperview()
         }
     }
 }
 
 extension MapVC: CLLocationManagerDelegate {
+    
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
     }
@@ -190,7 +206,7 @@ extension MapVC {
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.orthogonalScrollingBehavior  = .groupPaging
         layoutSection.interGroupSpacing = 18
-        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 500, leading: 18, bottom: 30, trailing: 18)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 18, bottom: 650, trailing: 18)
         
         return layoutSection
         
