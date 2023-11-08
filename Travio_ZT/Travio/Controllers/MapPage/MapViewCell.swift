@@ -11,11 +11,8 @@ import SnapKit
 
 
 class MapViewCell: UICollectionViewCell {
+    static let identifier = "mapCell"
     
-    
-    static let identifier = "places"
-    
-    // Section içindeki item değişimini dinlemek için
     var cellData: PlacesModel? {
         didSet {
             guard let cellData = cellData else {
@@ -28,30 +25,29 @@ class MapViewCell: UICollectionViewCell {
     }
     
     private lazy var backView: UIView = {
-        let view = UIView()
-        view.clipsToBounds = true
-        view.backgroundColor = .clear
-        view.layer.cornerRadius = 16
-        return view
+        let backView = UIView()
+        backView.clipsToBounds = true
+        backView.layer.cornerRadius = 16
+        backView.backgroundColor = .clear
+        return backView
     }()
-    
-    lazy var imageView: UIImageView = {
+
+     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
-    private lazy var imageIconView: UIImageView = {
+   private lazy var imageIconView: UIImageView = {
         let imageIconView = UIImageView()
         imageIconView.contentMode = .scaleAspectFit
-        imageIconView.sizeThatFits(CGSize(width: 9, height: 12))
-        imageIconView.image = UIImage(named: "imgPin")
+        imageIconView.image = UIImage(named: "img_pin")
         return imageIconView
     }()
     
-    lazy var titleLabel: UILabel = {
+     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-SemiBold", size: 24)
+        label.font = UIFont(name: "Poppins-SemiBold", size: 20)
         label.textColor = .white
         return label
     }()
@@ -69,19 +65,14 @@ class MapViewCell: UICollectionViewCell {
     }
     
     private func setupViews() {
-        
-        lazy var subtitleStackView = UIStackView(arrangedSubviews: [imageIconView, subtitleLabel])
-        subtitleStackView.spacing = 4
-        
-        lazy var innerStackView = UIStackView(arrangedSubviews: [titleLabel, subtitleStackView])
-        innerStackView.axis = .horizontal
-        innerStackView.spacing = 8
-        
         addSubviews(backView)
-        backView.addSubview(imageView)
-        imageView.addSubview(innerStackView)
+        backView.addSubviews(imageView,titleLabel,subtitleLabel,imageIconView)
         
-        backView.dropShadow()
+        setupLayouts()
+    }
+    
+    private func setupLayouts() {
+        
         backView.snp.makeConstraints({make in
             make.edges.equalToSuperview()
         })
@@ -89,24 +80,30 @@ class MapViewCell: UICollectionViewCell {
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        innerStackView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(8)
-            make.bottom.equalToSuperview().offset(-8)
+
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).offset(-60)
+            make.left.equalToSuperview().offset(16)
+        }
+
+        subtitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom)
+            make.left.equalToSuperview().offset(31)
+
         }
         
-        imageIconView.snp.makeConstraints({make in
-            make.width.equalTo(9)
-            make.height.equalTo(12)
-        })
+        imageIconView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom)
+            make.bottom.equalToSuperview().offset(-8)
+            make.left.equalToSuperview().offset(16)
+
+        }
+
     }
-    
-    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
     
 }
 

@@ -10,7 +10,7 @@ class MapVC: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: mapLayout())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
- 
+        
         collectionView.register(MapViewCell.self, forCellWithReuseIdentifier: MapViewCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -21,14 +21,18 @@ class MapVC: UIViewController {
     private lazy var mapView: MKMapView = {
         let map = MKMapView()
         map.showsUserLocation = true
-        map.translatesAutoresizingMaskIntoConstraints = true
         map.overrideUserInterfaceStyle = .dark
         map.delegate = self
         return map
     }()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        location()
+    }
+    
+    private func location() {
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         
@@ -38,12 +42,11 @@ class MapVC: UIViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         mapView.addGestureRecognizer(tapGesture)
-
     }
     
     func setupViews() {
-        self.view.addSubview(mapView)
-        self.view.addSubview(collectionView)
+        self.view.addSubviews(mapView)
+        mapView.addSubviews(collectionView)
         setupLayout()
     }
     
@@ -51,32 +54,33 @@ class MapVC: UIViewController {
         mapView.snp.makeConstraints({ map in
             map.top.bottom.equalToSuperview()
             map.left.right.equalToSuperview()
-            })
+        })
+        
         collectionView.snp.makeConstraints({ make in
-               make.top.equalToSuperview().offset(565)
-               make.bottom.equalToSuperview().offset(-101)
-               make.left.equalToSuperview()
-               make.right.equalToSuperview()
-           })
+            make.top.equalToSuperview().offset(500)
+            make.bottom.equalToSuperview().offset(-20)
+            make.left.right.equalToSuperview().inset(16)
+        })
     }
     
     private func checkLocationAuthorization() {
         guard let locationManager = locationManager,
               let location = locationManager.location else { return }
         switch locationManager.authorizationStatus {
-        case .authorizedWhenInUse, .authorizedAlways:
-            let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 750, longitudinalMeters: 750)
-            mapView.setRegion(region, animated: true)
-        case .denied:
-            print("Location services have been denied")
-        case .notDetermined, .restricted:
-            print("Location cannot be determined or is restricted")
-        @unknown default:
-            print("Unknown error")
+            case .authorizedWhenInUse, .authorizedAlways:
+                let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 750, longitudinalMeters: 750)
+                mapView.setRegion(region, animated: true)
+            case .denied:
+                print("Location services have been denied")
+            case .notDetermined, .restricted:
+                print("Location cannot be determined or is restricted")
+            @unknown default:
+                print("Unknown error")
         }
     }
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+        
         if gesture.state == .ended {
             let locationInView = gesture.location(in: mapView)
             let coordinate = mapView.convert(locationInView, toCoordinateFrom: mapView)
@@ -84,31 +88,32 @@ class MapVC: UIViewController {
             mapView.removeAnnotations(mapView.annotations)
             addCustomPinToMap(at: coordinate)
             showPopup()
-
+            
         }
     }
+    
     func showPopup(){
         let screenHeight = UIScreen.main.bounds.height
-        let popupHeight = screenHeight * 0.8
-
+        let popupHeight = screenHeight * 0.9
+        
         
         let loginVC = LoginVC()
         loginVC.view.frame = CGRect(x: 0, y: screenHeight, width: self.view.frame.width, height: popupHeight)
         self.view.addSubview(loginVC.view)
-
-
+        
+        
         UIView.animate(withDuration: 0.3) {
             loginVC.view.frame = CGRect(x: 0, y: screenHeight - popupHeight, width: self.view.frame.width, height: popupHeight)
         }
     }
-
-
-
+    
+    
+    
     func addCustomPinToMap(at coordinate: CLLocationCoordinate2D) {
         let customAnnotation = CustomAnnotation(coordinate: coordinate)
         mapView.addAnnotation(customAnnotation)
     }
-
+    
 }
 
 extension MapVC: CLLocationManagerDelegate {
@@ -126,29 +131,30 @@ extension MapVC: CLLocationManagerDelegate {
 }
 
 extension MapVC: MKMapViewDelegate {
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is CustomAnnotation {
             let senderAnnotation = annotation as! CustomAnnotation
-            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "CustomAnnotation")
-
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: CustomAnnotation.identifier)
+            
             if annotationView == nil {
-                annotationView = MKAnnotationView(annotation: senderAnnotation, reuseIdentifier: "CustomAnnotation")
+                annotationView = MKAnnotationView(annotation: senderAnnotation, reuseIdentifier: CustomAnnotation.identifier)
                 annotationView?.canShowCallout = true
             }
-
+            
             let pinImage = UIImage(named: "myCustomMark")
             annotationView?.image = pinImage
-
+            
             return annotationView
         }
-
+        
         return nil
     }
 }
 
 extension MapVC: UICollectionViewDelegateFlowLayout {
     
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
@@ -172,34 +178,39 @@ extension MapVC: UICollectionViewDataSource {
 }
 
 extension MapVC {
-
-   private func mapLayout() -> UICollectionViewCompositionalLayout {
+    
+    private func mapLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
             return self.mapLayouts()
         }
     }
-
+    
     private func mapLayouts() -> NSCollectionLayoutSection {
-       
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalWidth(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-
-
-        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7), heightDimension: .fractionalHeight(1))
-        let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitem: layoutItem, count: 1)
-
+        
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1))
+        let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
         
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-        layoutSection.orthogonalScrollingBehavior = .groupPaging
-
-        
-        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+        layoutSection.orthogonalScrollingBehavior  = .groupPaging
         layoutSection.interGroupSpacing = 16
-
+        
         return layoutSection
     }
 }
 
+
+#if DEBUG
+import SwiftUI
+
+@available(iOS 13 , *)
+struct MapVC_Preview: PreviewProvider {
+    static var previews: some View {
+        MapVC().showPreview()
+    }
+}
+#endif
 
 
 
