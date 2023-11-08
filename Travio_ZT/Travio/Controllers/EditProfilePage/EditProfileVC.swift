@@ -30,7 +30,7 @@ class EditProfileVC: UIViewController {
     
     private lazy var profileImage: UIImageView = {
         let image = UIImageView()
-        image.image = .imgProfile
+        image.image = UIImage(named: "imgProfile")
         image.contentMode = .scaleAspectFit
         
         return image

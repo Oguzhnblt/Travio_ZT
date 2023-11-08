@@ -7,11 +7,12 @@
 
 import Foundation
 
-    struct GetAllGalleryByPlaceIdData: Codable {
-            var count: Int?
-            var images: [Image]?
-        }
+struct GetAllGalleryByPlaceIdData: Codable {
+    var count: Int?
+    var images: [Image]?
+}
+
 struct GetAllGalleryByPlaceIdResponse: Codable {
-        let data: GetAllGalleryByPlaceIdData?
-        let status: String?
+    let data: GetAllGalleryByPlaceIdData?
+    let status: String?
 }

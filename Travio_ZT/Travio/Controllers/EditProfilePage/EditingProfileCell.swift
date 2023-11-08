@@ -11,7 +11,7 @@ class EditingProfileCell: UIView {
     
     private lazy var backView: UIView = {
         let view = UIView()
-        view.backgroundColor = .content
+        view.backgroundColor = UIColor(named: "content")
         view.clipsToBounds = true
         view.layer.cornerRadius = 16
         return view

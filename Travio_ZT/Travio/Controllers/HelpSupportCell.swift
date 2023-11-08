@@ -10,7 +10,8 @@ import UIKit
 import SnapKit
 
 class HelpSupportCell: UICollectionViewCell {
-    
+    static let cellReuseIdentifier = "cell"
+
     lazy var backView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -66,13 +67,12 @@ class HelpSupportCell: UICollectionViewCell {
             make.trailing.equalToSuperview().inset(16)
         }
         
-        // Add the iconImageView
         backView.addSubview(iconImageView)
         iconImageView.snp.makeConstraints { (make) in
             make.centerY.equalTo(titleLabel)
-            make.leading.equalTo(titleLabel.snp.trailing).offset(8) // Adjust the offset as needed
+            make.leading.equalTo(titleLabel.snp.trailing).offset(8)
             make.trailing.lessThanOrEqualToSuperview().inset(16)
-            make.width.height.equalTo(15) // Set the width and height as per your icon size
+            make.width.height.equalTo(15)
         }
         
         backView.addSubview(subtitleLabel)
