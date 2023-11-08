@@ -34,6 +34,12 @@ class MainTabbarVC: UITabBarController {
             let imageSettings =  UIImage(named: "menu")
             let selectedImageSettings = UIImage(named:"menu")
             settingsVC.tabBarItem = UITabBarItem(title: "Menu", image: imageSettings, selectedImage: selectedImageSettings)
+            let myVisitsVC = MyVisitsVC()
+                   let MyVisitsNC = UINavigationController(rootViewController: myVisitsVC)
+                   let imageVisits =  UIImage(systemName: "tabBarPin")
+                   let selectedImageVisits = UIImage(systemName: "tabBarPin")
+                   myVisitsVC.tabBarItem = UITabBarItem(title: "Visits", image: imageVisits, selectedImage: selectedImageVisits)
+            let mapVC = MapVC()
            // let myVisitsVC = MyVisitsVC()
            //         let MyVisitsNC = UINavigationController(rootViewController: myVisitsVC)
            //         let imageVisits =  UIImage(systemName: "house")
@@ -47,6 +53,7 @@ class MainTabbarVC: UITabBarController {
             let selectedImageMap = UIImage(named: "map")
             mapVC.tabBarItem = UITabBarItem(title: "Map", image: imageMap, selectedImage: selectedImageMap)
             
+            return [homeNC, MyVisitsNC, mapNC, settingsNC]
             return [homeNC, mapNC]
         }
     
