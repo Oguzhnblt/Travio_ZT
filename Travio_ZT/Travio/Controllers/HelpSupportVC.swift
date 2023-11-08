@@ -6,7 +6,6 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     private var selectedIndexPath: IndexPath?
     private var isExpanded: Bool = false
     
-    private lazy var cellReuseIdentifier = "cell"
     private lazy var expandedHeight: CGFloat = 150
     private lazy var collapsedHeight: CGFloat = 45
     
@@ -20,7 +19,7 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(HelpSupportCell.self, forCellWithReuseIdentifier: cellReuseIdentifier)
+        collectionView.register(HelpSupportCell.self, forCellWithReuseIdentifier: HelpSupportCell.cellReuseIdentifier)
         collectionView.backgroundColor = .white
         return collectionView
     }()
@@ -43,7 +42,7 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     
     private lazy var contentLabel: UILabel = {
         let headerLabel = UILabel()
-        headerLabel.textColor = UIColor(named: "background")
+        headerLabel.textColor = UIColor(named: "backgroundColor")
         headerLabel.text = "FAQ"
         headerLabel.font = UIFont(name: "Poppins-SemiBold", size: 24)
         
@@ -70,7 +69,7 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     }
     
     private func setupUI() {
-        self.view.backgroundColor = UIColor(named: "background")
+        self.view.backgroundColor = UIColor(named: "backgroundColor")
         self.view.addSubviews(backButton,headerLabel,helpSuppportItemView, contentLabel)
         
         backButton.snp.makeConstraints({make in
@@ -110,7 +109,7 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! HelpSupportCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HelpSupportCell.cellReuseIdentifier, for: indexPath) as! HelpSupportCell
         
         let item = helpItems[indexPath.item]
         cell.titleLabel.text = item.title
