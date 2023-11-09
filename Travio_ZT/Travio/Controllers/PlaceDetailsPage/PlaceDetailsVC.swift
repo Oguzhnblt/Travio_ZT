@@ -98,26 +98,28 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     private func setupLayouts() {
         
         collectionView.snp.makeConstraints({ make in
-            make.top.bottom.equalToSuperview().offset(-60)
+            make.top.equalToSuperview().offset(-100)
             make.left.right.equalToSuperview()
+            make.bottom.equalToSuperview()
         })
         
         bookmarkButton.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(-10)
             make.right.equalToSuperview().offset(-30)
         })
         
         backButton.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(-10)
             make.left.equalToSuperview().offset(24)
         })
         
-        
         pageControl.snp.makeConstraints({ make in
+            make.top.equalToSuperview().offset(self.view.frame.height * 0.23)
             make.left.right.equalToSuperview()
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(120)
-            })
+        })
     }
+
+
 }
 
 extension PlaceDetailsVC: UICollectionViewDataSource {
@@ -186,7 +188,7 @@ extension PlaceDetailsVC {
                 layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.25))
                 orthogonalScrollingBehavior = .groupPagingCentered
             case 1:
-                layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+                layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.6))
                 orthogonalScrollingBehavior = .none
             default:
                 Swift.fatalError("Unexpected section: \(section)")

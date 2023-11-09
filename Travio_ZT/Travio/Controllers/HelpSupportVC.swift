@@ -109,15 +109,21 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HelpSupportCell.cellReuseIdentifier, for: indexPath) as! HelpSupportCell
-        
+
         let item = helpItems[indexPath.item]
         cell.titleLabel.text = item.title
         cell.subtitleLabel.text = item.subtitle
-        
+
+        if let selectedIndexPath, selectedIndexPath == indexPath {
+            cell.iconImageView.image = UIImage(named: "img_right_arrow")
+        } else {
+            cell.iconImageView.image = UIImage(named: "img_arrow")
+        }
+
         return cell
     }
+
     
     // MARK: - UICollectionViewDelegateFlowLayout
     
@@ -132,6 +138,7 @@ class HelpSupportVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if selectedIndexPath == indexPath {
             selectedIndexPath = nil
+        
         } else {
             selectedIndexPath = indexPath
         }

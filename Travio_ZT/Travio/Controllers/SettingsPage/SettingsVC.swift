@@ -179,9 +179,9 @@ extension SettingsVC: UICollectionViewDataSource {
             case 3:
                 let helpSupport = HelpSupportVC()
                 navigationController?.pushViewController(helpSupport, animated: true)
-            case 4: break
-                //                let about = AboutVC()
-                //                navigationController?.pushViewController(about, animated: true)
+            case 4:
+                let placeDetail = PlaceDetailsVC()
+                navigationController?.pushViewController(placeDetail, animated: true)
             default: break
                 //                let termsOfUse = TermsOfUse()
                 //                navigationController?.pushViewController(termsOfUse, animated: true)

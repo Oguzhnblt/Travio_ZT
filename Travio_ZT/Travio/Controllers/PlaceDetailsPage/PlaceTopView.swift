@@ -7,6 +7,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import MapKit
 
 class PlaceTopView: UICollectionViewCell {
     
@@ -35,6 +36,26 @@ class PlaceTopView: UICollectionViewCell {
         return imageView
     }()
     
+    lazy var placeTitle: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = UIFont(name: "Poppins-SemiBold", size: 30)
+        return label
+    }()
+    
+    lazy var dateTitle: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.black
+        label.font = UIFont(name: "Poppins-Regular", size: 14)
+        return label
+    }()
+    
+    lazy var authorTitle: UILabel = {
+        let label = UILabel()
+        label.textColor = .gray
+        label.font = UIFont(name: "Poppins-Regular", size: 10)
+        return label
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -53,7 +74,6 @@ class PlaceTopView: UICollectionViewCell {
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

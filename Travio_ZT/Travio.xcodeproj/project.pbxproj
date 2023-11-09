@@ -31,6 +31,7 @@
 		0FC28E362AE92C9F005387E9 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC28E352AE92C9F005387E9 /* Router.swift */; };
 		0FC28E392AE92E56005387E9 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 0FC28E382AE92E56005387E9 /* Alamofire */; };
 		0FC9671D2AEA4B5D009FB26B /* MainTabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */; };
+		120490772AFCD6020076A0AA /* PlaceBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120490762AFCD6020076A0AA /* PlaceBottomView.swift */; };
 		1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1214274E2ADC25E700CA1D10 /* SignUpVC.swift */; };
 		122DB68A2AFADD2C001CDE5A /* PopularPlacesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122DB6892AFADD2C001CDE5A /* PopularPlacesVM.swift */; };
 		122DB68C2AFAE01B001CDE5A /* PlacesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122DB68B2AFAE01B001CDE5A /* PlacesModel.swift */; };
@@ -83,7 +84,6 @@
 		12A009432AEFA5A900D2AD14 /* PopularPlacesViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A009422AEFA5A900D2AD14 /* PopularPlacesViewCell.swift */; };
 		12B02A7D2AF8106F0098DF1D /* PlaceDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B02A7C2AF8106F0098DF1D /* PlaceDetailsVC.swift */; };
 		12B02A7F2AF812010098DF1D /* PlaceTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B02A7E2AF812010098DF1D /* PlaceTopView.swift */; };
-		12B02A812AF82A930098DF1D /* PlaceBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B02A802AF82A930098DF1D /* PlaceBottomView.swift */; };
 		12B3630A2AFC002C00B84AEF /* MapVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B363092AFC002C00B84AEF /* MapVM.swift */; };
 		12B3630D2AFC15CA00B84AEF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 12B3630C2AFC15CA00B84AEF /* Kingfisher */; };
 		12E1FD502AF38AAB00B89F81 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */; };
@@ -135,6 +135,7 @@
 		0FB84E112AF289160071A559 /* GetAllPlacesResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllPlacesResponseModel.swift; sourceTree = "<group>"; };
 		0FC28E352AE92C9F005387E9 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarVC.swift; sourceTree = "<group>"; };
+		120490762AFCD6020076A0AA /* PlaceBottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceBottomView.swift; sourceTree = "<group>"; };
 		1214274E2ADC25E700CA1D10 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		122DB6892AFADD2C001CDE5A /* PopularPlacesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularPlacesVM.swift; sourceTree = "<group>"; };
 		122DB68B2AFAE01B001CDE5A /* PlacesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesModel.swift; sourceTree = "<group>"; };
@@ -187,7 +188,6 @@
 		12A009422AEFA5A900D2AD14 /* PopularPlacesViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularPlacesViewCell.swift; sourceTree = "<group>"; };
 		12B02A7C2AF8106F0098DF1D /* PlaceDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsVC.swift; sourceTree = "<group>"; };
 		12B02A7E2AF812010098DF1D /* PlaceTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTopView.swift; sourceTree = "<group>"; };
-		12B02A802AF82A930098DF1D /* PlaceBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceBottomView.swift; sourceTree = "<group>"; };
 		12B363092AFC002C00B84AEF /* MapVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVM.swift; sourceTree = "<group>"; };
 		12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		12E1FD552AF3926A00B89F81 /* HelpSupportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportVC.swift; sourceTree = "<group>"; };
@@ -558,7 +558,7 @@
 			children = (
 				12B02A7C2AF8106F0098DF1D /* PlaceDetailsVC.swift */,
 				12B02A7E2AF812010098DF1D /* PlaceTopView.swift */,
-				12B02A802AF82A930098DF1D /* PlaceBottomView.swift */,
+				120490762AFCD6020076A0AA /* PlaceBottomView.swift */,
 			);
 			path = PlaceDetailsPage;
 			sourceTree = "<group>";
@@ -801,7 +801,6 @@
 				0FB84E0D2AF288180071A559 /* DeletePlaceResposeModel.swift in Sources */,
 				127806202AF7CC260085D31F /* HelpSupportModel.swift in Sources */,
 				125B445B2AE944F00047248D /* HomeVC.swift in Sources */,
-				12B02A812AF82A930098DF1D /* PlaceBottomView.swift in Sources */,
 				12B02A7D2AF8106F0098DF1D /* PlaceDetailsVC.swift in Sources */,
 				1255D8062ADAC7BD00FB6638 /* AppDelegate.swift in Sources */,
 				12A009412AEFA58500D2AD14 /* PopularPlacesVC.swift in Sources */,
@@ -826,6 +825,7 @@
 				0FC28E362AE92C9F005387E9 /* Router.swift in Sources */,
 				12B02A7F2AF812010098DF1D /* PlaceTopView.swift in Sources */,
 				FF9BD56A2AF2F86B0072BBA0 /* GetVisitByIdResponseModel.swift in Sources */,
+				120490772AFCD6020076A0AA /* PlaceBottomView.swift in Sources */,
 				0FB84E052AF286CC0071A559 /* PostPlaceResponseModel.swift in Sources */,
 				FF0B44BC2AF2AFE600586EA7 /* GetPopularPlacesResponseModel.swift in Sources */,
 				0FB84E082AF287840071A559 /* UpdatePlaceRequestModel.swift in Sources */,
@@ -1039,7 +1039,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1071,7 +1071,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
