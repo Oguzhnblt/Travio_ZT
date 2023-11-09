@@ -19,6 +19,7 @@ enum FormatType:String {
     case standard = "yyyy-MM-dd"
     case dateAndTime = "dd.MM.yyyy'T'HH:mm"
     case time = "HH:mm"
+    case stringFormat = "dd MMMM yyyy"
 }
 
 // MARK: - Font Type
@@ -568,5 +569,24 @@ class CustomLabelTextField: UITextField {
         return bounds.inset(by: placeholderInsets)
     }
     
+}
+
+extension DateFormatter {
+    static func formattedDate(from originalDateString: String, originalFormat: String, targetFormat: String, localeIdentifier: String? = nil) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = originalFormat
+        
+        if let localeIdentifier = localeIdentifier {
+            dateFormatter.locale = Locale(identifier: localeIdentifier)
+        }
+        
+        if let date = dateFormatter.date(from: originalDateString) {
+            dateFormatter.dateFormat = targetFormat
+            return dateFormatter.string(from: date)
+        } else {
+            print("Geçersiz tarih formatı")
+            return nil
+        }
+    }
 }
 

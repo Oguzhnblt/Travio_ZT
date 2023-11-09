@@ -8,17 +8,18 @@
 import Foundation
 import UIKit
 import SnapKit
+import Kingfisher
+import MapKit
 
 class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
+    var selectedPlace: Place?
+    
     private lazy var isBookmarked = true
 
-    let placeTopView = PlaceTopView()
-    
-    
     private lazy var collectionView: UICollectionView = {
         
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: myVisitsLayout())
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: PlaceDetailsLayout.shared.placeDetailsLayout())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.isScrollEnabled = false
@@ -35,12 +36,12 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.currentPage = 0
-        pageControl.numberOfPages = newPlacesMockData.count
+        pageControl.numberOfPages = 1 // FIXME: Fotoğraf sayısına göre düzeltilecek
         pageControl.backgroundStyle = .prominent
         pageControl.currentPageIndicatorTintColor = .white
         pageControl.pageIndicatorTintColor = .gray
         pageControl.addTarget(self, action: #selector(pageControlValueChanged), for: .valueChanged)
-
+        
         return pageControl
     }()
     
@@ -58,19 +59,19 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
     @objc private func bookMarkTapped() {
         isBookmarked.toggle()
-
+        
         if isBookmarked {
             print("Item removed from bookmarks!")
-
+            
         } else {
             print("Item bookmarked!")
-
+            
         }
-
+        
         let image = isBookmarked ? UIImage(named: "icon_bookmark") : UIImage(named: "icon_bookmark_fill")
         bookmarkButton.setImage(image, for: .normal)
     }
-  
+    
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "img_place_back"), for: .normal)
@@ -79,13 +80,14 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     }()
     
     @objc private func backButtonTapped() {
-        // Geri
+        navigationController?.popViewController(animated: true)
     }
-    
-   
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        
+        
         navigationController?.navigationBar.isHidden = true
     }
     
@@ -118,8 +120,8 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
             make.left.right.equalToSuperview()
         })
     }
-
-
+    
+    
 }
 
 extension PlaceDetailsVC: UICollectionViewDataSource {
@@ -131,7 +133,7 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
             case 0:
-                return newPlacesMockData.count
+                return 1 // FIXME: Düzeltilecek
             case 1:
                 return 1
             default:
@@ -144,15 +146,35 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
         switch indexPath.section {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceTopView.identifier, for: indexPath) as! PlaceTopView
-                cell.cellData = newPlacesMockData[indexPath.row]
                 
+                if let selectedPlace = selectedPlace,
+                          let coverImageURLString = selectedPlace.cover_image_url,
+                          let url = URL(string: coverImageURLString) {
+                           cell.imageView.kf.setImage(with: url)
+                    print(url)
+                       }
                 return cell
-            case 1:
                 
+            case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceBottomView.identifier, for: indexPath) as! PlaceBottomView
-                cell.placeTitle.text = "İstanbul"
-                cell.dateTitle.text = "22 Eylül 2023"
-                cell.authorTitle.text = "by added @oguzhanbolat"
+                
+                if let selectedPlace = selectedPlace {
+                    cell.placeTitle.text = selectedPlace.place
+                    cell.descriptionLabel.text = selectedPlace.description
+                    cell.authorTitle.text = selectedPlace.creator
+                    
+                    
+                    if let formattedDate = DateFormatter.formattedDate(from: selectedPlace.created_at!, originalFormat: FormatType.longFormat.rawValue , targetFormat: FormatType.stringFormat.rawValue, localeIdentifier: "tr_TR") {
+                        cell.dateTitle.text = formattedDate
+                    }
+
+                    let targetCoordinate = CLLocationCoordinate2D(latitude: selectedPlace.latitude!, longitude: selectedPlace.longitude!)
+                    
+                    let region = MKCoordinateRegion(center: targetCoordinate, latitudinalMeters: 250, longitudinalMeters: 250)
+                    
+                    cell.mapView.setCenter(targetCoordinate, animated: false)
+                    cell.mapView.region = region
+                }
                 return cell
                 
             default:
@@ -164,44 +186,11 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
 extension PlaceDetailsVC {
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-            let visibleIndexPaths = collectionView.indexPathsForVisibleItems
-            if let firstIndex = visibleIndexPaths.first {
-                pageControl.currentPage = firstIndex.item
-            }
-        }
-   
-    private func myVisitsLayout() -> UICollectionViewCompositionalLayout {
-        return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
-            return self.myVisitsLayouts(for: sectionNumber)
+        let visibleIndexPaths = collectionView.indexPathsForVisibleItems
+        if let firstIndex = visibleIndexPaths.first {
+            pageControl.currentPage = firstIndex.item
         }
     }
-    
-    private func myVisitsLayouts(for section: Int) -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        var layoutGroupSize: NSCollectionLayoutSize
-        var orthogonalScrollingBehavior: UICollectionLayoutSectionOrthogonalScrollingBehavior
-        
-        switch section {
-            case 0:
-                layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.25))
-                orthogonalScrollingBehavior = .groupPagingCentered
-            case 1:
-                layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.6))
-                orthogonalScrollingBehavior = .none
-            default:
-                Swift.fatalError("Unexpected section: \(section)")
-        }
-        
-        let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
-        
-        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-        layoutSection.orthogonalScrollingBehavior = orthogonalScrollingBehavior
-        
-        return layoutSection
-    }
-    
 }
 
 

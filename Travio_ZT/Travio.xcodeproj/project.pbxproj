@@ -67,6 +67,7 @@
 		1255D86E2ADB155E00FB6638 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D85B2ADB155E00FB6638 /* Poppins-SemiBold.ttf */; };
 		1255D86F2ADB155E00FB6638 /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D85C2ADB155E00FB6638 /* Poppins-Italic.ttf */; };
 		1255D8702ADB155E00FB6638 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D85D2ADB155E00FB6638 /* Poppins-MediumItalic.ttf */; };
+		125754312AFD5DAD00AD003B /* PlaceDetailsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125754302AFD5DAD00AD003B /* PlaceDetailsLayout.swift */; };
 		125B445B2AE944F00047248D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125B445A2AE944F00047248D /* HomeVC.swift */; };
 		127249C32AF2282200CEAA64 /* SecuritySettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249C22AF2282200CEAA64 /* SecuritySettingsVC.swift */; };
 		127249C52AF2291600CEAA64 /* ChangePasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249C42AF2291600CEAA64 /* ChangePasswordCell.swift */; };
@@ -171,6 +172,7 @@
 		1255D85B2ADB155E00FB6638 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		1255D85C2ADB155E00FB6638 /* Poppins-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Italic.ttf"; sourceTree = "<group>"; };
 		1255D85D2ADB155E00FB6638 /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
+		125754302AFD5DAD00AD003B /* PlaceDetailsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsLayout.swift; sourceTree = "<group>"; };
 		125B445A2AE944F00047248D /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		127249C22AF2282200CEAA64 /* SecuritySettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsVC.swift; sourceTree = "<group>"; };
 		127249C42AF2291600CEAA64 /* ChangePasswordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordCell.swift; sourceTree = "<group>"; };
@@ -559,6 +561,7 @@
 				12B02A7C2AF8106F0098DF1D /* PlaceDetailsVC.swift */,
 				12B02A7E2AF812010098DF1D /* PlaceTopView.swift */,
 				120490762AFCD6020076A0AA /* PlaceBottomView.swift */,
+				125754302AFD5DAD00AD003B /* PlaceDetailsLayout.swift */,
 			);
 			path = PlaceDetailsPage;
 			sourceTree = "<group>";
@@ -875,6 +878,7 @@
 				0FB84E0A2AF287BA0071A559 /* UpdatePlaceResponseModel.swift in Sources */,
 				0F5CB3192AF2697C00B9F13F /* RefreshResponseModel.swift in Sources */,
 				FF9BD5542AF2F1250072BBA0 /* PostGalleryImageResponseModel.swift in Sources */,
+				125754312AFD5DAD00AD003B /* PlaceDetailsLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

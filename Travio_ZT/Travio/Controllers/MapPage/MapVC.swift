@@ -9,8 +9,11 @@ import UIKit
 import SnapKit
 import MapKit
 
+
+
 class MapVC: UIViewController {
     
+
     let viewModel = MapVM()
     private lazy var mapPlaces = [Place]()
     
@@ -198,6 +201,7 @@ extension MapVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MapViewCell.identifier, for: indexPath) as! MapViewCell
+        
         let object = mapPlaces[indexPath.item]
         
         cell.configure(with: object)
@@ -206,13 +210,17 @@ extension MapVC: UICollectionViewDataSource {
         
     }
     
-    // Cell'e tıklandığında ilgili koordinata git
-
+    // Cell'e tıkladığım zaman ilgili detail sayfasını aç
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            let selectedPlace = mapPlaces[indexPath.item]
-            let targetCoordinate = CLLocationCoordinate2D(latitude: selectedPlace.latitude!, longitude: selectedPlace.longitude!)
-            
-            mapView.setCenter(targetCoordinate, animated: false)
+        let selectedPlace = mapPlaces[indexPath.item]
+            showDetailViewController(with: selectedPlace)
+        }
+        
+        private func showDetailViewController(with place: Place) {
+            let detailVC = PlaceDetailsVC()
+            detailVC.selectedPlace = place
+            navigationController?.pushViewController(detailVC, animated: true)
         }
 }
 
