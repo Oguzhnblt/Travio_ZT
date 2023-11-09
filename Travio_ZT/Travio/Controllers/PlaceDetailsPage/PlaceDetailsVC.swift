@@ -151,7 +151,6 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
                           let coverImageURLString = selectedPlace.cover_image_url,
                           let url = URL(string: coverImageURLString) {
                            cell.imageView.kf.setImage(with: url)
-                    print(url)
                        }
                 return cell
                 
