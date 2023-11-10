@@ -85,25 +85,34 @@ class MapVC: UIViewController {
     }
     
     @objc func handleTap(_ gesture: UITapGestureRecognizer) {
-        if gesture.state == .ended {
+        if gesture.state == .cancelled{
             mapView.removeAnnotations(mapView.annotations)
         }
     }
     
-    
+    @objc func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
+        if gesture.state == .ended {
+            if let cell = gesture.view as? MapViewCell, let indexPath = collectionView.indexPath(for: cell) {
+                let selectedPlace = mapPlaces[indexPath.item]
+                let coordinate = CLLocationCoordinate2D(latitude: selectedPlace.latitude!, longitude: selectedPlace.longitude!)
+                let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 750, longitudinalMeters: 750)
+                mapView.setRegion(region, animated: true)
+            }
+        }
+    }
+
     func showPopup() {
-        let loginVC = LoginVC()
-        loginVC.modalPresentationStyle = .popover
+        let addNewPlace = AddNewPlaceVC()
+        addNewPlace.modalPresentationStyle = .popover
         
-        if let popover = loginVC.popoverPresentationController {
+        if let popover = addNewPlace.popoverPresentationController {
             popover.sourceView = view
             popover.sourceRect = view.bounds
             popover.permittedArrowDirections = []
             
-            present(loginVC, animated: true)
+            present(addNewPlace, animated: true)
         }
     }
-
 
     
     private func checkLocationAuthorization() {
@@ -166,20 +175,24 @@ extension MapVC: MKMapViewDelegate {
         if annotation is MapAnnotation {
             let senderAnnotation = annotation as! MapAnnotation
             var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MapAnnotation.identifier)
-            
+
             if annotationView == nil {
                 annotationView = MKAnnotationView(annotation: senderAnnotation, reuseIdentifier: MapAnnotation.identifier)
                 annotationView?.canShowCallout = true
+
+                let disclosureButton = UIButton(type: .detailDisclosure)
+                annotationView?.rightCalloutAccessoryView = disclosureButton
             }
-            
+
             let pinImage = UIImage(named: "myCustomMark")
             annotationView?.image = pinImage
-            
+
             return annotationView
         }
-        
+
         return nil
     }
+
 }
 
 extension MapVC: UICollectionViewDelegateFlowLayout {
@@ -206,9 +219,17 @@ extension MapVC: UICollectionViewDataSource {
         
         cell.configure(with: object)
         
-        return cell
         
+        addCustomPinToMap(at: CLLocationCoordinate2D(latitude: object.latitude!, longitude: object.longitude!))
+        
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
+        doubleTapGesture.numberOfTapsRequired = 2
+        cell.addGestureRecognizer(doubleTapGesture)
+        
+        return cell
     }
+
+
     
     // Cell'e tıkladığım zaman ilgili detail sayfasını aç
     

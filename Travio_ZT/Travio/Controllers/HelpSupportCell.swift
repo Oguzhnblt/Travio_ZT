@@ -63,8 +63,7 @@ class HelpSupportCell: UICollectionViewCell {
         backView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { (make) in
             make.top.equalTo(8)
-            make.leading.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().inset(16)
+            make.left.right.equalToSuperview().inset(16)
         }
         
         backView.addSubview(iconImageView)

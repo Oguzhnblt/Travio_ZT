@@ -68,6 +68,10 @@
 		1255D86F2ADB155E00FB6638 /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D85C2ADB155E00FB6638 /* Poppins-Italic.ttf */; };
 		1255D8702ADB155E00FB6638 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D85D2ADB155E00FB6638 /* Poppins-MediumItalic.ttf */; };
 		125754312AFD5DAD00AD003B /* PlaceDetailsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125754302AFD5DAD00AD003B /* PlaceDetailsLayout.swift */; };
+		125754342AFD6AD800AD003B /* AddNewPlaceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125754332AFD6AD800AD003B /* AddNewPlaceViewCell.swift */; };
+		125754362AFD7A9800AD003B /* AddNewPlaceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125754352AFD7A9800AD003B /* AddNewPlaceVC.swift */; };
+		125754382AFD841D00AD003B /* AddNewPlaceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125754372AFD841D00AD003B /* AddNewPlaceLayout.swift */; };
+		1257543A2AFE2C8100AD003B /* AddPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125754392AFE2C8100AD003B /* AddPhotoCell.swift */; };
 		125B445B2AE944F00047248D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125B445A2AE944F00047248D /* HomeVC.swift */; };
 		127249C32AF2282200CEAA64 /* SecuritySettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249C22AF2282200CEAA64 /* SecuritySettingsVC.swift */; };
 		127249C52AF2291600CEAA64 /* ChangePasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249C42AF2291600CEAA64 /* ChangePasswordCell.swift */; };
@@ -173,6 +177,10 @@
 		1255D85C2ADB155E00FB6638 /* Poppins-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Italic.ttf"; sourceTree = "<group>"; };
 		1255D85D2ADB155E00FB6638 /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
 		125754302AFD5DAD00AD003B /* PlaceDetailsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsLayout.swift; sourceTree = "<group>"; };
+		125754332AFD6AD800AD003B /* AddNewPlaceViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewPlaceViewCell.swift; sourceTree = "<group>"; };
+		125754352AFD7A9800AD003B /* AddNewPlaceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewPlaceVC.swift; sourceTree = "<group>"; };
+		125754372AFD841D00AD003B /* AddNewPlaceLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewPlaceLayout.swift; sourceTree = "<group>"; };
+		125754392AFE2C8100AD003B /* AddPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoCell.swift; sourceTree = "<group>"; };
 		125B445A2AE944F00047248D /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		127249C22AF2282200CEAA64 /* SecuritySettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsVC.swift; sourceTree = "<group>"; };
 		127249C42AF2291600CEAA64 /* ChangePasswordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordCell.swift; sourceTree = "<group>"; };
@@ -488,9 +496,21 @@
 			path = Poppins;
 			sourceTree = "<group>";
 		};
+		125754322AFD6AC600AD003B /* AddNewPlacePage */ = {
+			isa = PBXGroup;
+			children = (
+				125754352AFD7A9800AD003B /* AddNewPlaceVC.swift */,
+				125754332AFD6AD800AD003B /* AddNewPlaceViewCell.swift */,
+				125754392AFE2C8100AD003B /* AddPhotoCell.swift */,
+				125754372AFD841D00AD003B /* AddNewPlaceLayout.swift */,
+			);
+			path = AddNewPlacePage;
+			sourceTree = "<group>";
+		};
 		125B445C2AE971580047248D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				125754322AFD6AC600AD003B /* AddNewPlacePage */,
 				0F866E122AFA10C3000C784A /* MapPage */,
 				12480C422AF0EBE400549C42 /* SettingsPage */,
 				127249C12AF2280200CEAA64 /* SecuritySettingsPage */,
@@ -832,12 +852,14 @@
 				0FB84E052AF286CC0071A559 /* PostPlaceResponseModel.swift in Sources */,
 				FF0B44BC2AF2AFE600586EA7 /* GetPopularPlacesResponseModel.swift in Sources */,
 				0FB84E082AF287840071A559 /* UpdatePlaceRequestModel.swift in Sources */,
+				125754362AFD7A9800AD003B /* AddNewPlaceVC.swift in Sources */,
 				1278062A2AF7EC840085D31F /* MyVisitsViewCell.swift in Sources */,
 				127806232AF7E2A30085D31F /* MyAddedPlacesVC.swift in Sources */,
 				1255D8082ADAC7BD00FB6638 /* SceneDelegate.swift in Sources */,
 				123F4FD92AFA22B300E0C525 /* HomeVM.swift in Sources */,
 				1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */,
 				127249C52AF2291600CEAA64 /* ChangePasswordCell.swift in Sources */,
+				125754382AFD841D00AD003B /* AddNewPlaceLayout.swift in Sources */,
 				0F6E232D2AF2373C00F843C6 /* LoginResponseModel.swift in Sources */,
 				FF9BD5702AF2FA2A0072BBA0 /* CheckVisitByPlaceIdResponseModel.swift in Sources */,
 				0F5CB31D2AF2755000B9F13F /* ProfileResponseModel.swift in Sources */,
@@ -869,11 +891,13 @@
 				127249D42AF2CDC700CEAA64 /* EditProfileVC.swift in Sources */,
 				1248ED342AED311200777E98 /* HomePageLayout.swift in Sources */,
 				FF9BD5572AF2F19A0072BBA0 /* DeleteGalleryImageResponseModel.swift in Sources */,
+				1257543A2AFE2C8100AD003B /* AddPhotoCell.swift in Sources */,
 				0F5CB3232AF2792200B9F13F /* ChangePasswordRequestModel.swift in Sources */,
 				FF9BD55C2AF2F3800072BBA0 /* GetAllGalleryByPlaceIdResponseModel.swift in Sources */,
 				12F85D832AF9123500FB7CBD /* SectionHeaderView.swift in Sources */,
 				FF0B44B62AF2AAAB00586EA7 /* Place.swift in Sources */,
 				FF0B44B62AF2AAAB00586EA7 /* Place.swift in Sources */,
+				125754342AFD6AD800AD003B /* AddNewPlaceViewCell.swift in Sources */,
 				FF0B44B62AF2AAAB00586EA7 /* Place.swift in Sources */,
 				0FB84E0A2AF287BA0071A559 /* UpdatePlaceResponseModel.swift in Sources */,
 				0F5CB3192AF2697C00B9F13F /* RefreshResponseModel.swift in Sources */,
