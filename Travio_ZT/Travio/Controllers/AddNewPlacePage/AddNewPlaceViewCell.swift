@@ -29,12 +29,12 @@ class AddNewPlaceViewCell: UICollectionViewCell {
         return label
     }()
     
-     lazy var textView: UITextView = {
+    lazy var textView: UITextView = {
         let textField = UITextView()
         textField.textColor = UIColor.gray
-         textField.backgroundColor = UIColor.white
+        textField.backgroundColor = UIColor.white
         textField.font = UIFont(name: "Poppins-Regular", size: 12)
-
+        
         return textField
     }()
     
@@ -49,7 +49,7 @@ class AddNewPlaceViewCell: UICollectionViewCell {
         textLabel.text = text
         textView.text = fieldText
     }
-
+    
     
     private func setupViews() {
         self.addSubview(backView)

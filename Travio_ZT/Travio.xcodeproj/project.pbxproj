@@ -36,7 +36,6 @@
 		122DB68A2AFADD2C001CDE5A /* PopularPlacesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122DB6892AFADD2C001CDE5A /* PopularPlacesVM.swift */; };
 		122DB68C2AFAE01B001CDE5A /* PlacesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122DB68B2AFAE01B001CDE5A /* PlacesModel.swift */; };
 		123F4FD92AFA22B300E0C525 /* HomeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123F4FD82AFA22B300E0C525 /* HomeVM.swift */; };
-		123F863E2AF5C62900E8F7B1 /* HelpSupportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123F863D2AF5C62900E8F7B1 /* HelpSupportCell.swift */; };
 		12480C442AF0EC0B00549C42 /* SettingsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12480C432AF0EC0B00549C42 /* SettingsCollectionViewCell.swift */; };
 		1248ED342AED311200777E98 /* HomePageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1248ED332AED311200777E98 /* HomePageLayout.swift */; };
 		1248ED3B2AED352700777E98 /* PlacesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1248ED3A2AED352700777E98 /* PlacesCollectionViewCell.swift */; };
@@ -91,8 +90,9 @@
 		12B02A7F2AF812010098DF1D /* PlaceTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B02A7E2AF812010098DF1D /* PlaceTopView.swift */; };
 		12B3630A2AFC002C00B84AEF /* MapVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B363092AFC002C00B84AEF /* MapVM.swift */; };
 		12B3630D2AFC15CA00B84AEF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 12B3630C2AFC15CA00B84AEF /* Kingfisher */; };
+		12BA00BD2AFF99710097275C /* HelpSupportTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00BC2AFF99710097275C /* HelpSupportTableCell.swift */; };
+		12BA00BF2AFF99820097275C /* HelpSupportTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00BE2AFF99820097275C /* HelpSupportTableVC.swift */; };
 		12E1FD502AF38AAB00B89F81 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */; };
-		12E1FD562AF3926A00B89F81 /* HelpSupportVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E1FD552AF3926A00B89F81 /* HelpSupportVC.swift */; };
 		12F85D832AF9123500FB7CBD /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D822AF9123500FB7CBD /* SectionHeaderView.swift */; };
 		12F85D872AF9148000FB7CBD /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D862AF9148000FB7CBD /* SignUpViewModel.swift */; };
 		12F85D892AF9149E00FB7CBD /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D882AF9149E00FB7CBD /* LoginViewModel.swift */; };
@@ -145,7 +145,6 @@
 		122DB6892AFADD2C001CDE5A /* PopularPlacesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularPlacesVM.swift; sourceTree = "<group>"; };
 		122DB68B2AFAE01B001CDE5A /* PlacesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesModel.swift; sourceTree = "<group>"; };
 		123F4FD82AFA22B300E0C525 /* HomeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVM.swift; sourceTree = "<group>"; };
-		123F863D2AF5C62900E8F7B1 /* HelpSupportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportCell.swift; sourceTree = "<group>"; };
 		12480C432AF0EC0B00549C42 /* SettingsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCollectionViewCell.swift; sourceTree = "<group>"; };
 		1248ED332AED311200777E98 /* HomePageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageLayout.swift; sourceTree = "<group>"; };
 		1248ED3A2AED352700777E98 /* PlacesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -199,8 +198,9 @@
 		12B02A7C2AF8106F0098DF1D /* PlaceDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsVC.swift; sourceTree = "<group>"; };
 		12B02A7E2AF812010098DF1D /* PlaceTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTopView.swift; sourceTree = "<group>"; };
 		12B363092AFC002C00B84AEF /* MapVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVM.swift; sourceTree = "<group>"; };
+		12BA00BC2AFF99710097275C /* HelpSupportTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportTableCell.swift; sourceTree = "<group>"; };
+		12BA00BE2AFF99820097275C /* HelpSupportTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportTableVC.swift; sourceTree = "<group>"; };
 		12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
-		12E1FD552AF3926A00B89F81 /* HelpSupportVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportVC.swift; sourceTree = "<group>"; };
 		12F85D822AF9123500FB7CBD /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		12F85D862AF9148000FB7CBD /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		12F85D882AF9149E00FB7CBD /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -589,8 +589,8 @@
 		12E1FD542AF3925900B89F81 /* HelpSupport */ = {
 			isa = PBXGroup;
 			children = (
-				12E1FD552AF3926A00B89F81 /* HelpSupportVC.swift */,
-				123F863D2AF5C62900E8F7B1 /* HelpSupportCell.swift */,
+				12BA00BE2AFF99820097275C /* HelpSupportTableVC.swift */,
+				12BA00BC2AFF99710097275C /* HelpSupportTableCell.swift */,
 				1278061F2AF7CC260085D31F /* HelpSupportModel.swift */,
 			);
 			name = HelpSupport;
@@ -855,6 +855,7 @@
 				125754362AFD7A9800AD003B /* AddNewPlaceVC.swift in Sources */,
 				1278062A2AF7EC840085D31F /* MyVisitsViewCell.swift in Sources */,
 				127806232AF7E2A30085D31F /* MyAddedPlacesVC.swift in Sources */,
+				12BA00BD2AFF99710097275C /* HelpSupportTableCell.swift in Sources */,
 				1255D8082ADAC7BD00FB6638 /* SceneDelegate.swift in Sources */,
 				123F4FD92AFA22B300E0C525 /* HomeVM.swift in Sources */,
 				1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */,
@@ -883,8 +884,6 @@
 				0FB84E032AF285080071A559 /* PostPlaceRequestModel.swift in Sources */,
 				FF9BD5622AF2F5210072BBA0 /* PostVisitRequestModel.swift in Sources */,
 				129A8B002AFC18070073CE6E /* MapVC.swift in Sources */,
-				12E1FD562AF3926A00B89F81 /* HelpSupportVC.swift in Sources */,
-				123F863E2AF5C62900E8F7B1 /* HelpSupportCell.swift in Sources */,
 				12A009432AEFA5A900D2AD14 /* PopularPlacesViewCell.swift in Sources */,
 				122DB68C2AFAE01B001CDE5A /* PlacesModel.swift in Sources */,
 				12F85D8B2AF915C200FB7CBD /* SettingsVC.swift in Sources */,
@@ -900,6 +899,7 @@
 				125754342AFD6AD800AD003B /* AddNewPlaceViewCell.swift in Sources */,
 				FF0B44B62AF2AAAB00586EA7 /* Place.swift in Sources */,
 				0FB84E0A2AF287BA0071A559 /* UpdatePlaceResponseModel.swift in Sources */,
+				12BA00BF2AFF99820097275C /* HelpSupportTableVC.swift in Sources */,
 				0F5CB3192AF2697C00B9F13F /* RefreshResponseModel.swift in Sources */,
 				FF9BD5542AF2F1250072BBA0 /* PostGalleryImageResponseModel.swift in Sources */,
 				125754312AFD5DAD00AD003B /* PlaceDetailsLayout.swift in Sources */,

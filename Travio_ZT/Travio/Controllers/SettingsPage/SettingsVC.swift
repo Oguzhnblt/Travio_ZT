@@ -177,7 +177,7 @@ extension SettingsVC: UICollectionViewDataSource {
                 let myAdded = MyAddedPlacesVC()
                 navigationController?.pushViewController(myAdded, animated: true)
             case 3:
-                let helpSupport = HelpSupportVC()
+                let helpSupport = HelpSupportTableVC()
                 navigationController?.pushViewController(helpSupport, animated: true)
             case 4:
                 let placeDetail = PlaceDetailsVC()
