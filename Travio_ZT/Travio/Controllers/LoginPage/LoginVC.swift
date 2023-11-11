@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class LoginVC: UIViewController {
-    private let viewModel = LoginViewModel()
+    private let viewModel = LoginVM()
     
     private func createStackView(axis: NSLayoutConstraint.Axis, spacing: CGFloat ) -> UIStackView {
         let stackView = UIStackView()
@@ -54,18 +54,7 @@ class LoginVC: UIViewController {
         return label
     }
     
-    private func addTextField(title: String, placeholder: String, isSecure: Bool) -> CustomLabelTextField {
-        let textField = CustomLabelTextField()
-        textField.font = UIFont(name: "Poppins-Regular", size: 12)
-        textField.backgroundColor = UIColor(named: "textFieldBackgroundColor")
-        textField.layer.cornerRadius = 16
-        textField.placeholder = placeholder
-        textField.customLabel.text = title
-        textField.isSecureTextEntry = isSecure
-        textField.autocapitalizationType = .none
-        return textField
-    }
-    
+   
     private func createButton() -> UIButton {
         let button = UIButton(type: .system)
         button.setTitle("Login", for: .normal)
@@ -94,8 +83,8 @@ class LoginVC: UIViewController {
     
     @objc private func buttonLoginTapped() {
         
-        guard let email = emailTextField.text,
-              let password = passwordTextField.text
+        guard let email = emailTextField.textField.text,
+              let password = passwordTextField.textField.text
                 
         else {return}
         
@@ -137,9 +126,9 @@ class LoginVC: UIViewController {
     private lazy var welcomeLabelText = createLabel(text: "Welcome to Travio", color: "textColor" , textSize: 24, fontName: "Poppins-Regular", alignment: .center)
     private lazy var accountLabel = createLabel(text: "Don’t have any account?", color: "textColor" , textSize: 14, fontName: "Poppins-SemiBold", alignment: .center)
     
-    private lazy var emailTextField = addTextField(title: "Email", placeholder: "deneme@example.com", isSecure: false)
+    private lazy var emailTextField = CommonTextField(labelText: "Email", textFieldPlaceholder: "deneme@example.com", isSecure: false)
     
-    private lazy var passwordTextField = addTextField(title: "Password", placeholder: "************", isSecure: true)
+    private lazy var passwordTextField = CommonTextField(labelText: "Password", textFieldPlaceholder: "************", isSecure: true)
     
     private lazy var loginButton = createButton()
     
@@ -179,12 +168,14 @@ class LoginVC: UIViewController {
         }
         
         
-        emailTextField.snp.makeConstraints { $0.height.equalTo(74) }
-        emailTextField.snp.makeConstraints { $0.width.equalTo(392) }
+        emailTextField.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+        }
         
-        passwordTextField.snp.makeConstraints { $0.height.equalTo(74) }
-        passwordTextField.snp.makeConstraints { $0.width.equalTo(392) }
-        
+        passwordTextField.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+        }
+
         loginİtemStackView.dropShadow()
         loginİtemStackView.snp.makeConstraints { textField in
             textField.top.equalTo(welcomeLabelText.snp.bottom).offset(41)

@@ -11,7 +11,7 @@ import SnapKit
 class MyAddedPlacesVC: UIViewController {
     
     private var isSortingAscending = true
-
+    
     private lazy var collectionView: UICollectionView = {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: myAddedlayout())
@@ -26,72 +26,34 @@ class MyAddedPlacesVC: UIViewController {
         return collectionView
     }()
     
-    private lazy var myAddedPlacesView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(named: "backgroundColor")
-        return view
-    }()
-    
-    private lazy var myAddedPlacesItemView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(named: "contentColor")
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 80
-        view.layer.maskedCorners = .layerMinXMinYCorner
-        return view
-    }()
-    
-    private lazy var backButton: UIButton = {
-        let backButton = UIButton(type: .custom)
-        backButton.setImage(UIImage(named: "leftArrowIcon"), for: .normal)
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        return backButton
-    }()
-    
     private lazy var sortButton: UIButton = {
         let sort = UIButton(type: .custom)
         sort.setImage(UIImage(named: "img_a_z"), for: .normal)
         sort.addTarget(self, action: #selector(sortDown), for: .touchUpInside)
-
-
-       return sort
+        
+        
+        return sort
     }()
-   
-    private func createLabel(text: String,textSize: CGFloat, fontName: String) -> UILabel {
-        let label = UILabel()
-        label.text = text
-        label.textColor = UIColor(named: "textFieldBackgroundColor")
-        label.numberOfLines = 1
-        label.textAlignment = .center
-        label.font = UIFont(name: fontName, size: textSize)
-        return label
-    }
     
-    
-    private lazy var titlelabel = createLabel(text: "My Added Places", textSize: 32, fontName: "Poppins-SemiBold")
-    
-    @objc func backButtonTapped() {
-        self.navigationController?.popViewController(animated: true)
-    }
     
     @objc func sortDown() {
         isSortingAscending.toggle()
         updateSortButtonImage()
         // FIXME: -- Logic eklenecek
-
+        
     }
-
+    
     @objc func sortUp() {
         isSortingAscending.toggle()
         updateSortButtonImage()
         // FIXME: -- Logic eklenecek
     }
-
+    
     private func updateSortButtonImage() {
         let imageName = isSortingAscending ? "img_a_z" : "img_z_a"
         sortButton.setImage(UIImage(named: imageName), for: .normal)
     }
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,43 +73,13 @@ class MyAddedPlacesVC: UIViewController {
     
     
     private func setupViews() {
-        
-        self.view.addSubviews(myAddedPlacesView,titlelabel, backButton)
-        myAddedPlacesView.addSubview(myAddedPlacesItemView)
-        myAddedPlacesItemView.addSubviews(collectionView,sortButton)
-        
-        
+        setupView(title: "My Added Places",buttonImage: UIImage.leftArrowIcon, buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [collectionView, sortButton])
+
         setupLayouts()
         
     }
     
     private func setupLayouts() {
-        
-        sortButton.snp.makeConstraints({make in
-            make.right.equalToSuperview().offset(-69)
-            make.top.equalToSuperview().offset(20)
-
-
-        })
-        
-        backButton.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(30)
-            make.left.equalToSuperview().offset(24)
-        })
-        
-        myAddedPlacesView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        titlelabel.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(19)
-            make.centerX.equalTo(myAddedPlacesView)
-        })
-        
-        myAddedPlacesItemView.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(80)
-            make.edges.equalToSuperview()
-        }
         
         collectionView.dropShadow()
         collectionView.snp.makeConstraints({make in
@@ -155,6 +87,12 @@ class MyAddedPlacesVC: UIViewController {
             make.left.right.equalToSuperview()
             
         })
+        sortButton.snp.makeConstraints({make in
+            make.right.equalToSuperview().offset(-69)
+            make.top.equalToSuperview().offset(20)
+        })
+        
+       
     }
 }
 
@@ -208,18 +146,18 @@ extension MyAddedPlacesVC {
     }
     
     
-   private func myAddedPlacesLayout() -> NSCollectionLayoutSection {
+    private func myAddedPlacesLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
         layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 0)
-
+        
         let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.17))
         let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
-       
+        
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-       layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 100, trailing: 0)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 100, trailing: 0)
         layoutSection.orthogonalScrollingBehavior  = .none
-
+        
         return layoutSection
     }
 }

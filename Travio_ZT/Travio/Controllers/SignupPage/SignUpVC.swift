@@ -11,56 +11,23 @@ import UIKit
 import SnapKit
 
 class SignUpVC: UIViewController {
-    private lazy var viewModel = SignUpViewModel()
     
-    private func createStackView(axis: NSLayoutConstraint.Axis, spacing: CGFloat ) -> UIStackView {
-        let stackView = UIStackView()
-        stackView.axis = axis
+    private lazy var viewModel = SignUpVM()
+    
+    private lazy var fullNameField = CommonTextField(labelText: "Username", textFieldPlaceholder: "bilge_adam", isSecure: false)
+    private lazy var emailField = CommonTextField(labelText: "Email", textFieldPlaceholder: "deneme@example.com", isSecure: false)
+    private lazy var passwordField = CommonTextField(labelText: "Password", textFieldPlaceholder: "", isSecure: true)
+    private lazy var passwordConfirmField = CommonTextField(labelText: "Password Confirm", textFieldPlaceholder: "", isSecure: true)
+    
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [fullNameField, emailField, passwordField, passwordConfirmField])
+        stackView.axis = .vertical
         stackView.distribution = .fillProportionally
-        stackView.spacing = spacing
-        stackView.alignment = .center
+        stackView.spacing = 24
         return stackView
-    }
-    
-    private lazy var loginView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(named: "backgroundColor")
-        return view
     }()
     
-    private lazy var loginItemView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(named: "contentColor")
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 80
-        view.layer.maskedCorners = .layerMinXMinYCorner
-        return view
-    }()
-    
-    private func createLabel(text: String, color: String, textSize: CGFloat, fontName: String, alignment: NSTextAlignment) -> UILabel {
-        let label = UILabel()
-        label.text = text
-        label.textColor = UIColor(named: color)
-        label.numberOfLines = 1
-        label.textAlignment = alignment
-        label.font = UIFont(name: fontName, size: textSize)
-        return label
-    }
-    
-    
-    private func addTextField(title: String, placeholder: String, keyboardType: UIKeyboardType, isSecure: Bool) -> CustomLabelTextField {
-        let textField = CustomLabelTextField()
-        textField.font = UIFont(name: "Poppins-Regular", size: 12)
-        textField.backgroundColor = UIColor(named: "textFieldBackgroundColor")
-        textField.layer.cornerRadius = 16
-        textField.placeholder = placeholder
-        textField.customLabel.text = title
-        textField.isSecureTextEntry = isSecure
-        textField.autocapitalizationType = .none
-        return textField
-    }
-    
-    
+   
     private lazy var signUpButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
@@ -70,52 +37,26 @@ class SignUpVC: UIViewController {
         button.layer.backgroundColor = UIColor(named: "signUpColor")?.cgColor
         button.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
         
-        button.isEnabled = true // Tüm alanlar dolmadan butonun aktif olmaması için
         return button
     }()
-    
-    private lazy var backButton: UIButton = {
-        let buttonImage = UIImage(named: "leftArrowIcon")
-        let imageButton = UIButton(type: .system)
-        imageButton.setImage(buttonImage, for: .normal)
-        imageButton.tintColor = .white
-        
-        let customBackButtonItem = UIBarButtonItem(customView: imageButton)
-        navigationItem.leftBarButtonItem = customBackButtonItem
-        
-        imageButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        return imageButton
-    }()
-    
-    private lazy var passwordMatchWarningLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor(named: "backgroundColor")
-        label.font = UIFont(name: "Poppins-Regular", size: 12)
-        label.textAlignment = .center
-        return label
-    }()
-    
-    
-    @objc private func backButtonTapped() {
-        self.navigationController?.isNavigationBarHidden = true
-        self.navigationController?.popViewController(animated: true)
-    }
     
     
     @objc func signUpButtonTapped() {
         
-        guard let fullName = usernameTextField.text,
-              let email = emailTextField.text,
-              let password = passwordTextField.text
-        else {return}
-        
-        viewModel.signUp(fullName: fullName, email: email, password: password)
-        
+        guard let fullName = fullNameField.textField.text,
+              let email = emailField.textField.text,
+              let password = passwordField.textField.text,
+              let confirmPassword = passwordConfirmField.textField.text
+        else { return }
+
+        viewModel.signUp(fullName: fullName, email: email, password: password, confirmPassword: confirmPassword)
+
         viewModel.showAlertFailure = { message in
             self.showAlert(message: message)
         }
+
     }
-    
+
     
     // MARK: ShowAlert
     
@@ -125,7 +66,7 @@ class SignUpVC: UIViewController {
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
-   
+    
     private func navigateToLoginViewController() {
         if let navigationController = navigationController {
             navigationController.popViewController(animated: true)
@@ -137,82 +78,24 @@ class SignUpVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.isNavigationBarHidden = true
         setupViews()
     }
     
-    private lazy var loginItemStackView = createStackView(axis: .vertical, spacing: 24)
-    
-    private lazy var signUpText = createLabel(text: "Sign Up", color: "textFieldBackgroundColor", textSize: 36, fontName: "Poppins-SemiBold", alignment: .center)
-    private lazy var errorLabel = createLabel(text: "", color: "", textSize: 14, fontName: "Poppins-Regular", alignment: .center)
-    
-    private lazy var usernameTextField = addTextField(title: "Username", placeholder: "deneme_name", keyboardType: .default, isSecure: false)
-    private lazy var emailTextField = addTextField(title: "Email", placeholder: "deneme@example.com", keyboardType: .emailAddress, isSecure: false)
-    private lazy var passwordTextField = addTextField(title: "Password", placeholder: "", keyboardType: .default, isSecure: true)
-    private lazy var passwordConfirmTextField = addTextField(title: "Password Confirm", placeholder: "", keyboardType: .default, isSecure: true)
-    
-    
     
     private func setupViews() {
+        setupView(title: "Sign Up", buttonImage: UIImage.leftArrowIcon, buttonPosition: .left, headerLabelPosition: .center ,buttonAction: #selector(buttonTapped), itemsView: [stackView, signUpButton])
         
-        self.view.addSubviews(loginView,loginItemView,signUpText,backButton,errorLabel)
-        
-        loginItemView.addSubviews(loginItemStackView,signUpButton)
-        
-        loginItemStackView.addArrangedSubviews(usernameTextField,emailTextField,passwordTextField,passwordConfirmTextField)
-        
-        
-        setupLayouts()
-    }
-    
-    private func setupLayouts() {
-        
-        loginView.snp.makeConstraints({loginView in
-            loginView.edges.equalToSuperview()
-            loginView.top.equalTo(self.view.safeAreaLayoutGuide)
+        stackView.dropShadow()
+        stackView.snp.makeConstraints({make in
+            make.top.equalToSuperview().offset(72)
+            make.left.right.equalToSuperview().inset(16)
         })
         
-        signUpText.snp.makeConstraints({text in
-            text.centerX.equalTo(loginView)
-            text.bottom.equalTo(loginItemView.snp.top).offset(-56)
-            
-        })
-        
-        loginItemView.snp.makeConstraints({itemView in
-            itemView.top.bottom.equalTo(loginView).offset(164)
-            itemView.left.right.equalTo(loginView)
-        })
-        
-        usernameTextField.snp.makeConstraints { $0.height.equalTo(74) }
-        usernameTextField.snp.makeConstraints { $0.width.equalTo(392) }
-        
-        emailTextField.snp.makeConstraints { $0.height.equalTo(74) }
-        emailTextField.snp.makeConstraints { $0.width.equalTo(392) }
-        
-        passwordTextField.snp.makeConstraints { $0.height.equalTo(74) }
-        passwordTextField.snp.makeConstraints { $0.width.equalTo(392) }
-        
-        passwordConfirmTextField.snp.makeConstraints { $0.height.equalTo(74) }
-        passwordConfirmTextField.snp.makeConstraints { $0.width.equalTo(392) }
-        
-        
-        loginItemStackView.dropShadow()
-        loginItemStackView.snp.makeConstraints({stack in
-            stack.left.right.equalTo(loginItemView).inset(24)
-            stack.top.equalTo(loginItemView.snp.top).offset(72)
-        })
-        
-        signUpButton.snp.makeConstraints({button in
-            button.height.equalTo(54)
-            button.width.equalTo(342)
-            
-            button.left.right.equalTo(loginItemStackView)
-            button.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-23)
-        })
-        
-        
-        backButton.snp.makeConstraints({button in
-            button.centerY.equalTo(signUpText)
-            button.left.equalTo(loginItemStackView).offset(12)
+        signUpButton.snp.makeConstraints({make in
+            make.bottom.centerX.equalTo(self.view.safeAreaLayoutGuide)
+            make.width.equalTo(342)
+            make.height.equalTo(54)
         })
         
     }

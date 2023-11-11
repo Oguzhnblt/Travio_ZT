@@ -32,15 +32,7 @@ class SettingsVC: UIViewController {
         return collectionView
     }()
     
-    
-    private lazy var settingsItemView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(named: "contentColor")
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 80
-        view.layer.maskedCorners = .layerMinXMinYCorner
-        return view
-    }()
+   
     
     private lazy var profileImage : UIImageView = {
         let profileImage = UIImageView()
@@ -48,13 +40,6 @@ class SettingsVC: UIViewController {
         return profileImage
     }()
     
-    private lazy var logoutButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "img_logout"), for: .normal)
-        button.addTarget(self, action: #selector(buttonLogoutTapped), for: .touchUpInside)
-        
-        return button
-    }()
     
     private lazy var editProfileButton: UIButton = {
         let button = UIButton(type: .system)
@@ -82,15 +67,7 @@ class SettingsVC: UIViewController {
         return label
     }
     
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.distribution = .fillProportionally
-        stackView.spacing = 8
-        return stackView
-    }()
-    
-    private lazy var settingsText = createLabel(text: "Settings", color: "textFieldBackgroundColor", textSize: 32, fontName: "Poppins-SemiBold", alignment: .center)
+   
     private lazy var profileText = createLabel(text: "Bruce Wills", color: "textColor", textSize: 16, fontName: "Poppins-SemiBold", alignment: .center)
     
     private lazy var editProfileText = createLabel(text: "Edit Profile", color: "backgroundColor", textSize: 12, fontName: "Poppins-SemiBold", alignment: .center)
@@ -104,29 +81,16 @@ class SettingsVC: UIViewController {
     
     
     func setupViews() {
-        self.view.addSubviews(settingsItemView,logoutButton,settingsText)
-        self.view.backgroundColor = UIColor(named: "backgroundColor")
-        settingsItemView.addSubviews(profileImage, profileText, editProfileButton,collectionView)
-        
+        setupView(title: "Settings", buttonImage: UIImage.imgLogout, buttonPosition: .right, headerLabelPosition: .left, buttonAction: nil, itemsView: [collectionView, profileImage, profileText, editProfileButton])
         setupLayout()
     }
     
     func setupLayout() {
         
-        settingsItemView.snp.makeConstraints({make in
-            make.top.bottom.equalToSuperview().offset(135)
-            make.left.right.equalToSuperview()
-            
-        })
-        
-        settingsText.snp.makeConstraints({make in
-            make.left.equalToSuperview().offset(20)
-            make.top.equalToSuperview().offset(85)
-        })
-        
-        logoutButton.snp.makeConstraints({make in
-            make.right.equalToSuperview().offset(-24)
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(-10)
+        collectionView.dropShadow()
+        collectionView.snp.makeConstraints({make in
+            make.top.equalTo(editProfileButton.snp.bottom)
+            make.left.right.bottom.equalToSuperview()
         })
         
         profileImage.snp.makeConstraints({make in
@@ -144,11 +108,7 @@ class SettingsVC: UIViewController {
             make.centerX.equalToSuperview()
         })
         
-        collectionView.dropShadow()
-        collectionView.snp.makeConstraints({make in
-            make.top.equalTo(editProfileButton.snp.bottom)
-            make.left.right.bottom.equalToSuperview()
-        })
+    
     }
 }
 
@@ -179,12 +139,12 @@ extension SettingsVC: UICollectionViewDataSource {
             case 3:
                 let helpSupport = HelpSupportTableVC()
                 navigationController?.pushViewController(helpSupport, animated: true)
-            case 4: break
-//                let placeDetail = PlaceDetailsVC()
-//                navigationController?.pushViewController(placeDetail, animated: true)
-            default: break
-                //                let termsOfUse = TermsOfUse()
-                //                navigationController?.pushViewController(termsOfUse, animated: true)
+            case 4:
+                let about = AboutUsVC()
+                navigationController?.pushViewController(about, animated: true)
+            default: 
+                let termsOfUse = TermsOfUseVC()
+                navigationController?.pushViewController(termsOfUse, animated: true)
                 
         }
     }
@@ -212,7 +172,7 @@ extension SettingsVC {
         
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.interGroupSpacing = 8
-        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 16, bottom: 200, trailing: 16)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 16, bottom: 20, trailing: 16)
         
         return layoutSection
     }

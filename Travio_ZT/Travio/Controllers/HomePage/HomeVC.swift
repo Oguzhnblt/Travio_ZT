@@ -221,7 +221,7 @@ import SwiftUI
 struct HomeVC_Preview: PreviewProvider {
     static var previews: some View{
         
-        HomeVC().showPreview()
+        HomeVC().showPreview().ignoresSafeArea()
     }
 }
 #endif

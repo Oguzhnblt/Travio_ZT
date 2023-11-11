@@ -10,49 +10,106 @@ import UIKit
 import SnapKit
 
 extension UIViewController {
-    func setupCommonHeaderView(title: String, buttonAction: Selector?) {
+    
+    func setupView(title: String?, buttonImage: UIImage?, buttonPosition: ButtonPosition?, headerLabelPosition: HeaderLabelPosition ,buttonAction: Selector?, itemsView: [UIView], buttonTintColor: UIColor? = nil) {
+        
         lazy var headerLabel = UILabel()
         headerLabel.textColor = .black
         headerLabel.text = title
         headerLabel.textColor = .white
         headerLabel.font = UIFont(name: "Poppins-SemiBold", size: 32)
         
-        lazy var securityItemView = UIView()
-        securityItemView.backgroundColor = UIColor(named: "contentColor")
-        securityItemView.clipsToBounds = true
-        securityItemView.layer.cornerRadius = 80
-        securityItemView.layer.maskedCorners = .layerMinXMinYCorner
+        lazy var containerView = UIView()
+        containerView.backgroundColor = UIColor.background
+        containerView.clipsToBounds = true
         
-        lazy var backButton = UIButton(type: .custom)
-        backButton.setImage(UIImage(named: "leftArrowIcon"), for: .normal)
+        lazy var itemView = UIView()
+        itemView.backgroundColor = UIColor.content
+        itemView.clipsToBounds = true
+        itemView.layer.cornerRadius = 80
+        itemView.layer.maskedCorners = .layerMinXMinYCorner
+        
+        lazy var button = UIButton(type: .custom)
+        button.setImage(buttonImage, for: .normal)
+        button.tintColor = buttonTintColor
         if let action = buttonAction {
-            backButton.addTarget(self, action: action, for: .touchUpInside)
+            button.addTarget(self, action: action, for: .touchUpInside)
         }
         
-        // Add these views to your main view or any desired container view
-        view.addSubview(headerLabel)
-        view.addSubview(securityItemView)
-        view.addSubview(backButton)
+        view.addSubviews(containerView, headerLabel, button)
+        containerView.addSubview(itemView)
         
-        // Use SnapKit for constraints
+        itemView.addSubviews(itemsView)
+        
+        containerView.snp.makeConstraints({make in
+            make.edges.equalToSuperview()
+        })
+        
+        itemView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(145)
+            make.left.right.bottom.equalToSuperview()
+        }
+        
         headerLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
-            make.leading.equalToSuperview().offset(20)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(-15)
+            make.centerX.equalToSuperview()
         }
         
-        securityItemView.snp.makeConstraints { make in
-            make.top.equalTo(headerLabel.snp.bottom).offset(20)
-            make.leading.equalToSuperview().offset(20)
-            make.width.height.equalTo(160) // Customize the size as needed
+        switch buttonPosition {
+            case .left:
+                button.snp.makeConstraints { make in
+                    make.centerY.equalTo(headerLabel.snp.centerY)
+                    make.leading.equalToSuperview().offset(24)
+                }
+            case .right:
+                button.snp.makeConstraints { make in
+                    make.centerY.equalTo(headerLabel.snp.centerY)
+                    make.trailing.equalToSuperview().offset(-24)
+                }
+            case .none:
+                button.snp.makeConstraints({make in})
         }
         
-        backButton.snp.makeConstraints { make in
-            make.centerY.equalTo(headerLabel.snp.centerY)
-            make.leading.equalToSuperview().offset(10)
+        switch headerLabelPosition {
+            case .left:
+                headerLabel.snp.makeConstraints { make in
+                    make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(-15)
+                    make.leading.equalToSuperview().offset(24)
+                }
+            case .right:
+                headerLabel.snp.makeConstraints { make in
+                    make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(-15)
+                    make.trailing.equalToSuperview().offset(-24)
+                }
+            case .center:
+                headerLabel.snp.makeConstraints { make in
+                    make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(-15)
+                    make.centerX.equalToSuperview()
+                }
         }
     }
     
     @objc func buttonTapped() {
         navigationController?.popViewController(animated: true)
+    }
+}
+
+enum ButtonPosition {
+    case left
+    case right
+}
+
+enum HeaderLabelPosition {
+    case left
+    case right
+    case center
+}
+
+
+extension UIView {
+    func addSubviews(_ views: [UIView]) {
+        for view in views {
+            self.addSubview(view)
+        }
     }
 }

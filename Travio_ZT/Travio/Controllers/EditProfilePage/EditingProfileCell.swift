@@ -40,7 +40,6 @@ class EditingProfileCell: UIView {
         stackView.spacing = 8
         backView.addSubview(stackView)
         
-        backView.dropShadow()
         backView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(8)
             make.width.equalTo(164)
@@ -66,10 +65,5 @@ class EditingProfileCell: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-    
-    func configure(text: String, image: UIImage) {
-        label.text = text
-        signImage.image = image
     }
 }

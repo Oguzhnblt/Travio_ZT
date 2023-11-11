@@ -7,18 +7,25 @@
 
 import Foundation
 
-class SignUpViewModel {
+class SignUpVM {
     
     var showAlertSuccess: ((String) -> Void)?
     var showAlertFailure: ((String) -> Void)?
     
     
-    func signUp(fullName: String,email: String, password: String) {
-        guard !fullName.isEmpty, !email.isEmpty, !password.isEmpty
+    func signUp(fullName: String,email: String, password: String, confirmPassword: String) {
+        guard !fullName.isEmpty, !email.isEmpty, !password.isEmpty, !confirmPassword.isEmpty
         else {
             showAlertFailure?("Lütfen tüm alanları doldurunuz.")
             return
         }
+        
+        
+        if password != confirmPassword {
+            showAlertFailure?("Parolalar eşleşmiyor")
+            return
+        }
+
         
         let params = ["full_name": fullName,"email": email,"password": password]
         

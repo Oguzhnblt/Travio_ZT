@@ -33,21 +33,6 @@ class HelpSupportTableVC: UIViewController, UITableViewDelegate, UITableViewData
         return tableView
     }()
 
-    private lazy var headerLabel: UILabel = {
-        let headerLabel = UILabel()
-        headerLabel.textColor = .white
-        headerLabel.text = "Help&Support"
-        headerLabel.font = UIFont(name: "Poppins-SemiBold", size: 32)
-        return headerLabel
-    }()
-
-    private lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "leftArrowIcon"), for: .normal)
-        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        return button
-    }()
-
     private lazy var contentLabel: UILabel = {
         let headerLabel = UILabel()
         headerLabel.textColor = UIColor(named: "backgroundColor")
@@ -56,56 +41,36 @@ class HelpSupportTableVC: UIViewController, UITableViewDelegate, UITableViewData
         return headerLabel
     }()
 
-    private lazy var helpSuppportItemView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.content
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 80
-        view.layer.maskedCorners = .layerMinXMinYCorner
-        return view
-    }()
-
-    @objc private func backButtonTapped() {
-        self.navigationController?.popViewController(animated: true)
-    }
-
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
 
     private func setupUI() {
-        self.view.backgroundColor = UIColor(named: "backgroundColor")
-        self.view.addSubviews(backButton, headerLabel, helpSuppportItemView)
-        helpSuppportItemView.addSubviews(contentLabel,tableView)
-
-        backButton.snp.makeConstraints({ make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(10)
-            make.right.equalTo(headerLabel.snp.left)
-            make.left.equalToSuperview()
-        })
-
-        headerLabel.snp.makeConstraints({ make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide)
-            make.left.equalToSuperview().offset(72)
-        })
-
-        helpSuppportItemView.snp.makeConstraints({ make in
-            make.top.equalTo(headerLabel.snp.bottom).offset(58)
-            make.left.right.bottom.equalToSuperview()
-        })
-        contentLabel.snp.makeConstraints({make in
-            make.top.equalToSuperview().offset(50)
-            make.left.equalToSuperview().offset(16)
-        })
+        setupView(title: "Help&Support",buttonImage: UIImage.leftArrowIcon, buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [tableView, contentLabel])
 
         tableView.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview().inset(90)
             make.left.right.equalToSuperview().inset(8)
         }
       
+        contentLabel.snp.makeConstraints({make in
+            make.top.equalToSuperview().offset(50)
+            make.left.equalToSuperview().offset(16)
+        })
     }
-
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return helpItems.count

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class LoginViewModel {
+class LoginVM {
     
     var showAlertSuccess: ((String) -> Void)?
     var showAlertFailure: ((String) -> Void)?

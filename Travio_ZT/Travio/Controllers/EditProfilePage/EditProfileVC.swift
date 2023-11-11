@@ -11,23 +11,6 @@ import SnapKit
 
 class EditProfileVC: UIViewController {
     
-    private lazy var headerLabel: UILabel = {
-        let headerLabel = UILabel()
-        headerLabel.textColor = .black
-        headerLabel.text = "Edit Profile"
-        headerLabel.textColor = .white
-        headerLabel.font = UIFont(name: "Poppins-SemiBold", size: 32)
-        
-        return headerLabel
-    }()
-    
-    private lazy var exitButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "img_exit"), for: .normal)
-        button.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
     private lazy var profileImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "img_profile")
@@ -54,68 +37,35 @@ class EditProfileVC: UIViewController {
         return label
     }()
     
-    private lazy var editProfileItemView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(named: "contentColor")
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 80
-        view.layer.maskedCorners = .layerMinXMinYCorner
-        return view
-    }()
     
-    private lazy var adminCell: EditingProfileCell = {
+    private func editingProfileCell(labelText: String, imageName: String) -> EditingProfileCell {
         let cell = EditingProfileCell()
-        cell.label.text = "Admin"
-        cell.signImage.image = UIImage(named: "img_admin")
-        
+        cell.label.text = labelText
+        cell.signImage.image = UIImage(named: imageName)
         return cell
-    }()
-    
-    private lazy var signCell: EditingProfileCell = {
-        let cell = EditingProfileCell()
-        cell.label.text = "2 Kasım 2023"
-        cell.signImage.image = UIImage(named: "img_sign")
-        return cell
-    }()
-    
-    private lazy var cellStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
+    }
+    private func stackView(axis: NSLayoutConstraint.Axis, views: [UIView]) -> UIStackView {
+        let stack = UIStackView(arrangedSubviews: views)
+        stack.axis = axis
         stack.spacing = 8
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-        
         return stack
-    }()
+    }
     
-    private lazy var fullNameField: TextFieldCell = {
-        let field = TextFieldCell()
-        field.fieldLabel.text = "Full Name"
-        field.textField.placeholder = "bilge_adam"
-        
-        return field
-    }()
     
-    private lazy var emailField: TextFieldCell = {
-        let field = TextFieldCell()
-        field.fieldLabel.text = "Email"
-        field.textField.placeholder = "deneme@example.com"
-        
-        return field
-    }()
+    private lazy var adminCell = editingProfileCell(labelText: "Admin", imageName: "img_admin")
+    private lazy var signCell = editingProfileCell(labelText: "2 Kasım 2023", imageName: "img_sign")
     
-    private lazy var fieldStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 8
-        stack.distribution = .fillEqually
-        stack.alignment = .center
-        
-        return stack
-    }()
+    
+    private lazy var fullNameField = CommonTextField(labelText: "Full Name", textFieldPlaceholder: "bilge_adam", isSecure: false)
+    private lazy var emailField = CommonTextField(labelText: "Email", textFieldPlaceholder: "deneme@example.com", isSecure: false)
+    
+    
+    private lazy var cellStackView = stackView(axis: .horizontal, views: [adminCell, signCell])
+    private lazy var fieldStackView = stackView(axis: .vertical, views: [fullNameField, emailField])
+    private lazy var stackViews = stackView(axis: .vertical, views: [cellStackView, fieldStackView])
     
     private lazy var saveButton: UIButton = {
-    
+        
         let saveButton = UIButton(type: .custom)
         saveButton.setTitle("Save", for: .normal)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
@@ -129,7 +79,7 @@ class EditProfileVC: UIViewController {
     @objc func saveButtonTapped() {
         
     }
- 
+    
     @objc func exitButtonTapped() {
         navigationController?.popToRootViewController(animated: true)
     }
@@ -138,7 +88,7 @@ class EditProfileVC: UIViewController {
         super.viewDidLoad()
         setupViews()
         navigationController?.navigationBar.isHidden = true
-  
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -153,13 +103,9 @@ class EditProfileVC: UIViewController {
     
     private func setupViews() {
         self.view.backgroundColor = UIColor(named: "backgroundColor")
-   
-      
-        self.view.addSubviews(editProfileItemView, headerLabel, exitButton)
         
-        cellStackView.addArrangedSubviews(signCell,adminCell)
+        setupView(title: "Edit Profile", buttonImage: UIImage.imgExit, buttonPosition: .right, headerLabelPosition: .left, buttonAction: #selector(buttonTapped), itemsView: [profileImage, changePhotoButton, profileName, stackViews, saveButton])
         
-        editProfileItemView.addSubviews(profileImage, changePhotoButton, profileName,cellStackView,fullNameField,emailField,saveButton)
         
         setupLayouts()
         
@@ -167,21 +113,6 @@ class EditProfileVC: UIViewController {
     
     private func setupLayouts() {
         
-        headerLabel.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide)
-            make.left.equalToSuperview().offset(24)
-        })
-        
-        exitButton.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide)
-            make.right.equalToSuperview().offset(-24)
-            
-        })
-        
-        editProfileItemView.snp.makeConstraints { make in
-            make.edges.equalTo(self.view.safeAreaLayoutGuide).offset(80)
-            make.left.right.equalToSuperview()
-        }
         
         profileImage.snp.makeConstraints({make in
             make.top.equalToSuperview().offset(24)
@@ -199,21 +130,9 @@ class EditProfileVC: UIViewController {
             make.left.right.equalToSuperview()
         })
         
-        cellStackView.dropShadow()
-        cellStackView.snp.makeConstraints({make in
+        stackViews.dropShadow()
+        stackViews.snp.makeConstraints({make in
             make.top.equalTo(profileName.snp.bottom).offset(21)
-            make.left.right.equalToSuperview().inset(24)
-        })
-        
-        fullNameField.dropShadow()
-        fullNameField.snp.makeConstraints({make in
-            make.top.equalTo(cellStackView.snp.bottom).offset(21)
-            make.left.right.equalToSuperview().inset(24)
-        })
-        
-        emailField.dropShadow()
-        emailField.snp.makeConstraints({make in
-            make.top.equalTo(fullNameField.snp.bottom).offset(21)
             make.left.right.equalToSuperview().inset(24)
         })
         
@@ -222,9 +141,9 @@ class EditProfileVC: UIViewController {
             make.left.right.equalToSuperview().inset(24)
             make.width.equalTo(342)
             make.height.equalTo(51)
-
+            
         })
-      
+        
     }
 }
 
