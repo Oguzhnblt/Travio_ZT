@@ -62,8 +62,8 @@ class MyVisitsVC: UIViewController {
     private func setupLayouts() {
      
         myVisitsItemView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().offset(125)
-            make.left.right.equalToSuperview()
+            make.top.equalToSuperview().offset(125)
+            make.left.right.bottom.equalToSuperview()
         }
         
         headerLabel.snp.makeConstraints({make in
@@ -72,8 +72,9 @@ class MyVisitsVC: UIViewController {
         })
         
         collectionView.snp.makeConstraints({make in
-            make.top.bottom.equalToSuperview().offset(45)
+            make.top.equalTo(myVisitsItemView.snp.top)
             make.left.right.equalToSuperview().inset(24)
+            make.bottom.equalToSuperview()
         })
     }
 }
@@ -123,7 +124,7 @@ extension MyVisitsVC {
 
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.orthogonalScrollingBehavior = .none
-        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 150, trailing: 0)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 45, leading: 0, bottom: 0, trailing: 0)
 
         layoutSection.interGroupSpacing = 16
 

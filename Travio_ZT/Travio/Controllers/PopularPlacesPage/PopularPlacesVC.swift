@@ -101,6 +101,16 @@ class PopularPlacesVC: UIViewController {
         popularPlacesData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
     private func popularPlacesData() {
         viewModel.dataTransfer = { [weak self] place in
             self?.popularPlaces = place

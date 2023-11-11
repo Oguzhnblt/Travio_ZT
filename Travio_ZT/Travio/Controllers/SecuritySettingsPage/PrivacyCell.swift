@@ -8,12 +8,13 @@
 import UIKit
 import SnapKit
 
-class PrivacyCell: UIView {
+class PrivacyCell: UITableViewCell {
     
+    static let reuseIdentifier = "PrivacyCell"
     
     private lazy var backView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.white
         view.clipsToBounds = true
         view.layer.cornerRadius = 16
         return view
@@ -34,16 +35,18 @@ class PrivacyCell: UIView {
     }()
     
     private func setupViews() {
-        self.addSubview(backView)
+        contentView.addSubview(backView)
         
         let stackView = UIStackView(arrangedSubviews: [label, UIView(), toggleSwitch])
         stackView.axis = .horizontal
-        stackView.spacing = 8 
+        stackView.spacing = 8
         stackView.alignment = .center
         backView.addSubview(stackView)
         
         backView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(8)
+            make.left.right.equalToSuperview().inset(8)
+            make.top.bottom.equalToSuperview().inset(4)
+
         }
         
         stackView.snp.makeConstraints { make in
@@ -56,6 +59,7 @@ class PrivacyCell: UIView {
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview()
         }
+        
     }
     
     func configure(text: String, isOn: Bool) {
@@ -63,8 +67,8 @@ class PrivacyCell: UIView {
         toggleSwitch.isOn = isOn
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
     }
     

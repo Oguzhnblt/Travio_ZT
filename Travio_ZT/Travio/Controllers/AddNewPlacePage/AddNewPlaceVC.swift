@@ -52,7 +52,7 @@ class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         }
         
         addPlaceButton.snp.makeConstraints({make in
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-10)
+            make.bottom.equalTo(collectionView.snp.bottom).offset(-50)
             make.centerX.equalToSuperview()
             make.width.equalTo(342)
             make.height.equalTo(54)

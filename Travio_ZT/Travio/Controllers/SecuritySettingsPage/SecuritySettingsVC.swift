@@ -5,46 +5,27 @@
 //  Created by Oğuz on 1.11.2023.
 //
 
-import Foundation
+import UIKit
 import SnapKit
 
-class SecuritySettingsVC: UIViewController {
+class SecuritySettingsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = UIColor.clear
+        tableView.separatorStyle = .none
+        tableView.dataSource = self
+        tableView.delegate = self
+        return tableView
+    }()
+  
     private lazy var headerLabel: UILabel = {
         let headerLabel = UILabel()
         headerLabel.textColor = .black
         headerLabel.text = "Security Settings"
         headerLabel.textColor = .white
         headerLabel.font = UIFont(name: "Poppins-SemiBold", size: 32)
-        
         return headerLabel
-    }()
-    
-    private func fieldLabel(title: String) -> UILabel{
-        let fieldLabel = UILabel()
-        fieldLabel.textColor = UIColor(named: "backgroundColor")
-        fieldLabel.text = title
-        fieldLabel.font = UIFont(name: "Poppins-SemiBold", size: 16)
-        
-        return fieldLabel
-    }
-    
-    private lazy var backButton: UIButton = {
-        let backButton = UIButton(type: .custom)
-        backButton.setImage(UIImage(named: "leftArrowIcon"), for: .normal)
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        return backButton
-    }()
-    
-    private lazy var saveButton: UIButton = {
-        
-        let saveButton = UIButton()
-        saveButton.setTitle("Save", for: .normal)
-        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-        saveButton.layer.cornerRadius = 12
-        saveButton.backgroundColor = UIColor(named: "backgroundColor")
-        return saveButton
     }()
     
     private lazy var securityItemView: UIView = {
@@ -56,45 +37,22 @@ class SecuritySettingsVC: UIViewController {
         return view
     }()
     
-    private lazy var newPassword: ChangePasswordCell = {
-        let tf = ChangePasswordCell()
-        tf.label.text = "New Password"
-        return tf
+    private lazy var backButton: UIButton = {
+        let backButton = UIButton(type: .custom)
+        backButton.setImage(UIImage(named: "leftArrowIcon"), for: .normal)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return backButton
     }()
     
-    private lazy var newPasswordConfirm: ChangePasswordCell = {
-        let tf = ChangePasswordCell()
-        tf.label.text = " New Password Confirm"
-        return tf
+    private lazy var saveButton: UIButton = {
+        let saveButton = UIButton()
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        saveButton.layer.cornerRadius = 12
+        saveButton.clipsToBounds = true
+        saveButton.backgroundColor = UIColor(named: "backgroundColor")
+        return saveButton
     }()
-    
-    private func PrivacySettings(text: String, isOn: Bool) -> PrivacyCell {
-        let cell = PrivacyCell()
-        cell.label.text = text
-        cell.toggleSwitch.isOn = isOn
-        return cell
-    }
-    
-    private func stackView() -> UIStackView  {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = 4
-        stack.distribution = .fill
-        
-        return stack
-    }
-    
-    private lazy var passwordStack = stackView()
-    private lazy var privacyStack = stackView()
-    
-    private lazy var changePasswordLabel = fieldLabel(title: "Change Password")
-    private lazy var privacyLabel = fieldLabel(title: "Privacy")
-    
-    private lazy var camera = PrivacySettings(text: "Camera", isOn: false)
-    private lazy var photoLibrary = PrivacySettings(text: "Photo Library", isOn: false)
-    private lazy var location = PrivacySettings(text: "Location", isOn: false)
-    
-    
     
     @objc func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
@@ -102,8 +60,11 @@ class SecuritySettingsVC: UIViewController {
     
     @objc func saveButtonTapped() {
         
-        
     }
+    
+    private let sections = ["Change Password", "Privacy"]
+    private let passwordItems = ["New Password", "New Password Confirm"]
+    private let privacyItems = ["Camera", "Photo Library", "Location"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,66 +72,97 @@ class SecuritySettingsVC: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
-    private func setupViews() {
-        self.view.backgroundColor = UIColor(named: "backgroundColor")
-        self.view.addSubviews(securityItemView,backButton, headerLabel)
-        
-        privacyStack.addArrangedSubviews(camera,photoLibrary,location)
-        passwordStack.addArrangedSubviews(newPassword,newPasswordConfirm)
-        
-        securityItemView.addSubviews(saveButton, passwordStack,privacyStack, changePasswordLabel, privacyLabel)
-        
-        setupLayouts()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
     }
     
-    private func setupLayouts() {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
+    private func setupViews() {
+        view.backgroundColor = UIColor.background
+        view.addSubviews(securityItemView, backButton, headerLabel)
+        securityItemView.addSubviews(tableView, saveButton)
         
         securityItemView.snp.makeConstraints { make in
-            make.top.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(55)
+            make.top.bottom.equalToSuperview().offset(135)
             make.left.right.equalToSuperview()
         }
         
-        backButton.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(10)
-            make.right.equalTo(headerLabel.snp.left)
-            make.left.equalToSuperview()
-        })
+        backButton.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(24)
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(-5)
+        }
         
-        headerLabel.snp.makeConstraints({make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide)
-            make.left.equalToSuperview().offset(72)
-        })
+        headerLabel.snp.makeConstraints { make in
+            make.left.equalTo(backButton.snp.right).offset(24)
+            make.top.equalToSuperview().offset(80)
+        }
         
+        tableView.dropShadow()
+        tableView.snp.makeConstraints { make in
+            make.top.left.right.equalToSuperview().inset(16)
+            make.bottom.equalTo(saveButton.snp.top).offset(-16)
+        }
         
-        passwordStack.dropShadow()
-        passwordStack.snp.makeConstraints({make in
-            make.top.equalToSuperview().offset(55)
-            make.left.right.equalToSuperview().inset(24)
-        })
-        
-        privacyStack.dropShadow()
-        privacyStack.snp.makeConstraints({make in
-            make.top.equalTo(passwordStack.snp.bottom).offset(30)
-            make.left.right.equalToSuperview().inset(24)
-
-        })
-        
-        saveButton.snp.makeConstraints({ make in
-            make.top.equalToSuperview().offset(550)
+        saveButton.snp.makeConstraints { make in
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-55)
+            make.left.right.equalToSuperview().inset(16)
             make.height.equalTo(54)
-            make.left.right.equalToSuperview().inset(24)
-        })
-        
-        changePasswordLabel.snp.makeConstraints({make in
-            make.bottom.equalTo(passwordStack.snp.top)
-            make.left.equalToSuperview().offset(36)
-        })
-        
-        privacyLabel.snp.makeConstraints({make in
-            make.bottom.equalTo(privacyStack.snp.top)
-            make.left.equalToSuperview().offset(36)
-        })
-    }}
+        }
+    }
+    
+    // MARK: - UITableViewDataSource
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sections.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return section == 0 ? passwordItems.count : privacyItems.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell = ChangePasswordCell()
+            cell.label.text = passwordItems[indexPath.row]
+            cell.selectionStyle = .none
+            cell.backgroundColor = UIColor.clear
+            return cell
+        } else {
+            let cell = PrivacyCell()
+            cell.label.text = privacyItems[indexPath.row]
+            cell.selectionStyle = .none
+            cell.backgroundColor = UIColor.clear
+            cell.toggleSwitch.isOn = false
+            return cell
+        }
+    }
+    
+    // MARK: - UITableViewDelegate
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.clear
+        let titleLabel = UILabel()
+        titleLabel.textColor = UIColor(named: "backgroundColor")
+        titleLabel.font = UIFont(name: "Poppins-SemiBold", size: 16)
+        titleLabel.text = sections[section]
+        headerView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(12)
+            make.centerY.equalToSuperview()
+        }
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 24
+    }
+}
 
 
 

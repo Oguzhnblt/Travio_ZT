@@ -8,13 +8,16 @@
 import UIKit
 import SnapKit
 
-class ChangePasswordCell: UIView {
+import UIKit
+import SnapKit
+
+class ChangePasswordCell: UITableViewCell {
     
-    static let field = ChangePasswordCell()
+    static let reuseIdentifier = "ChangePasswordCell"
     
     private lazy var backView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.white
         view.clipsToBounds = true
         view.layer.cornerRadius = 16
         return view
@@ -28,7 +31,7 @@ class ChangePasswordCell: UIView {
         return label
     }()
     
-     lazy var textField: UITextField = {
+    lazy var textField: UITextField = {
         let textField = UITextField()
         textField.layer.cornerRadius = 8.0
         textField.layer.borderColor = UIColor.gray.cgColor
@@ -38,7 +41,7 @@ class ChangePasswordCell: UIView {
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [label, textField])
         stackView.axis = .vertical
-        stackView.spacing = 8.0
+        stackView.spacing = 4
         return stackView
     }()
     
@@ -46,22 +49,25 @@ class ChangePasswordCell: UIView {
         label.text = text
         textField.text = fieldText
     }
-
     
     private func setupViews() {
-        self.addSubview(backView)
+        contentView.addSubview(backView)
+        backView.addSubview(stackView)
+        
         backView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(8)
+            make.left.right.equalToSuperview().inset(8)
+            make.top.bottom.equalToSuperview().inset(4)
         }
         
-        backView.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(8)
         }
+        
+        
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
     }
     
@@ -69,6 +75,7 @@ class ChangePasswordCell: UIView {
         super.init(coder: aDecoder)
     }
 }
+
 
 
 

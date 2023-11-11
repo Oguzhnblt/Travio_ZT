@@ -92,6 +92,7 @@
 		12B3630D2AFC15CA00B84AEF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 12B3630C2AFC15CA00B84AEF /* Kingfisher */; };
 		12BA00BD2AFF99710097275C /* HelpSupportTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00BC2AFF99710097275C /* HelpSupportTableCell.swift */; };
 		12BA00BF2AFF99820097275C /* HelpSupportTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00BE2AFF99820097275C /* HelpSupportTableVC.swift */; };
+		12BA00C22AFFDCDB0097275C /* CommonSetupBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00C12AFFDCDB0097275C /* CommonSetupBackView.swift */; };
 		12E1FD502AF38AAB00B89F81 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */; };
 		12F85D832AF9123500FB7CBD /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D822AF9123500FB7CBD /* SectionHeaderView.swift */; };
 		12F85D872AF9148000FB7CBD /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D862AF9148000FB7CBD /* SignUpViewModel.swift */; };
@@ -200,6 +201,7 @@
 		12B363092AFC002C00B84AEF /* MapVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVM.swift; sourceTree = "<group>"; };
 		12BA00BC2AFF99710097275C /* HelpSupportTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportTableCell.swift; sourceTree = "<group>"; };
 		12BA00BE2AFF99820097275C /* HelpSupportTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportTableVC.swift; sourceTree = "<group>"; };
+		12BA00C12AFFDCDB0097275C /* CommonSetupBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSetupBackView.swift; sourceTree = "<group>"; };
 		12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		12F85D822AF9123500FB7CBD /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		12F85D862AF9148000FB7CBD /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
@@ -455,6 +457,7 @@
 		1255D8042ADAC7BD00FB6638 /* Travio */ = {
 			isa = PBXGroup;
 			children = (
+				12BA00C02AFFDCC80097275C /* CommonElement */,
 				1255D8052ADAC7BD00FB6638 /* AppDelegate.swift */,
 				1255D8072ADAC7BD00FB6638 /* SceneDelegate.swift */,
 				1248ED322AED310400777E98 /* Model */,
@@ -584,6 +587,14 @@
 				125754302AFD5DAD00AD003B /* PlaceDetailsLayout.swift */,
 			);
 			path = PlaceDetailsPage;
+			sourceTree = "<group>";
+		};
+		12BA00C02AFFDCC80097275C /* CommonElement */ = {
+			isa = PBXGroup;
+			children = (
+				12BA00C12AFFDCDB0097275C /* CommonSetupBackView.swift */,
+			);
+			path = CommonElement;
 			sourceTree = "<group>";
 		};
 		12E1FD542AF3925900B89F81 /* HelpSupport */ = {
@@ -879,6 +890,7 @@
 				0F5CB3152AF2681D00B9F13F /* RefreshRequestModel.swift in Sources */,
 				FF9BD5522AF2F0E00072BBA0 /* PostGalleryImageRequestModel.swift in Sources */,
 				FF9BD5652AF2F5FF0072BBA0 /* VisitModel.swift in Sources */,
+				12BA00C22AFFDCDB0097275C /* CommonSetupBackView.swift in Sources */,
 				129A8B022AFC2A020073CE6E /* MapPageLayout.swift in Sources */,
 				FF0B44B92AF2AD6A00586EA7 /* GetAllPlacesForUserResponseModel.swift in Sources */,
 				0FB84E032AF285080071A559 /* PostPlaceRequestModel.swift in Sources */,

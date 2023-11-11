@@ -146,8 +146,8 @@ class SettingsVC: UIViewController {
         
         collectionView.dropShadow()
         collectionView.snp.makeConstraints({make in
-            make.left.right.equalToSuperview()
-            make.top.bottom.equalToSuperview().offset(218)
+            make.top.equalTo(editProfileButton.snp.bottom)
+            make.left.right.bottom.equalToSuperview()
         })
     }
 }
@@ -179,9 +179,9 @@ extension SettingsVC: UICollectionViewDataSource {
             case 3:
                 let helpSupport = HelpSupportTableVC()
                 navigationController?.pushViewController(helpSupport, animated: true)
-            case 4:
-                let placeDetail = PlaceDetailsVC()
-                navigationController?.pushViewController(placeDetail, animated: true)
+            case 4: break
+//                let placeDetail = PlaceDetailsVC()
+//                navigationController?.pushViewController(placeDetail, animated: true)
             default: break
                 //                let termsOfUse = TermsOfUse()
                 //                navigationController?.pushViewController(termsOfUse, animated: true)
