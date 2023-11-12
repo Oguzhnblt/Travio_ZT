@@ -96,7 +96,7 @@ class EditProfileVC: UIViewController {
             signCell.label.text = formattedDate
         }
         
-        emailField.textField.placeholder = profileInfo.email
+        emailField.textField.text = profileInfo.email
         fullNameField.textField.text = profileInfo.full_name
     }
     
@@ -105,8 +105,8 @@ class EditProfileVC: UIViewController {
     
     @objc func saveButtonTapped() {
         // FIXME: Düzeltilecek
-        guard let email = emailField.textField.placeholder,
-              let full_name = fullNameField.textField.text,
+        guard let full_name = fullNameField.textField.text,
+              let email = emailField.textField.text,
               let pp_url = profileInfo?.pp_url else { return }
         
         viewModel.changeMyProfile(profile: EditProfileRequest(full_name: full_name, email: email, pp_url: pp_url))

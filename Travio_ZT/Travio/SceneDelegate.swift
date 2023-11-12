@@ -39,11 +39,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func isUserLoggedIn() -> Bool {
         guard AccessManager.shared.getToken(accountIdentifier: "access-token") != nil else {
-            print("accessToken bulunamadı")
+            print("Not found access-token")
             return false
         }
         guard AccessManager.shared.getToken(accountIdentifier: "refresh-token") != nil else {
-            print("refreshToken bulunamadı")
+            print("Not found refresh-token")
             return false
         }
         return true

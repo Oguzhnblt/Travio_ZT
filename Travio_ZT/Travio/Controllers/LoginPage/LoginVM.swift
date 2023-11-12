@@ -12,9 +12,6 @@ class LoginVM {
     var showAlertSuccess: ((String) -> Void)?
     var showAlertFailure: ((String) -> Void)?
     var navigateToViewController: (() -> Void)?
-//    var loginSuccessCallback: ((String) -> Void)?
-
-
     
     
     func login(email: String, password: String) {
@@ -27,8 +24,8 @@ class LoginVM {
         
         NetworkingHelper.shared.fetchData(urlRequest: .login(params: params)) { [weak self] (result: Result<LoginResponse, Error>) in
             switch result {
-                case .success(_):
-//                    self?.loginSuccessCallback?(loginResponse.accessToken!)
+                case .success(let loginResponse):
+                    AccessManager.shared.saveToken(loginResponse.accessToken!, accountIdentifier: "access-token")
                     self?.navigateToViewController?()
                 case .failure(_):
                     self?.showAlertFailure!("Email ve şifre hatalı.")

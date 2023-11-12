@@ -29,7 +29,7 @@ class PlaceDetailsLayout {
                 layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.25))
                 orthogonalScrollingBehavior = .groupPagingCentered
             case 1:
-                layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.6))
+                layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.55))
                 orthogonalScrollingBehavior = .none
             default:
                 Swift.fatalError("Unexpected section: \(section)")

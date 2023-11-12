@@ -8,7 +8,7 @@
 import Foundation
 
 struct EditProfileRequest: Codable {
-    var full_name: String?
-    var email: String?
-    var pp_url: String?
+    var full_name: String
+    var email: String
+    var pp_url: String
 }

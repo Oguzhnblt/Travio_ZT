@@ -46,7 +46,6 @@
 		1255D8122ADAC7BE00FB6638 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1255D8102ADAC7BE00FB6638 /* LaunchScreen.storyboard */; };
 		1255D81A2ADACC6400FB6638 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1255D8192ADACC6400FB6638 /* Extensions.swift */; };
 		1255D81D2ADACD7500FB6638 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1255D81C2ADACD7500FB6638 /* SnapKit */; };
-		1255D8202ADACF2900FB6638 /* TinyConstraints in Frameworks */ = {isa = PBXBuildFile; productRef = 1255D81F2ADACF2900FB6638 /* TinyConstraints */; };
 		1255D85E2ADB155E00FB6638 /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D84B2ADB155E00FB6638 /* Poppins-ExtraLight.ttf */; };
 		1255D85F2ADB155E00FB6638 /* Poppins-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D84C2ADB155E00FB6638 /* Poppins-ThinItalic.ttf */; };
 		1255D8602ADB155E00FB6638 /* Poppins-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D84D2ADB155E00FB6638 /* Poppins-ExtraLightItalic.ttf */; };
@@ -97,6 +96,7 @@
 		12BA00C82AFFE2020097275C /* AboutUsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00C72AFFE2020097275C /* AboutUsVC.swift */; };
 		12E0A3652B00357000F1F8D1 /* EditProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E0A3642B00357000F1F8D1 /* EditProfileVM.swift */; };
 		12E0A3692B00D8E000F1F8D1 /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E0A3682B00D8E000F1F8D1 /* AccessManager.swift */; };
+		12E0A3742B01101F00F1F8D1 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 12E0A3732B01101F00F1F8D1 /* IQKeyboardManagerSwift */; };
 		12E1FD502AF38AAB00B89F81 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */; };
 		12EAA9E82B001550006DCD42 /* CommonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EAA9E72B001550006DCD42 /* CommonTextField.swift */; };
 		12F85D832AF9123500FB7CBD /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D822AF9123500FB7CBD /* SectionHeaderView.swift */; };
@@ -241,10 +241,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12E0A3742B01101F00F1F8D1 /* IQKeyboardManagerSwift in Frameworks */,
 				12B3630D2AFC15CA00B84AEF /* Kingfisher in Frameworks */,
 				0FC28E392AE92E56005387E9 /* Alamofire in Frameworks */,
 				1255D81D2ADACD7500FB6638 /* SnapKit in Frameworks */,
-				1255D8202ADACF2900FB6638 /* TinyConstraints in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -794,9 +794,9 @@
 			name = Travio;
 			packageProductDependencies = (
 				1255D81C2ADACD7500FB6638 /* SnapKit */,
-				1255D81F2ADACF2900FB6638 /* TinyConstraints */,
 				0FC28E382AE92E56005387E9 /* Alamofire */,
 				12B3630C2AFC15CA00B84AEF /* Kingfisher */,
+				12E0A3732B01101F00F1F8D1 /* IQKeyboardManagerSwift */,
 			);
 			productName = Travio;
 			productReference = 1255D8022ADAC7BD00FB6638 /* Travio.app */;
@@ -831,6 +831,7 @@
 				1255D81E2ADACF2900FB6638 /* XCRemoteSwiftPackageReference "TinyConstraints" */,
 				0FC28E372AE92E56005387E9 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				12B3630B2AFC15CA00B84AEF /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				12E0A3722B01101F00F1F8D1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = 1255D8032ADAC7BD00FB6638 /* Products */;
 			projectDirPath = "";
@@ -1113,6 +1114,8 @@
 				DEVELOPMENT_TEAM = K97JL7U478;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Travio/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Near me requires location so it can offer nearby points of interests.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Near me requires location so it can offer nearby points of interests.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1145,6 +1148,8 @@
 				DEVELOPMENT_TEAM = K97JL7U478;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Travio/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "Near me requires location so it can offer nearby points of interests.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Near me requires location so it can offer nearby points of interests.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1223,6 +1228,14 @@
 				minimumVersion = 7.10.0;
 			};
 		};
+		12E0A3722B01101F00F1F8D1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.5.16;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1236,15 +1249,15 @@
 			package = 1255D81B2ADACD7500FB6638 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		1255D81F2ADACF2900FB6638 /* TinyConstraints */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1255D81E2ADACF2900FB6638 /* XCRemoteSwiftPackageReference "TinyConstraints" */;
-			productName = TinyConstraints;
-		};
 		12B3630C2AFC15CA00B84AEF /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 12B3630B2AFC15CA00B84AEF /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		12E0A3732B01101F00F1F8D1 /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 12E0A3722B01101F00F1F8D1 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -28,7 +28,7 @@ class EditProfileVM {
         
         let params = ["full_name": profile.full_name, "email": profile.email, "pp_url": profile.pp_url]
         
-        NetworkingHelper.shared.fetchData(urlRequest: .editProfile(params: params)) {(result: Result<EditProfileResponse, Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .editProfile(params: params as Parameters)) {(result: Result<EditProfileResponse, Error>) in
             switch result {
                 case .success(let success):
                     print(success.message!)

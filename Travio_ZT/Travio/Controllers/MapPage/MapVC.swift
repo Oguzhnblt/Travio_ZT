@@ -23,7 +23,7 @@ class MapVC: UIViewController {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: MapPageLayout.shared.mapLayout())
         collectionView.backgroundColor = UIColor.clear
-        
+        collectionView.isScrollEnabled = false
         collectionView.register(MapViewCell.self, forCellWithReuseIdentifier: MapViewCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -252,7 +252,7 @@ import SwiftUI
 @available(iOS 13 , *)
 struct MapVC_Preview: PreviewProvider {
     static var previews: some View {
-        MapVC().showPreview()
+        MapVC().showPreview().ignoresSafeArea()
     }
 }
 #endif

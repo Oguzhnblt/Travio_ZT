@@ -70,6 +70,7 @@ class PlaceBottomView: UICollectionViewCell {
      lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
+         label.text = "Lorem ipsum dolor sit amet"
         label.font = UIFont(name: "Poppins-Regular", size: 12)
         label.numberOfLines = 0
         return label
