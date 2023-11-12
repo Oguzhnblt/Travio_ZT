@@ -11,6 +11,11 @@ import SnapKit
 
 class EditProfileVC: UIViewController {
     
+    private var profileInfo: ProfileResponse?
+    
+    private lazy var viewModel = EditProfileVM()
+
+    
     private lazy var profileImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "img_profile")
@@ -60,24 +65,53 @@ class EditProfileVC: UIViewController {
     private lazy var emailField = CommonTextField(labelText: "Email", textFieldPlaceholder: "deneme@example.com", isSecure: false)
     
     
-    private lazy var cellStackView = stackView(axis: .horizontal, views: [adminCell, signCell])
+    private lazy var cellStackView = stackView(axis: .horizontal, views: [signCell, adminCell])
     private lazy var fieldStackView = stackView(axis: .vertical, views: [fullNameField, emailField])
     private lazy var stackViews = stackView(axis: .vertical, views: [cellStackView, fieldStackView])
     
     private lazy var saveButton: UIButton = {
         
-        let saveButton = UIButton(type: .custom)
+        let saveButton = UIButton(type: .system)
         saveButton.setTitle("Save", for: .normal)
+        saveButton.setTitleColor(UIColor.white, for: .normal)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.layer.cornerRadius = 12
         saveButton.backgroundColor = UIColor(named: "backgroundColor")
         return saveButton
     }()
     
+    func updateUI(with profileInfo: ProfileResponse) {
+        profileName.text = profileInfo.full_name
+
+        let imageUrl = URL(string: (profileInfo.pp_url!))
+        profileImage.kf.setImage(with: imageUrl)
+        
+        adminCell.label.text = profileInfo.role
+        
+        if let formattedDate = DateFormatter.formattedDate(from: (profileInfo.created_at!),
+                                                           originalFormat: FormatType.longFormat.rawValue,
+                                                           targetFormat: FormatType.stringFormat.rawValue,
+                                                           localeIdentifier: "tr_TR")
+        {
+            signCell.label.text = formattedDate
+        }
+        
+        emailField.textField.placeholder = profileInfo.email
+        fullNameField.textField.text = profileInfo.full_name
+    }
+    
+    
     
     
     @objc func saveButtonTapped() {
+        // FIXME: Düzeltilecek
+        guard let email = emailField.textField.placeholder,
+              let full_name = fullNameField.textField.text,
+              let pp_url = profileInfo?.pp_url else { return }
         
+        viewModel.changeMyProfile(profile: EditProfileRequest(full_name: full_name, email: email, pp_url: pp_url))
+        
+        profileName.text = full_name
     }
     
     @objc func exitButtonTapped() {
@@ -87,6 +121,13 @@ class EditProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        
+        viewModel.dataTransfer = { [weak self] profile in
+            self?.updateUI(with: profile)
+        }
+        
+        viewModel.myProfile()
+        
         navigationController?.navigationBar.isHidden = true
         
     }

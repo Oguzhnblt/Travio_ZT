@@ -51,7 +51,8 @@ class SettingsVC: UIViewController {
     }()
     
     @objc func buttonEditProfileTapped() {
-        
+        let editProfileVC = EditProfileVC()
+        navigationController?.pushViewController(editProfileVC, animated: true)
     }
     
     @objc func buttonLogoutTapped(){
@@ -70,7 +71,7 @@ class SettingsVC: UIViewController {
    
     private lazy var profileText = createLabel(text: "Bruce Wills", color: "textColor", textSize: 16, fontName: "Poppins-SemiBold", alignment: .center)
     
-    private lazy var editProfileText = createLabel(text: "Edit Profile", color: "backgroundColor", textSize: 12, fontName: "Poppins-SemiBold", alignment: .center)
+    private lazy var editProfileText = createLabel(text: "Edit Profile", color: "seeAllColor", textSize: 12, fontName: "Poppins-SemiBold", alignment: .center)
     
     
     override func viewDidLoad() {
@@ -131,8 +132,8 @@ extension SettingsVC: UICollectionViewDataSource {
                 let securitySettings = SecuritySettingsVC()
                 navigationController?.pushViewController(securitySettings, animated: true)
             case 1:
-                let editProfile = EditProfileVC()
-                navigationController?.pushViewController(editProfile, animated: true)
+                let appDefaults = EditProfileVC()
+                navigationController?.pushViewController(appDefaults, animated: true)
             case 2:
                 let myAdded = MyAddedPlacesVC()
                 navigationController?.pushViewController(myAdded, animated: true)
@@ -187,7 +188,7 @@ import SwiftUI
 struct SettingsVC_Preview: PreviewProvider {
     static var previews: some View{
         
-        SettingsVC().showPreview()
+        SettingsVC().showPreview().ignoresSafeArea()
     }
 }
 #endif

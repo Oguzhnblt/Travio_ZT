@@ -96,6 +96,7 @@ class LoginVC: UIViewController {
         viewModel.showAlertFailure = { message in
             self.showAlert(message: message)
         }
+ 
     }
     
     private func navigateToHomeVC() {

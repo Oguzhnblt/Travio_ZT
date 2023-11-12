@@ -3,4 +3,69 @@
    uuid = "50668CE7-466A-4D56-B3D1-5F006785B969"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E6A053B6-9FD8-4EB2-A51E-DA5965DDE673"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Travio/Controllers/EditProfilePage/EditProfileVM.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "changeMyProfile(profile:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E6A053B6-9FD8-4EB2-A51E-DA5965DDE673 - f6789c4cfa91fca8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Travio.ProfileResponse, Swift.Error&gt;) -&gt; () in Travio.EditProfileVM.changeMyProfile(profile: Travio.EditProfileRequest) -&gt; ()"
+                  moduleName = "Travio"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/oguz/Travio_ZT/Travio_ZT/Travio/Controllers/EditProfilePage/EditProfileVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "34"
+                  endingLineNumber = "34"
+                  offsetFromSymbolStart = "824">
+               </Location>
+               <Location
+                  uuid = "E6A053B6-9FD8-4EB2-A51E-DA5965DDE673 - 290a85190df55d2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Travio.EditProfileResponse, Swift.Error&gt;) -&gt; () in Travio.EditProfileVM.changeMyProfile(profile: Travio.EditProfileRequest) -&gt; ()"
+                  moduleName = "Travio"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/oguz/Travio_ZT/Travio_ZT/Travio/Controllers/EditProfilePage/EditProfileVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "34"
+                  endingLineNumber = "34"
+                  offsetFromSymbolStart = "328">
+               </Location>
+               <Location
+                  uuid = "E6A053B6-9FD8-4EB2-A51E-DA5965DDE673 - 290a85190df55d2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;Travio.EditProfileResponse, Swift.Error&gt;) -&gt; () in Travio.EditProfileVM.changeMyProfile(profile: Travio.EditProfileRequest) -&gt; ()"
+                  moduleName = "Travio"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/oguz/Travio_ZT/Travio_ZT/Travio/Controllers/EditProfilePage/EditProfileVM.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "34"
+                  endingLineNumber = "34"
+                  offsetFromSymbolStart = "372">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

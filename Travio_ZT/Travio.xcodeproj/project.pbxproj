@@ -96,7 +96,6 @@
 		12BA00C52AFFDE880097275C /* TermsOfUseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00C42AFFDE880097275C /* TermsOfUseVC.swift */; };
 		12BA00C82AFFE2020097275C /* AboutUsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00C72AFFE2020097275C /* AboutUsVC.swift */; };
 		12E0A3652B00357000F1F8D1 /* EditProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E0A3642B00357000F1F8D1 /* EditProfileVM.swift */; };
-		12E0A3672B003ED200F1F8D1 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E0A3662B003ED200F1F8D1 /* KeychainHelper.swift */; };
 		12E0A3692B00D8E000F1F8D1 /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E0A3682B00D8E000F1F8D1 /* AccessManager.swift */; };
 		12E1FD502AF38AAB00B89F81 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */; };
 		12EAA9E82B001550006DCD42 /* CommonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EAA9E72B001550006DCD42 /* CommonTextField.swift */; };
@@ -211,7 +210,6 @@
 		12BA00C42AFFDE880097275C /* TermsOfUseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseVC.swift; sourceTree = "<group>"; };
 		12BA00C72AFFE2020097275C /* AboutUsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsVC.swift; sourceTree = "<group>"; };
 		12E0A3642B00357000F1F8D1 /* EditProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVM.swift; sourceTree = "<group>"; };
-		12E0A3662B003ED200F1F8D1 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		12E0A3682B00D8E000F1F8D1 /* AccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessManager.swift; sourceTree = "<group>"; };
 		12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		12EAA9E72B001550006DCD42 /* CommonTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTextField.swift; sourceTree = "<group>"; };
@@ -557,9 +555,9 @@
 			isa = PBXGroup;
 			children = (
 				127249D32AF2CDC700CEAA64 /* EditProfileVC.swift */,
+				12E0A3642B00357000F1F8D1 /* EditProfileVM.swift */,
 				127249DB2AF3014500CEAA64 /* EditingProfileCell.swift */,
 				12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */,
-				12E0A3642B00357000F1F8D1 /* EditProfileVM.swift */,
 			);
 			path = EditProfilePage;
 			sourceTree = "<group>";
@@ -633,7 +631,6 @@
 			children = (
 				0FC28E352AE92C9F005387E9 /* Router.swift */,
 				0F34F45E2AEA580A007189BE /* NetworkingHelper.swift */,
-				12E0A3662B003ED200F1F8D1 /* KeychainHelper.swift */,
 				12E0A3682B00D8E000F1F8D1 /* AccessManager.swift */,
 			);
 			path = Helper;
@@ -893,7 +890,6 @@
 				12EAA9E82B001550006DCD42 /* CommonTextField.swift in Sources */,
 				FF0B44B42AF2A74800586EA7 /* GetPlaceByIdResponseModel.swift in Sources */,
 				0F5CB31B2AF26C6700B9F13F /* UploadResponseModel.swift in Sources */,
-				12E0A3672B003ED200F1F8D1 /* KeychainHelper.swift in Sources */,
 				0FC9671D2AEA4B5D009FB26B /* MainTabbarVC.swift in Sources */,
 				12E0A3692B00D8E000F1F8D1 /* AccessManager.swift in Sources */,
 				12F85D872AF9148000FB7CBD /* SignUpVM.swift in Sources */,

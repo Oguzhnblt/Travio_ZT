@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let window = UIWindow(windowScene: windowScene)
-        if hasUserLoggedIn() {
+        if isUserLoggedIn() {
             let vc = MainTabbarVC()
             let rootViewController = UINavigationController(rootViewController: vc)
             window.rootViewController = rootViewController
@@ -37,16 +37,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
-    func hasUserLoggedIn() -> Bool {
-        
-        guard AccessManager.shared.getToken(accountIdentifier: "access_token") != nil else {
+    func isUserLoggedIn() -> Bool {
+        guard AccessManager.shared.getToken(accountIdentifier: "access-token") != nil else {
             print("accessToken bulunamadı")
-            
             return false
         }
         guard AccessManager.shared.getToken(accountIdentifier: "refresh-token") != nil else {
             print("refreshToken bulunamadı")
-            
             return false
         }
         return true

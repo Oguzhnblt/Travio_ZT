@@ -10,22 +10,31 @@ import Alamofire
 
 class EditProfileVM {
     
-    var showAlertFailure: ((String) -> Void)?
-    var navigateToViewController: (() -> Void)?
-    var loginSuccessCallback: ((String) -> Void)?
-
-
+    var dataTransfer: ((ProfileResponse) -> Void)?
+    
     func myProfile() {
-               
+        
         NetworkingHelper.shared.fetchData(urlRequest: .myProfile) { [weak self] (result: Result<ProfileResponse, Error>) in
             switch result {
-                case .success(_):
-//                    self?.loginSuccessCallback?(loginResponse.access_token!)
-                    self?.navigateToViewController?()
-                case .failure(_):
-                    self?.showAlertFailure!("Erişim yetkiniz yok")
+                case .success(let profile):
+                    self!.dataTransfer!(profile)
+                case .failure(let err):
+                    print(err.localizedDescription)
+            }
+        }
+    }
+    
+    func changeMyProfile(profile: EditProfileRequest) {
+        
+        let params = ["full_name": profile.full_name, "email": profile.email, "pp_url": profile.pp_url]
+        
+        NetworkingHelper.shared.fetchData(urlRequest: .editProfile(params: params)) {(result: Result<EditProfileResponse, Error>) in
+            switch result {
+                case .success(let success):
+                    print(success.message!)
+                case .failure(let err):
+                    print(err.localizedDescription)
             }
         }
     }
 }
-
