@@ -95,6 +95,9 @@
 		12BA00C22AFFDCDB0097275C /* CommonSetupBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00C12AFFDCDB0097275C /* CommonSetupBackView.swift */; };
 		12BA00C52AFFDE880097275C /* TermsOfUseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00C42AFFDE880097275C /* TermsOfUseVC.swift */; };
 		12BA00C82AFFE2020097275C /* AboutUsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00C72AFFE2020097275C /* AboutUsVC.swift */; };
+		12E0A3652B00357000F1F8D1 /* EditProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E0A3642B00357000F1F8D1 /* EditProfileVM.swift */; };
+		12E0A3672B003ED200F1F8D1 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E0A3662B003ED200F1F8D1 /* KeychainHelper.swift */; };
+		12E0A3692B00D8E000F1F8D1 /* AccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E0A3682B00D8E000F1F8D1 /* AccessManager.swift */; };
 		12E1FD502AF38AAB00B89F81 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */; };
 		12EAA9E82B001550006DCD42 /* CommonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EAA9E72B001550006DCD42 /* CommonTextField.swift */; };
 		12F85D832AF9123500FB7CBD /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D822AF9123500FB7CBD /* SectionHeaderView.swift */; };
@@ -207,6 +210,9 @@
 		12BA00C12AFFDCDB0097275C /* CommonSetupBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSetupBackView.swift; sourceTree = "<group>"; };
 		12BA00C42AFFDE880097275C /* TermsOfUseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseVC.swift; sourceTree = "<group>"; };
 		12BA00C72AFFE2020097275C /* AboutUsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsVC.swift; sourceTree = "<group>"; };
+		12E0A3642B00357000F1F8D1 /* EditProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVM.swift; sourceTree = "<group>"; };
+		12E0A3662B003ED200F1F8D1 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		12E0A3682B00D8E000F1F8D1 /* AccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessManager.swift; sourceTree = "<group>"; };
 		12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		12EAA9E72B001550006DCD42 /* CommonTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTextField.swift; sourceTree = "<group>"; };
 		12F85D822AF9123500FB7CBD /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
@@ -468,13 +474,11 @@
 				1248ED322AED310400777E98 /* Model */,
 				125B445C2AE971580047248D /* Controllers */,
 				1255D8192ADACC6400FB6638 /* Extensions.swift */,
+				12E0A36A2B00E02B00F1F8D1 /* Helper */,
 				12BA00C02AFFDCC80097275C /* CommonElement */,
 				1255D80E2ADAC7BE00FB6638 /* Assets.xcassets */,
 				1255D8102ADAC7BE00FB6638 /* LaunchScreen.storyboard */,
 				1255D8132ADAC7BE00FB6638 /* Info.plist */,
-				0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */,
-				0FC28E352AE92C9F005387E9 /* Router.swift */,
-				0F34F45E2AEA580A007189BE /* NetworkingHelper.swift */,
 			);
 			path = Travio;
 			sourceTree = "<group>";
@@ -519,6 +523,7 @@
 		125B445C2AE971580047248D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				12E0A36B2B00E06C00F1F8D1 /* MainTabbarVC */,
 				12BA00C62AFFE1E40097275C /* AboutUs */,
 				125754322AFD6AC600AD003B /* AddNewPlacePage */,
 				127249D22AF2CDB600CEAA64 /* EditProfilePage */,
@@ -554,6 +559,7 @@
 				127249D32AF2CDC700CEAA64 /* EditProfileVC.swift */,
 				127249DB2AF3014500CEAA64 /* EditingProfileCell.swift */,
 				12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */,
+				12E0A3642B00357000F1F8D1 /* EditProfileVM.swift */,
 			);
 			path = EditProfilePage;
 			sourceTree = "<group>";
@@ -620,6 +626,25 @@
 				12BA00C72AFFE2020097275C /* AboutUsVC.swift */,
 			);
 			path = AboutUs;
+			sourceTree = "<group>";
+		};
+		12E0A36A2B00E02B00F1F8D1 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				0FC28E352AE92C9F005387E9 /* Router.swift */,
+				0F34F45E2AEA580A007189BE /* NetworkingHelper.swift */,
+				12E0A3662B003ED200F1F8D1 /* KeychainHelper.swift */,
+				12E0A3682B00D8E000F1F8D1 /* AccessManager.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		12E0A36B2B00E06C00F1F8D1 /* MainTabbarVC */ = {
+			isa = PBXGroup;
+			children = (
+				0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */,
+			);
+			path = MainTabbarVC;
 			sourceTree = "<group>";
 		};
 		12E1FD542AF3925900B89F81 /* HelpSupport */ = {
@@ -868,7 +893,9 @@
 				12EAA9E82B001550006DCD42 /* CommonTextField.swift in Sources */,
 				FF0B44B42AF2A74800586EA7 /* GetPlaceByIdResponseModel.swift in Sources */,
 				0F5CB31B2AF26C6700B9F13F /* UploadResponseModel.swift in Sources */,
+				12E0A3672B003ED200F1F8D1 /* KeychainHelper.swift in Sources */,
 				0FC9671D2AEA4B5D009FB26B /* MainTabbarVC.swift in Sources */,
+				12E0A3692B00D8E000F1F8D1 /* AccessManager.swift in Sources */,
 				12F85D872AF9148000FB7CBD /* SignUpVM.swift in Sources */,
 				127249C32AF2282200CEAA64 /* SecuritySettingsVC.swift in Sources */,
 				127249D12AF2BF4700CEAA64 /* PrivacyCell.swift in Sources */,
@@ -914,6 +941,7 @@
 				0F6E232B2AF236B800F843C6 /* LoginRequestModel.swift in Sources */,
 				0F5CB3252AF2797E00B9F13F /* ChangePasswordResponseModel.swift in Sources */,
 				0F5CB3152AF2681D00B9F13F /* RefreshRequestModel.swift in Sources */,
+				12E0A3652B00357000F1F8D1 /* EditProfileVM.swift in Sources */,
 				FF9BD5522AF2F0E00072BBA0 /* PostGalleryImageRequestModel.swift in Sources */,
 				FF9BD5652AF2F5FF0072BBA0 /* VisitModel.swift in Sources */,
 				12BA00C22AFFDCDB0097275C /* CommonSetupBackView.swift in Sources */,

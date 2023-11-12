@@ -99,7 +99,7 @@ class LoginVC: UIViewController {
     }
     
     private func navigateToHomeVC() {
-        let homeVC = HomeVC() 
+        let homeVC = MainTabbarVC() 
         let navigationController = UINavigationController(rootViewController: homeVC)
         navigationController.modalPresentationStyle = .fullScreen
         self.present(navigationController, animated: true, completion: nil)

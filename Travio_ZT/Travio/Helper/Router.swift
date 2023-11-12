@@ -12,8 +12,8 @@ enum Router{
     case register(params:Parameters)
     case login(params: Parameters)
     case refresh(params: Parameters)
-    case upload(image: Data)
-    case profile
+    case upload(params: Parameters)
+    case myProfile
     case editProfile(params: Parameters)
     case changePassword(params: Parameters)
     case postPlace(params: Parameters)
@@ -48,7 +48,7 @@ enum Router{
                 return "/v1/auth/refresh"
             case .upload:
                 return "/upload"
-            case .profile:
+            case .myProfile:
                 return "/v1/me"
             case .editProfile:
                 return "/v1/edit-profile"
@@ -87,9 +87,6 @@ enum Router{
             case .checkVisitByPlaceId(let placeId):
                 return "/v1/visits/user/\(placeId)"
                 
-                
-                
-                
         }
     }
     
@@ -98,7 +95,7 @@ enum Router{
         switch self {
             case .register, .login, .refresh, .upload, .postPlace, .postGalleryImage, .postVisit:
                 return .post
-            case .profile, .getAllPlaces, .getPlaceById, .getAllPlacesForUser, .getPopularPlaces, .getAllVisits,.getVisitById, .getLastPlaces, .getAllGalleryByPlaceId:
+            case .myProfile, .getAllPlaces, .getPlaceById, .getAllPlacesForUser, .getPopularPlaces, .getAllVisits,.getVisitById, .getLastPlaces, .getAllGalleryByPlaceId:
                 return .get
             case .editProfile, .changePassword, .updatePlace:
                 return .put
@@ -111,10 +108,14 @@ enum Router{
     
     var headers:HTTPHeaders {
         switch self {
-            case .register, .login, .refresh, .upload, .getPlaceById, .getPopularPlaces, .getLastPlaces, .getAllGalleryByPlaceId:
+            case .register, .login, .refresh, .getPlaceById, .getPopularPlaces, .getLastPlaces, .getAllGalleryByPlaceId:
                 return [:]
-            case .profile, .editProfile, .changePassword, .postPlace, .updatePlace, .deletePlace, .getAllPlaces, .getAllPlacesForUser, .postGalleryImage, .deleteGalleryImage, .postVisit, .getAllVisits, .getVisitById,.deleteVisitByPlaceId,.checkVisitByPlaceId:
+            case .myProfile, .editProfile, .changePassword, .postPlace, .updatePlace, .deletePlace, .getAllPlaces, .getAllPlacesForUser, .postGalleryImage, .deleteGalleryImage, .postVisit, .getAllVisits, .getVisitById,.deleteVisitByPlaceId,.checkVisitByPlaceId:
+                guard let token = AccessManager.shared.getToken(accountIdentifier: "access-token") else { return [:] }
                 return["Authorization": "Bearer access_token"]
+            case .upload:
+                let boundary = "Boundary-\(UUID().uuidString)"
+                return ["Content-Type": "multipart/form-data; boundary=\(boundary)"]
         }
     }
     
@@ -126,9 +127,9 @@ enum Router{
                 return params
             case .refresh(let params):
                 return params
-            case .upload(let image):
-                return nil
-            case .profile, .deletePlace, .getAllPlaces, .getPlaceById, .getAllPlacesForUser,.deleteGalleryImage, .getAllGalleryByPlaceId, .getAllVisits, .getVisitById,.deleteVisitByPlaceId,.checkVisitByPlaceId:
+            case .upload(let params):
+                return params
+            case .myProfile, .deletePlace, .getAllPlaces, .getPlaceById, .getAllPlacesForUser,.deleteGalleryImage, .getAllGalleryByPlaceId, .getAllVisits, .getVisitById,.deleteVisitByPlaceId,.checkVisitByPlaceId:
                 return nil
             case .editProfile(let params):
                 return params
@@ -150,9 +151,8 @@ enum Router{
                 return params
         }
     }
-    
-    
 }
+
 
 extension Router:URLRequestConvertible {
     
@@ -173,8 +173,5 @@ extension Router:URLRequestConvertible {
         
         return try encoding.encode(urlRequest, with: parameters)
     }
-    
-    
-    
 }
 
