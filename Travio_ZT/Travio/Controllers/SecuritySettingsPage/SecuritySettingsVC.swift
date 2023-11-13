@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 class SecuritySettingsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    private lazy var viewModel = SecuritySettingsVM()
+    var showAlertFailure: ((String) -> Void)?
     
       private let sections = ["Privacy"]
       private let passwordItems = ["New Password", "New Password Confirm"]
@@ -55,6 +57,15 @@ class SecuritySettingsVC: UIViewController, UITableViewDataSource, UITableViewDe
     }()
     
     @objc func saveButtonTapped() {
+        guard let new_password = newPasswordField.textField.text,
+              let new_password_confirm = newPasswordConfirmField.textField.text
+        else { return }
+        
+        if new_password != new_password_confirm {
+            showAlertFailure?("Parolalar eşleşmiyor")
+            return
+        }
+        viewModel.changePassword(profile: ChangePasswordRequest(new_password: new_password))
         
     }
     
