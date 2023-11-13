@@ -14,7 +14,7 @@ class TermsOfUseVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.background
+        self.view.backgroundColor = UIColor(named: "backgroundColor")
         setupViews()
     }
     
@@ -37,7 +37,7 @@ class TermsOfUseVC: UIViewController {
     
     private func setupLayouts() {
         
-        setupView(title: "Terms Of Use",buttonImage: UIImage.leftArrowIcon, buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [UIView()])
+        setupView(title: "Terms Of Use",buttonImage: UIImage(named: "leftArrowIcon"), buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [UIView()])
 
     }
     

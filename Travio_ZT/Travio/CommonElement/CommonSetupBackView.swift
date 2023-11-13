@@ -20,11 +20,11 @@ extension UIViewController {
         headerLabel.font = UIFont(name: "Poppins-SemiBold", size: 32)
         
         lazy var containerView = UIView()
-        containerView.backgroundColor = UIColor.background
+        containerView.backgroundColor = UIColor(named: "backgroundColor")
         containerView.clipsToBounds = true
         
         lazy var itemView = UIView()
-        itemView.backgroundColor = UIColor.content
+        itemView.backgroundColor = UIColor(named: "contentColor")
         itemView.clipsToBounds = true
         itemView.layer.cornerRadius = 80
         itemView.layer.maskedCorners = .layerMinXMinYCorner

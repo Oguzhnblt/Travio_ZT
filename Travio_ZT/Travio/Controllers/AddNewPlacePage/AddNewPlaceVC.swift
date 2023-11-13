@@ -26,7 +26,7 @@ class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: addNewPageLayout())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = UIColor.content
+        collectionView.backgroundColor = UIColor(named: "contentColor")
         collectionView.register(AddNewPlaceViewCell.self, forCellWithReuseIdentifier: AddNewPlaceViewCell.identifier)
         collectionView.register(AddPhotoCell.self, forCellWithReuseIdentifier: AddPhotoCell.identifier)
         collectionView.dataSource = self

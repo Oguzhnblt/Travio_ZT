@@ -82,7 +82,7 @@ class SettingsVC: UIViewController {
     
     
     func setupViews() {
-        setupView(title: "Settings", buttonImage: UIImage.imgLogout, buttonPosition: .right, headerLabelPosition: .left, buttonAction: nil, itemsView: [collectionView, profileImage, profileText, editProfileButton])
+        setupView(title: "Settings", buttonImage: UIImage(named: "imgLogout"), buttonPosition: .right, headerLabelPosition: .left, buttonAction: nil, itemsView: [collectionView, profileImage, profileText, editProfileButton])
         setupLayout()
     }
     

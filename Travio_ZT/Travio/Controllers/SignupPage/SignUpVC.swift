@@ -84,7 +84,7 @@ class SignUpVC: UIViewController {
     
     
     private func setupViews() {
-        setupView(title: "Sign Up", buttonImage: UIImage.leftArrowIcon, buttonPosition: .left, headerLabelPosition: .center ,buttonAction: #selector(buttonTapped), itemsView: [stackView, signUpButton])
+        setupView(title: "Sign Up", buttonImage: UIImage(named: "leftArrowIcon"), buttonPosition: .left, headerLabelPosition: .center ,buttonAction: #selector(buttonTapped), itemsView: [stackView, signUpButton])
         
         stackView.dropShadow()
         stackView.snp.makeConstraints({make in

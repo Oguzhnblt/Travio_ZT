@@ -30,7 +30,7 @@ class SecuritySettingsVC: UIViewController, UITableViewDataSource, UITableViewDe
         let label = UILabel()
         label.text = "Change Password"
         label.font = UIFont(name: "Poppins-Semibold", size: 16)
-        label.textColor = UIColor.background
+        label.textColor = UIColor(named: "backgroundColor")
         return label
     }()
     
@@ -76,7 +76,7 @@ class SecuritySettingsVC: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     private func setupViews() {
-        setupView(title: "Security Settings",buttonImage: UIImage.leftArrowIcon, buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [fieldLabel, stackView, tableView, saveButton])
+        setupView(title: "Security Settings",buttonImage: UIImage(named: "leftArrowIcon"), buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [fieldLabel, stackView, tableView, saveButton])
         
         fieldLabel.snp.makeConstraints({make in
             make.bottom.equalTo(stackView.snp.top)

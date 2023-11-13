@@ -85,7 +85,7 @@ class PopularPlacesVC: UIViewController {
     
     private func setupViews() {
         
-        setupView(title: "Popular Places",buttonImage: UIImage.leftArrowIcon, buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [collectionView, sortButton])
+        setupView(title: "Popular Places",buttonImage: UIImage(named: "leftArrowIcon"), buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [collectionView, sortButton])
 
         setupLayouts()
         
