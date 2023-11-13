@@ -145,7 +145,7 @@ class EditProfileVC: UIViewController {
     private func setupViews() {
         self.view.backgroundColor = UIColor(named: "backgroundColor")
         
-        setupView(title: "Edit Profile", buttonImage: UIImage.imgExit, buttonPosition: .right, headerLabelPosition: .left, buttonAction: #selector(buttonTapped), itemsView: [profileImage, changePhotoButton, profileName, stackViews, saveButton])
+        setupView(title: "Edit Profile", buttonImage: UIImage(named: "imgExit"), buttonPosition: .right, headerLabelPosition: .left, buttonAction: #selector(buttonTapped), itemsView: [profileImage, changePhotoButton, profileName, stackViews, saveButton])
         
         
         setupLayouts()

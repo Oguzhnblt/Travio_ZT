@@ -28,7 +28,7 @@ class HelpSupportTableVC: UIViewController, UITableViewDelegate, UITableViewData
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(HelpSupportTableCell.self, forCellReuseIdentifier: HelpSupportTableCell.cellReuseIdentifier)
-        tableView.backgroundColor = UIColor.content
+        tableView.backgroundColor = UIColor(named: "contentColor")
         tableView.separatorStyle = .none
         return tableView
     }()
@@ -59,7 +59,7 @@ class HelpSupportTableVC: UIViewController, UITableViewDelegate, UITableViewData
     
 
     private func setupUI() {
-        setupView(title: "Help&Support",buttonImage: UIImage.leftArrowIcon, buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [tableView, contentLabel])
+        setupView(title: "Help&Support",buttonImage: UIImage(named: "leftArrowIcon"), buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [tableView, contentLabel])
 
         tableView.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview().inset(90)
@@ -83,11 +83,11 @@ class HelpSupportTableVC: UIViewController, UITableViewDelegate, UITableViewData
         cell.titleLabel.text = item.title
         cell.subtitleLabel.text = item.subtitle
         
-        cell.backgroundColor = UIColor.content
+        cell.backgroundColor = UIColor(named: "contentColor")
         cell.selectionStyle = .none
 
         let cellState = cellStates[indexPath]
-        cell.iconImageView.image = cellState == .expanded ? UIImage.imgArrow : UIImage.imgRightArrow
+        cell.iconImageView.image = cellState == .expanded ? UIImage(named: "imgArrow") : UIImage(named: "imgRightArrow")
 
         return cell
     }

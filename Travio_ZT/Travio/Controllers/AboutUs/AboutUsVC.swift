@@ -14,7 +14,7 @@ class AboutUsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.background
+        self.view.backgroundColor = UIColor(named: "backgroundColor")
         setupViews()
     }
     
@@ -37,7 +37,7 @@ class AboutUsVC: UIViewController {
     
     private func setupLayouts() {
         
-        setupView(title: "About Us",buttonImage: UIImage.leftArrowIcon, buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [UIView()])
+        setupView(title: "About Us",buttonImage: UIImage(named: "leftArrowIcon"), buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [UIView()])
 
     }
 }
