@@ -20,7 +20,7 @@ class HelpSupportTableVC: UIViewController, UITableViewDelegate, UITableViewData
     private var selectedIndexPath: IndexPath?
     private var isExpanded: Bool = false
 
-    private lazy var expandedHeight: CGFloat = 155
+    private lazy var expandedHeight: CGFloat = 160
     private lazy var collapsedHeight: CGFloat = 60
 
     private lazy var tableView: UITableView = {
@@ -106,7 +106,7 @@ class HelpSupportTableVC: UIViewController, UITableViewDelegate, UITableViewData
             cellStates[indexPath] = .expanded
         }
 
-        tableView.reloadRows(at: [indexPath], with: .automatic)
+        tableView.reloadRows(at: [indexPath], with: .fade)
     }
 }
 

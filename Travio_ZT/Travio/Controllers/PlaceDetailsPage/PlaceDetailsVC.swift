@@ -16,7 +16,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     var selectedPlace: Place?
     
     private lazy var isBookmarked = true
-
+    
     private lazy var collectionView: UICollectionView = {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: PlaceDetailsLayout.shared.placeDetailsLayout())
@@ -25,7 +25,6 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         collectionView.isScrollEnabled = false
         collectionView.register(PlaceTopView.self, forCellWithReuseIdentifier: PlaceTopView.identifier)
         collectionView.register(PlaceBottomView.self, forCellWithReuseIdentifier: PlaceBottomView.identifier)
-        
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -82,7 +81,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
-  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -132,10 +131,8 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-            case 0:
+            case 0,1:
                 return 1 // FIXME: Düzeltilecek
-            case 1:
-                return 1
             default:
                 return 1
         }
@@ -148,10 +145,10 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceTopView.identifier, for: indexPath) as! PlaceTopView
                 
                 if let selectedPlace = selectedPlace,
-                          let coverImageURLString = selectedPlace.cover_image_url,
-                          let url = URL(string: coverImageURLString) {
-                           cell.imageView.kf.setImage(with: url)
-                       }
+                   let coverImageURLString = selectedPlace.cover_image_url,
+                   let url = URL(string: coverImageURLString) {
+                    cell.imageView.kf.setImage(with: url)
+                }
                 return cell
                 
             case 1:
@@ -166,7 +163,7 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
                     if let formattedDate = DateFormatter.formattedDate(from: selectedPlace.created_at!, originalFormat: FormatType.longFormat.rawValue , targetFormat: FormatType.stringFormat.rawValue, localeIdentifier: "tr_TR") {
                         cell.dateTitle.text = formattedDate
                     }
-
+                    
                     let targetCoordinate = CLLocationCoordinate2D(latitude: selectedPlace.latitude!, longitude: selectedPlace.longitude!)
                     
                     let region = MKCoordinateRegion(center: targetCoordinate, latitudinalMeters: 250, longitudinalMeters: 250)
