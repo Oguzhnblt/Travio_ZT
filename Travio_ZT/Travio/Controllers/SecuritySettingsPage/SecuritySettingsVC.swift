@@ -10,7 +10,6 @@ import SnapKit
 
 class SecuritySettingsVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private lazy var viewModel = SecuritySettingsVM()
-    var showAlertFailure: ((String) -> Void)?
     
       private let sections = ["Privacy"]
       private let passwordItems = ["New Password", "New Password Confirm"]
@@ -56,18 +55,37 @@ class SecuritySettingsVC: UIViewController, UITableViewDataSource, UITableViewDe
         return saveButton
     }()
     
+
     @objc func saveButtonTapped() {
-        guard let new_password = newPasswordField.textField.text,
-              let new_password_confirm = newPasswordConfirmField.textField.text
-        else { return }
-        
-        if new_password != new_password_confirm {
-            showAlertFailure?("Parolalar eşleşmiyor")
-            return
+        let validation = viewModel.validatePasswordFields(newPassword: newPasswordField.textField.text, confirmPassword: newPasswordConfirmField.textField.text)
+
+        switch validation {
+        case .success:
+            guard let new_password = newPasswordField.textField.text else {
+                return
+            }
+            viewModel.changePassword(profile: ChangePasswordRequest(new_password: new_password)) { result in
+                switch result {
+                case .success(let successMessage):
+                    self.showAlert(message: successMessage)
+
+                case .failure(let error):
+                    self.showAlert(message: error.localizedDescription)
+                }
+            }
+        case .failure(let errorMessage):
+            showAlert(message: errorMessage)
         }
-        viewModel.changePassword(profile: ChangePasswordRequest(new_password: new_password))
-        
     }
+
+
+    private func showAlert(message: String) {
+        let alertController = UIAlertController(title: "Uyarı", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Tamam", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     
   
     override func viewDidLoad() {
@@ -170,3 +188,4 @@ struct SecuritySettingsVC_Preview: PreviewProvider {
     }
 }
 #endif
+

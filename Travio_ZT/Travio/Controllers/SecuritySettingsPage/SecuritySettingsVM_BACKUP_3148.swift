@@ -10,12 +10,18 @@ enum ValidationResult {
 }
 
 class SecuritySettingsVM {
+<<<<<<< HEAD
+    func changePassword(profile: ChangePasswordRequest) {
+        var showAlertFailure: ((String) -> Void)?
+
+=======
     func validatePasswordFields(newPassword: String?, confirmPassword: String?) -> ValidationResult {
         guard let new_password = newPassword, !new_password.isEmpty,
               let new_password_confirm = confirmPassword, !new_password_confirm.isEmpty
         else {
             return .failure("Lütfen tüm alanları doldurun.")
         }
+>>>>>>> sprint4/SecuritySettingsNetworking
         
         if new_password.count >= 6 {
             if new_password == new_password_confirm {
@@ -43,3 +49,6 @@ class SecuritySettingsVM {
     }
     
 }
+
+
+
