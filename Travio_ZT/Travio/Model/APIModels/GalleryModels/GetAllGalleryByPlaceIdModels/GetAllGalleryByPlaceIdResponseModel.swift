@@ -9,7 +9,7 @@ import Foundation
 
 struct GetAllGalleryByPlaceIdData: Codable {
     var count: Int?
-    var images: [Image]?
+    var images: [PlaceImage]?
 }
 
 struct GetAllGalleryByPlaceIdResponse: Codable {

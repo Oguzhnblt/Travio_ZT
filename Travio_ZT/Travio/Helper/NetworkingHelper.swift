@@ -10,16 +10,17 @@ import Alamofire
 
 class NetworkingHelper{
     static let shared = NetworkingHelper()
+    
     typealias CallBack<T:Codable> = (Result<T,Error>)->Void
     
-    public func fetchData<T: Codable>(urlRequest: Router, callback: @escaping CallBack<T>) {
-        AF.request(urlRequest).validate().responseDecodable {(response: DataResponse<T, AFError>)in
-            switch response.result {
-                case .success(let value):
-                    callback(.success(value))
-                case .failure(let error):
-                    callback(.failure(error))
-            }
-        }
-    }
+    func fetchData<T: Decodable>(urlRequest: Router, completion: @escaping (Result<T, Error>) -> Void) {
+           AF.request(urlRequest).responseDecodable(of: T.self) { response in
+               switch response.result {
+               case .success(let data):
+                   completion(.success(data))
+               case .failure(let error):
+                   completion(.failure(error))
+               }
+           }
+       }
 }

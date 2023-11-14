@@ -37,6 +37,9 @@ class SettingsVC: UIViewController {
     private lazy var profileImage : UIImageView = {
         let profileImage = UIImageView()
         profileImage.image = UIImage(named: "img_profile")
+        profileImage.contentMode = .scaleAspectFill
+        profileImage.layer.masksToBounds = true
+        profileImage.layer.cornerRadius = 50
         return profileImage
     }()
     
@@ -97,6 +100,7 @@ class SettingsVC: UIViewController {
         profileImage.snp.makeConstraints({make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(24)
+            make.size.equalTo(120)
         })
         
         profileText.snp.makeConstraints({make in

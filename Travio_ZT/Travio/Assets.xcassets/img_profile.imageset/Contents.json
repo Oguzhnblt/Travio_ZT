@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "image_3.png",
+      "filename" : "tv_show_rick_and_morty_morty_smith_rick_sanchez_half_faces_4k_hd_movies-2560x1440.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "image_3@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "image_3@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -9,33 +9,36 @@ import UIKit
 import SnapKit
 
 
-class EditProfileVC: UIViewController {
+class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     private var profileInfo: ProfileResponse?
     
     private lazy var viewModel = EditProfileVM()
-
+    private var imageDatas: [Data] = []
+    
     
     private lazy var profileImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "img_profile")
-        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleAspectFill
+        image.layer.masksToBounds = true
+        image.layer.cornerRadius = 50
         
         return image
     }()
     
     private lazy var changePhotoButton: UIButton = {
-        let button = UIButton(type: .custom)
+        let button = UIButton(type: .system)
         button.setTitle("Change Photo", for: .normal)
         button.setTitleColor(UIColor(named: "backgroundColor"), for: .normal)
         button.titleLabel?.font = UIFont(name: "Poppins-Regular", size: 12)
+        button.addTarget(self, action: #selector(changePhotoTapped), for: .touchUpInside)
         
         return button
     }()
     
     private lazy var profileName: UILabel = {
         let label = UILabel()
-        label.text = "Bruce Wills"
         label.font = UIFont(name: "Poppins-SemiBold", size: 24)
         label.textAlignment = .center
         
@@ -82,7 +85,7 @@ class EditProfileVC: UIViewController {
     
     func updateUI(with profileInfo: ProfileResponse) {
         profileName.text = profileInfo.full_name
-
+        
         let imageUrl = URL(string: (profileInfo.pp_url!))
         profileImage.kf.setImage(with: imageUrl)
         
@@ -104,15 +107,27 @@ class EditProfileVC: UIViewController {
     
     
     @objc func saveButtonTapped() {
-        // FIXME: Düzeltilecek
         guard let full_name = fullNameField.textField.text,
-              let email = emailField.textField.text,
-              let pp_url = profileInfo?.pp_url else { return }
+              let email = emailField.textField.text else { return }
+        
+        let pp_url = "urlImage"
         
         viewModel.changeMyProfile(profile: EditProfileRequest(full_name: full_name, email: email, pp_url: pp_url))
         
         profileName.text = full_name
+        
+
     }
+    
+    @objc func changePhotoTapped() {
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    
     
     @objc func exitButtonTapped() {
         navigationController?.popToRootViewController(animated: true)
@@ -132,6 +147,7 @@ class EditProfileVC: UIViewController {
         
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
@@ -145,7 +161,7 @@ class EditProfileVC: UIViewController {
     private func setupViews() {
         self.view.backgroundColor = UIColor(named: "backgroundColor")
         
-        setupView(title: "Edit Profile", buttonImage: UIImage(named: "imgExit"), buttonPosition: .right, headerLabelPosition: .left, buttonAction: #selector(buttonTapped), itemsView: [profileImage, changePhotoButton, profileName, stackViews, saveButton])
+        setupView(title: "Edit Profile", buttonImage: UIImage(named: "img_exit"), buttonPosition: .right, headerLabelPosition: .left, buttonAction: #selector(buttonTapped), itemsView: [profileImage, changePhotoButton, profileName, stackViews, saveButton])
         
         
         setupLayouts()
@@ -156,9 +172,9 @@ class EditProfileVC: UIViewController {
         
         
         profileImage.snp.makeConstraints({make in
+            make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(24)
-            make.left.right.equalToSuperview()
-            
+            make.size.equalTo(120)
         })
         
         changePhotoButton.snp.makeConstraints({make in
@@ -186,7 +202,22 @@ class EditProfileVC: UIViewController {
         })
         
     }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            profileImage.image = selectedImage
+            
+            if let imageData = selectedImage.jpegData(compressionQuality: 1) {
+                imageDatas.append(imageData)
+                viewModel.uploadImage(data: imageDatas)
+            }
+            
+            dismiss(animated: true, completion: nil)
+        }
+    }
 }
+
+
 
 
 #if DEBUG

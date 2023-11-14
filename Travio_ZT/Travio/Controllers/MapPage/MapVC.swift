@@ -43,9 +43,9 @@ class MapVC: UIViewController {
     
     
     override func viewDidLoad() {
-        setupViews()
-        mapData()
         super.viewDidLoad()
+        mapData()
+        setupViews()
         location()
     }
     

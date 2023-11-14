@@ -10,7 +10,8 @@ import Alamofire
 
 class SecuritySettingsVM {
     func changePassword(profile: ChangePasswordRequest) {
-        
+        var showAlertFailure: ((String) -> Void)?
+
         
         let params = ["new_password": profile.new_password]
         

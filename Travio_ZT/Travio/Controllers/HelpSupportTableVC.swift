@@ -87,7 +87,7 @@ class HelpSupportTableVC: UIViewController, UITableViewDelegate, UITableViewData
         cell.selectionStyle = .none
 
         let cellState = cellStates[indexPath]
-        cell.iconImageView.image = cellState == .expanded ? UIImage(named: "imgArrow") : UIImage(named: "imgRightArrow")
+        cell.iconImageView.image = cellState == .expanded ? UIImage(named: "img_arrow") : UIImage(named: "img_right_arrow")
 
         return cell
     }

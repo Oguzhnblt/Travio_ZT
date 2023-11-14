@@ -29,6 +29,7 @@ class CommonTextField: UIView {
     
     lazy var textField: UITextField = {
         let textField = UITextField()
+        textField.autocapitalizationType = .none
         return textField
     }()
     

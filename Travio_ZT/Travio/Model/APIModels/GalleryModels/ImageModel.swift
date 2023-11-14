@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Image: Codable,Identifiable {
+struct PlaceImage: Codable,Identifiable {
     var id: String?
-        var place_id: String?
-        var image_url: String?
-        var created_at: String?
-        var updated_at: String?
+    var place_id: String?
+    var image_url: String?
+    var created_at: String?
+    var updated_at: String?
 }

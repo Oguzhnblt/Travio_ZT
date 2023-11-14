@@ -11,6 +11,7 @@ import Alamofire
 class EditProfileVM {
     
     var dataTransfer: ((ProfileResponse) -> Void)?
+    var transferURLs: (([String]) -> Void)?
     
     func myProfile() {
         
@@ -25,7 +26,6 @@ class EditProfileVM {
     }
     
     func changeMyProfile(profile: EditProfileRequest) {
-        
         let params = ["full_name": profile.full_name, "email": profile.email, "pp_url": profile.pp_url]
         
         NetworkingHelper.shared.fetchData(urlRequest: .editProfile(params: params as Parameters)) {(result: Result<EditProfileResponse, Error>) in
@@ -37,4 +37,17 @@ class EditProfileVM {
             }
         }
     }
+    
+    func uploadImage(data: [Data]) {
+        let params = ["file": data]
+        NetworkingHelper.shared.fetchData(urlRequest: .upload(params: params)) { [self] (result: Result<UploadResponse, Error>) in
+            switch result {
+            case .success(let success):
+                    self.transferURLs!(success.urls)
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        }
+    }
+
 }

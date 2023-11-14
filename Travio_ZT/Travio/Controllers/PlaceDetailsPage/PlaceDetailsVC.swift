@@ -14,6 +14,9 @@ import MapKit
 class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
     var selectedPlace: Place?
+    var imageURLs: [String] = []
+    
+    private lazy var viewModel = PlaceDetailsVM()
     
     private lazy var isBookmarked = true
     
@@ -35,7 +38,6 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.currentPage = 0
-        pageControl.numberOfPages = 1 // FIXME: Fotoğraf sayısına göre düzeltilecek
         pageControl.backgroundStyle = .prominent
         pageControl.currentPageIndicatorTintColor = .white
         pageControl.pageIndicatorTintColor = .gray
@@ -85,9 +87,23 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        
+        galleryImages()
         
         navigationController?.navigationBar.isHidden = true
+    }
+    
+    private func galleryImages() {
+        guard let placeId = selectedPlace?.id else { return }
+        
+        viewModel.getAllGalleries(placeId: placeId)
+        
+        viewModel.imageData = { [weak self] placeImages in
+            let imageURLs = placeImages.compactMap { $0.image_url }
+            self?.imageURLs.append(contentsOf: imageURLs)
+            
+            self?.pageControl.numberOfPages = self?.imageURLs.count ?? 1
+            self?.collectionView.reloadData()
+        }
     }
     
     private func setupViews() {
@@ -131,8 +147,10 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-            case 0,1:
-                return 1 // FIXME: Düzeltilecek
+            case 0:
+                return imageURLs.count
+            case 1:
+                return 1
             default:
                 return 1
         }
@@ -143,13 +161,17 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
         switch indexPath.section {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceTopView.identifier, for: indexPath) as! PlaceTopView
-                
-                if let selectedPlace = selectedPlace,
-                   let coverImageURLString = selectedPlace.cover_image_url,
-                   let url = URL(string: coverImageURLString) {
-                    cell.imageView.kf.setImage(with: url)
+
+                if indexPath.row < imageURLs.count {
+                    
+                    let imageURLString = imageURLs[indexPath.row]
+                    if let url = URL(string: imageURLString) {
+                        cell.imageView.kf.setImage(with: url)
+                    }
                 }
+
                 return cell
+
                 
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceBottomView.identifier, for: indexPath) as! PlaceBottomView

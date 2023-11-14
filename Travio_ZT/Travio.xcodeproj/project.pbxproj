@@ -100,6 +100,7 @@
 		12E0A3742B01101F00F1F8D1 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 12E0A3732B01101F00F1F8D1 /* IQKeyboardManagerSwift */; };
 		12E1FD502AF38AAB00B89F81 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */; };
 		12EAA9E82B001550006DCD42 /* CommonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EAA9E72B001550006DCD42 /* CommonTextField.swift */; };
+		12F5C1B82B021F37007FB53A /* PlaceDetailsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F5C1B72B021F37007FB53A /* PlaceDetailsVM.swift */; };
 		12F85D832AF9123500FB7CBD /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D822AF9123500FB7CBD /* SectionHeaderView.swift */; };
 		12F85D872AF9148000FB7CBD /* SignUpVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D862AF9148000FB7CBD /* SignUpVM.swift */; };
 		12F85D892AF9149E00FB7CBD /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D882AF9149E00FB7CBD /* LoginVM.swift */; };
@@ -215,6 +216,7 @@
 		12E0A3682B00D8E000F1F8D1 /* AccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessManager.swift; sourceTree = "<group>"; };
 		12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		12EAA9E72B001550006DCD42 /* CommonTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTextField.swift; sourceTree = "<group>"; };
+		12F5C1B72B021F37007FB53A /* PlaceDetailsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsVM.swift; sourceTree = "<group>"; };
 		12F85D822AF9123500FB7CBD /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		12F85D862AF9148000FB7CBD /* SignUpVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVM.swift; sourceTree = "<group>"; };
 		12F85D882AF9149E00FB7CBD /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
@@ -600,6 +602,7 @@
 				12B02A7E2AF812010098DF1D /* PlaceTopView.swift */,
 				120490762AFCD6020076A0AA /* PlaceBottomView.swift */,
 				125754302AFD5DAD00AD003B /* PlaceDetailsLayout.swift */,
+				12F5C1B72B021F37007FB53A /* PlaceDetailsVM.swift */,
 			);
 			path = PlaceDetailsPage;
 			sourceTree = "<group>";
@@ -914,6 +917,7 @@
 				FF9BD56A2AF2F86B0072BBA0 /* GetVisitByIdResponseModel.swift in Sources */,
 				120490772AFCD6020076A0AA /* PlaceBottomView.swift in Sources */,
 				0FB84E052AF286CC0071A559 /* PostPlaceResponseModel.swift in Sources */,
+				12F5C1B82B021F37007FB53A /* PlaceDetailsVM.swift in Sources */,
 				FF0B44BC2AF2AFE600586EA7 /* GetPopularPlacesResponseModel.swift in Sources */,
 				0FB84E082AF287840071A559 /* UpdatePlaceRequestModel.swift in Sources */,
 				125754362AFD7A9800AD003B /* AddNewPlaceVC.swift in Sources */,
