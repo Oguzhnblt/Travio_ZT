@@ -5,7 +5,6 @@
 //  Created by Oğuz on 14.10.2023.
 //
 
-import UIKit
 
 import UIKit
 
@@ -76,9 +75,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-    
-    
-    
-    
 }
 

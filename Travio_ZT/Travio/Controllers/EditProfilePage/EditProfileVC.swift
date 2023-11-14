@@ -9,8 +9,10 @@ import UIKit
 import SnapKit
 import Kingfisher
 
+
 class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
+
     private var profileInfo: ProfileResponse?
     
     private lazy var viewModel = EditProfileVM()
@@ -26,6 +28,13 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         
         return image
     }()
+    
+    private func imagePicker() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
     
     private lazy var changePhotoButton: UIButton = {
         let button = UIButton(type: .system)
@@ -88,11 +97,11 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
               let ppUrlString = profileInfo.pp_url,
               let imageUrl = URL(string: ppUrlString),
               let createdAt = profileInfo.created_at,
-              let formattedDate = DateFormatter.formattedDate(from: createdAt,
-                                                              originalFormat: FormatType.longFormat.rawValue,
-                                                              targetFormat: FormatType.stringFormat.rawValue,
-                                                              localeIdentifier: "tr_TR")
-                
+              let formattedDate = DateFormatter.formattedDate(
+                from: createdAt,
+                originalFormat: FormatType.longFormat.rawValue,
+                targetFormat: FormatType.stringFormat.rawValue,
+                localeIdentifier: "tr_TR")
         else {return}
         
         profileName.text = fullName
@@ -118,12 +127,7 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         viewModel.uploadImage(images: imageDatas)
     }
     
-    private func imagePicker() {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true, completion: nil)
-    }
+   
     
     @objc func changePhotoTapped() {
         imagePicker()
@@ -176,7 +180,6 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
     
     private func setupLayouts() {
         
-        
         profileImage.snp.makeConstraints({make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(24)
@@ -206,7 +209,6 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
             make.height.equalTo(51)
             
         })
-        
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

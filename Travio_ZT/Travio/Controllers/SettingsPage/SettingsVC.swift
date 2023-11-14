@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 
 class SettingsVC: UIViewController {
+
     
     let cellDataArray: [SettingsCellData] = [
         SettingsCellData(iconName: "user_alt", labelText: "Security Settings"),
@@ -33,7 +34,6 @@ class SettingsVC: UIViewController {
     }()
     
    
-    
     private lazy var profileImage : UIImageView = {
         let profileImage = UIImageView()
         profileImage.image = UIImage(named: "img_profile")
@@ -59,7 +59,7 @@ class SettingsVC: UIViewController {
     }
     
     @objc override func buttonTapped(){
-        
+        print("Logout işlemi")
     }
     
     private func createLabel(text: String, color: String, textSize: CGFloat, fontName: String, alignment: NSTextAlignment) -> UILabel {
@@ -76,7 +76,7 @@ class SettingsVC: UIViewController {
     
     private lazy var editProfileText = createLabel(text: "Edit Profile", color: "seeAllColor", textSize: 12, fontName: "Poppins-SemiBold", alignment: .center)
     
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
