@@ -7,14 +7,14 @@
 
 import UIKit
 import SnapKit
-
+import Kingfisher
 
 class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     private var profileInfo: ProfileResponse?
     
     private lazy var viewModel = EditProfileVM()
-    private var imageDatas: [Data] = []
+    private var imageDatas: [UIImage] = []
     
     
     private lazy var profileImage: UIImageView = {
@@ -107,18 +107,19 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
     
     
     @objc func saveButtonTapped() {
-        guard let full_name = fullNameField.textField.text,
+        guard let fullName = fullNameField.textField.text,
               let email = emailField.textField.text else { return }
-        
-        let pp_url = "urlImage"
-        
-        viewModel.changeMyProfile(profile: EditProfileRequest(full_name: full_name, email: email, pp_url: pp_url))
-        
-        profileName.text = full_name
-        
 
+        viewModel.transferURLs = { [weak self] url in
+            let pp_url = url[0]
+            print(pp_url)
+            
+            self?.viewModel.changeMyProfile(profile: EditProfileRequest(full_name: fullName, email: email, pp_url: pp_url))
+        }
+
+        profileName.text = fullName
     }
-    
+
     @objc func changePhotoTapped() {
         
         let imagePicker = UIImagePickerController()
@@ -206,11 +207,9 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
             profileImage.image = selectedImage
+        
+                viewModel.uploadImage(images: [selectedImage])
             
-            if let imageData = selectedImage.jpegData(compressionQuality: 1) {
-                imageDatas.append(imageData)
-                viewModel.uploadImage(data: imageDatas)
-            }
             
             dismiss(animated: true, completion: nil)
         }
