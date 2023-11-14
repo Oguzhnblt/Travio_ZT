@@ -83,49 +83,50 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         return saveButton
     }()
     
-    func updateUI(with profileInfo: ProfileResponse) {
-        profileName.text = profileInfo.full_name
+    func profileUpdated(with profileInfo: ProfileResponse) {
+        guard let fullName = profileInfo.full_name,
+              let ppUrlString = profileInfo.pp_url,
+              let imageUrl = URL(string: ppUrlString),
+              let createdAt = profileInfo.created_at,
+              let formattedDate = DateFormatter.formattedDate(from: createdAt,
+                                                              originalFormat: FormatType.longFormat.rawValue,
+                                                              targetFormat: FormatType.stringFormat.rawValue,
+                                                              localeIdentifier: "tr_TR")
+                
+        else {return}
         
-        let imageUrl = URL(string: (profileInfo.pp_url!))
+        profileName.text = fullName
         profileImage.kf.setImage(with: imageUrl)
-        
-        adminCell.label.text = profileInfo.role
-        
-        if let formattedDate = DateFormatter.formattedDate(from: (profileInfo.created_at!),
-                                                           originalFormat: FormatType.longFormat.rawValue,
-                                                           targetFormat: FormatType.stringFormat.rawValue,
-                                                           localeIdentifier: "tr_TR")
-        {
-            signCell.label.text = formattedDate
-        }
-        
-        emailField.textField.text = profileInfo.email
-        fullNameField.textField.text = profileInfo.full_name
+        adminCell.label.text = profileInfo.role ?? "DefaultRole"
+        signCell.label.text = formattedDate
+        emailField.textField.text = profileInfo.email ?? ""
+        fullNameField.textField.text = fullName
     }
-    
-    
     
     
     @objc func saveButtonTapped() {
         guard let fullName = fullNameField.textField.text,
               let email = emailField.textField.text else { return }
-
+        
         viewModel.transferURLs = { [weak self] url in
             let pp_url = url[0]
-            print(pp_url)
             
             self?.viewModel.changeMyProfile(profile: EditProfileRequest(full_name: fullName, email: email, pp_url: pp_url))
         }
-
-        profileName.text = fullName
-    }
-
-    @objc func changePhotoTapped() {
         
+        profileName.text = fullName
+        viewModel.uploadImage(images: imageDatas)
+    }
+    
+    private func imagePicker() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)
+    }
+    
+    @objc func changePhotoTapped() {
+        imagePicker()
     }
     
     
@@ -139,7 +140,7 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         setupViews()
         
         viewModel.dataTransfer = { [weak self] profile in
-            self?.updateUI(with: profile)
+            self?.profileUpdated(with: profile)
         }
         
         viewModel.myProfile()
@@ -161,12 +162,16 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
     
     private func setupViews() {
         self.view.backgroundColor = UIColor(named: "backgroundColor")
+
+        setupView(title: "Edit Profile", buttonImage: UIImage(named: "img_exit"), buttonPosition: .right, headerLabelPosition: .left, headerLabelTopOffset: 20, buttonAction: #selector(buttonTapped), itemsView: [profileImage, changePhotoButton, profileName, stackViews, saveButton])
         
-        setupView(title: "Edit Profile", buttonImage: UIImage(named: "img_exit"), buttonPosition: .right, headerLabelPosition: .left, buttonAction: #selector(buttonTapped), itemsView: [profileImage, changePhotoButton, profileName, stackViews, saveButton])
-        
-        
+
         setupLayouts()
         
+    }
+    
+    @objc override func buttonTapped() {
+        self.dismiss(animated: true)
     }
     
     private func setupLayouts() {
@@ -207,9 +212,7 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
             profileImage.image = selectedImage
-        
-                viewModel.uploadImage(images: [selectedImage])
-            
+            imageDatas.append(selectedImage)
             
             dismiss(animated: true, completion: nil)
         }

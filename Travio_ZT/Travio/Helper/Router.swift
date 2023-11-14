@@ -108,14 +108,11 @@ enum Router{
     
     var headers:HTTPHeaders {
         switch self {
-            case .register, .login, .refresh, .getPlaceById, .getPopularPlaces, .getLastPlaces, .getAllGalleryByPlaceId:
+            case .register, .login, .refresh, .getPlaceById, .getPopularPlaces, .getLastPlaces, .getAllGalleryByPlaceId, .upload:
                 return [:]
             case .myProfile, .editProfile, .changePassword, .postPlace, .updatePlace, .deletePlace, .getAllPlaces, .getAllPlacesForUser, .postGalleryImage, .deleteGalleryImage, .postVisit, .getAllVisits, .getVisitById,.deleteVisitByPlaceId,.checkVisitByPlaceId:
                 guard let token = AccessManager.shared.getToken(accountIdentifier: "access-token") else { return [:] }
                 return["Authorization": "Bearer \(token)"]
-            case .upload:
-                let boundary = "Boundary-\(UUID().uuidString)"
-                return ["Content-Type": "multipart/form-data; boundary=\(boundary)"]
         }
     }
     

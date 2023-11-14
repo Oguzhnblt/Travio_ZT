@@ -39,31 +39,18 @@ class EditProfileVM {
         }
     }
 
-//    func uploadImage(data: [UIImage]) {
-//        let params = ["file": data]
-//        NetworkingHelper.shared.fetchData(urlRequest: .upload(params: params)) { [self] (result: Result<UploadResponse, Error>) in
-//            switch result {
-//            case .success(let success):
-//                    self.transferURLs!(success.urls)
-//            case .failure(let failure):
-//                print(failure.localizedDescription)
-//            }
-//        }
-//    }
     
-    public func uploadImage(images: [UIImage]){
-           
-           let url = "https://ios-class-2f9672c5c549.herokuapp.com/upload"
-           let headers = HTTPHeaders(["Content-Type": "multipart/form-data"])
-           
-           NetworkingHelper.shared.uploadImages(images: images, url: url, headers: headers, callback: {(result: Result<UploadResponse,Error>) in
-               switch result {
-               case .success(let success):
-                       self.transferURLs?(success.urls)
-               case .failure(let failure):
-                       print(failure.localizedDescription)
-               }
-           })
-       }
+    public func uploadImage(images: [UIImage]) {
+        let urlRequest = Router.upload(params: ["file": images]) 
+        
+        NetworkingHelper.shared.imageToURLs(images: images, urlRequest: urlRequest, callback: { (result: Result<UploadResponse, Error>) in
+            switch result {
+            case .success(let success):
+                self.transferURLs?(success.urls)
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        })
+    }
 
 }

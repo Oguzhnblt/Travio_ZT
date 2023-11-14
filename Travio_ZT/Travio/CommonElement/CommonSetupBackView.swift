@@ -11,7 +11,7 @@ import SnapKit
 
 extension UIViewController {
     
-    func setupView(title: String?, buttonImage: UIImage?, buttonPosition: ButtonPosition?, headerLabelPosition: HeaderLabelPosition, buttonAction: Selector?, itemsView: [UIView], buttonTintColor: UIColor? = nil) {
+    func setupView(title: String?, buttonImage: UIImage?, buttonPosition: ButtonPosition?, headerLabelPosition: HeaderLabelPosition, headerLabelTopOffset: CGFloat = -15,buttonAction: Selector?, itemsView: [UIView], buttonTintColor: UIColor? = nil) {
         
         lazy var headerLabel = UILabel()
         headerLabel.textColor = .black
@@ -53,7 +53,7 @@ extension UIViewController {
         headerLabel.snp.makeConstraints { make in
             switch headerLabelPosition {
             case .left:
-                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(-15)
+                    make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(headerLabelTopOffset)
                 make.leading.equalToSuperview().offset(24)
             case .right:
                 make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(-15)

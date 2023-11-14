@@ -55,11 +55,11 @@ class SettingsVC: UIViewController {
     
     @objc func buttonEditProfileTapped() {
         let editProfileVC = EditProfileVC()
-        navigationController?.pushViewController(editProfileVC, animated: true)
+        present(editProfileVC, animated: true)
     }
     
-    @objc func buttonLogoutTapped(){
-        print("Tıklandı")
+    @objc override func buttonTapped(){
+        
     }
     
     private func createLabel(text: String, color: String, textSize: CGFloat, fontName: String, alignment: NSTextAlignment) -> UILabel {
@@ -85,7 +85,7 @@ class SettingsVC: UIViewController {
     
     
     func setupViews() {
-        setupView(title: "Settings", buttonImage: UIImage(named: "imgLogout"), buttonPosition: .right, headerLabelPosition: .left, buttonAction: nil, itemsView: [collectionView, profileImage, profileText, editProfileButton])
+        setupView(title: "Settings", buttonImage: UIImage(named: "img_logout"), buttonPosition: .right, headerLabelPosition: .left, buttonAction: #selector(buttonTapped), itemsView: [collectionView, profileImage, profileText,editProfileButton])
         setupLayout()
     }
     

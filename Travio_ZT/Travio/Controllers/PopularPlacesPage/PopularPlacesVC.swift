@@ -77,7 +77,7 @@ class PopularPlacesVC: UIViewController {
             self?.popularPlaces = place
             self?.collectionView.reloadData()
         }
-        viewModel.popularPlaces(limit: 10)
+        viewModel.popularPlaces(limit: 30)
     }
     
     

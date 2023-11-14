@@ -25,26 +25,23 @@ class NetworkingHelper{
         }
     }
     
-    public func uploadImages<T: Codable>(images: [UIImage], url: String, headers: HTTPHeaders, callback: @escaping CallBack<T>) {
+    public func imageToURLs<T: Codable>(images: [UIImage], urlRequest: Router, callback: @escaping CallBack<T>) {
         var imageDataArray: [Data] = []
         
         for image in images {
-            if let imageData = image.jpegData(compressionQuality: 1) {
-                imageDataArray.append(imageData)
-            } else {
-                //callback(.failure(APIError(statusCode: 500, message: "Invalid Image Data")))
-                return
-            }
+            guard let imageData = image.jpegData(compressionQuality: 1) else {continue}
+            imageDataArray.append(imageData)
         }
+        
         AF.upload(
             multipartFormData: { multipartFormData in
                 for (index, imageData) in imageDataArray.enumerated() {
                     multipartFormData.append(imageData, withName: "file", fileName: "image\(index).jpg", mimeType: "image/jpeg")
                 }
             },
-            to: url,
-            method: .post,
-            headers: headers
+            to: urlRequest.baseURL + urlRequest.path,
+            method: urlRequest.method,
+            headers: urlRequest.headers
         ).responseDecodable(of: T.self) { response in
             switch response.result {
                 case .success(let success):
@@ -54,5 +51,5 @@ class NetworkingHelper{
             }
         }
     }
+    
 }
-
