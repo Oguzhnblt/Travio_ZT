@@ -66,8 +66,9 @@ class SecuritySettingsVC: UIViewController, UITableViewDataSource, UITableViewDe
             }
             viewModel.changePassword(profile: ChangePasswordRequest(new_password: new_password)) { result in
                 switch result {
-                case .success(let success):
-                    print(success.message!)
+                case .success(let successMessage):
+                    self.showAlert(message: successMessage)
+
                 case .failure(let error):
                     self.showAlert(message: error.localizedDescription)
                 }
@@ -79,11 +80,12 @@ class SecuritySettingsVC: UIViewController, UITableViewDataSource, UITableViewDe
 
 
     private func showAlert(message: String) {
-        let alertController = UIAlertController(title: "Hata", message: message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Uyarı", message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Tamam", style: .default, handler: nil)
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
     }
+    
     
   
     override func viewDidLoad() {
