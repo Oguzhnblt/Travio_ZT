@@ -25,7 +25,7 @@ class LoginVM {
         NetworkingHelper.shared.fetchData(urlRequest: .login(params: params)) { [weak self] (result: Result<LoginResponse, Error>) in
             switch result {
                 case .success(let loginResponse):
-                    AccessManager.shared.saveToken(loginResponse.accessToken!, accountIdentifier: "access-token")
+                    AccessManager.shared.saveToken(loginResponse.accessToken, accountIdentifier: "access-token")
                     self?.navigateToViewController?()
                 case .failure(_):
                     self?.showAlertFailure!("Email ve şifre hatalı.")

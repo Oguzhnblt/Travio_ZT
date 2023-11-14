@@ -9,15 +9,24 @@ import UIKit
 import SnapKit
 import Kingfisher
 
+enum IndicatorState {
+    case start
+    case stop
+}
+
 
 class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
-
-    private var profileInfo: ProfileResponse?
-    
     private lazy var viewModel = EditProfileVM()
     private var imageDatas: [UIImage] = []
-    
+    private func showIndicator(state: IndicatorState) {
+        switch state {
+        case .start:
+            profileImage.subviews.compactMap { $0 as? UIActivityIndicatorView }.first?.startAnimating()
+        case .stop:
+            profileImage.subviews.compactMap { $0 as? UIActivityIndicatorView }.first?.stopAnimating()
+        }
+    }
     
     private lazy var profileImage: UIImageView = {
         let image = UIImageView()
@@ -26,8 +35,17 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         image.layer.masksToBounds = true
         image.layer.cornerRadius = 50
         
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.hidesWhenStopped = true
+        image.addSubview(activityIndicator)
+        
+        activityIndicator.snp.makeConstraints({ make in
+            make.center.equalToSuperview()
+        })
+        
         return image
     }()
+    
     
     private func imagePicker() {
         let imagePicker = UIImagePickerController()
@@ -45,6 +63,18 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         
         return button
     }()
+    
+    private lazy var saveButton: UIButton = {
+        
+        let saveButton = UIButton(type: .system)
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.setTitleColor(UIColor.white, for: .normal)
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        saveButton.layer.cornerRadius = 12
+        saveButton.backgroundColor = UIColor(named: "backgroundColor")
+        return saveButton
+    }()
+    
     
     private lazy var profileName: UILabel = {
         let label = UILabel()
@@ -68,6 +98,13 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         return stack
     }
     
+    private func showAlert(message: String) {
+        let alertController = UIAlertController(title: "Uyarı", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Tamam", style: .default)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     
     private lazy var adminCell = editingProfileCell(labelText: "Admin", imageName: "img_admin")
     private lazy var signCell = editingProfileCell(labelText: "2 Kasım 2023", imageName: "img_sign")
@@ -81,18 +118,9 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
     private lazy var fieldStackView = stackView(axis: .vertical, views: [fullNameField, emailField])
     private lazy var stackViews = stackView(axis: .vertical, views: [cellStackView, fieldStackView])
     
-    private lazy var saveButton: UIButton = {
-        
-        let saveButton = UIButton(type: .system)
-        saveButton.setTitle("Save", for: .normal)
-        saveButton.setTitleColor(UIColor.white, for: .normal)
-        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-        saveButton.layer.cornerRadius = 12
-        saveButton.backgroundColor = UIColor(named: "backgroundColor")
-        return saveButton
-    }()
     
     func profileUpdated(with profileInfo: ProfileResponse) {
+        showIndicator(state: .start)
         guard let fullName = profileInfo.full_name,
               let ppUrlString = profileInfo.pp_url,
               let imageUrl = URL(string: ppUrlString),
@@ -105,29 +133,39 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         else {return}
         
         profileName.text = fullName
-        profileImage.kf.setImage(with: imageUrl)
-        adminCell.label.text = profileInfo.role ?? "DefaultRole"
+        profileImage.kf.setImage(with: imageUrl) {_ in
+            self.showIndicator(state: .stop)
+        }
+    
+        adminCell.label.text = profileInfo.role ?? "User"
         signCell.label.text = formattedDate
         emailField.textField.text = profileInfo.email ?? ""
         fullNameField.textField.text = fullName
+        
+        
     }
     
     
     @objc func saveButtonTapped() {
         guard let fullName = fullNameField.textField.text,
               let email = emailField.textField.text else { return }
-        
+        showIndicator(state: .start)
         viewModel.transferURLs = { [weak self] url in
-            let pp_url = url[0]
-            
-            self?.viewModel.changeMyProfile(profile: EditProfileRequest(full_name: fullName, email: email, pp_url: pp_url))
+            let pp_url = url.first
+            self?.viewModel.changeMyProfile(profile: EditProfileRequest(full_name: fullName, email: email, pp_url: pp_url!))
         }
         
         profileName.text = fullName
         viewModel.uploadImage(images: imageDatas)
+        
+        viewModel.showAlertVM = { message in
+            self.showAlert(message: message)
+            self.showIndicator(state: .stop)
+
+        }
     }
     
-   
+    
     
     @objc func changePhotoTapped() {
         imagePicker()
@@ -140,12 +178,16 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         setupViews()
         
         viewModel.dataTransfer = { [weak self] profile in
             self?.profileUpdated(with: profile)
+            
         }
+        
+        
         
         viewModel.myProfile()
         
@@ -153,10 +195,10 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -166,10 +208,10 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
     
     private func setupViews() {
         self.view.backgroundColor = UIColor(named: "backgroundColor")
-
+        
         setupView(title: "Edit Profile", buttonImage: UIImage(named: "img_exit"), buttonPosition: .right, headerLabelPosition: .left, headerLabelTopOffset: 20, buttonAction: #selector(buttonTapped), itemsView: [profileImage, changePhotoButton, profileName, stackViews, saveButton])
         
-
+        
         setupLayouts()
         
     }
