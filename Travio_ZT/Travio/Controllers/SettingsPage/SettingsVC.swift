@@ -82,7 +82,7 @@ class SettingsVC: UIViewController {
     
     
     func setupViews() {
-        setupView(title: "Settings", buttonImage: UIImage(named: "imgLogout"), buttonPosition: .right, headerLabelPosition: .left, buttonAction: nil, itemsView: [collectionView, profileImage, profileText, editProfileButton])
+        setupView(title: "Settings", buttonImage: UIImage(named: "img_logout"), buttonPosition: .right, headerLabelPosition: .left, buttonAction: nil, itemsView: [collectionView, profileImage, profileText, editProfileButton])
         setupLayout()
     }
     
@@ -131,9 +131,9 @@ extension SettingsVC: UICollectionViewDataSource {
             case 0:
                 let securitySettings = SecuritySettingsVC()
                 navigationController?.pushViewController(securitySettings, animated: true)
-            case 1:
-                let appDefaults = EditProfileVC()
-                navigationController?.pushViewController(appDefaults, animated: true)
+            case 1: break
+//                let appDefaults = EditProfileVC()
+//                navigationController?.pushViewController(appDefaults, animated: true)
             case 2:
                 let myAdded = MyAddedPlacesVC()
                 navigationController?.pushViewController(myAdded, animated: true)
