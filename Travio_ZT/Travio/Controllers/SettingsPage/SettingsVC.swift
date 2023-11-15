@@ -1,4 +1,5 @@
-//image ve text
+
+//
 //  SettingsVC.swift
 //  Travio
 //
@@ -7,8 +8,11 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class SettingsVC: UIViewController {
+    
+    private let settingsVM = SettingsVM()
     
     let cellDataArray: [SettingsCellData] = [
         SettingsCellData(iconName: "user_alt", labelText: "Security Settings"),
@@ -54,12 +58,6 @@ class SettingsVC: UIViewController {
     
     @objc func buttonEditProfileTapped() {
         let editProfileVC = EditProfileVC()
-        editProfileVC.profileImageChangedCallback = { [weak self] newImage in
-                    self?.profileImage.image = newImage
-                }
-        editProfileVC.profileNameChangedCallback = { [weak self] newName in
-               self?.updateProfileName(newName: newName)
-           }
         present(editProfileVC, animated: true)
     }
     
@@ -75,9 +73,18 @@ class SettingsVC: UIViewController {
         label.font = UIFont(name: fontName, size: textSize)
         return label
     }
-    func updateProfileName(newName: String) {
-            profileText.text = newName
+    private func updateUI(with profile: ProfileResponse) {
+        profileText.text = profile.full_name ?? "Default Name"
+
+        if let imageUrl = profile.pp_url, let url = URL(string: imageUrl) {
+            let options: KingfisherOptionsInfo = [
+                .transition(.fade(0.2)),
+                .cacheOriginalImage
+            ]
+
+            profileImage.kf.setImage(with: url, options: options)
         }
+    }
     
    
     private lazy var profileText = createLabel(text: "Bruce Wills", color: "textColor", textSize: 16, fontName: "Poppins-SemiBold", alignment: .center)
@@ -89,6 +96,11 @@ class SettingsVC: UIViewController {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
         setupViews()
+        
+        settingsVM.myProfile()
+        settingsVM.dataTransfer = { [weak self] profile in
+                    self?.updateUI(with: profile)
+                }
     }
     
     
@@ -204,4 +216,3 @@ struct SettingsVC_Preview: PreviewProvider {
     }
 }
 #endif
-
