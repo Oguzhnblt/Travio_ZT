@@ -1,4 +1,3 @@
-
 //
 //  SettingsVC.swift
 //  Travio
@@ -10,7 +9,7 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class SettingsVC: UIViewController {
+class SettingsVC: UIViewController, EditProfileDelegate {
     
     private let settingsVM = SettingsVM()
     
@@ -58,7 +57,8 @@ class SettingsVC: UIViewController {
     
     @objc func buttonEditProfileTapped() {
         let editProfileVC = EditProfileVC()
-        present(editProfileVC, animated: true)
+            editProfileVC.delegate = self
+            present(editProfileVC, animated: true)
     }
     
     @objc override func buttonTapped(){
@@ -101,7 +101,15 @@ class SettingsVC: UIViewController {
         settingsVM.dataTransfer = { [weak self] profile in
                     self?.updateUI(with: profile)
                 }
+        let editProfileVC = EditProfileVC()
+               editProfileVC.delegate = self
+        present(editProfileVC, animated: true)
     }
+    
+    func profileDidUpdate(fullName: String, image: UIImage) {
+           profileText.text = fullName
+           profileImage.image = image
+       }
     
     
     func setupViews() {

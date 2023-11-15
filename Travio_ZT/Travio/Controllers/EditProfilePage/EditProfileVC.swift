@@ -2,6 +2,10 @@ import UIKit
 import SnapKit
 import Kingfisher
 
+protocol EditProfileDelegate: AnyObject {
+    func profileDidUpdate(fullName: String, image: UIImage)
+}
+
 enum IndicatorState {
     case start
     case stop
@@ -10,9 +14,12 @@ enum IndicatorState {
 
 class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
+    weak var delegate: EditProfileDelegate?
+    
     private lazy var viewModel = EditProfileVM()
     private var imageDatas: [UIImage] = []
     private func showIndicator(state: IndicatorState) {
+    
         switch state {
         case .start:
             profileImage.subviews.compactMap { $0 as? UIActivityIndicatorView }.first?.startAnimating()
@@ -154,6 +161,10 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         viewModel.showAlertVM = { message in
             self.showAlert(message: message)
             self.showIndicator(state: .stop)
+            
+            if let fullName = self.fullNameField.textField.text {
+            self.delegate?.profileDidUpdate(fullName: fullName, image: self.profileImage.image ?? UIImage())
+        }
 
         }
     }
@@ -270,4 +281,3 @@ struct EditProfileVC_Preview: PreviewProvider {
     }
 }
 #endif
-
