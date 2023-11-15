@@ -45,36 +45,18 @@ class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         CLGeocoder().reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
             guard let placemark = placemarks?.first, error == nil else {return}
             
-            var formattedLocation = ""
-            
-            if let city = placemark.locality {
-                formattedLocation += "\(city)"
-                
-            }
-            
-            if let subLocality = placemark.subLocality {
-                if !formattedLocation.isEmpty {
-                    formattedLocation += ", "
-                }
-                formattedLocation += "\(subLocality)"
-            }
-            
-            if let country = placemark.country {
-                if !formattedLocation.isEmpty {
-                    formattedLocation += ", "
-                }
-                formattedLocation += "\(country)"
-            }
+            let country = placemark.country!
+            let city = placemark.locality!
             
             let indexPath = IndexPath(item: 0, section: 2)
             if let cell = self?.collectionView.cellForItem(at: indexPath) as? AddNewPlaceViewCell {
-                cell.textView.text = formattedLocation
+                cell.textView.text = "\(city), \(country)"
             }
         }
     }
     
     @objc func addPlaceButtonTapped() {
-        
+        // Sunucuya veri ekleme işlemi
     }
     
     override func viewDidLoad() {
