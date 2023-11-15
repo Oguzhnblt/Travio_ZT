@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class AddPhotoCell: UICollectionViewCell {
+class AddPhotoViewCell: UICollectionViewCell {
     static let identifier = "photoCell"
     
     private lazy var backView: UIView = {
@@ -23,7 +23,7 @@ class AddPhotoCell: UICollectionViewCell {
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "img_addPhoto")
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -49,10 +49,11 @@ class AddPhotoCell: UICollectionViewCell {
 
         
         imageView.snp.makeConstraints({make in
-            make.center.equalToSuperview()
+            make.edges.equalToSuperview()
         })
         
         dropShadow()
+        
     }
     
     required init?(coder: NSCoder) {
