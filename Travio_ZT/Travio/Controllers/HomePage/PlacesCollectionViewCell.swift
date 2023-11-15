@@ -14,10 +14,18 @@ class PlacesCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "places"
     
-    func configure(with place: Place) {
+    func configurePopularPlaces(with place: Place) {
         if let url = URL(string: place.cover_image_url!) {
             imageView.kf.setImage(with: url)
         }        
+        titleLabel.text = place.title
+        subtitleLabel.text = place.place
+    }
+    
+    func configureLastPlaces(with place: PlaceLast) {
+        if let url = URL(string: place.cover_image_url!) {
+            imageView.kf.setImage(with: url)
+        }
         titleLabel.text = place.title
         subtitleLabel.text = place.place
     }

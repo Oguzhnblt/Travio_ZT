@@ -14,6 +14,7 @@ import MapKit
 class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
     var selectedPlace: Place?
+    var selectedLastPlace: PlaceLast?
     var imageURLs: [String] = []
     
     private lazy var viewModel = PlaceDetailsVM()
@@ -93,19 +94,25 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     }
     
     private func galleryImages() {
-        guard let placeId = selectedPlace?.id else { return }
-        
-        viewModel.getAllGalleries(placeId: placeId)
-        
-        viewModel.imageData = { [weak self] placeImages in
-            let imageURLs = placeImages.compactMap { $0.image_url }
-            self?.imageURLs.append(contentsOf: imageURLs)
+        if let placeId = selectedPlace?.id {
+            viewModel.getAllGalleries(placeId: placeId)
             
-            self?.pageControl.numberOfPages = self?.imageURLs.count ?? 1
-            self?.collectionView.reloadData()
+            viewModel.imageData = { [weak self] placeImages in
+                let imageURLs = placeImages.compactMap { $0.image_url }
+                self?.imageURLs.append(contentsOf: imageURLs)
+                
+                self?.pageControl.numberOfPages = self?.imageURLs.count ?? 1
+                self?.collectionView.reloadData()
+            }
+        } else if let selectedLastPlace = selectedLastPlace {
+            if let imageURL = selectedLastPlace.cover_image_url {
+                self.imageURLs.append(imageURL)
+                self.pageControl.numberOfPages = 1
+                self.collectionView.reloadData()
+            }
         }
     }
-    
+
     private func setupViews() {
         self.view.backgroundColor = .white
         self.view.addSubviews(collectionView, pageControl, bookmarkButton, backButton)
@@ -157,13 +164,13 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        switch indexPath.section {
+
+            switch indexPath.section {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceTopView.identifier, for: indexPath) as! PlaceTopView
 
                 if indexPath.row < imageURLs.count {
-                    
+
                     let imageURLString = imageURLs[indexPath.row]
                     if let url = URL(string: imageURLString) {
                         cell.imageView.kf.setImage(with: url)
@@ -172,34 +179,52 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
 
                 return cell
 
-                
+
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceBottomView.identifier, for: indexPath) as! PlaceBottomView
-                
+
                 if let selectedPlace = selectedPlace {
                     cell.placeTitle.text = selectedPlace.place
                     cell.descriptionLabel.text = selectedPlace.description
                     cell.authorTitle.text = selectedPlace.creator
-                    
-                    
-                    if let formattedDate = DateFormatter.formattedDate(from: selectedPlace.created_at!, originalFormat: FormatType.longFormat.rawValue , targetFormat: FormatType.stringFormat.rawValue, localeIdentifier: "tr_TR") {
+
+
+                    if let formattedDate = DateFormatter.formattedDate(from: selectedPlace.created_at!, originalFormat: FormatType.longFormat.rawValue, targetFormat: FormatType.stringFormat.rawValue, localeIdentifier: "tr_TR") {
                         cell.dateTitle.text = formattedDate
                     }
-                    
+
                     let targetCoordinate = CLLocationCoordinate2D(latitude: selectedPlace.latitude!, longitude: selectedPlace.longitude!)
-                    
+
                     let region = MKCoordinateRegion(center: targetCoordinate, latitudinalMeters: 250, longitudinalMeters: 250)
+
+                    cell.mapView.setCenter(targetCoordinate, animated: false)
+                    cell.mapView.region = region
                     
+                } else if let selectedLastPlace = selectedLastPlace {
+                    cell.placeTitle.text = selectedLastPlace.place
+                    cell.descriptionLabel.text = selectedLastPlace.description
+                    cell.authorTitle.text = selectedLastPlace.creator
+
+                    if let formattedDate = DateFormatter.formattedDate(from: selectedLastPlace.created_at!, originalFormat: FormatType.longFormat.rawValue, targetFormat: FormatType.stringFormat.rawValue, localeIdentifier: "tr_TR") {
+                        cell.dateTitle.text = formattedDate
+                    }
+
+                    let targetCoordinate = CLLocationCoordinate2D(latitude: selectedLastPlace.latitude!, longitude: selectedLastPlace.longitude!)
+
+                    let region = MKCoordinateRegion(center: targetCoordinate, latitudinalMeters: 250, longitudinalMeters: 250)
+
                     cell.mapView.setCenter(targetCoordinate, animated: false)
                     cell.mapView.region = region
                 }
+
                 return cell
-                
+
             default:
                 fatalError("Unexpected section")
+            }
         }
     }
-}
+
 
 extension PlaceDetailsVC {
     

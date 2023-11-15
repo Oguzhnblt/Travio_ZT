@@ -13,6 +13,7 @@ class HomeVC: UIViewController {
     
     let viewModel = HomeVM()
     var popularPlaces = [Place]()
+    var lastPlaces = [PlaceLast]()
 
     let popularPlacesId = "PopularPlacesHeader"
     let newPlacesId = "NewPlacesHeader"
@@ -70,15 +71,24 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
         setupViews()
         navigationController?.navigationBar.isHidden = true
+        lastPlacesData()
         popularPlacesData()
     }
     
     private func popularPlacesData() {
-        viewModel.dataTransfer = { [weak self] place in
+        viewModel.popularPlacesTransfer = { [weak self] place in
             self?.popularPlaces = place
             self?.collectionView.reloadData()
         }
         viewModel.popularPlaces(limit: 2)
+    }
+    
+    private func lastPlacesData() {
+        viewModel.lastPlacesTransfer = { [weak self] place in
+            self?.lastPlaces = place
+            self?.collectionView.reloadData()
+        }
+        viewModel.newPlaces()
     }
    
     private func setupViews() {
@@ -133,8 +143,10 @@ extension HomeVC: UICollectionViewDataSource {
         switch section {
             case 0:
                 return popularPlaces.count
+            case 1:
+                return lastPlaces.count
             default:
-                return popularPlaces.count
+                fatalError()
         }
     }
     
@@ -144,15 +156,17 @@ extension HomeVC: UICollectionViewDataSource {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlacesCollectionViewCell.identifier, for: indexPath) as! PlacesCollectionViewCell
                 
                 let object = popularPlaces[indexPath.item]
-                cell.configure(with: object)
+                cell.configurePopularPlaces(with: object)
                 
                 return cell
-            default:
+            case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlacesCollectionViewCell.identifier, for: indexPath) as! PlacesCollectionViewCell
                 
-                let object = popularPlaces[indexPath.item]
-                cell.configure(with: object)
+                let object = lastPlaces[indexPath.item]
+                cell.configureLastPlaces(with: object)
                 return cell
+            default:
+                fatalError()
                 
         }
     }
@@ -165,36 +179,40 @@ extension HomeVC: UICollectionViewDataSource {
             
             if indexPath.section < sectionTitles.count {
                 header.title.text = sectionTitles[indexPath.section]
-                
-                
                 header.button.setTitle("See All", for: .normal)
-                header.button.addTarget(self, action: #selector(seeAllPopular), for: .touchUpInside)
-                
-            } else {
-                header.title.text = "Unknown Section"
-                header.button.setTitle("See All", for: .normal)
-                header.button.addTarget(self, action: #selector(seeAllDefault), for: .touchUpInside)
+                switch indexPath.section {
+                    case 0:
+                        header.button.addTarget(self, action: #selector(seeAllPopular), for: .touchUpInside)
+                    case 1:
+                        header.button.addTarget(self, action: #selector(seeAllNew), for: .touchUpInside)
+                    default:
+                        break
+                }
             }
-            
             return header
         }
         return UICollectionReusableView()
     }
+
     
     @objc func seeAllPopular() {
-        let seeAllVC = PopularPlacesVC()
-        navigationController?.pushViewController(seeAllVC, animated: true)
+        let popularPlacesVC = GenericPlacesVC()
+        popularPlacesVC.title = "Popular Places"
+        popularPlacesVC.isPopular = true
+        popularPlacesVC.fetchData()
+        navigationController?.pushViewController(popularPlacesVC, animated: true)
     }
-    
+
     @objc func seeAllNew() {
-        print( "Handle the action for See All New")
-        
+        let popularPlacesVC = GenericPlacesVC()
+        popularPlacesVC.title = "New Places"
+        popularPlacesVC.isPopular = false
+        popularPlacesVC.fetchData()
+        navigationController?.pushViewController(popularPlacesVC, animated: true)
     }
+
+
     
-    @objc func seeAllDefault() {
-        print( "Handle the action for See All Default")
-        
-    }
 }
 
 
@@ -205,8 +223,10 @@ extension HomeVC {
             switch sectionNumber {
                 case 0:
                     return HomePageLayout.shared.makePlacesLayout()
-                default:
+                case 1:
                     return HomePageLayout.shared.makePlacesLayout()
+                default:
+                    fatalError()
             }
         }
     }
