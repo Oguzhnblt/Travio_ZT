@@ -1,4 +1,4 @@
-//
+//image ve text
 //  EditProfileVC.swift
 //  Travio
 //
@@ -16,7 +16,8 @@ enum IndicatorState {
 
 
 class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
-    
+    var profileImageChangedCallback: ((UIImage) -> Void)?
+    var profileNameChangedCallback: ((String) -> Void)?
     private lazy var viewModel = EditProfileVM()
     private var imageDatas: [UIImage] = []
     private func showIndicator(state: IndicatorState) {
@@ -142,6 +143,7 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         emailField.textField.text = profileInfo.email ?? ""
         fullNameField.textField.text = fullName
         
+        profileNameChangedCallback?(fullName)
         
     }
     
@@ -258,6 +260,7 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
             profileImage.image = selectedImage
             imageDatas.append(selectedImage)
             
+            profileImageChangedCallback?(selectedImage)
             dismiss(animated: true, completion: nil)
         }
     }
@@ -277,3 +280,4 @@ struct EditProfileVC_Preview: PreviewProvider {
     }
 }
 #endif
+

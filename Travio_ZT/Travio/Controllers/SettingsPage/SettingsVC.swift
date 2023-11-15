@@ -1,4 +1,4 @@
-//
+//image ve text
 //  SettingsVC.swift
 //  Travio
 //
@@ -54,6 +54,12 @@ class SettingsVC: UIViewController {
     
     @objc func buttonEditProfileTapped() {
         let editProfileVC = EditProfileVC()
+        editProfileVC.profileImageChangedCallback = { [weak self] newImage in
+                    self?.profileImage.image = newImage
+                }
+        editProfileVC.profileNameChangedCallback = { [weak self] newName in
+               self?.updateProfileName(newName: newName)
+           }
         present(editProfileVC, animated: true)
     }
     
@@ -69,6 +75,9 @@ class SettingsVC: UIViewController {
         label.font = UIFont(name: fontName, size: textSize)
         return label
     }
+    func updateProfileName(newName: String) {
+            profileText.text = newName
+        }
     
    
     private lazy var profileText = createLabel(text: "Bruce Wills", color: "textColor", textSize: 16, fontName: "Poppins-SemiBold", alignment: .center)
@@ -146,7 +155,7 @@ extension SettingsVC: UICollectionViewDataSource {
             case 4:
                 let about = AboutUsVC()
                 navigationController?.pushViewController(about, animated: true)
-            default: 
+            default:
                 let termsOfUse = TermsOfUseVC()
                 navigationController?.pushViewController(termsOfUse, animated: true)
                 
@@ -195,3 +204,4 @@ struct SettingsVC_Preview: PreviewProvider {
     }
 }
 #endif
+
