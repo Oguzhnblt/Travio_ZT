@@ -41,8 +41,10 @@ class PopularPlacesTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 16
         imageView.clipsToBounds = true
+        imageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner,]
         return imageView
     }()
+
 
     private lazy var imageIconView: UIImageView = {
         let imageView = UIImageView()
