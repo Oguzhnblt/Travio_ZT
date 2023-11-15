@@ -8,9 +8,12 @@
 import Foundation
 import UIKit
 import SnapKit
+import MapKit
 
-class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    var selectedCoordinate: CLLocationCoordinate2D?
+
     private lazy var addPlaceButton: UIButton = {
         
         let saveButton = UIButton()
@@ -35,12 +38,49 @@ class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         return collectionView
     }()
     
+    private func updateLocationInfo() {
+        guard let selectedCoordinate = selectedCoordinate else { return }
+
+        let location = CLLocation(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude)
+
+        CLGeocoder().reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
+            guard let placemark = placemarks?.first, error == nil else {return}
+
+            var formattedLocation = ""
+
+            if let city = placemark.locality {
+                formattedLocation += "\(city)"
+                
+            }
+
+            if let subLocality = placemark.subLocality {
+                if !formattedLocation.isEmpty {
+                    formattedLocation += ", "
+                }
+                formattedLocation += "\(subLocality)"
+            }
+
+            if let country = placemark.country {
+                if !formattedLocation.isEmpty {
+                    formattedLocation += ", "
+                }
+                formattedLocation += "\(country)"
+            }
+
+            let indexPath = IndexPath(item: 0, section: 2)
+            if let cell = self?.collectionView.cellForItem(at: indexPath) as? AddNewPlaceViewCell {
+                cell.textView.text = formattedLocation
+            }
+        }
+    }
+
     @objc func saveButtonTapped() {
         
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateLocationInfo()
         setupUI()
     }
 
@@ -80,6 +120,7 @@ class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         case 0, 1, 2:
             let cell: AddNewPlaceViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddNewPlaceViewCell.identifier, for: indexPath) as! AddNewPlaceViewCell
             configureTextCell(cell, for: indexPath.section)
+                
             return cell
         case 3:
             let cell: AddPhotoCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoCell.identifier, for: indexPath) as! AddPhotoCell

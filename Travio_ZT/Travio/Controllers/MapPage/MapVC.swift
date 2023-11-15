@@ -10,17 +10,17 @@ import SnapKit
 import MapKit
 
 class MapVC: UIViewController {
-
+    
     // MARK: - Properties
-
+    
     let viewModel = MapVM()
     private var mapPlaces = [Place]()
     private var locationManager: CLLocationManager?
-
+    
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: MapPageLayout.shared.mapLayout())
         collectionView.backgroundColor = UIColor.clear
-        collectionView.isScrollEnabled = true
+        collectionView.isScrollEnabled = false
         collectionView.register(MapViewCell.self, forCellWithReuseIdentifier: MapViewCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -32,7 +32,7 @@ class MapVC: UIViewController {
         view.clipsToBounds = true
         return view
     }()
-
+    
     private lazy var mapView: MKMapView = {
         let map = MKMapView()
         map.showsUserLocation = true
@@ -42,39 +42,43 @@ class MapVC: UIViewController {
         map.delegate = self
         return map
     }()
-
+    
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         mapData()
         location()
+        
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        mapView.addGestureRecognizer(longPressGesture)
+        
     }
-
+    
     // MARK: - Setup
-
+    
     private func setupViews() {
         view.addSubviews(mapView, collectionView)
         setupLayout()
     }
-
+    
     private func setupLayout() {
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-
+        
         collectionView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().offset(550)
             make.left.right.equalToSuperview()
         }
     }
-
+    
     // MARK: - Data Handling
-
+    
     private func mapData() {
         viewModel.mapPlaces()
-
+        
         viewModel.dataTransfer = { [weak self] places in
             self?.mapPlaces = places
             self?.updateMapAndCollection()
@@ -82,80 +86,76 @@ class MapVC: UIViewController {
         
         updateMapAndCollection()
     }
-
+    
     private func updateMapAndCollection() {
         mapView.removeAnnotations(mapView.annotations)
-
+        
         for place in mapPlaces {
             if let latitude = place.latitude, let longitude = place.longitude {
                 let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 addCustomPinToMap(at: coordinate)
             }
         }
-
+        
         collectionView.reloadData()
     }
-
+    
     // MARK: - Location Handling
-
+    
     private func location() {
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.requestWhenInUseAuthorization()
-
+        
     }
-
-
+    
+    
     // MARK: - Map Functions
-
+    
     private func addCustomPinToMap(at coordinate: CLLocationCoordinate2D) {
         let customAnnotation = MapAnnotation(coordinate: coordinate)
         mapView.addAnnotation(customAnnotation)
     }
     
+    
     private func checkLocationAuthorization() {
         guard let locationManager = locationManager, let location = locationManager.location else { return }
-
+        
         switch locationManager.authorizationStatus {
-        case .authorizedWhenInUse, .authorizedAlways:
-            let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 750, longitudinalMeters: 750)
-            mapView.setRegion(region, animated: true)
-        case .denied:
-            print("Location services have been denied")
-        case .notDetermined, .restricted:
-            print("Location authorization is undetermined or restricted")
+            case .authorizedWhenInUse, .authorizedAlways:
+                let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 750, longitudinalMeters: 750)
+                mapView.setRegion(region, animated: true)
+            case .denied:
+                print("Location services have been denied")
+            case .notDetermined, .restricted:
+                print("Location authorization is undetermined or restricted")
             @unknown default:
                 fatalError()
         }
     }
-
+    
     // MARK: - Popup
-
-    private func showPopup() {
+    
+    
+    private func showPopup(at coordinate: CLLocationCoordinate2D) {
         let addNewPlace = AddNewPlaceVC()
+        addNewPlace.selectedCoordinate = coordinate  
         addNewPlace.modalPresentationStyle = .popover
-
+        
         if let popover = addNewPlace.popoverPresentationController {
             popover.sourceView = view
             popover.sourceRect = view.bounds
             popover.permittedArrowDirections = []
-
-            present(addNewPlace, animated: true) { [weak self] in
-                // Add a gesture recognizer to detect if the pop-up is dismissed
-                let dismissTapGesture = UITapGestureRecognizer(target: self, action: #selector(self?.handleDismissTap(_:)))
-                addNewPlace.view.superview?.addGestureRecognizer(dismissTapGesture)
-            }
+            
+            present(addNewPlace, animated: true, completion: nil)
         }
     }
-
-    @objc private func handleDismissTap(_ gesture: UITapGestureRecognizer) {
-        // Check if the tap occurred outside of the pop-up
-        if gesture.state == .ended, let presentedViewController = presentedViewController, !presentedViewController.view.frame.contains(gesture.location(in: view)) {
-            // Dismiss the pop-up
-            presentedViewController.dismiss(animated: true) {
-                // Remove the added pin when the pop-up is dismissed
-                self.mapView.removeAnnotations(self.mapView.annotations)
-            }
+    
+    @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            let touchPoint = gesture.location(in: mapView)
+            let coordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+            showPopup(at: coordinate)
         }
     }
 }
@@ -166,7 +166,7 @@ extension MapVC: CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkLocationAuthorization()
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }
@@ -179,21 +179,21 @@ extension MapVC: MKMapViewDelegate {
         if annotation is MapAnnotation {
             let senderAnnotation = annotation as! MapAnnotation
             var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MapAnnotation.identifier)
-
+            
             if annotationView == nil {
                 annotationView = MKAnnotationView(annotation: senderAnnotation, reuseIdentifier: MapAnnotation.identifier)
                 annotationView?.canShowCallout = true
-
+                
                 let disclosureButton = UIButton(type: .detailDisclosure)
                 annotationView?.rightCalloutAccessoryView = disclosureButton
             }
-
+            
             let pinImage = UIImage(named: "myCustomMark")
             annotationView?.image = pinImage
-
+            
             return annotationView
         }
-
+        
         return nil
     }
     
@@ -220,34 +220,34 @@ extension MapVC: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return mapPlaces.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MapViewCell.identifier, for: indexPath) as! MapViewCell
         let object = mapPlaces[indexPath.item]
         cell.configure(with: object)
-
+        
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
         doubleTapGesture.numberOfTapsRequired = 2
         cell.addGestureRecognizer(doubleTapGesture)
-
+        
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedPlace = mapPlaces[indexPath.item]
         showDetailViewController(with: selectedPlace)
     }
-
+    
     private func showDetailViewController(with place: Place) {
         let detailVC = PlaceDetailsVC()
         detailVC.selectedPlace = place
         navigationController?.pushViewController(detailVC, animated: true)
     }
-
+    
     @objc private func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
         if gesture.state == .ended {
             if let cell = gesture.view as? MapViewCell, let indexPath = collectionView.indexPath(for: cell) {
@@ -260,7 +260,6 @@ extension MapVC: UICollectionViewDataSource {
     }
 }
 
-// MARK: - SwiftUI Preview
 
 #if DEBUG
 import SwiftUI
