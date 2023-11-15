@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-class PlacesCollectionViewCell: UICollectionViewCell {
+class HomeCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "places"
     

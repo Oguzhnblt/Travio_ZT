@@ -11,9 +11,9 @@ import SnapKit
 
 class HomeVC: UIViewController {
     
-    let viewModel = HomeVM()
-    var popularPlaces = [Place]()
-    var lastPlaces = [PlaceLast]()
+    private lazy var viewModel = HomeVM()
+    private lazy var popularPlaces = [Place]()
+    private lazy var lastPlaces = [PlaceLast]()
 
     let popularPlacesId = "PopularPlacesHeader"
     let newPlacesId = "NewPlacesHeader"
@@ -30,7 +30,7 @@ class HomeVC: UIViewController {
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: "popularPlacesId", withReuseIdentifier: "popularPlaces")
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: "newPlacesId", withReuseIdentifier: "newPlaces")
         
-        collectionView.register(PlacesCollectionViewCell.self, forCellWithReuseIdentifier: PlacesCollectionViewCell.identifier)
+        collectionView.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -153,21 +153,20 @@ extension HomeVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
             case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlacesCollectionViewCell.identifier, for: indexPath) as! PlacesCollectionViewCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as! HomeCollectionViewCell
                 
                 let object = popularPlaces[indexPath.item]
                 cell.configurePopularPlaces(with: object)
                 
                 return cell
             case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlacesCollectionViewCell.identifier, for: indexPath) as! PlacesCollectionViewCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as! HomeCollectionViewCell
                 
                 let object = lastPlaces[indexPath.item]
                 cell.configureLastPlaces(with: object)
                 return cell
             default:
                 fatalError()
-                
         }
     }
     
@@ -194,7 +193,6 @@ extension HomeVC: UICollectionViewDataSource {
         return UICollectionReusableView()
     }
 
-    
     @objc func seeAllPopular() {
         let popularPlacesVC = GenericPlacesVC()
         popularPlacesVC.title = "Popular Places"
@@ -204,26 +202,20 @@ extension HomeVC: UICollectionViewDataSource {
     }
 
     @objc func seeAllNew() {
-        let popularPlacesVC = GenericPlacesVC()
-        popularPlacesVC.title = "New Places"
-        popularPlacesVC.isPopular = false
-        popularPlacesVC.fetchData()
-        navigationController?.pushViewController(popularPlacesVC, animated: true)
+        let newPlacesVC = GenericPlacesVC()
+        newPlacesVC.title = "New Places"
+        newPlacesVC.isPopular = false
+        newPlacesVC.fetchData()
+        navigationController?.pushViewController(newPlacesVC, animated: true)
     }
-
-
-    
 }
-
 
 extension HomeVC {
     
     func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
             switch sectionNumber {
-                case 0:
-                    return HomePageLayout.shared.makePlacesLayout()
-                case 1:
+                case 0,1:
                     return HomePageLayout.shared.makePlacesLayout()
                 default:
                     fatalError()
@@ -231,7 +223,6 @@ extension HomeVC {
         }
     }
 }
-
 
 
 #if DEBUG

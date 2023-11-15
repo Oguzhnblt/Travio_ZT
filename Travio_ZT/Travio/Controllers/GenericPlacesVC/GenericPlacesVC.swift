@@ -13,9 +13,10 @@ class GenericPlacesVC: UIViewController {
     let viewModel = GenericPlacesVM()
     var popularPlaces = [Place]()
     var lastPlaces = [PlaceLast]()
+    var isPopular = Bool()
+
     
     private var isSorted = false
-    var isPopular = Bool()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.showsVerticalScrollIndicator = false
@@ -45,10 +46,19 @@ class GenericPlacesVC: UIViewController {
         let imageName = isSorted ? "img_up_sort" : "img_down_sort"
         sortButton.setImage(UIImage(named: imageName), for: .normal)
         
-        if isSorted {
-            popularPlaces.sort { $0.title!.localizedCompare($1.title!) == .orderedAscending }
+        if isPopular {
+            if isSorted {
+                popularPlaces.sort { $0.title!.localizedCompare($1.title!) == .orderedAscending }
+            } else {
+                popularPlaces.sort { $0.title!.localizedCompare($1.title!) == .orderedDescending }
+            }
+            
         } else {
-            popularPlaces.sort { $0.title!.localizedCompare($1.title!) == .orderedDescending }
+            if isSorted {
+                lastPlaces.sort { $0.title!.localizedCompare($1.title!) == .orderedAscending }
+            } else {
+                lastPlaces.sort { $0.title!.localizedCompare($1.title!) == .orderedDescending }
+            }
         }
         
         tableView.reloadData()
@@ -101,8 +111,9 @@ class GenericPlacesVC: UIViewController {
     
     private func setupLayouts() {
         tableView.snp.makeConstraints({ make in
-            make.top.bottom.equalToSuperview().offset(55)
+            make.top.equalToSuperview().offset(55)
             make.left.right.equalToSuperview().inset(16)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         })
         
         sortButton.snp.makeConstraints({ make in
