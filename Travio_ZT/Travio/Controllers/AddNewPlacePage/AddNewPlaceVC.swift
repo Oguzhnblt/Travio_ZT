@@ -1,24 +1,32 @@
-//
-//  AddNewPlaceVC.swift
-//  Travio
-//
-//  Created by Oğuz on 9.11.2023.
-//
-
 import Foundation
 import UIKit
 import SnapKit
 import MapKit
 
-class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+class AddNewPlaceVC: UIViewController {
+    private var blurEffectView: UIVisualEffectView?
     var selectedCoordinate: CLLocationCoordinate2D?
-    
     private lazy var addPlaceImages: [UIImage] = []
     private lazy var viewModel = AddNewPlaceVM()
     var completedAddPlace: (() -> Void)?
-    
-    
+
+    // MARK: UI Elements
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.color = .black
+        indicator.hidesWhenStopped = true
+        return indicator
+    }()
+
+    private lazy var activityIndicatorLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.text = "New location is loading, please wait."
+        label.textAlignment = .center
+        label.font = UIFont(name: "Poppins-Regular", size: 14)
+        return label
+    }()
+
     private lazy var addPlaceButton: UIButton = {
         let saveButton = UIButton()
         saveButton.setTitle("Add Place", for: .normal)
@@ -27,7 +35,7 @@ class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         saveButton.backgroundColor = UIColor(named: "backgroundColor")
         return saveButton
     }()
-    
+
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: addNewPageLayout())
         collectionView.showsVerticalScrollIndicator = false
@@ -37,37 +45,95 @@ class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         collectionView.register(AddPhotoViewCell.self, forCellWithReuseIdentifier: AddPhotoViewCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
-        
         return collectionView
     }()
-    
-    
+
+    // MARK: Lifecycle Methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViews()
+        updateLocationInfo()
+        hideBlurEffect()
+    }
+
+    // MARK: Private Methods
+    private func setupViews() {
+        view.addSubviews(collectionView, addPlaceButton, activityIndicator)
+        activityIndicator.addSubview(activityIndicatorLabel)
+
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
+        activityIndicator.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-90)
+        }
+
+        activityIndicatorLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(activityIndicator.snp.bottom).offset(8)
+        }
+
+        addPlaceButton.snp.makeConstraints { make in
+            make.bottom.equalTo(collectionView.snp.bottom).offset(-50)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(342)
+            make.height.equalTo(54)
+        }
+    }
+
+    private func showIndicator(state: IndicatorState) {
+        switch state {
+        case .start:
+            activityIndicator.startAnimating()
+            showBlurEffect()
+        case .stop:
+            activityIndicator.stopAnimating()
+            hideBlurEffect()
+        }
+    }
+
+    private func showBlurEffect() {
+        let blurEffect = UIBlurEffect(style: .prominent)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView?.frame = collectionView.bounds
+        blurEffectView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.addSubview(blurEffectView!)
+
+        blurEffectView?.contentView.addSubview(activityIndicator)
+    }
+
+    private func hideBlurEffect() {
+        blurEffectView?.removeFromSuperview()
+        blurEffectView = nil
+    }
+
     private func updateLocationInfo() {
         guard let selectedCoordinate = selectedCoordinate else { return }
-        
+
         let location = CLLocation(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude)
-        
+
         CLGeocoder().reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
-            guard let placemark = placemarks?.first, error == nil else {return}
-            
+            guard let placemark = placemarks?.first, error == nil else { return }
+
             let country = placemark.country!
             let city = placemark.locality!
-            
+
             let indexPath = IndexPath(item: 0, section: 2)
             if let cell = self?.collectionView.cellForItem(at: indexPath) as? AddNewPlaceViewCell {
                 cell.textView.text = "\(city), \(country)"
-                
             }
         }
     }
-    
-    @objc func addPlaceButtonTapped() {
-        updateLocationInfo()
-        
+
+    @objc private func addPlaceButtonTapped() {
+        showIndicator(state: .start)
+
         let placeNameIndexPath = IndexPath(item: 0, section: 0)
         let placeDescriptionIndexPath = IndexPath(item: 0, section: 1)
         let locationIndexPath = IndexPath(item: 0, section: 2)
-        
+
         guard
             let placeNameCell = collectionView.cellForItem(at: placeNameIndexPath) as? AddNewPlaceViewCell,
             let placeDescriptionCell = collectionView.cellForItem(at: placeDescriptionIndexPath) as? AddNewPlaceViewCell,
@@ -75,17 +141,16 @@ class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         else {
             return
         }
-        
+
         let place = locationCell.textView.text ?? ""
         let title = placeNameCell.textView.text ?? ""
         let description = placeDescriptionCell.textView.text ?? ""
-        
-        
+
         viewModel.uploadImage(images: addPlaceImages)
-        
+
         viewModel.transferURLs = { [weak self] urls in
             guard let self = self else { return }
-            
+
             let params: [String: Any] = [
                 "place": place,
                 "title": title,
@@ -94,98 +159,78 @@ class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionVie
                 "latitude": self.selectedCoordinate!.latitude as Double,
                 "longitude": self.selectedCoordinate!.longitude as Double
             ]
-            
+
             self.viewModel.transferPlaceID = { [weak self] placeId in
                 guard let self = self else { return }
-                
+                self.showIndicator(state: .stop)
                 self.completedAddPlace?()
                 self.dismiss(animated: true, completion: nil)
-                
+
                 for imageUrl in urls {
                     let params = ["place_id": placeId, "image_url": imageUrl]
                     self.viewModel.postGalleryImage(params: params)
-                    print("Image URL: \(imageUrl), Place ID: \(placeId)")
                 }
             }
             self.viewModel.addPlace(params: params)
         }
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupViews()
-    }
-    
-    private func setupViews() {
-        self.view.addSubviews(collectionView, addPlaceButton)
-        
-        collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        addPlaceButton.snp.makeConstraints({make in
-            make.bottom.equalTo(collectionView.snp.bottom).offset(-50)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(342)
-            make.height.equalTo(54)
-        })
-    }
-    
-    
+}
+
+// MARK: UICollectionViewDataSource
+extension AddNewPlaceVC: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 4
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
-            case 0, 1, 2:
-                return 1
-            case 3:
-                return 3
-            default:
-                return 0
+        case 0, 1, 2:
+            return 1
+        case 3:
+            return 3
+        default:
+            return 0
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
-            case 0, 1, 2:
-                let cell: AddNewPlaceViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddNewPlaceViewCell.identifier, for: indexPath) as! AddNewPlaceViewCell
-                configureTextCell(cell, for: indexPath.section)
-                return cell
-            case 3:
-                let cell: AddPhotoViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoViewCell.identifier, for: indexPath) as! AddPhotoViewCell
-                
-                return cell
-            default:
-                fatalError()
+        case 0, 1, 2:
+            let cell: AddNewPlaceViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddNewPlaceViewCell.identifier, for: indexPath) as! AddNewPlaceViewCell
+            configureTextCell(cell, for: indexPath.section)
+            return cell
+        case 3:
+            let cell: AddPhotoViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddPhotoViewCell.identifier, for: indexPath) as! AddPhotoViewCell
+            return cell
+        default:
+            fatalError()
         }
     }
-    
+
     private func configureTextCell(_ cell: AddNewPlaceViewCell, for section: Int) {
         switch section {
-            case 0:
-                cell.textLabel.text = "Place Name"
-            case 1:
-                cell.textLabel.text = "Visit Description"
-            case 2:
-                cell.textLabel.text = "Country, City"
-            default:
-                break
+        case 0:
+            cell.textLabel.text = "Place Name"
+        case 1:
+            cell.textLabel.text = "Visit Description"
+        case 2:
+            cell.textLabel.text = "Country, City"
+        default:
+            break
         }
     }
-    
-    
-    
-    
+}
+
+// MARK: UICollectionViewDelegate
+extension AddNewPlaceVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         showImagePicker(for: indexPath)
     }
-    
+
     func showImagePicker(for indexPath: IndexPath) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -193,25 +238,27 @@ class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         imagePicker.view.tag = indexPath.item
         present(imagePicker, animated: true, completion: nil)
     }
-    
-    
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+}
+
+// MARK: UIImagePickerControllerDelegate
+extension AddNewPlaceVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else {
             picker.dismiss(animated: true, completion: nil)
             return
         }
-        
+
         let indexPath = IndexPath(item: picker.view.tag, section: 3)
-        if let cell = self.collectionView.cellForItem(at: indexPath) as? AddPhotoViewCell {
+        if let cell = collectionView.cellForItem(at: indexPath) as? AddPhotoViewCell {
             cell.imageView.image = selectedImage
             addPlaceImages.append(selectedImage)
         }
-        
+
         picker.dismiss(animated: true, completion: nil)
     }
 }
 
+// MARK: Compositional Layout
 extension AddNewPlaceVC {
     func addNewPageLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, _) -> NSCollectionLayoutSection? in
@@ -220,8 +267,7 @@ extension AddNewPlaceVC {
     }
 }
 
-
-
+// MARK: SwiftUI Preview
 #if DEBUG
 import SwiftUI
 

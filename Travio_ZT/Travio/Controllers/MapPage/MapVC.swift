@@ -86,6 +86,7 @@ class MapVC: UIViewController {
         
         updateMapAndCollection()
     }
+
     
     private func updateMapAndCollection() {        
         for place in mapPlaces {
