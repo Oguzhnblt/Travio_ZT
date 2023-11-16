@@ -56,6 +56,10 @@ class MapVC: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        collectionView.reloadData()
+    }
+    
     // MARK: - Setup
     
     private func setupViews() {
@@ -122,7 +126,7 @@ class MapVC: UIViewController {
         
         switch locationManager.authorizationStatus {
             case .authorizedWhenInUse, .authorizedAlways:
-                let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 750, longitudinalMeters: 750)
+                let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
                 mapView.setRegion(region, animated: true)
             case .denied:
                 print("Location services have been denied")

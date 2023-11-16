@@ -75,6 +75,13 @@ class HomeVC: UIViewController {
         popularPlacesData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        let addNewPlace = AddNewPlaceVC()
+        addNewPlace.completedAddPlace = {
+            self.collectionView.reloadData()
+        }
+    }
+    
     private func popularPlacesData() {
         viewModel.popularPlacesTransfer = { [weak self] place in
             self?.popularPlaces = place

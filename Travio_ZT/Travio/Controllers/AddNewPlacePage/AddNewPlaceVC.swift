@@ -12,7 +12,7 @@ class AddNewPlaceVC: UIViewController {
 
     // MARK: UI Elements
     private lazy var activityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .large)
+        let indicator = UIActivityIndicatorView(style: .medium)
         indicator.color = .black
         indicator.hidesWhenStopped = true
         return indicator
@@ -21,9 +21,9 @@ class AddNewPlaceVC: UIViewController {
     private lazy var activityIndicatorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.text = "New location is loading, please wait."
+        label.text = "Yeni yer ekleniyor lütfen bekleyiniz."
         label.textAlignment = .center
-        label.font = UIFont(name: "Poppins-Regular", size: 14)
+        label.font = UIFont(name: "Poppins-Regular", size: 12)
         return label
     }()
 
@@ -97,9 +97,9 @@ class AddNewPlaceVC: UIViewController {
     private func showBlurEffect() {
         let blurEffect = UIBlurEffect(style: .prominent)
         blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView?.frame = collectionView.bounds
+        blurEffectView?.frame = view.bounds
         blurEffectView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.addSubview(blurEffectView!)
+        view.addSubview(blurEffectView!)
 
         blurEffectView?.contentView.addSubview(activityIndicator)
     }
@@ -128,8 +128,7 @@ class AddNewPlaceVC: UIViewController {
     }
 
     @objc private func addPlaceButtonTapped() {
-        showIndicator(state: .start)
-
+      
         let placeNameIndexPath = IndexPath(item: 0, section: 0)
         let placeDescriptionIndexPath = IndexPath(item: 0, section: 1)
         let locationIndexPath = IndexPath(item: 0, section: 2)
@@ -141,6 +140,16 @@ class AddNewPlaceVC: UIViewController {
         else {
             return
         }
+        
+        if placeNameCell.textView.text?.isEmpty ?? true ||
+               placeDescriptionCell.textView.text?.isEmpty ?? true ||
+               locationCell.textView.text?.isEmpty ?? true {
+
+               displayAlert(message: "Lütfen tüm alanları doldurunuz.")
+               return
+           }
+        
+        showIndicator(state: .start)
 
         let place = locationCell.textView.text ?? ""
         let title = placeNameCell.textView.text ?? ""
@@ -173,6 +182,13 @@ class AddNewPlaceVC: UIViewController {
             }
             self.viewModel.addPlace(params: params)
         }
+    }
+    
+    private func displayAlert(message: String) {
+        let alert = UIAlertController(title: "Uyarı", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Tamam", style: .default, handler: nil)
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -214,7 +230,7 @@ extension AddNewPlaceVC: UICollectionViewDataSource {
         case 1:
             cell.textLabel.text = "Visit Description"
         case 2:
-            cell.textLabel.text = "Country, City"
+            cell.textLabel.text = "City, Country"
         default:
             break
         }
