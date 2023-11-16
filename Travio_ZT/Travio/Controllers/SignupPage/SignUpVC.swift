@@ -5,7 +5,6 @@
 //  Created by Oğuz on 15.10.2023.
 //
 
-
 import Foundation
 import UIKit
 import SnapKit
@@ -35,10 +34,26 @@ class SignUpVC: UIViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.layer.cornerRadius = 12
         button.layer.backgroundColor = UIColor(named: "signUpColor")?.cgColor
+        button.isEnabled = false
         button.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
         
         return button
     }()
+    
+    private func updateSignUpButtonState() {
+            let isFormValid = !fullNameField.textField.text!.isEmpty &&
+                              !emailField.textField.text!.isEmpty &&
+                              !passwordField.textField.text!.isEmpty &&
+                              !passwordConfirmField.textField.text!.isEmpty
+
+            signUpButton.isEnabled = isFormValid
+
+            if isFormValid {
+                signUpButton.backgroundColor = UIColor(named: "backgroundColor")
+            } else {
+                signUpButton.backgroundColor = UIColor(named: "signUpColor")
+            }
+        }
     
     
     @objc func signUpButtonTapped() {
@@ -48,12 +63,15 @@ class SignUpVC: UIViewController {
               let password = passwordField.textField.text,
               let confirmPassword = passwordConfirmField.textField.text
         else { return }
-
+        
+       
         viewModel.signUp(fullName: fullName, email: email, password: password, confirmPassword: confirmPassword)
 
         viewModel.showAlertFailure = { message in
             self.showAlert(message: message)
         }
+        updateSignUpButtonState()
+
 
     }
 
