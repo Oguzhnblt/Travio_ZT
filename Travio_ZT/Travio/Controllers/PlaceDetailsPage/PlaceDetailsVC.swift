@@ -94,24 +94,32 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     }
     
     private func galleryImages() {
-        if let placeId = selectedPlace?.id {
-            viewModel.getAllGalleries(placeId: placeId)
-            
-            viewModel.imageData = { [weak self] placeImages in
+        guard let placeId = selectedPlace?.id ?? selectedLastPlace?.id else {return}
+
+        viewModel.getAllGalleries(placeId: placeId)
+        viewModel.imageData = { [weak self] placeImages in
+            guard let self = self else { return }
+
+            if placeImages.isEmpty {
+                self.setDefaultImage()
+            } else {
                 let imageURLs = placeImages.compactMap { $0.image_url }
-                self?.imageURLs.append(contentsOf: imageURLs)
-                
-                self?.pageControl.numberOfPages = self?.imageURLs.count ?? 1
-                self?.collectionView.reloadData()
-            }
-        } else if let selectedLastPlace = selectedLastPlace {
-            if let imageURL = selectedLastPlace.cover_image_url {
-                self.imageURLs.append(imageURL)
-                self.pageControl.numberOfPages = 1
+                self.imageURLs.append(contentsOf: imageURLs)
+
+                self.pageControl.numberOfPages = self.imageURLs.count
                 self.collectionView.reloadData()
             }
         }
     }
+
+
+    private func setDefaultImage() {
+        let defaultImageURL = "https://www.simurgtakip.com/wp-content/uploads/2015/08/default_image_01.png"
+        self.imageURLs = [defaultImageURL]
+        self.pageControl.numberOfPages = 1
+        self.collectionView.reloadData()
+    }
+
 
     private func setupViews() {
         self.view.backgroundColor = .white

@@ -87,9 +87,7 @@ class MapVC: UIViewController {
         updateMapAndCollection()
     }
     
-    private func updateMapAndCollection() {
-        mapView.removeAnnotations(mapView.annotations)
-        
+    private func updateMapAndCollection() {        
         for place in mapPlaces {
             if let latitude = place.latitude, let longitude = place.longitude {
                 let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -139,13 +137,17 @@ class MapVC: UIViewController {
     
     private func showPopup(at coordinate: CLLocationCoordinate2D) {
         let addNewPlace = AddNewPlaceVC()
-        addNewPlace.selectedCoordinate = coordinate  
+        addNewPlace.selectedCoordinate = coordinate
         addNewPlace.modalPresentationStyle = .popover
         
         if let popover = addNewPlace.popoverPresentationController {
             popover.sourceView = view
             popover.sourceRect = view.bounds
             popover.permittedArrowDirections = []
+            
+            addNewPlace.completedAddPlace = { [weak self] in
+                self?.mapData()
+            }
             
             present(addNewPlace, animated: true, completion: nil)
         }

@@ -54,6 +54,7 @@ class GenericPlacesTableViewCell: UITableViewCell {
         imageView.layer.cornerRadius = 16
         imageView.clipsToBounds = true
         imageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner,]
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     

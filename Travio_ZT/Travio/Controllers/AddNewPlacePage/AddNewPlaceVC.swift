@@ -14,6 +14,11 @@ class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     
     var selectedCoordinate: CLLocationCoordinate2D?
     
+    private lazy var addPlaceImages: [UIImage] = []
+    private lazy var viewModel = AddNewPlaceVM()
+    var completedAddPlace: (() -> Void)?
+    
+    
     private lazy var addPlaceButton: UIButton = {
         let saveButton = UIButton()
         saveButton.setTitle("Add Place", for: .normal)
@@ -36,7 +41,7 @@ class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         return collectionView
     }()
     
-   
+    
     private func updateLocationInfo() {
         guard let selectedCoordinate = selectedCoordinate else { return }
         
@@ -51,21 +56,67 @@ class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionVie
             let indexPath = IndexPath(item: 0, section: 2)
             if let cell = self?.collectionView.cellForItem(at: indexPath) as? AddNewPlaceViewCell {
                 cell.textView.text = "\(city), \(country)"
+                
             }
         }
     }
     
     @objc func addPlaceButtonTapped() {
-        // Sunucuya veri ekleme işlemi
+        updateLocationInfo()
+        
+        let placeNameIndexPath = IndexPath(item: 0, section: 0)
+        let placeDescriptionIndexPath = IndexPath(item: 0, section: 1)
+        let locationIndexPath = IndexPath(item: 0, section: 2)
+        
+        guard
+            let placeNameCell = collectionView.cellForItem(at: placeNameIndexPath) as? AddNewPlaceViewCell,
+            let placeDescriptionCell = collectionView.cellForItem(at: placeDescriptionIndexPath) as? AddNewPlaceViewCell,
+            let locationCell = collectionView.cellForItem(at: locationIndexPath) as? AddNewPlaceViewCell
+        else {
+            return
+        }
+        
+        let place = locationCell.textView.text ?? ""
+        let title = placeNameCell.textView.text ?? ""
+        let description = placeDescriptionCell.textView.text ?? ""
+        
+        
+        viewModel.uploadImage(images: addPlaceImages)
+        
+        viewModel.transferURLs = { [weak self] urls in
+            guard let self = self else { return }
+            
+            let params: [String: Any] = [
+                "place": place,
+                "title": title,
+                "description": description,
+                "cover_image_url": urls.first!,
+                "latitude": self.selectedCoordinate!.latitude as Double,
+                "longitude": self.selectedCoordinate!.longitude as Double
+            ]
+            
+            self.viewModel.transferPlaceID = { [weak self] placeId in
+                guard let self = self else { return }
+                
+                self.completedAddPlace?()
+                self.dismiss(animated: true, completion: nil)
+                
+                for imageUrl in urls {
+                    let params = ["place_id": placeId, "image_url": imageUrl]
+                    self.viewModel.postGalleryImage(params: params)
+                    print("Image URL: \(imageUrl), Place ID: \(placeId)")
+                }
+            }
+            self.viewModel.addPlace(params: params)
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateLocationInfo()
-        setupUI()
+        setupViews()
     }
     
-    private func setupUI() {
+    private func setupViews() {
         self.view.addSubviews(collectionView, addPlaceButton)
         
         collectionView.snp.makeConstraints { make in
@@ -115,17 +166,16 @@ class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         switch section {
             case 0:
                 cell.textLabel.text = "Place Name"
-                cell.textView.text = "Please write a place name"
             case 1:
                 cell.textLabel.text = "Visit Description"
-                cell.textView.text = "Your long description here..."
             case 2:
                 cell.textLabel.text = "Country, City"
-                cell.textView.text = "France, Paris"
             default:
                 break
         }
     }
+    
+    
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -151,12 +201,13 @@ class AddNewPlaceVC: UIViewController, UICollectionViewDelegate, UICollectionVie
             picker.dismiss(animated: true, completion: nil)
             return
         }
-
+        
         let indexPath = IndexPath(item: picker.view.tag, section: 3)
         if let cell = self.collectionView.cellForItem(at: indexPath) as? AddPhotoViewCell {
             cell.imageView.image = selectedImage
+            addPlaceImages.append(selectedImage)
         }
-
+        
         picker.dismiss(animated: true, completion: nil)
     }
 }
@@ -168,6 +219,8 @@ extension AddNewPlaceVC {
         }
     }
 }
+
+
 
 #if DEBUG
 import SwiftUI

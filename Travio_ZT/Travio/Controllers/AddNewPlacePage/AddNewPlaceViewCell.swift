@@ -45,12 +45,7 @@ class AddNewPlaceViewCell: UICollectionViewCell {
         return stackView
     }()
     
-    func configure(text: String, fieldText: String) {
-        textLabel.text = text
-        textView.text = fieldText
-    }
-    
-    
+  
     private func setupViews() {
         self.addSubview(backView)
         backView.addSubview(stackView)

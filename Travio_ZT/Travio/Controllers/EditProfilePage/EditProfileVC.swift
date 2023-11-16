@@ -147,25 +147,24 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
     
     
     @objc func saveButtonTapped() {
+        showIndicator(state: .start)
+
         guard let fullName = fullNameField.textField.text,
               let email = emailField.textField.text else { return }
-        showIndicator(state: .start)
+        
+        viewModel.uploadImage(images: imageDatas)
         viewModel.transferURLs = { [weak self] url in
             let pp_url = url.first
             self?.viewModel.changeMyProfile(profile: EditProfileRequest(full_name: fullName, email: email, pp_url: pp_url!))
         }
         
         profileName.text = fullName
-        viewModel.uploadImage(images: imageDatas)
         
         viewModel.showAlertVM = { message in
             self.showAlert(message: message)
             self.showIndicator(state: .stop)
-
         }
     }
-    
-    
     
     @objc func changePhotoTapped() {
         imagePicker()
@@ -186,8 +185,6 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
             self?.profileUpdated(with: profile)
             
         }
-        
-        
         
         viewModel.myProfile()
         
@@ -211,9 +208,7 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         
         setupView(title: "Edit Profile", buttonImage: UIImage(named: "img_exit"), buttonPosition: .right, headerLabelPosition: .left, headerLabelTopOffset: 20, buttonAction: #selector(buttonTapped), itemsView: [profileImage, changePhotoButton, profileName, stackViews, saveButton])
         
-        
         setupLayouts()
-        
     }
     
     @objc override func buttonTapped() {
@@ -264,15 +259,12 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
 }
 
 
-
-
 #if DEBUG
 import SwiftUI
 
 @available(iOS 13, *)
 struct EditProfileVC_Preview: PreviewProvider {
     static var previews: some View{
-        
         EditProfileVC().showPreview()
     }
 }
