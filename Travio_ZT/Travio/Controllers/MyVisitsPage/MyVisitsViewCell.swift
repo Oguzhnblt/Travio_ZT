@@ -15,17 +15,21 @@ class MyVisitsViewCell: UICollectionViewCell {
     
     static let identifier = "places"
     
-    // Section içindeki item değişimini dinlemek için
-    var cellData: PlacesModel? {
+    var cellData: Visit? {
         didSet {
-            guard let cellData = cellData else {
-                return
+            guard let cellData = cellData else { return }
+
+            if let coverImageURL = cellData.place?.cover_image_url {
+                imageView.kf.setImage(with: URL(string: coverImageURL))
+            } else {
+                imageView.image = UIImage(named: "img_default")
             }
-            imageView.image = UIImage(named: cellData.cover_img_url ?? "img_default")
-            titleLabel.text = cellData.title
-            subtitleLabel.text = cellData.place
+
+            titleLabel.text = cellData.place?.title
+            subtitleLabel.text = cellData.place?.place
         }
     }
+
     
     private lazy var backView: UIView = {
         let view = UIView()
@@ -43,8 +47,7 @@ class MyVisitsViewCell: UICollectionViewCell {
     private lazy var imageIconView: UIImageView = {
         let imageIconView = UIImageView()
         imageIconView.contentMode = .scaleAspectFit
-        imageIconView.sizeThatFits(CGSize(width: 9, height: 12))
-        imageIconView.image = UIImage(named: "imgPin")
+        imageIconView.image = UIImage(named: "img_pin")
         return imageIconView
     }()
     
@@ -80,7 +83,6 @@ class MyVisitsViewCell: UICollectionViewCell {
         backView.addSubview(imageView)
         imageView.addSubview(innerStackView)
         
-        backView.dropShadow()
         backView.snp.makeConstraints({make in
             make.edges.equalToSuperview()
         })
@@ -96,8 +98,10 @@ class MyVisitsViewCell: UICollectionViewCell {
         
         imageIconView.snp.makeConstraints({make in
             make.width.equalTo(9)
-            make.height.equalTo(12)
+            make.height.equalTo(18)
         })
+        
+        dropShadow()
     }
     
     

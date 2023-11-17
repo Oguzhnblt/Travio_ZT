@@ -10,7 +10,6 @@ import Alamofire
 
 class PlaceDetailsVM {
     var imageData: (([PlaceImage]) -> Void)?
-    var visitsTransfer: (([Visit]) -> Void)?
     var checking: ((String) -> Void)?
 
      func getAllGalleries(placeId: String) {
@@ -44,16 +43,6 @@ class PlaceDetailsVM {
            }
        })
    }
-    func getAllVisits() {
-        NetworkingHelper.shared.fetchData(urlRequest: .getAllVisits, completion: { [self](result: Result<GetAllVisitsResponse, Error>) in
-            switch result {
-                case .success(let success):
-                    visitsTransfer?(success.data!.visits)
-                case .failure(let failure):
-                    print(failure.localizedDescription)
-            }
-        })
-    }
     
     func checkVisitsById(placeID: String) {
         NetworkingHelper.shared.fetchData(urlRequest: .checkVisitByPlaceId(placeId: placeID), completion: { [self](result: Result<CheckVisitByPlaceIdResponse, Error>) in
