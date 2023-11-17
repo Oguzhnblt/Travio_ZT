@@ -22,6 +22,7 @@
 		0F6E232D2AF2373C00F843C6 /* LoginResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6E232C2AF2373C00F843C6 /* LoginResponseModel.swift */; };
 		0F866E142AFA136F000C784A /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F866E132AFA136F000C784A /* MapAnnotation.swift */; };
 		0F866E182AFA3107000C784A /* MapViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F866E172AFA3107000C784A /* MapViewCell.swift */; };
+		0FA0784F2B04DC41008FAFC9 /* SettingsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA0784E2B04DC41008FAFC9 /* SettingsVM.swift */; };
 		0FB69B0B2B02081500F476B7 /* SecuritySettingsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB69B0A2B02081500F476B7 /* SecuritySettingsVM.swift */; };
 		0FB84E032AF285080071A559 /* PostPlaceRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB84E022AF285080071A559 /* PostPlaceRequestModel.swift */; };
 		0FB84E052AF286CC0071A559 /* PostPlaceResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB84E042AF286CC0071A559 /* PostPlaceResponseModel.swift */; };
@@ -141,6 +142,7 @@
 		0F6E232C2AF2373C00F843C6 /* LoginResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponseModel.swift; sourceTree = "<group>"; };
 		0F866E132AFA136F000C784A /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
 		0F866E172AFA3107000C784A /* MapViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewCell.swift; sourceTree = "<group>"; };
+		0FA0784E2B04DC41008FAFC9 /* SettingsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVM.swift; sourceTree = "<group>"; };
 		0FB69B0A2B02081500F476B7 /* SecuritySettingsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsVM.swift; sourceTree = "<group>"; };
 		0FB84E022AF285080071A559 /* PostPlaceRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPlaceRequestModel.swift; sourceTree = "<group>"; };
 		0FB84E042AF286CC0071A559 /* PostPlaceResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPlaceResponseModel.swift; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 			children = (
 				12480C432AF0EC0B00549C42 /* SettingsCollectionViewCell.swift */,
 				12F85D8A2AF915C200FB7CBD /* SettingsVC.swift */,
+				0FA0784E2B04DC41008FAFC9 /* SettingsVM.swift */,
 			);
 			path = SettingsPage;
 			sourceTree = "<group>";
@@ -974,6 +977,7 @@
 				FF0B44B62AF2AAAB00586EA7 /* Place.swift in Sources */,
 				12BA00C82AFFE2020097275C /* AboutUsVC.swift in Sources */,
 				125754342AFD6AD800AD003B /* AddNewPlaceViewCell.swift in Sources */,
+				0FA0784F2B04DC41008FAFC9 /* SettingsVM.swift in Sources */,
 				FF0B44B62AF2AAAB00586EA7 /* Place.swift in Sources */,
 				0FB84E0A2AF287BA0071A559 /* UpdatePlaceResponseModel.swift in Sources */,
 				12BA00BF2AFF99820097275C /* HelpSupportTableVC.swift in Sources */,

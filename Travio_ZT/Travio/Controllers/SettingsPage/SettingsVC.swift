@@ -7,8 +7,11 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
-class SettingsVC: UIViewController {
+class SettingsVC: UIViewController, EditProfileDelegate {
+    
+    private let settingsVM = SettingsVM()
     
     let cellDataArray: [SettingsCellData] = [
         SettingsCellData(iconName: "user_alt", labelText: "Security Settings"),
@@ -54,7 +57,8 @@ class SettingsVC: UIViewController {
     
     @objc func buttonEditProfileTapped() {
         let editProfileVC = EditProfileVC()
-        present(editProfileVC, animated: true)
+            editProfileVC.delegate = self
+            present(editProfileVC, animated: true)
     }
     
     @objc override func buttonTapped(){
@@ -69,6 +73,18 @@ class SettingsVC: UIViewController {
         label.font = UIFont(name: fontName, size: textSize)
         return label
     }
+    private func updateUI(with profile: ProfileResponse) {
+        profileText.text = profile.full_name ?? "Default Name"
+
+        if let imageUrl = profile.pp_url, let url = URL(string: imageUrl) {
+            let options: KingfisherOptionsInfo = [
+                .transition(.fade(0.2)),
+                .cacheOriginalImage
+            ]
+
+            profileImage.kf.setImage(with: url, options: options)
+        }
+    }
     
    
     private lazy var profileText = createLabel(text: "Bruce Wills", color: "textColor", textSize: 16, fontName: "Poppins-SemiBold", alignment: .center)
@@ -80,7 +96,20 @@ class SettingsVC: UIViewController {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
         setupViews()
+        
+        settingsVM.myProfile()
+        settingsVM.dataTransfer = { [weak self] profile in
+                    self?.updateUI(with: profile)
+                }
+        let editProfileVC = EditProfileVC()
+               editProfileVC.delegate = self
+        present(editProfileVC, animated: true)
     }
+    
+    func profileDidUpdate(fullName: String, image: UIImage) {
+           profileText.text = fullName
+           profileImage.image = image
+       }
     
     
     func setupViews() {
@@ -146,7 +175,7 @@ extension SettingsVC: UICollectionViewDataSource {
             case 4:
                 let about = AboutUsVC()
                 navigationController?.pushViewController(about, animated: true)
-            default: 
+            default:
                 let termsOfUse = TermsOfUseVC()
                 navigationController?.pushViewController(termsOfUse, animated: true)
                 
