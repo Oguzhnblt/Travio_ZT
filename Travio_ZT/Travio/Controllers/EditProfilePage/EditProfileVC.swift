@@ -156,8 +156,17 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         showIndicator(state: .start)
 
         guard let fullName = fullNameField.textField.text,
-              let email = emailField.textField.text else { return }
-        
+              let email = emailField.textField.text else {
+            showAlert(message: "Lütfen geçerli bir ad ve e-posta girin.")
+                    showIndicator(state: .stop)
+            return }
+        let validationResult = viewModel.validateInputs(fullName: fullName, email: email)
+
+            if !validationResult.isValid {
+                showAlert(message: validationResult.errorMessage)
+                showIndicator(state: .stop)
+                return
+            }
         viewModel.uploadImage(images: imageDatas)
         viewModel.transferURLs = { [weak self] url in
             let pp_url = url.first
