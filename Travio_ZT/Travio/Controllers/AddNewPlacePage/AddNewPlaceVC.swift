@@ -4,6 +4,11 @@ import SnapKit
 import MapKit
 
 class AddNewPlaceVC: UIViewController {
+    
+    private lazy var placeNameIndexPath = IndexPath(item: 0, section: 0)
+    private lazy var placeDescriptionIndexPath = IndexPath(item: 0, section: 1)
+    private lazy var locationIndexPath = IndexPath(item: 0, section: 2)
+    
     private var blurEffectView: UIVisualEffectView?
     var selectedCoordinate: CLLocationCoordinate2D?
     private lazy var addPlaceImages: [UIImage] = []
@@ -120,8 +125,7 @@ class AddNewPlaceVC: UIViewController {
             let country = placemark.country!
             let city = placemark.locality!
 
-            let indexPath = IndexPath(item: 0, section: 2)
-            if let cell = self?.collectionView.cellForItem(at: indexPath) as? AddNewPlaceViewCell {
+            if let cell = self?.collectionView.cellForItem(at: self!.locationIndexPath) as? AddNewPlaceViewCell {
                 cell.textView.text = "\(city), \(country)"
             }
         }
@@ -129,17 +133,11 @@ class AddNewPlaceVC: UIViewController {
 
     @objc private func addPlaceButtonTapped() {
       
-        let placeNameIndexPath = IndexPath(item: 0, section: 0)
-        let placeDescriptionIndexPath = IndexPath(item: 0, section: 1)
-        let locationIndexPath = IndexPath(item: 0, section: 2)
-
         guard
             let placeNameCell = collectionView.cellForItem(at: placeNameIndexPath) as? AddNewPlaceViewCell,
             let placeDescriptionCell = collectionView.cellForItem(at: placeDescriptionIndexPath) as? AddNewPlaceViewCell,
             let locationCell = collectionView.cellForItem(at: locationIndexPath) as? AddNewPlaceViewCell
-        else {
-            return
-        }
+        else {return}
         
         if placeNameCell.textView.text?.isEmpty ?? true ||
                placeDescriptionCell.textView.text?.isEmpty ?? true ||
@@ -165,22 +163,22 @@ class AddNewPlaceVC: UIViewController {
                 "title": title,
                 "description": description,
                 "cover_image_url": urls.first!,
-                "latitude": self.selectedCoordinate!.latitude as Double,
-                "longitude": self.selectedCoordinate!.longitude as Double
+                "latitude": selectedCoordinate!.latitude as Double,
+                "longitude": selectedCoordinate!.longitude as Double
             ]
 
-            self.viewModel.transferPlaceID = { [weak self] placeId in
+            viewModel.transferPlaceID = { [weak self] placeId in
                 guard let self = self else { return }
-                self.showIndicator(state: .stop)
-                self.completedAddPlace?()
-                self.dismiss(animated: true, completion: nil)
+                showIndicator(state: .stop)
+                completedAddPlace?()
+                dismiss(animated: true, completion: nil)
 
                 for imageUrl in urls {
                     let params = ["place_id": placeId, "image_url": imageUrl]
-                    self.viewModel.postGalleryImage(params: params)
+                    viewModel.postGalleryImage(params: params)
                 }
             }
-            self.viewModel.addPlace(params: params)
+            viewModel.addPlace(params: params)
         }
     }
     
