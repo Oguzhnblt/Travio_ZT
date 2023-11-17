@@ -15,6 +15,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
     var selectedPlace: Place?
     var imageURLs: [String] = []
+    var visitArray: Visit?
     
     private lazy var viewModel = PlaceDetailsVM()
     
@@ -61,6 +62,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     @objc private func bookMarkTapped() {
         isBookmarked.toggle()
         
+        
         if isBookmarked {
             let formattedDate = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withInternetDateTime, .withFractionalSeconds])
             
@@ -74,7 +76,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         let image = isBookmarked ? UIImage(named: "icon_bookmark_fill") : UIImage(named: "icon_bookmark")
         bookmarkButton.setImage(image, for: .normal)
     }
-
+    
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "img_place_back"), for: .normal)
@@ -91,37 +93,38 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         setupViews()
         galleryImages()
         
+        
         navigationController?.navigationBar.isHidden = true
     }
     
     private func galleryImages() {
         guard let placeId = selectedPlace?.id  else {return}
-
+        
         viewModel.getAllGalleries(placeId: placeId)
         viewModel.imageData = { [weak self] placeImages in
             guard let self = self else { return }
-
+            
             if placeImages.isEmpty {
                 self.setDefaultImage()
             } else {
                 let imageURLs = placeImages.compactMap { $0.image_url }
                 self.imageURLs.append(contentsOf: imageURLs)
-
+                
                 self.pageControl.numberOfPages = self.imageURLs.count
                 self.collectionView.reloadData()
             }
         }
     }
-
-
+    
+    
     private func setDefaultImage() {
         let defaultImageURL = "https://www.simurgtakip.com/wp-content/uploads/2015/08/default_image_01.png"
         self.imageURLs = [defaultImageURL]
         self.pageControl.numberOfPages = 1
         self.collectionView.reloadData()
     }
-
-
+    
+    
     private func setupViews() {
         self.view.backgroundColor = .white
         self.view.addSubviews(collectionView, pageControl, bookmarkButton, backButton)
@@ -173,48 +176,48 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-            switch indexPath.section {
+        
+        switch indexPath.section {
             case 0:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceTopView.identifier, for: indexPath) as! PlaceTopView
-
+                
                 if indexPath.row < imageURLs.count {
-
+                    
                     let imageURLString = imageURLs[indexPath.row]
                     if let url = URL(string: imageURLString) {
                         cell.imageView.kf.setImage(with: url)
                     }
                 }
-
+                
                 return cell
-
-
+                
+                
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceBottomView.identifier, for: indexPath) as! PlaceBottomView
-
-                    if let selectedLocation = selectedPlace {
-                        cell.placeTitle.text = selectedLocation.place
-                        cell.descriptionLabel.text = selectedLocation.description
-                        cell.authorTitle.text = selectedLocation.creator
-
-                        if let formattedDate = DateFormatter.formattedDate(from: selectedLocation.created_at!, originalFormat: FormatType.longFormat.rawValue, targetFormat: FormatType.stringFormat.rawValue, localeIdentifier: "tr_TR") {
-                            cell.dateTitle.text = formattedDate
-                        }
-
-                        let targetCoordinate = CLLocationCoordinate2D(latitude: selectedLocation.latitude!, longitude: selectedLocation.longitude!)
-                        let region = MKCoordinateRegion(center: targetCoordinate, latitudinalMeters: 250, longitudinalMeters: 250)
-
-                        cell.mapView.setCenter(targetCoordinate, animated: false)
-                        cell.mapView.region = region
+                
+                if let selectedLocation = selectedPlace {
+                    cell.placeTitle.text = selectedLocation.place
+                    cell.descriptionLabel.text = selectedLocation.description
+                    cell.authorTitle.text = selectedLocation.creator
+                    
+                    if let formattedDate = DateFormatter.formattedDate(from: selectedLocation.created_at!, originalFormat: FormatType.longFormat.rawValue, targetFormat: FormatType.stringFormat.rawValue, localeIdentifier: "tr_TR") {
+                        cell.dateTitle.text = formattedDate
                     }
-
-                    return cell
-
+                    
+                    let targetCoordinate = CLLocationCoordinate2D(latitude: selectedLocation.latitude!, longitude: selectedLocation.longitude!)
+                    let region = MKCoordinateRegion(center: targetCoordinate, latitudinalMeters: 250, longitudinalMeters: 250)
+                    
+                    cell.mapView.setCenter(targetCoordinate, animated: false)
+                    cell.mapView.region = region
+                }
+                
+                return cell
+                
             default:
                 fatalError("Unexpected section")
-            }
         }
     }
+}
 
 
 extension PlaceDetailsVC {

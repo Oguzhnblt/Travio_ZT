@@ -10,6 +10,7 @@ import Alamofire
 
 class PlaceDetailsVM {
     var imageData: (([PlaceImage]) -> Void)?
+    var visitsTransfer: (([Visit]) -> Void)?
 
      func getAllGalleries(placeId: String) {
          NetworkingHelper.shared.fetchData(urlRequest: .getAllGalleryByPlaceId(placeId: placeId), completion: {(result: Result<GetAllGalleryByPlaceIdResponse,Error>) in
@@ -25,8 +26,8 @@ class PlaceDetailsVM {
     func postVisit(params: [String: Any?]) {
         NetworkingHelper.shared.fetchData(urlRequest: .postVisit(params: params as Parameters), completion: {(result: Result<PostVisitResponse,Error>) in
            switch result {
-               case .success(let success):
-                   print(success.message!)
+               case .success(_): break
+                  
                case .failure(let failure):
                    print(failure.localizedDescription)
            }
@@ -36,12 +37,21 @@ class PlaceDetailsVM {
     func deleteVisit(placeID: String?) {
         NetworkingHelper.shared.fetchData(urlRequest: .deleteVisitByPlaceId(placeId: placeID!), completion: {(result: Result<DeleteVisitByPlaceIdResponse,Error>) in
            switch result {
-               case .success(let success):
-                   print(success.message!)
+               case .success(_): break
                case .failure(let failure):
                    print(failure.localizedDescription)
            }
        })
    }
+    func getAllVisits() {
+        NetworkingHelper.shared.fetchData(urlRequest: .getAllVisits, completion: { [self](result: Result<GetAllVisitsResponse, Error>) in
+            switch result {
+                case .success(let success):
+                    visitsTransfer?(success.data!.visits)
+                case .failure(let failure):
+                    print(failure.localizedDescription)
+            }
+        })
+    }
     
 }
