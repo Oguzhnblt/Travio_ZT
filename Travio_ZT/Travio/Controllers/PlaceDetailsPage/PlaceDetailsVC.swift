@@ -15,7 +15,6 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
     var selectedPlace: Place?
     var imageURLs: [String] = []
-    var visitArray: Visit?
     
     private lazy var viewModel = PlaceDetailsVM()
     
@@ -59,6 +58,13 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         return button
     }()
     
+    private lazy var backButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "img_place_back"), for: .normal)
+        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
     @objc private func bookMarkTapped() {
         isBookmarked.toggle()
         
@@ -77,24 +83,9 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         bookmarkButton.setImage(image, for: .normal)
     }
     
-    private lazy var backButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: "img_place_back"), for: .normal)
-        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
+ 
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupViews()
-        galleryImages()
-        
-        
-        navigationController?.navigationBar.isHidden = true
     }
     
     private func galleryImages() {
@@ -116,7 +107,6 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         }
     }
     
-    
     private func setDefaultImage() {
         let defaultImageURL = "https://www.simurgtakip.com/wp-content/uploads/2015/08/default_image_01.png"
         self.imageURLs = [defaultImageURL]
@@ -125,6 +115,29 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     }
     
     
+    private func checkBookmark() {
+        guard let placeID = selectedPlace?.id else { return }
+
+        viewModel.checkVisitsById(placeID: placeID)
+        viewModel.checking = { [weak self] status in
+            guard let self = self else { return }
+            self.isBookmarked = (status == "success")
+            
+            let bookmarkImage = self.isBookmarked ? UIImage(named: "icon_bookmark_fill") : UIImage(named: "icon_bookmark")
+            self.bookmarkButton.setImage(bookmarkImage, for: .normal)
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViews()
+        galleryImages()
+        checkBookmark()
+
+        navigationController?.navigationBar.isHidden = true
+    }
+
+   
     private func setupViews() {
         self.view.backgroundColor = .white
         self.view.addSubviews(collectionView, pageControl, bookmarkButton, backButton)

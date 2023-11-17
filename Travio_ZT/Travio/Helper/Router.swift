@@ -95,11 +95,11 @@ enum Router{
         switch self {
             case .register, .login, .refresh, .upload, .postPlace, .postGalleryImage, .postVisit:
                 return .post
-            case .myProfile, .getAllPlaces, .getPlaceById, .getAllPlacesForUser, .getPopularPlaces, .getAllVisits,.getVisitById, .getLastPlaces, .getAllGalleryByPlaceId:
+            case .myProfile, .getAllPlaces, .getPlaceById, .getAllPlacesForUser, .getPopularPlaces, .getAllVisits,.getVisitById, .getLastPlaces, .getAllGalleryByPlaceId, .checkVisitByPlaceId:
                 return .get
             case .editProfile, .changePassword, .updatePlace:
                 return .put
-            case .deletePlace, .deleteGalleryImage, .deleteVisitByPlaceId,.checkVisitByPlaceId:
+            case .deletePlace, .deleteGalleryImage, .deleteVisitByPlaceId:
                 return .delete
                 
         }

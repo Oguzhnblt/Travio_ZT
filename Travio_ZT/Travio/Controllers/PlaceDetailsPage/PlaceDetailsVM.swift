@@ -11,6 +11,7 @@ import Alamofire
 class PlaceDetailsVM {
     var imageData: (([PlaceImage]) -> Void)?
     var visitsTransfer: (([Visit]) -> Void)?
+    var checking: ((String) -> Void)?
 
      func getAllGalleries(placeId: String) {
          NetworkingHelper.shared.fetchData(urlRequest: .getAllGalleryByPlaceId(placeId: placeId), completion: {(result: Result<GetAllGalleryByPlaceIdResponse,Error>) in
@@ -48,6 +49,17 @@ class PlaceDetailsVM {
             switch result {
                 case .success(let success):
                     visitsTransfer?(success.data!.visits)
+                case .failure(let failure):
+                    print(failure.localizedDescription)
+            }
+        })
+    }
+    
+    func checkVisitsById(placeID: String) {
+        NetworkingHelper.shared.fetchData(urlRequest: .checkVisitByPlaceId(placeId: placeID), completion: { [self](result: Result<CheckVisitByPlaceIdResponse, Error>) in
+            switch result {
+                case .success(let success):
+                    checking?(success.status!)
                 case .failure(let failure):
                     print(failure.localizedDescription)
             }
