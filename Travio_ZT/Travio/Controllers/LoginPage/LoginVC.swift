@@ -88,6 +88,11 @@ class LoginVC: UIViewController {
                 
         else {return}
         
+        guard viewModel.isValidEmail(email) else {
+                    showAlert(message: "Geçersiz email")
+                    return
+                }
+        
         viewModel.login(email: email, password: password)
         
         viewModel.navigateToViewController = {

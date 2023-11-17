@@ -101,9 +101,6 @@ class SettingsVC: UIViewController, EditProfileDelegate {
         settingsVM.dataTransfer = { [weak self] profile in
                     self?.updateUI(with: profile)
                 }
-        let editProfileVC = EditProfileVC()
-               editProfileVC.delegate = self
-        present(editProfileVC, animated: true)
     }
     
     func profileDidUpdate(fullName: String, image: UIImage) {
