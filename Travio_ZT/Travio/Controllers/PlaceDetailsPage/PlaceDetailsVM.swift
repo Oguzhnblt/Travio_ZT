@@ -17,9 +17,31 @@ class PlaceDetailsVM {
                 case .success(let success):
                     self.imageData?((success.data?.images)!)
                 case .failure(let failure):
-                    print(failure)
+                    print(failure.localizedDescription)
             }
         })
     }
+    
+    func postVisit(params: [String: Any?]) {
+        NetworkingHelper.shared.fetchData(urlRequest: .postVisit(params: params as Parameters), completion: {(result: Result<PostVisitResponse,Error>) in
+           switch result {
+               case .success(let success):
+                   print(success.message!)
+               case .failure(let failure):
+                   print(failure.localizedDescription)
+           }
+       })
+   }
+    
+    func deleteVisit(placeID: String?) {
+        NetworkingHelper.shared.fetchData(urlRequest: .deleteVisitByPlaceId(placeId: placeID!), completion: {(result: Result<DeleteVisitByPlaceIdResponse,Error>) in
+           switch result {
+               case .success(let success):
+                   print(success.message!)
+               case .failure(let failure):
+                   print(failure.localizedDescription)
+           }
+       })
+   }
     
 }

@@ -22,7 +22,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         subtitleLabel.text = place.place
     }
     
-    func configureLastPlaces(with place: PlaceLast) {
+    func configureLastPlaces(with place: Place) {
         if let url = URL(string: place.cover_image_url!) {
             imageView.kf.setImage(with: url)
         }

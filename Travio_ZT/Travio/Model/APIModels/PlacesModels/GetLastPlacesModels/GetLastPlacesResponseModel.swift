@@ -10,7 +10,7 @@ import Foundation
 
 struct GetLastPlacesData: Codable {
     var count: Int?
-    var places: [PlaceLast]?
+    var places: [Place]?
 }
 
 struct GetLastPlacesResponse: Codable {

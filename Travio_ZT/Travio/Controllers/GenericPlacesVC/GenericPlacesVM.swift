@@ -10,7 +10,7 @@ import Foundation
 class GenericPlacesVM {
     
     var popularplacesTransfer: (([Place]) -> Void)?
-    var lastPlacesTransfer: (([PlaceLast]) -> Void)?
+    var lastPlacesTransfer: (([Place]) -> Void)?
     
     func popularPlaces() {
         NetworkingHelper.shared.fetchData(urlRequest: .getPopularPlaces(limit: 100)) { [self] (result: Result<GetPopularPlacesResponse, Error>) in

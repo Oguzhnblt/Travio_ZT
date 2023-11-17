@@ -21,7 +21,7 @@ class GenericPlacesTableViewCell: UITableViewCell {
         subtitleLabel.text = place.place
     }
     
-    func configureLastPlace(with lastPlace: PlaceLast) {
+    func configureLastPlace(with lastPlace: Place) {
         if let url = URL(string: lastPlace.cover_image_url!) {
             imageViews.kf.setImage(with: url)
         }

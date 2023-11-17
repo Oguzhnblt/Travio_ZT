@@ -12,7 +12,7 @@ class GenericPlacesVC: UIViewController {
     
     let viewModel = GenericPlacesVM()
     var popularPlaces = [Place]()
-    var lastPlaces = [PlaceLast]()
+    var lastPlaces = [Place]()
     var isPopular = Bool()
 
     
@@ -161,7 +161,7 @@ extension GenericPlacesVC: UITableViewDelegate, UITableViewDataSource {
 
         if let selectedPlace = place as? Place {
             detailVC.selectedPlace = selectedPlace
-        } else if let selectedLastPlace = place as? PlaceLast {
+        } else if let selectedLastPlace = place as? Place {
             detailVC.selectedLastPlace = selectedLastPlace
         }
 

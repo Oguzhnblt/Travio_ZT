@@ -14,12 +14,12 @@ import MapKit
 class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
     var selectedPlace: Place?
-    var selectedLastPlace: PlaceLast?
+    var selectedLastPlace: Place?
     var imageURLs: [String] = []
     
     private lazy var viewModel = PlaceDetailsVM()
     
-    private lazy var isBookmarked = true
+    private lazy var isBookmarked = false
     
     private lazy var collectionView: UICollectionView = {
         
@@ -63,17 +63,19 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         isBookmarked.toggle()
         
         if isBookmarked {
-            print("Item removed from bookmarks!")
+            let formattedDate = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withInternetDateTime, .withFractionalSeconds])
+            
+            let params = ["place_id": selectedPlace?.id, "visited_at": formattedDate]
+            viewModel.postVisit(params: params)
             
         } else {
-            print("Item bookmarked!")
-            
+            viewModel.deleteVisit(placeID: selectedPlace?.id)
         }
         
-        let image = isBookmarked ? UIImage(named: "icon_bookmark") : UIImage(named: "icon_bookmark_fill")
+        let image = isBookmarked ? UIImage(named: "icon_bookmark_fill") : UIImage(named: "icon_bookmark")
         bookmarkButton.setImage(image, for: .normal)
     }
-    
+
     private lazy var backButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "img_place_back"), for: .normal)
@@ -191,41 +193,23 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceBottomView.identifier, for: indexPath) as! PlaceBottomView
 
-                if let selectedPlace = selectedPlace {
-                    cell.placeTitle.text = selectedPlace.place
-                    cell.descriptionLabel.text = selectedPlace.description
-                    cell.authorTitle.text = selectedPlace.creator
+                    if let selectedLocation = selectedPlace ?? selectedLastPlace {
+                        cell.placeTitle.text = selectedLocation.place
+                        cell.descriptionLabel.text = selectedLocation.description
+                        cell.authorTitle.text = selectedLocation.creator
 
+                        if let formattedDate = DateFormatter.formattedDate(from: selectedLocation.created_at!, originalFormat: FormatType.longFormat.rawValue, targetFormat: FormatType.stringFormat.rawValue, localeIdentifier: "tr_TR") {
+                            cell.dateTitle.text = formattedDate
+                        }
 
-                    if let formattedDate = DateFormatter.formattedDate(from: selectedPlace.created_at!, originalFormat: FormatType.longFormat.rawValue, targetFormat: FormatType.stringFormat.rawValue, localeIdentifier: "tr_TR") {
-                        cell.dateTitle.text = formattedDate
+                        let targetCoordinate = CLLocationCoordinate2D(latitude: selectedLocation.latitude!, longitude: selectedLocation.longitude!)
+                        let region = MKCoordinateRegion(center: targetCoordinate, latitudinalMeters: 250, longitudinalMeters: 250)
+
+                        cell.mapView.setCenter(targetCoordinate, animated: false)
+                        cell.mapView.region = region
                     }
 
-                    let targetCoordinate = CLLocationCoordinate2D(latitude: selectedPlace.latitude!, longitude: selectedPlace.longitude!)
-
-                    let region = MKCoordinateRegion(center: targetCoordinate, latitudinalMeters: 250, longitudinalMeters: 250)
-
-                    cell.mapView.setCenter(targetCoordinate, animated: false)
-                    cell.mapView.region = region
-                    
-                } else if let selectedLastPlace = selectedLastPlace {
-                    cell.placeTitle.text = selectedLastPlace.place
-                    cell.descriptionLabel.text = selectedLastPlace.description
-                    cell.authorTitle.text = selectedLastPlace.creator
-
-                    if let formattedDate = DateFormatter.formattedDate(from: selectedLastPlace.created_at!, originalFormat: FormatType.longFormat.rawValue, targetFormat: FormatType.stringFormat.rawValue, localeIdentifier: "tr_TR") {
-                        cell.dateTitle.text = formattedDate
-                    }
-
-                    let targetCoordinate = CLLocationCoordinate2D(latitude: selectedLastPlace.latitude!, longitude: selectedLastPlace.longitude!)
-
-                    let region = MKCoordinateRegion(center: targetCoordinate, latitudinalMeters: 250, longitudinalMeters: 250)
-
-                    cell.mapView.setCenter(targetCoordinate, animated: false)
-                    cell.mapView.region = region
-                }
-
-                return cell
+                    return cell
 
             default:
                 fatalError("Unexpected section")

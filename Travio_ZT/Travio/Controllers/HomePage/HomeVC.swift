@@ -13,7 +13,7 @@ class HomeVC: UIViewController {
     
     private lazy var viewModel = HomeVM()
     private lazy var popularPlaces = [Place]()
-    private lazy var lastPlaces = [PlaceLast]()
+    private lazy var lastPlaces = [Place]()
 
     let popularPlacesId = "PopularPlacesHeader"
     let newPlacesId = "NewPlacesHeader"
