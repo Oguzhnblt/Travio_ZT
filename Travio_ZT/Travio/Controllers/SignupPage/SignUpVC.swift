@@ -64,8 +64,15 @@ class SignUpVC: UIViewController {
               let confirmPassword = passwordConfirmField.textField.text
         else { return }
         
-       
-        viewModel.signUp(fullName: fullName, email: email, password: password, confirmPassword: confirmPassword)
+        guard viewModel.validateEmail(email) else {
+                showAlert(message: "Geçersiz email")
+                return
+            }
+        
+       viewModel.signUp(fullName: fullName, email: email, password: password, confirmPassword: confirmPassword)
+        viewModel.showAlertSuccess = { message in
+                self.showAlert(message: message)
+            }
 
         viewModel.showAlertFailure = { message in
             self.showAlert(message: message)

@@ -34,11 +34,16 @@ class SignUpVM {
         NetworkingHelper.shared.fetchData(urlRequest: .register(params: params)) { [weak self] (result: Result<RegisterResponse, Error>) in
             switch result {
                 case .success(_):
-                    self?.showAlertSuccess!("Login successful")
+                    self?.showAlertSuccess!("Kayıt işlemi başarılı")
                 case .failure(_):
                     self?.showAlertFailure!("Email ve şifre hatalı.")
             }
         }
+    }
+    func validateEmail(_ email: String) -> Bool {
+        let emailRegex = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return emailPredicate.evaluate(with: email)
     }
 }
 
