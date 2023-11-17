@@ -98,6 +98,14 @@ class SignUpVC: UIViewController {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
         setupViews()
+        
+        fullNameField.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+           emailField.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+           passwordField.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+           passwordConfirmField.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+    }
+    @objc private func textFieldDidChange() {
+        updateSignUpButtonState()
     }
     
     
