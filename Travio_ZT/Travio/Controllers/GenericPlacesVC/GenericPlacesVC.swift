@@ -11,8 +11,7 @@ import SnapKit
 class GenericPlacesVC: UIViewController {
     
     let viewModel = GenericPlacesVM()
-    var popularPlaces = [Place]()
-    var lastPlaces = [Place]()
+    var places = [Place]()
     var isPopular = Bool()
 
     
@@ -48,16 +47,16 @@ class GenericPlacesVC: UIViewController {
         
         if isPopular {
             if isSorted {
-                popularPlaces.sort { $0.title!.localizedCompare($1.title!) == .orderedAscending }
+                places.sort { $0.title!.localizedCompare($1.title!) == .orderedAscending }
             } else {
-                popularPlaces.sort { $0.title!.localizedCompare($1.title!) == .orderedDescending }
+                places.sort { $0.title!.localizedCompare($1.title!) == .orderedDescending }
             }
             
         } else {
             if isSorted {
-                lastPlaces.sort { $0.title!.localizedCompare($1.title!) == .orderedAscending }
+                places.sort { $0.title!.localizedCompare($1.title!) == .orderedAscending }
             } else {
-                lastPlaces.sort { $0.title!.localizedCompare($1.title!) == .orderedDescending }
+                places.sort { $0.title!.localizedCompare($1.title!) == .orderedDescending }
             }
         }
         
@@ -84,13 +83,13 @@ class GenericPlacesVC: UIViewController {
     func fetchData() {
             if isPopular {
                 viewModel.popularplacesTransfer = { [weak self] place in
-                    self?.popularPlaces = place
+                    self?.places = place
                     self?.updateTableView()
                 }
                 viewModel.popularPlaces()
             } else {
                 viewModel.lastPlacesTransfer = { [weak self] place in
-                    self?.lastPlaces = place
+                    self?.places = place
                     self?.updateTableView()
                 }
                 viewModel.newPlaces()
@@ -126,17 +125,17 @@ class GenericPlacesVC: UIViewController {
 extension GenericPlacesVC: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isPopular ? popularPlaces.count : lastPlaces.count
+        return isPopular ? places.count : places.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: GenericPlacesTableViewCell.identifier, for: indexPath) as! GenericPlacesTableViewCell
 
         if isPopular {
-            let object = popularPlaces[indexPath.row]
+            let object = places[indexPath.row]
             cell.configure(with: object)
         } else {
-            let object = lastPlaces[indexPath.row]
+            let object = places[indexPath.row]
             cell.configureLastPlace(with: object)
         }
 
@@ -148,10 +147,10 @@ extension GenericPlacesVC: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isPopular {
-            let selectedPlace = popularPlaces[indexPath.row]
+            let selectedPlace = places[indexPath.row]
             showDetailViewController(with: selectedPlace)
         } else {
-            let selectedLastPlace = lastPlaces[indexPath.row]
+            let selectedLastPlace = places[indexPath.row]
             showDetailViewController(with: selectedLastPlace)
         }
     }
@@ -162,7 +161,7 @@ extension GenericPlacesVC: UITableViewDelegate, UITableViewDataSource {
         if let selectedPlace = place as? Place {
             detailVC.selectedPlace = selectedPlace
         } else if let selectedLastPlace = place as? Place {
-            detailVC.selectedLastPlace = selectedLastPlace
+            detailVC.selectedPlace = selectedLastPlace
         }
 
         navigationController?.pushViewController(detailVC, animated: true)

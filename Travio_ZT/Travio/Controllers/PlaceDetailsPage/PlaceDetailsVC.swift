@@ -14,7 +14,6 @@ import MapKit
 class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
     var selectedPlace: Place?
-    var selectedLastPlace: Place?
     var imageURLs: [String] = []
     
     private lazy var viewModel = PlaceDetailsVM()
@@ -96,7 +95,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     }
     
     private func galleryImages() {
-        guard let placeId = selectedPlace?.id ?? selectedLastPlace?.id else {return}
+        guard let placeId = selectedPlace?.id  else {return}
 
         viewModel.getAllGalleries(placeId: placeId)
         viewModel.imageData = { [weak self] placeImages in
@@ -193,7 +192,7 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceBottomView.identifier, for: indexPath) as! PlaceBottomView
 
-                    if let selectedLocation = selectedPlace ?? selectedLastPlace {
+                    if let selectedLocation = selectedPlace {
                         cell.placeTitle.text = selectedLocation.place
                         cell.descriptionLabel.text = selectedLocation.description
                         cell.authorTitle.text = selectedLocation.creator
