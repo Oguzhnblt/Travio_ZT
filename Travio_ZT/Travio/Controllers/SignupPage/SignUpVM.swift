@@ -9,6 +9,8 @@ import Foundation
 
 class SignUpVM {
     
+    
+    
     var showAlertSuccess: ((String) -> Void)?
     var showAlertFailure: ((String) -> Void)?
     
