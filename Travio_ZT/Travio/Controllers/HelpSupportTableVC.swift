@@ -62,12 +62,13 @@ class HelpSupportTableVC: UIViewController, UITableViewDelegate, UITableViewData
         setupView(title: "Help&Support",buttonImage: UIImage(named: "leftArrowIcon"), buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [tableView, contentLabel])
 
         tableView.snp.makeConstraints { (make) in
-            make.top.bottom.equalToSuperview().inset(90)
+            make.top.equalToSuperview().offset(90)
             make.left.right.equalToSuperview().inset(8)
+            make.bottom.equalToSuperview()
         }
       
         contentLabel.snp.makeConstraints({make in
-            make.top.equalToSuperview().offset(50)
+            make.top.equalTo(tableView.snp.top).offset(-30)
             make.left.equalToSuperview().offset(16)
         })
     }

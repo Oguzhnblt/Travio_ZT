@@ -36,13 +36,21 @@ class MapVC: UIViewController {
     private lazy var mapView: MKMapView = {
         let map = MKMapView()
         map.showsUserLocation = true
-        map.overrideUserInterfaceStyle = .dark
+        map.overrideUserInterfaceStyle = .light
         map.isScrollEnabled = true
         map.isZoomEnabled = true
         map.delegate = self
         return map
     }()
     
+    private lazy var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "Nereye gitmek istiyorsunuz"
+        searchBar.delegate = self
+        searchBar.searchBarStyle = .minimal
+        return searchBar
+    }()
+
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -53,7 +61,6 @@ class MapVC: UIViewController {
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         mapView.addGestureRecognizer(longPressGesture)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +70,7 @@ class MapVC: UIViewController {
     // MARK: - Setup
     
     private func setupViews() {
-        view.addSubviews(mapView, collectionView)
+        view.addSubviews(mapView, collectionView, searchBar)
         setupLayout()
     }
     
@@ -72,11 +79,19 @@ class MapVC: UIViewController {
             make.edges.equalToSuperview()
         }
         
+        searchBar.snp.makeConstraints({ make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.left.right.equalToSuperview()
+        })
+
+
         collectionView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().offset(550)
             make.left.right.equalToSuperview()
         }
     }
+
+    
     
     // MARK: - Data Handling
     
@@ -90,9 +105,8 @@ class MapVC: UIViewController {
         
         updateMapAndCollection()
     }
-
     
-    private func updateMapAndCollection() {        
+    private func updateMapAndCollection() {
         for place in mapPlaces {
             if let latitude = place.latitude, let longitude = place.longitude {
                 let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -109,9 +123,7 @@ class MapVC: UIViewController {
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         locationManager?.requestWhenInUseAuthorization()
-        
     }
-    
     
     // MARK: - Map Functions
     
@@ -119,7 +131,6 @@ class MapVC: UIViewController {
         let customAnnotation = MapAnnotation(coordinate: coordinate)
         mapView.addAnnotation(customAnnotation)
     }
-    
     
     private func checkLocationAuthorization() {
         guard let locationManager = locationManager, let location = locationManager.location else { return }
@@ -138,7 +149,6 @@ class MapVC: UIViewController {
     }
     
     // MARK: - Popup
-    
     
     private func showPopup(at coordinate: CLLocationCoordinate2D) {
         let addNewPlace = AddNewPlaceVC()
@@ -267,6 +277,48 @@ extension MapVC: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UISearchBarDelegate
+
+extension MapVC: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        performLocationSearch(query: searchBar.text)
+    }
+}
+
+// MARK: - Helper Methods
+
+extension MapVC {
+    private func performLocationSearch(query: String?) {
+        guard let query = query, !query.isEmpty else {
+            return
+        }
+        
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = query
+        
+        let search = MKLocalSearch(request: request)
+        search.start { (response, error) in
+            guard let response = response else {
+                print("Error searching for location: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            let placemarks = response.mapItems
+            if let firstPlacemark = placemarks.first {
+                let coordinate = firstPlacemark.placemark.coordinate
+                self.updateMap(coordinate: coordinate)
+            }
+        }
+    }
+    
+    private func updateMap(coordinate: CLLocationCoordinate2D) {
+        
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 100, longitudinalMeters: 100)
+        mapView.setRegion(region, animated: true)
+        collectionView.reloadData()
+    }
+}
 
 #if DEBUG
 import SwiftUI

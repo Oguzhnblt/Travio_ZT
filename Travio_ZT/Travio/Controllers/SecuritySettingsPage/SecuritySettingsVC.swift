@@ -90,6 +90,9 @@ class SecuritySettingsVC: UIViewController {
             case .success:
                 guard let new_password = newPasswordField.textField.text else {return}
                 viewModel.changePassword(ChangePasswordRequest(new_password: new_password))
+                viewModel.successAlert = { message in
+                    self.showAlert(message: message)
+                }
             case .failure(let errorMessage):
                 showAlert(message: errorMessage)
         }
