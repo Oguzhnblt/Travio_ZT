@@ -52,6 +52,8 @@ class CommonTextField: UIView {
         stackView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(12)
         }
+        
+        dropShadow()
     }
     
     init(labelText: String, textFieldPlaceholder: String, isSecure: Bool) {

@@ -76,8 +76,7 @@
 		1257543A2AFE2C8100AD003B /* AddPhotoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125754392AFE2C8100AD003B /* AddPhotoViewCell.swift */; };
 		125B445B2AE944F00047248D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125B445A2AE944F00047248D /* HomeVC.swift */; };
 		127249C32AF2282200CEAA64 /* SecuritySettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249C22AF2282200CEAA64 /* SecuritySettingsVC.swift */; };
-		127249C52AF2291600CEAA64 /* ChangePasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249C42AF2291600CEAA64 /* ChangePasswordCell.swift */; };
-		127249D12AF2BF4700CEAA64 /* PrivacyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249D02AF2BF4700CEAA64 /* PrivacyCell.swift */; };
+		127249D12AF2BF4700CEAA64 /* PrivacyField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249D02AF2BF4700CEAA64 /* PrivacyField.swift */; };
 		127249D42AF2CDC700CEAA64 /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249D32AF2CDC700CEAA64 /* EditProfileVC.swift */; };
 		127249DC2AF3014500CEAA64 /* EditingProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249DB2AF3014500CEAA64 /* EditingProfileCell.swift */; };
 		127806202AF7CC260085D31F /* HelpSupportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1278061F2AF7CC260085D31F /* HelpSupportModel.swift */; };
@@ -197,8 +196,7 @@
 		125754392AFE2C8100AD003B /* AddPhotoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoViewCell.swift; sourceTree = "<group>"; };
 		125B445A2AE944F00047248D /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		127249C22AF2282200CEAA64 /* SecuritySettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsVC.swift; sourceTree = "<group>"; };
-		127249C42AF2291600CEAA64 /* ChangePasswordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordCell.swift; sourceTree = "<group>"; };
-		127249D02AF2BF4700CEAA64 /* PrivacyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyCell.swift; sourceTree = "<group>"; };
+		127249D02AF2BF4700CEAA64 /* PrivacyField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyField.swift; sourceTree = "<group>"; };
 		127249D32AF2CDC700CEAA64 /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
 		127249DB2AF3014500CEAA64 /* EditingProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingProfileCell.swift; sourceTree = "<group>"; };
 		1278061F2AF7CC260085D31F /* HelpSupportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportModel.swift; sourceTree = "<group>"; };
@@ -556,8 +554,7 @@
 			isa = PBXGroup;
 			children = (
 				127249C22AF2282200CEAA64 /* SecuritySettingsVC.swift */,
-				127249C42AF2291600CEAA64 /* ChangePasswordCell.swift */,
-				127249D02AF2BF4700CEAA64 /* PrivacyCell.swift */,
+				127249D02AF2BF4700CEAA64 /* PrivacyField.swift */,
 				0FB69B0A2B02081500F476B7 /* SecuritySettingsVM.swift */,
 			);
 			path = SecuritySettingsPage;
@@ -911,7 +908,7 @@
 				12E0A3692B00D8E000F1F8D1 /* AccessManager.swift in Sources */,
 				12F85D872AF9148000FB7CBD /* SignUpVM.swift in Sources */,
 				127249C32AF2282200CEAA64 /* SecuritySettingsVC.swift in Sources */,
-				127249D12AF2BF4700CEAA64 /* PrivacyCell.swift in Sources */,
+				127249D12AF2BF4700CEAA64 /* PrivacyField.swift in Sources */,
 				FF9BD56D2AF2F92D0072BBA0 /* DeleteVisitByPlaceIdResponseModel.swift in Sources */,
 				FF0B44BF2AF2B24100586EA7 /* GetLastPlacesResponseModel.swift in Sources */,
 				12E1FD502AF38AAB00B89F81 /* TextFieldCell.swift in Sources */,
@@ -937,7 +934,6 @@
 				1255D8082ADAC7BD00FB6638 /* SceneDelegate.swift in Sources */,
 				123F4FD92AFA22B300E0C525 /* HomeVM.swift in Sources */,
 				1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */,
-				127249C52AF2291600CEAA64 /* ChangePasswordCell.swift in Sources */,
 				0FB69B0B2B02081500F476B7 /* SecuritySettingsVM.swift in Sources */,
 				125754382AFD841D00AD003B /* AddNewPlaceLayout.swift in Sources */,
 				0F6E232D2AF2373C00F843C6 /* LoginResponseModel.swift in Sources */,
@@ -1154,7 +1150,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1188,7 +1184,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

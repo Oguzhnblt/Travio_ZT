@@ -1,5 +1,5 @@
 //
-//  SecuritySettingsCollectionCell.swift
+//  PrivacyCell.swift
 //  Travio
 //
 //  Created by Oğuz on 1.11.2023.
@@ -8,9 +8,7 @@
 import UIKit
 import SnapKit
 
-class ChangePasswordCell: UITableViewCell {
-    
-    static let reuseIdentifier = "ChangePasswordCell"
+class PrivacyField: UIView {
     
     private lazy var backView: UIView = {
         let view = UIView()
@@ -22,33 +20,25 @@ class ChangePasswordCell: UITableViewCell {
     
     lazy var label: UILabel = {
         let label = UILabel()
+        label.textAlignment = .left
         label.textColor = .black
         label.font = UIFont(name: "Poppins-Regular", size: 14)
-        label.textAlignment = .left
         return label
     }()
     
-    lazy var textField: UITextField = {
-        let textField = UITextField()
-        textField.layer.cornerRadius = 8.0
-        textField.layer.borderColor = UIColor.gray.cgColor
-        return textField
+    lazy var toggleSwitch: UISwitch = {
+        let toggle = UISwitch()
+        toggle.isOn = false
+        return toggle
     }()
-    
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [label, textField])
-        stackView.axis = .vertical
-        stackView.spacing = 4
-        return stackView
-    }()
-    
-    func configure(text: String, fieldText: String) {
-        label.text = text
-        textField.text = fieldText
-    }
     
     private func setupViews() {
-        contentView.addSubview(backView)
+        self.addSubview(backView)
+        
+        let stackView = UIStackView(arrangedSubviews: [label, UIView(), toggleSwitch])
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        stackView.alignment = .center
         backView.addSubview(stackView)
         
         backView.snp.makeConstraints { make in
@@ -57,23 +47,28 @@ class ChangePasswordCell: UITableViewCell {
         }
         
         stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(8)
+            make.top.bottom.equalToSuperview()
+            make.left.right.equalToSuperview().inset(8)
+            make.height.equalTo(74)
         }
         
+        toggleSwitch.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
         
+        dropShadow()
     }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    init(labelText: String, isOn: Bool) {
+        super.init(frame: .zero)
+        label.text = labelText
+        toggleSwitch.isOn = isOn
         setupViews()
     }
+    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 }
-
-
-
-
-
