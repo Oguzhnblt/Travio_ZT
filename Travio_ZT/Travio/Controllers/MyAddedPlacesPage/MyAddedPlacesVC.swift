@@ -132,6 +132,14 @@ extension MyAddedPlacesVC: UICollectionViewDataSource {
     
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailsVC = PlaceDetailsVC()
+        
+        detailsVC.selectedPlace = myAddedPlaces[indexPath.item]
+        
+        navigationController?.pushViewController(detailsVC, animated: true)
+    }
 }
 
 extension MyAddedPlacesVC {

@@ -14,22 +14,14 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "places"
     
-    func configurePopularPlaces(with place: Place) {
+    func configurePlaces(with place: Place) {
         if let url = URL(string: place.cover_image_url!) {
             imageView.kf.setImage(with: url)
         }        
         titleLabel.text = place.title
         subtitleLabel.text = place.place
     }
-    
-    func configureLastPlaces(with place: Place) {
-        if let url = URL(string: place.cover_image_url!) {
-            imageView.kf.setImage(with: url)
-        }
-        titleLabel.text = place.title
-        subtitleLabel.text = place.place
-    }
-    
+
     private lazy var backView: UIView = {
         let backView = UIView()
         backView.clipsToBounds = true

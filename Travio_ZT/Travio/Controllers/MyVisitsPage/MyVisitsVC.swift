@@ -85,6 +85,13 @@ extension MyVisitsVC: UICollectionViewDataSource {
         return cell
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let placeDetailsVC = PlaceDetailsVC()
+        placeDetailsVC.selectedPlace = myVisits[indexPath.item].place
+        navigationController?.pushViewController(placeDetailsVC, animated: true)
+    }
+
 }
 
 

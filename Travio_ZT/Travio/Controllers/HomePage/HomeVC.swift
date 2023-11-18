@@ -163,19 +163,35 @@ extension HomeVC: UICollectionViewDataSource {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as! HomeCollectionViewCell
                 
                 let object = popularPlaces[indexPath.item]
-                cell.configurePopularPlaces(with: object)
+                cell.configurePlaces(with: object)
                 
                 return cell
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as! HomeCollectionViewCell
                 
                 let object = lastPlaces[indexPath.item]
-                cell.configureLastPlaces(with: object)
+                cell.configurePlaces(with: object)
                 return cell
             default:
                 fatalError()
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let placeDetailsVC = PlaceDetailsVC()  
+        
+        switch indexPath.section {
+        case 0:
+            placeDetailsVC.selectedPlace = popularPlaces[indexPath.item]
+        case 1:
+            placeDetailsVC.selectedPlace = lastPlaces[indexPath.item]
+        default:
+            break
+        }
+        
+        navigationController?.pushViewController(placeDetailsVC, animated: true)
+    }
+
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
