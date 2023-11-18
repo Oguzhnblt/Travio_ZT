@@ -7,11 +7,11 @@
 
 import Foundation
 struct GetAllPlacesForUserData: Codable {
-            let count: Int?
-            let places: [Place]?
-        }
+    let count: Int?
+    let places: [Place]?
+}
 
-struct getAllPlacesForUserResponse: Codable{
-        let data: GetAllPlacesForUserData?
-        let status: String?
+struct GetAllPlacesForUserResponse: Codable{
+    let data: GetAllPlacesForUserData?
+    let status: String?
 }

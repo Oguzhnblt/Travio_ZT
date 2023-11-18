@@ -11,7 +11,22 @@ import UIKit
 
 class MyAddedPlacesViewCell: UICollectionViewCell {
     
+    static let identifier = "myAddedCell"
     
+    var cellData: Place? {
+        didSet {
+            guard let cellData = cellData else { return }
+
+            if let coverImageURL = cellData.cover_image_url {
+                imageView.kf.setImage(with: URL(string: coverImageURL))
+            } else {
+                imageView.image = UIImage(named: "img_default")
+            }
+
+            titleLabel.text = cellData.title
+            subtitleLabel.text = cellData.place
+        }
+    }
     private lazy var backView: UIView = {
         let view = UIView()
         view.clipsToBounds = true

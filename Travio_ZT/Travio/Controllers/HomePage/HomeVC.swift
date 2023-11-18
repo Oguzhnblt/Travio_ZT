@@ -87,7 +87,7 @@ class HomeVC: UIViewController {
             self?.popularPlaces = place
             self?.collectionView.reloadData()
         }
-        viewModel.popularPlaces(limit: 2)
+        viewModel.popularPlaces()
     }
     
     private func lastPlacesData() {

@@ -12,7 +12,7 @@ class HomeVM {
     var popularPlacesTransfer: (([Place]) -> Void)?
     var lastPlacesTransfer: (([Place]) -> Void)?
     
-    func popularPlaces(limit: Int) {
+    func popularPlaces() {
         NetworkingHelper.shared.fetchData(urlRequest: .getPopularPlaces(limit: 3)) { [self] (result: Result<GetPopularPlacesResponse, Error>) in
             switch result {
                 case .success(let object):

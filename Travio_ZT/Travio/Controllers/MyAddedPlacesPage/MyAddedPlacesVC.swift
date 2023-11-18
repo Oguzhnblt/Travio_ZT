@@ -10,6 +10,8 @@ import SnapKit
 
 class MyAddedPlacesVC: UIViewController {
     
+    private lazy var viewModel = MyAddedPlacesVM()
+    private var myAddedPlaces: [Place] = []
     private var isSortingAscending = true
     
     private lazy var collectionView: UICollectionView = {
@@ -19,7 +21,7 @@ class MyAddedPlacesVC: UIViewController {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
         
-        collectionView.register(MyAddedPlacesViewCell.self, forCellWithReuseIdentifier: "popularCell")
+        collectionView.register(MyAddedPlacesViewCell.self, forCellWithReuseIdentifier: MyAddedPlacesViewCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -55,9 +57,19 @@ class MyAddedPlacesVC: UIViewController {
     }
     
     
+    private func myAdded() {
+        viewModel.myAddedTransfer = { myAdded in
+            self.myAddedPlaces = myAdded
+            self.collectionView.reloadData()
+        }
+        viewModel.getMyAddedPlaces()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        myAdded()
+        
         navigationController?.navigationBar.isHidden = true
     }
     
@@ -98,7 +110,6 @@ class MyAddedPlacesVC: UIViewController {
 
 extension MyAddedPlacesVC: UICollectionViewDelegateFlowLayout {
     
-    // Her bir item'in boyutu
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
@@ -111,29 +122,14 @@ extension MyAddedPlacesVC: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return popularPlacesMockData.count
+        return myAddedPlaces.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "popularCell", for: indexPath) as! MyAddedPlacesViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyAddedPlacesViewCell.identifier, for: indexPath) as! MyAddedPlacesViewCell
         
-        let place = popularPlacesMockData[indexPath.row]
-        
-        cell.titleLabel.text = place.title
-        cell.subtitleLabel.text = place.place
-        
-        // FIXME: -- Mock data ile işlem yapmayı bitirdiğinde burayı düzelt.
-        // Eğer place.cover_img_url boş bir dize veya sadece boşluk içeriyorsa veya dosya asset içinde yoksa
-        
-        if let imgUrl = place.cover_img_url, !imgUrl.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
-           let image = UIImage(named: imgUrl) {
-            cell.imageView.image = image
-        } else {
-            cell.imageView.image = UIImage(named: "img_default")
-        }
-        
-        
-        
+        cell.cellData = myAddedPlaces[indexPath.row]
+    
         return cell
     }
 }
