@@ -15,7 +15,6 @@ class MapVC: UIViewController {
     
     let viewModel = MapVM()
     private var mapPlaces = [Place]()
-    private var locationManager: CLLocationManager?
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: MapPageLayout.shared.mapLayout())
@@ -50,21 +49,37 @@ class MapVC: UIViewController {
         searchBar.searchBarStyle = .minimal
         return searchBar
     }()
-
+    
+    func showAlert(message: String) {
+        let alertController = UIAlertController(title: "Hata", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Tamam", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func tapGestureMethods() {
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        mapView.addGestureRecognizer(longPressGesture)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOutsideSearchBar))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
     // MARK: - Lifecycle
+    
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         mapData()
-        location()
-        
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-        mapView.addGestureRecognizer(longPressGesture)
+        tapGestureMethods()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         collectionView.reloadData()
+        
     }
     
     // MARK: - Setup
@@ -83,14 +98,14 @@ class MapVC: UIViewController {
             make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.left.right.equalToSuperview()
         })
-
-
+        
+        
         collectionView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().offset(550)
             make.left.right.equalToSuperview()
         }
     }
-
+    
     
     
     // MARK: - Data Handling
@@ -117,37 +132,15 @@ class MapVC: UIViewController {
         collectionView.reloadData()
     }
     
-    // MARK: - Location Handling
-    
-    private func location() {
-        locationManager = CLLocationManager()
-        locationManager?.delegate = self
-        locationManager?.requestWhenInUseAuthorization()
-    }
-    
+
     // MARK: - Map Functions
     
     private func addCustomPinToMap(at coordinate: CLLocationCoordinate2D) {
-        let customAnnotation = MapAnnotation(coordinate: coordinate)
-        mapView.addAnnotation(customAnnotation)
+        let annotation = MapAnnotation(coordinate: coordinate, image: UIImage(named: "icon_map_mark"))
+        mapView.addAnnotation(annotation)
     }
-    
-    private func checkLocationAuthorization() {
-        guard let locationManager = locationManager, let location = locationManager.location else { return }
-        
-        switch locationManager.authorizationStatus {
-            case .authorizedWhenInUse, .authorizedAlways:
-                let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
-                mapView.setRegion(region, animated: true)
-            case .denied:
-                print("Location services have been denied")
-            case .notDetermined, .restricted:
-                print("Location authorization is undetermined or restricted")
-            @unknown default:
-                fatalError()
-        }
-    }
-    
+ 
+  
     // MARK: - Popup
     
     private func showPopup(at coordinate: CLLocationCoordinate2D) {
@@ -177,42 +170,10 @@ class MapVC: UIViewController {
     }
 }
 
-// MARK: - CLLocationManagerDelegate
-
-extension MapVC: CLLocationManagerDelegate {
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkLocationAuthorization()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error)
-    }
-}
 
 // MARK: - MKMapViewDelegate
 
 extension MapVC: MKMapViewDelegate {
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MapAnnotation {
-            let senderAnnotation = annotation as! MapAnnotation
-            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MapAnnotation.identifier)
-            
-            if annotationView == nil {
-                annotationView = MKAnnotationView(annotation: senderAnnotation, reuseIdentifier: MapAnnotation.identifier)
-                annotationView?.canShowCallout = true
-                
-                let disclosureButton = UIButton(type: .detailDisclosure)
-                annotationView?.rightCalloutAccessoryView = disclosureButton
-            }
-            
-            let pinImage = UIImage(named: "myCustomMark")
-            annotationView?.image = pinImage
-            
-            return annotationView
-        }
-        
-        return nil
-    }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let coordinate = view.annotation?.coordinate else { return }
@@ -220,6 +181,25 @@ extension MapVC: MKMapViewDelegate {
             let indexPath = IndexPath(item: index, section: 0)
             collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
         }
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MapAnnotation else {
+            return nil
+        }
+
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MapAnnotation.identifier)
+
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: MapAnnotation.identifier)
+            annotationView!.canShowCallout = false
+        } else {
+            annotationView!.annotation = annotation
+        }
+
+        annotationView!.image = (annotation as? MapAnnotation)?.image
+
+        return annotationView
     }
 }
 
@@ -229,6 +209,8 @@ extension MapVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
     }
+    
+    
 }
 
 // MARK: - UICollectionViewDataSource
@@ -262,8 +244,11 @@ extension MapVC: UICollectionViewDataSource {
     private func showDetailViewController(with place: Place) {
         let detailVC = PlaceDetailsVC()
         detailVC.selectedPlace = place
+        detailVC.selectedCoordinates = CLLocationCoordinate2D(latitude: place.latitude!, longitude: place.longitude!)
         navigationController?.pushViewController(detailVC, animated: true)
     }
+    
+    
     
     @objc private func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
         if gesture.state == .ended {
@@ -282,14 +267,21 @@ extension MapVC: UICollectionViewDataSource {
 extension MapVC: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        performLocationSearch(query: searchBar.text)
+        locationSearch(query: searchBar.text)
     }
+    
+    @objc private func handleTapOutsideSearchBar(_ gesture: UITapGestureRecognizer) {
+        searchBar.resignFirstResponder()
+    }
+    
 }
+
 
 // MARK: - Helper Methods
 
 extension MapVC {
-    private func performLocationSearch(query: String?) {
+    
+    private func locationSearch(query: String?) {
         guard let query = query, !query.isEmpty else {
             return
         }
@@ -300,7 +292,7 @@ extension MapVC {
         let search = MKLocalSearch(request: request)
         search.start { (response, error) in
             guard let response = response else {
-                print("Error searching for location: \(error?.localizedDescription ?? "Unknown error")")
+                self.showAlert(message: "\(query) bulunamadı.")
                 return
             }
             
@@ -313,8 +305,7 @@ extension MapVC {
     }
     
     private func updateMap(coordinate: CLLocationCoordinate2D) {
-        
-        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 100, longitudinalMeters: 100)
+        let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         mapView.setRegion(region, animated: true)
         collectionView.reloadData()
     }

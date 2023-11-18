@@ -56,6 +56,7 @@ class PlaceBottomView: UICollectionViewCell {
         let mapView = MKMapView()
         mapView.overrideUserInterfaceStyle = .dark
         mapView.layer.cornerRadius = 16
+         mapView.delegate = self
         return mapView
     }()
     
@@ -119,4 +120,27 @@ class PlaceBottomView: UICollectionViewCell {
             make.bottom.equalToSuperview()
         }
     }
+}
+
+extension PlaceBottomView: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MapAnnotation else {
+            return nil
+        }
+
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MapAnnotation.identifier)
+
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: MapAnnotation.identifier)
+            annotationView!.canShowCallout = false
+        } else {
+            annotationView!.annotation = annotation
+        }
+
+        annotationView!.image = (annotation as? MapAnnotation)?.image
+
+        return annotationView
+    }
+   
+   
 }

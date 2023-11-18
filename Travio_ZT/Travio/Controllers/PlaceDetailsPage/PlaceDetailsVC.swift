@@ -15,6 +15,8 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
     var selectedPlace: Place?
     var imageURLs: [String] = []
+    var selectedCoordinates: CLLocationCoordinate2D?
+    
     
     private lazy var viewModel = PlaceDetailsVM()
     
@@ -34,7 +36,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         
         return collectionView
     }()
-    
+
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.currentPage = 0
@@ -90,6 +92,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     }
     
     
+    
     private func checkBookmark() {
         guard let placeID = selectedPlace?.id else { return }
         
@@ -104,6 +107,8 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
             self.bookmarkButton.setImage(bookmarkImage, for: .normal)
         }
     }
+    
+  
     private func galleryImages() {
         guard let placeId = selectedPlace?.id  else {return}
         
@@ -227,6 +232,10 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
                     
                     cell.mapView.setCenter(targetCoordinate, animated: false)
                     cell.mapView.region = region
+                    
+                    let annotation = MapAnnotation(coordinate: targetCoordinate, image: UIImage(named: "icon_map_mark"))
+                    cell.mapView.addAnnotation(annotation)
+                
                 }
                 
                 return cell

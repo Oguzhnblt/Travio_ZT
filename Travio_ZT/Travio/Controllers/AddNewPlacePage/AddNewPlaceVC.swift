@@ -120,10 +120,10 @@ class AddNewPlaceVC: UIViewController {
         let location = CLLocation(latitude: selectedCoordinate.latitude, longitude: selectedCoordinate.longitude)
 
         CLGeocoder().reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
-            guard let placemark = placemarks?.first, error == nil else { return }
-
-            let country = placemark.country!
-            let city = placemark.locality!
+            guard let placemark = placemarks?.first, error == nil,
+                  let country = placemark.country ?? placemark.areasOfInterest?.first,
+                  let city = placemark.locality
+            else { return }
 
             if let cell = self?.collectionView.cellForItem(at: self!.locationIndexPath) as? AddNewPlaceViewCell {
                 cell.textView.text = "\(city), \(country)"

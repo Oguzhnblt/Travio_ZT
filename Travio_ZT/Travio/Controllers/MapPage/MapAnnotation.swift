@@ -12,13 +12,13 @@ import MapKit
 class MapAnnotation: NSObject, MKAnnotation {
     static let identifier = "mapAnnotation"
     var coordinate: CLLocationCoordinate2D
-    var title: String?
-    var subtitle: String?
-    var id: String?
     var image: UIImage?
 
-    init(coordinate: CLLocationCoordinate2D) {
+    init(coordinate: CLLocationCoordinate2D, image: UIImage?) {
         self.coordinate = coordinate
+        self.image = image
         super.init()
     }
 }
+
+
