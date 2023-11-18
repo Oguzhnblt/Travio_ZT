@@ -28,16 +28,15 @@ class SecuritySettingsVM {
         }
     }
     
-    func changePassword(profile: ChangePasswordRequest, completion: @escaping (Result<String, Error>) -> Void) {
+    func changePassword(_ profile: ChangePasswordRequest) {
         let params = ["new_password": profile.new_password]
         
         NetworkingHelper.shared.fetchData(urlRequest: .changePassword(params: params as Parameters)) { (result: Result<ChangePasswordResponse, Error>) in
             switch result {
-            case .success:
-                completion(.success("Şifreniz başarıyla güncellendi"))
-                
-            case .failure(let error):
-                completion(.failure(error))
+                case .success(let success):
+                    print(success.message!)
+                case .failure(let failure):
+                    print(failure.localizedDescription)
             }
         }
     }

@@ -13,8 +13,6 @@ class SecuritySettingsVC: UIViewController {
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        scrollView.contentSize = CGSize(width: view.frame.width * 2, height: view.frame.height * 2)
         scrollView.isScrollEnabled = true
         scrollView.isUserInteractionEnabled = true
         scrollView.contentInsetAdjustmentBehavior = .always
@@ -74,17 +72,6 @@ class SecuritySettingsVC: UIViewController {
         return stackView
     }()
     
-    private lazy var itemStackViews: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [changePasswordStackView, privacyStackView])
-        stackView.axis = .vertical
-        stackView.distribution = .fillProportionally
-        stackView.spacing = 48
-        return stackView
-    }()
-    
-    
-    
-    
     private lazy var saveButton: UIButton = {
         let saveButton = UIButton()
         saveButton.setTitle("Save", for: .normal)
@@ -101,18 +88,8 @@ class SecuritySettingsVC: UIViewController {
         
         switch validation {
             case .success:
-                guard let new_password = newPasswordField.textField.text else {
-                    return
-                }
-                viewModel.changePassword(profile: ChangePasswordRequest(new_password: new_password)) { result in
-                    switch result {
-                        case .success(let successMessage):
-                            self.showAlert(message: successMessage)
-                            
-                        case .failure(let error):
-                            self.showAlert(message: error.localizedDescription)
-                    }
-                }
+                guard let new_password = newPasswordField.textField.text else {return}
+                viewModel.changePassword(ChangePasswordRequest(new_password: new_password))
             case .failure(let errorMessage):
                 showAlert(message: errorMessage)
         }
