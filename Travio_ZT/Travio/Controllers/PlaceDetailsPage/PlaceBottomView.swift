@@ -12,17 +12,9 @@ import MapKit
 
 class PlaceBottomView: UICollectionViewCell {
     
-    var menuButtonAction: (() -> Void)?
-
-
     static let identifier = "bottomView"
 
-    func configure(with place: Place) {
-        placeTitle.text = place.title
-        descriptionLabel.text = place.description
-    }
-
-
+    
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         return view
@@ -66,12 +58,7 @@ class PlaceBottomView: UICollectionViewCell {
         return mapView
     }()
 
-   
-    @objc func menuButtonTapped() {
-        menuButtonAction?()
-    }
-
-   
+ 
     lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [placeTitle, dateTitle, authorTitle])
         stackView.axis = .vertical
@@ -116,7 +103,6 @@ class PlaceBottomView: UICollectionViewCell {
         stackView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
-            make.size.equalTo(100)
         }
 
         mapView.snp.makeConstraints { make in

@@ -157,7 +157,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         }
     }
     
-    private func checkUpdateDeletePlace() {
+    private func checkPlaceForUser() {
 
             viewModel.userCheck = { [weak self] user in
                 guard let self = self else { return }
@@ -208,7 +208,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         setupViews()
         galleryImages()
         checkBookmark()
-        checkUpdateDeletePlace()
+        checkPlaceForUser()
         
         navigationController?.navigationBar.isHidden = true
     }
@@ -245,14 +245,12 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         })
         
         menuButton.snp.makeConstraints({ make in
-            make.top.equalTo(pageControl.snp.bottom).offset(84)
+            make.top.equalTo(pageControl.snp.bottom).offset(70)
             make.right.equalToSuperview().offset(-24)
             make.left.equalTo(pageControl.snp.right)
             make.size.equalTo(20)
         })
     }
-    
-    
 }
 
 extension PlaceDetailsVC: UICollectionViewDataSource {
