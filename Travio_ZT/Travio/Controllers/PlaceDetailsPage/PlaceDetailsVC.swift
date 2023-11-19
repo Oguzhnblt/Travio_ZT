@@ -14,10 +14,11 @@ import MapKit
 class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
     var selectedPlace: Place?
+    var userID: [Place] = []
     var imageURLs: [String] = []
     var selectedCoordinates: CLLocationCoordinate2D?
     
-    
+    let placeBottomView = PlaceBottomView()
     private lazy var viewModel = PlaceDetailsVM()
     
     private lazy var isBookmarked = false
@@ -36,6 +37,15 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         
         return collectionView
     }()
+    
+    
+    private lazy var menuButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "icon_three_dot"), for: .normal)
+        button.addTarget(self, action: #selector(menuButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
 
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
@@ -73,6 +83,34 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         navigationController?.popViewController(animated: true)
     }
     
+    @objc func menuButtonTapped() {
+        let menu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        let deleteAction = UIAlertAction(title: "Sil", style: .destructive) { [weak self] _ in
+            if let selectedPlaceID = self!.selectedPlace?.id,
+               self!.userID.contains(where: { $0.id == selectedPlaceID }) {
+                self?.viewModel.deletePlace(placeId: selectedPlaceID)
+                self?.collectionView.reloadData()
+            }
+        }
+
+//        let updateAction = UIAlertAction(title: "Güncelle", style: .default) { _ in
+//            if let selectedPlaceID = self.selectedPlace?.id,
+//               self.userID.contains(where: { $0.id == selectedPlaceID }) {
+//                self.viewModel.updatePlace(placeId: selectedPlaceID, params: [String : Any])
+//                self.collectionView.reloadData()
+//            }
+//        }
+//
+        let cancelAction = UIAlertAction(title: "İptal Et", style: .cancel, handler: nil)
+
+        menu.addAction(deleteAction)
+//        menu.addAction(updateAction)
+        menu.addAction(cancelAction)
+
+        self.present(menu, animated: true, completion: nil)
+    }
+
     
     private lazy var bookmarkButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -119,25 +157,42 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         }
     }
     
+    private func checkUpdateDeletePlace() {
+
+            viewModel.userCheck = { [weak self] user in
+                guard let self = self else { return }
+                
+                self.userID.append(contentsOf: user)
+                
+                if let selectedPlaceID = self.selectedPlace?.id, self.userID.contains(where: { $0.id == selectedPlaceID }) {
+                    self.menuButton.isHidden = false
+                } else {
+                    self.menuButton.isHidden = true
+                }
+            }
+            
+            viewModel.checkForUser()
+        }
+    
   
     private func galleryImages() {
-        guard let placeId = selectedPlace?.id  else {return}
-        
-        viewModel.getAllGalleries(placeId: placeId)
-        viewModel.imageData = { [weak self] placeImages in
-            guard let self = self else { return }
-            
-            if placeImages.isEmpty {
-                self.setDefaultImage()
-            } else {
-                let imageURLs = placeImages.compactMap { $0.image_url }
-                self.imageURLs.append(contentsOf: imageURLs)
-                
-                self.pageControl.numberOfPages = self.imageURLs.count
-                self.collectionView.reloadData()
+            guard let placeId = selectedPlace?.id else { return }
+
+            viewModel.getAllGalleries(placeId: placeId)
+            viewModel.imageData = { [weak self] placeImages in
+                guard let self = self else { return }
+
+                if placeImages.isEmpty {
+                    self.setDefaultImage()
+                } else {
+                    let imageURLs = placeImages.compactMap { $0.image_url }
+                    self.imageURLs.append(contentsOf: imageURLs)
+
+                    self.pageControl.numberOfPages = self.imageURLs.count
+                    self.collectionView.reloadData()
+                }
             }
         }
-    }
     
     
     private func setDefaultImage() {
@@ -153,6 +208,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         setupViews()
         galleryImages()
         checkBookmark()
+        checkUpdateDeletePlace()
         
         navigationController?.navigationBar.isHidden = true
     }
@@ -161,7 +217,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
     private func setupViews() {
         self.view.backgroundColor = .white
-        self.view.addSubviews(collectionView, pageControl, bookmarkButton, backButton)
+        self.view.addSubviews(collectionView, pageControl, bookmarkButton, backButton, menuButton)
         setupLayouts()
     }
     
@@ -186,6 +242,13 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         pageControl.snp.makeConstraints({ make in
             make.top.equalToSuperview().offset(self.view.frame.height * 0.23)
             make.left.right.equalToSuperview()
+        })
+        
+        menuButton.snp.makeConstraints({ make in
+            make.top.equalTo(pageControl.snp.bottom).offset(84)
+            make.right.equalToSuperview().offset(-24)
+            make.left.equalTo(pageControl.snp.right)
+            make.size.equalTo(20)
         })
     }
     
@@ -277,7 +340,7 @@ import SwiftUI
 struct PlaceDetailsVC_Preview: PreviewProvider {
     static var previews: some View{
         
-        PlaceDetailsVC().showPreview()
+        PlaceDetailsVC().showPreview().ignoresSafeArea()
     }
 }
 #endif

@@ -30,7 +30,7 @@ class MyVisitsVC: UIViewController {
         let label = UILabel()
         label.text = "Ziyaret edilen yer yoktur."
         label.textColor = .gray
-        label.font = UIFont(name: "Poppins-Regular", size: 16)
+        label.font = UIFont(name: "Poppins-Regular", size: 14)
         label.isHidden = true
         label.textAlignment = .center
         return label

@@ -5,93 +5,104 @@
 //  Created by Oğuz on 5.11.2023.
 //
 
-
 import UIKit
 import SnapKit
 import MapKit
 
+
 class PlaceBottomView: UICollectionViewCell {
     
+    var menuButtonAction: (() -> Void)?
+
+
     static let identifier = "bottomView"
-    
+
     func configure(with place: Place) {
-           placeTitle.text = place.title
-           descriptionLabel.text = place.description
-       }
-       
-    
+        placeTitle.text = place.title
+        descriptionLabel.text = place.description
+    }
+
+
     private lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         return view
     }()
-    
+
     private lazy var backView: UIView = {
         let view = UIView()
         return view
     }()
-  
+
     lazy var placeTitle: UILabel = {
         let label = UILabel()
         label.textColor = .black
+        label.text = "Türkiye"
         label.font = UIFont(name: "Poppins-SemiBold", size: 30)
-        label.numberOfLines = 0
+        label.numberOfLines = -1
         return label
     }()
-    
+
     lazy var dateTitle: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.black
+        label.text = "10 Kasım 2023"
         label.font = UIFont(name: "Poppins-Regular", size: 14)
         return label
     }()
-    
+
     lazy var authorTitle: UILabel = {
         let label = UILabel()
         label.textColor = .gray
+        label.text = "Oğuzhan Bolat"
         label.font = UIFont(name: "Poppins-Regular", size: 10)
         return label
     }()
-    
-     lazy var mapView: MKMapView = {
+
+    lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.overrideUserInterfaceStyle = .dark
         mapView.layer.cornerRadius = 16
-         mapView.delegate = self
+        mapView.delegate = self
         return mapView
     }()
-    
-    
-    private lazy var stackView: UIStackView = {
+
+   
+    @objc func menuButtonTapped() {
+        menuButtonAction?()
+    }
+
+   
+    lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [placeTitle, dateTitle, authorTitle])
         stackView.axis = .vertical
         stackView.spacing = 4
         return stackView
     }()
-    
-     lazy var descriptionLabel: UILabel = {
+   
+  
+    lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-         label.text = "Lorem ipsum dolor sit amet"
+        label.text = "Lorem ipsum dolor sit amet"
         label.font = UIFont(name: "Poppins-Regular", size: 12)
         label.numberOfLines = 0
         return label
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         setupViews()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
+
+  
     private func setupViews() {
         self.addSubview(scrollView)
         scrollView.addSubview(backView)
-        backView.addSubviews(stackView, mapView, descriptionLabel)
+        backView.addSubviews(stackView,mapView, descriptionLabel)
 
         backView.snp.makeConstraints{ make in
             make.edges.equalToSuperview()
@@ -105,7 +116,7 @@ class PlaceBottomView: UICollectionViewCell {
         stackView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
-
+            make.size.equalTo(100)
         }
 
         mapView.snp.makeConstraints { make in
@@ -119,6 +130,7 @@ class PlaceBottomView: UICollectionViewCell {
             make.leading.trailing.equalToSuperview().inset(16)
             make.bottom.equalToSuperview()
         }
+        
     }
 }
 
@@ -141,6 +153,4 @@ extension PlaceBottomView: MKMapViewDelegate {
 
         return annotationView
     }
-   
-   
 }

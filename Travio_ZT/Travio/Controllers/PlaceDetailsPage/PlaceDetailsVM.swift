@@ -11,6 +11,7 @@ import Alamofire
 class PlaceDetailsVM {
     var imageData: (([PlaceImage]) -> Void)?
     var checking: ((String) -> Void)?
+    var userCheck: (([Place]) -> Void)?
 
      func getAllGalleries(placeId: String) {
          NetworkingHelper.shared.fetchData(urlRequest: .getAllGalleryByPlaceId(placeId: placeId), completion: {(result: Result<GetAllGalleryByPlaceIdResponse,Error>) in
@@ -27,7 +28,6 @@ class PlaceDetailsVM {
         NetworkingHelper.shared.fetchData(urlRequest: .postVisit(params: params as Parameters), completion: {(result: Result<PostVisitResponse,Error>) in
            switch result {
                case .success(_): break
-                  
                case .failure(let failure):
                    print(failure.localizedDescription)
            }
@@ -49,6 +49,37 @@ class PlaceDetailsVM {
             switch result {
                 case .success(let success):
                     checking?(success.status!)
+                case .failure(let failure):
+                    print(failure.localizedDescription)
+            }
+        })
+    }
+    
+    func checkForUser() {
+        NetworkingHelper.shared.fetchData(urlRequest: .getAllPlacesForUser, completion: {(result: Result<GetAllPlacesForUserResponse, Error>)in
+            switch result {
+                case .success(let success):
+                    self.userCheck?((success.data?.places)!)
+                case .failure(let failure):
+                    print(failure.localizedDescription)
+            }
+        })
+    }
+    
+    func deletePlace(placeId: String) {
+        NetworkingHelper.shared.fetchData(urlRequest: .deletePlace(placeId: placeId), completion: {(result: Result<DeletePlaceResponse, Error>)in
+            switch result {
+                case .success(_): break
+                case .failure(let failure):
+                    print(failure.localizedDescription)
+            }
+        })
+    }
+    
+    func updatePlace(placeId: String, params: [String: Any]) {
+        NetworkingHelper.shared.fetchData(urlRequest: .updatePlace(placeId: placeId, params: params), completion: {(result: Result<UpdatePlaceResponse, Error>)in
+            switch result {
+                case .success(_): break
                 case .failure(let failure):
                     print(failure.localizedDescription)
             }
