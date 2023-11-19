@@ -48,6 +48,14 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         return pageControl
     }()
     
+    private func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title,message: message,preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Tamam",style: .default,handler: nil)
+
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+
     @objc private func pageControlValueChanged() {
         let indexPath = IndexPath(item: pageControl.currentPage, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
@@ -79,12 +87,15 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         
         if isBookmarked {
             let formattedDate = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withInternetDateTime, .withFractionalSeconds])
-            
+
             let params = ["place_id": selectedPlace?.id, "visited_at": formattedDate]
             viewModel.postVisit(params: params)
+            showAlert(title: "💖", message: "Ziyaretlere eklendi.")
             
+
         } else {
             viewModel.deleteVisit(placeID: selectedPlace?.id)
+            showAlert(title: "💔", message: "Ziyaretlerden kaldırıldı.")
         }
         
         let image = isBookmarked ? UIImage(named: "icon_bookmark_fill") : UIImage(named: "icon_bookmark")

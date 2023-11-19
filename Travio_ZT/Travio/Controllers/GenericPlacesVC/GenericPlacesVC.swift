@@ -12,8 +12,8 @@ class GenericPlacesVC: UIViewController {
     
     let viewModel = GenericPlacesVM()
     var places = [Place]()
-    var isPopular = Bool()
-
+    var sectionType: SectionType?
+    
     
     private var isSorted = false
     private lazy var tableView: UITableView = {
@@ -45,19 +45,10 @@ class GenericPlacesVC: UIViewController {
         let imageName = isSorted ? "img_up_sort" : "img_down_sort"
         sortButton.setImage(UIImage(named: imageName), for: .normal)
         
-        if isPopular {
-            if isSorted {
-                places.sort { $0.title!.localizedCompare($1.title!) == .orderedAscending }
-            } else {
-                places.sort { $0.title!.localizedCompare($1.title!) == .orderedDescending }
-            }
-            
+        if isSorted {
+            places.sort { $0.title!.localizedCompare($1.title!) == .orderedAscending }
         } else {
-            if isSorted {
-                places.sort { $0.title!.localizedCompare($1.title!) == .orderedAscending }
-            } else {
-                places.sort { $0.title!.localizedCompare($1.title!) == .orderedDescending }
-            }
+            places.sort { $0.title!.localizedCompare($1.title!) == .orderedDescending }
         }
         
         tableView.reloadData()
@@ -81,20 +72,30 @@ class GenericPlacesVC: UIViewController {
     }
     
     func fetchData() {
-            if isPopular {
+        switch sectionType {
+            case .popularPlaces:
                 viewModel.popularplacesTransfer = { [weak self] place in
                     self?.places = place
                     self?.updateTableView()
                 }
                 viewModel.popularPlaces()
-            } else {
+            case .newPlaces:
                 viewModel.lastPlacesTransfer = { [weak self] place in
                     self?.places = place
                     self?.updateTableView()
                 }
                 viewModel.newPlaces()
-            }
+            case .myAddedPlaces:
+                viewModel.addedPlacesTransfer = { [weak self] place in
+                    self?.places = place
+                    self?.updateTableView()
+                }
+                viewModel.myAddedPlaces()
+            case .none:
+                break
         }
+        
+    }
     
     private func updateTableView() {
         DispatchQueue.main.async {
@@ -123,47 +124,35 @@ class GenericPlacesVC: UIViewController {
 }
 
 extension GenericPlacesVC: UITableViewDelegate, UITableViewDataSource {
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isPopular ? places.count : places.count
+        return places.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: GenericPlacesTableViewCell.identifier, for: indexPath) as! GenericPlacesTableViewCell
-
-        if isPopular {
-            let object = places[indexPath.row]
-            cell.configure(with: object)
-        } else {
-            let object = places[indexPath.row]
-            cell.configureLastPlace(with: object)
-        }
-
+        
+        let object = places[indexPath.row]
+        cell.configure(with: object)
+        
         cell.backgroundColor = UIColor(named: "contentColor")
         cell.selectionStyle = .none
-
+        
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if isPopular {
-            let selectedPlace = places[indexPath.row]
-            showDetailViewController(with: selectedPlace)
-        } else {
-            let selectedLastPlace = places[indexPath.row]
-            showDetailViewController(with: selectedLastPlace)
-        }
+        let selectedPlace = places[indexPath.row]
+        showDetailViewController(with: selectedPlace)
     }
-
+    
     private func showDetailViewController(with place: Any) {
         let detailVC = PlaceDetailsVC()
-
+        
         if let selectedPlace = place as? Place {
             detailVC.selectedPlace = selectedPlace
-        } else if let selectedLastPlace = place as? Place {
-            detailVC.selectedPlace = selectedLastPlace
         }
-
+        
         navigationController?.pushViewController(detailVC, animated: true)
     }
 }

@@ -13,14 +13,20 @@ import Kingfisher
 
 class MapViewCell: UICollectionViewCell {
     static let identifier = "mapCell"
+    private lazy var viewModel = MapVM()
     
     func configure(with place: Place) {
-           if let url = URL(string: place.cover_image_url!) {
-               imageView.kf.setImage(with: url)
+
+           if let urlString = place.cover_image_url, let url = URL(string: urlString), !urlString.isEmpty {
+               viewModel.imageCorrect(imageView: imageView, url: url)
+           } else {
+               imageView.image = UIImage(named: "img_default")
            }
+
            titleLabel.text = place.title
            subtitleLabel.text = place.place
        }
+
         
    
     lazy var imageView: UIImageView = {

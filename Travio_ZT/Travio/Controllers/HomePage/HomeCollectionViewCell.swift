@@ -13,14 +13,22 @@ import Kingfisher
 class HomeCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "places"
-    
+    private lazy var viewModel = HomeVM()
+
     func configurePlaces(with place: Place) {
-        if let url = URL(string: place.cover_image_url!) {
-            imageView.kf.setImage(with: url)
-        }        
+
+        if let urlString = place.cover_image_url, let url = URL(string: urlString), !urlString.isEmpty {
+            viewModel.imageCorrect(imageView: imageView, url: url)
+        } else {
+            imageView.image = UIImage(named: "img_default")
+        }
+
         titleLabel.text = place.title
         subtitleLabel.text = place.place
     }
+
+
+
 
     private lazy var backView: UIView = {
         let backView = UIView()
@@ -69,6 +77,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupLayouts() {
+        backView.dropShadow()
         backView.snp.makeConstraints({make in
             make.edges.equalToSuperview()
         })
@@ -94,6 +103,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
             make.left.equalToSuperview().offset(16)
             
         }
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

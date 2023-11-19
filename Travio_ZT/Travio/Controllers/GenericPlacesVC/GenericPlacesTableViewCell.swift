@@ -11,25 +11,21 @@ import SnapKit
 class GenericPlacesTableViewCell: UITableViewCell {
     
     static let identifier = "popularPlaces"
-    
+    private lazy var viewModel = GenericPlacesVM()
     
     func configure(with place: Place) {
-        if let url = URL(string: place.cover_image_url!) {
-            imageViews.kf.setImage(with: url)
+
+        if let urlString = place.cover_image_url, let url = URL(string: urlString), !urlString.isEmpty {
+            viewModel.imageCorrect(imageView: imageViews, url: url)
+        } else {
+            imageViews.image = UIImage(named: "img_default")
         }
+
         titleLabel.text = place.title
         subtitleLabel.text = place.place
     }
-    
-    func configureLastPlace(with lastPlace: Place) {
-        if let url = URL(string: lastPlace.cover_image_url!) {
-            imageViews.kf.setImage(with: url)
-        }
-        titleLabel.text = lastPlace.title
-        subtitleLabel.text = lastPlace.place
-    }
-    
-    
+
+   
     private lazy var backView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.white

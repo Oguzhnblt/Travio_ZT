@@ -23,7 +23,7 @@ class HomePageLayout {
         layoutSection.orthogonalScrollingBehavior  = .groupPaging
         let layoutSectionHeader = createSectionHeader()
         layoutSection.boundarySupplementaryItems = [layoutSectionHeader]
-        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 20, trailing: 16)
         layoutSection.interGroupSpacing = 16
 
         return layoutSection

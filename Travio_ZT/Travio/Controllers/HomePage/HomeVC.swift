@@ -8,12 +8,31 @@
 import UIKit
 import SnapKit
 
+enum SectionType: Int, CaseIterable {
+    case popularPlaces
+    case newPlaces
+    case myAddedPlaces
+
+    func title() -> String {
+        switch self {
+        case .popularPlaces:
+            return "Popular Places"
+        case .newPlaces:
+            return "New Places"
+        case .myAddedPlaces:
+            return "My Added Places"
+        }
+    }
+}
+
 
 class HomeVC: UIViewController {
     
     private lazy var viewModel = HomeVM()
+    
     private lazy var popularPlaces = [Place]()
     private lazy var lastPlaces = [Place]()
+    private lazy var myAddedPlaces = [Place]()
 
     let popularPlacesId = "PopularPlacesHeader"
     let newPlacesId = "NewPlacesHeader"
@@ -27,8 +46,9 @@ class HomeVC: UIViewController {
         
         
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
-        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: "popularPlacesId", withReuseIdentifier: "popularPlaces")
-        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: "newPlacesId", withReuseIdentifier: "newPlaces")
+        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: popularPlacesId, withReuseIdentifier: popularPlacesId)
+        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: newPlacesId, withReuseIdentifier: newPlacesId)
+
         
         collectionView.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
         collectionView.dataSource = self
@@ -37,20 +57,7 @@ class HomeVC: UIViewController {
         return collectionView
     }()
     
-    private lazy var headerLabel: UILabel = {
-        let headerLabel = UILabel()
-        headerLabel.textColor = .black
-        headerLabel.font = UIFont(name: "Poppins-Regular", size: 20)
-        
-        return headerLabel
-    }()
-    
-    private lazy var homeView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(named: "backgroundColor")
-        return view
-    }()
-    
+   
     private lazy var homeItemView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "contentColor")
@@ -73,6 +80,7 @@ class HomeVC: UIViewController {
         navigationController?.navigationBar.isHidden = true
         lastPlacesData()
         popularPlacesData()
+        myAddedPlacesData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,34 +105,38 @@ class HomeVC: UIViewController {
         }
         viewModel.newPlaces()
     }
+    
+    private func myAddedPlacesData() {
+        viewModel.addedPlacesTransfer = { [weak self] place in
+            self?.myAddedPlaces = place
+            self?.collectionView.reloadData()
+        }
+        viewModel.myAddedPlaces()
+    }
    
     private func setupViews() {
-        
-        self.view.addSubviews(homeView,imageView)
-        homeView.addSubview(homeItemView)
+        self.view.backgroundColor = UIColor(named: "backgroundColor")
+        self.view.addSubviews(homeItemView,imageView)
         homeItemView.addSubviews(collectionView)
-        
         
         setupLayouts()
         
     }
     private func setupLayouts() {
-        homeView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        homeItemView.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).offset(35)
+            make.left.right.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
         
         imageView.snp.makeConstraints({make in
-            make.top.equalTo(homeView).offset(80)
-            make.left.equalTo(homeView).offset(16)
+            make.top.equalToSuperview().offset(80)
+            make.left.equalToSuperview().offset(16)
         })
         
-        homeItemView.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(125)
-            make.edges.equalToSuperview()
-        }
-        collectionView.dropShadow()
+       
         collectionView.snp.makeConstraints({make in
-            make.top.equalToSuperview().offset(10)
+            make.top.equalToSuperview()
             make.bottom.equalToSuperview()
             make.left.right.equalToSuperview()
         })
@@ -143,109 +155,120 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
 
 extension HomeVC: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return SectionType.allCases.count
     }
+
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-            case 0:
+        guard let sectionType = SectionType(rawValue: section) else {return 0}
+
+        switch sectionType {
+            case .popularPlaces:
                 return popularPlaces.count
-            case 1:
+            case .newPlaces:
                 return lastPlaces.count
-            default:
-                fatalError()
+            case .myAddedPlaces:
+                return myAddedPlaces.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.section {
-            case 0:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as! HomeCollectionViewCell
-                
-                let object = popularPlaces[indexPath.item]
-                cell.configurePlaces(with: object)
-                
-                return cell
-            case 1:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as! HomeCollectionViewCell
-                
-                let object = lastPlaces[indexPath.item]
-                cell.configurePlaces(with: object)
-                return cell
-            default:
-                fatalError()
+        guard let sectionType = SectionType(rawValue: indexPath.section) else {
+            fatalError("Invalid section type")
         }
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as! HomeCollectionViewCell
+
+        switch sectionType {
+            case .popularPlaces:
+                cell.configurePlaces(with: popularPlaces[indexPath.item])
+            case .newPlaces:
+                cell.configurePlaces(with: lastPlaces[indexPath.item])
+            case .myAddedPlaces:
+                cell.configurePlaces(with: myAddedPlaces[indexPath.item])
+        }
+
+        return cell
     }
+
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let placeDetailsVC = PlaceDetailsVC()  
-        
-        switch indexPath.section {
-        case 0:
-            placeDetailsVC.selectedPlace = popularPlaces[indexPath.item]
-        case 1:
-            placeDetailsVC.selectedPlace = lastPlaces[indexPath.item]
-        default:
-            break
+        guard let sectionType = SectionType(rawValue: indexPath.section) else {
+            fatalError("Invalid section type")
         }
-        
+
+        let placeDetailsVC = PlaceDetailsVC()
+
+        switch sectionType {
+            case .popularPlaces:
+                placeDetailsVC.selectedPlace = popularPlaces[indexPath.item]
+            case .newPlaces:
+                placeDetailsVC.selectedPlace = lastPlaces[indexPath.item]
+            case .myAddedPlaces:
+                placeDetailsVC.selectedPlace = myAddedPlaces[indexPath.item]
+        }
+
         navigationController?.pushViewController(placeDetailsVC, animated: true)
     }
+
 
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.reuseIdentifier, for: indexPath) as! SectionHeaderView
             
-            let sectionTitles = ["Popular Places", "New Places"]
+            let sectionTitles = ["Popular Places", "New Places", "My Added Places"]
             
             if indexPath.section < sectionTitles.count {
+                let sectionType = SectionType(rawValue: indexPath.section)!
+                
                 header.title.text = sectionTitles[indexPath.section]
                 header.button.setTitle("See All", for: .normal)
-                switch indexPath.section {
-                    case 0:
-                        header.button.addTarget(self, action: #selector(seeAllPopular), for: .touchUpInside)
-                    case 1:
-                        header.button.addTarget(self, action: #selector(seeAllNew), for: .touchUpInside)
-                    default:
-                        break
-                }
+                
+                header.button.tag = sectionType.rawValue
+                header.button.addTarget(self, action: #selector(seeAll(_:)), for: .touchUpInside)
             }
+            
             return header
         }
+        
         return UICollectionReusableView()
     }
 
-    @objc func seeAllPopular() {
-        let popularPlacesVC = GenericPlacesVC()
-        popularPlacesVC.title = "Popular Places"
-        popularPlacesVC.isPopular = true
-        popularPlacesVC.fetchData()
-        navigationController?.pushViewController(popularPlacesVC, animated: true)
-    }
 
-    @objc func seeAllNew() {
-        let newPlacesVC = GenericPlacesVC()
-        newPlacesVC.title = "New Places"
-        newPlacesVC.isPopular = false
-        newPlacesVC.fetchData()
-        navigationController?.pushViewController(newPlacesVC, animated: true)
+    @objc func seeAll(_ sender: UIButton) {
+        guard let sectionType = SectionType(rawValue: sender.tag) else {
+            return
+        }
+
+        let genericPlacesVC = GenericPlacesVC()
+        
+        switch sectionType {
+            case .popularPlaces:
+                genericPlacesVC.title = sectionType.title()
+                genericPlacesVC.sectionType = .popularPlaces
+            case .newPlaces:
+                genericPlacesVC.title =  sectionType.title()
+                genericPlacesVC.sectionType = .newPlaces
+            case .myAddedPlaces:
+                genericPlacesVC.title =  sectionType.title()
+                genericPlacesVC.sectionType = .myAddedPlaces
+        }
+        
+        genericPlacesVC.fetchData()
+        navigationController?.pushViewController(genericPlacesVC, animated: true)
     }
+    
 }
 
 extension HomeVC {
     
     func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
-            switch sectionNumber {
-                case 0,1:
                     return HomePageLayout.shared.makePlacesLayout()
-                default:
-                    fatalError()
             }
         }
     }
-}
 
 
 #if DEBUG
