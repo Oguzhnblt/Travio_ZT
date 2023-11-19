@@ -26,32 +26,47 @@ class MyVisitsVC: UIViewController {
         return collectionView
     }()
     
+    private lazy var noDataLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Ziyaret edilen yer yoktur."
+        label.textColor = .gray
+        label.font = UIFont(name: "Poppins-Regular", size: 16)
+        label.isHidden = true
+        label.textAlignment = .center
+        return label
+    }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        
         navigationController?.navigationBar.isHidden = true
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
+
         viewModel.visitsTransfer = { [self] visits in
             self.myVisits = visits
             collectionView.reloadData()
+            noDataLabel.isHidden = !myVisits.isEmpty
         }
-        viewModel.getAllVisits()
         
+        viewModel.getAllVisits()
     }
     
     private func setupViews() {
         setupView(title: "My Visits", buttonImage: nil, buttonPosition: nil, headerLabelPosition: .left, buttonAction: nil, itemsView: [collectionView])
-        
+        view.addSubviews(noDataLabel)
         setupLayouts()
         
     }
     
     private func setupLayouts() {
+        noDataLabel.snp.makeConstraints({make in
+            make.center.equalToSuperview()
+        })
+        
         collectionView.snp.makeConstraints({make in
             make.top.equalToSuperview()
             make.left.right.equalToSuperview().inset(24)

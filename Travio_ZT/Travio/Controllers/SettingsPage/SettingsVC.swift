@@ -58,6 +58,7 @@ class SettingsVC: UIViewController, EditProfileDelegate {
     private func showAlert(message: String) {
         let alertController = UIAlertController(title: "Uyarı", message: message, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "İptal Et", style: .cancel, handler: nil)
+        
         let logoutAction = UIAlertAction(title: "Çıkış Yap", style: .destructive) { _ in
             AccessManager.shared.deleteToken(accountIdentifier: "access-token")
             let loginVC = LoginVC()
