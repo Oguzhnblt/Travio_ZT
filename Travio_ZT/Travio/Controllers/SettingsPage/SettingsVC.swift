@@ -60,8 +60,10 @@ class SettingsVC: UIViewController, EditProfileDelegate {
         let cancelAction = UIAlertAction(title: "İptal Et", style: .cancel, handler: nil)
         let logoutAction = UIAlertAction(title: "Çıkış Yap", style: .destructive) { _ in
             AccessManager.shared.deleteToken(accountIdentifier: "access-token")
-            let vc = LoginVC()
-            self.navigationController?.pushViewController(vc, animated: true)
+            let loginVC = LoginVC()
+            let navigationController = UINavigationController(rootViewController: loginVC)
+            navigationController.modalPresentationStyle = .fullScreen
+            self.present(navigationController, animated: true, completion: nil)
         }
         
         alertController.addAction(cancelAction)
