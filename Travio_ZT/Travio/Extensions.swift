@@ -485,3 +485,20 @@ extension DateFormatter {
     }
 }
 
+extension Data {
+    init?(base64URLEncoded: String) {
+        var base64 = base64URLEncoded
+            .replacingOccurrences(of: "-", with: "+")
+            .replacingOccurrences(of: "_", with: "/")
+
+        // Add padding to make it a multiple of 4
+        let paddedLength = (4 - base64.count % 4) % 4
+        base64 += String(repeating: "=", count: paddedLength)
+
+        guard let data = Data(base64Encoded: base64) else { return nil }
+        self = data
+    }
+}
+
+
+

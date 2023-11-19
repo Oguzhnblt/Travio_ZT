@@ -43,7 +43,7 @@ class SecuritySettingsVC: UIViewController {
         let label = UILabel()
         label.text = headerLabel[0]
         label.textColor = UIColor(named: "backgroundColor")
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     
@@ -51,7 +51,7 @@ class SecuritySettingsVC: UIViewController {
         let label = UILabel()
         label.text = headerLabel[1]
         label.textColor = UIColor(named: "backgroundColor")
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     
@@ -59,7 +59,6 @@ class SecuritySettingsVC: UIViewController {
     private lazy var privacyStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [camera, photoLibrary, location])
         stackView.axis = .vertical
-        stackView.spacing = 8
         
         return stackView
     }()
@@ -67,7 +66,6 @@ class SecuritySettingsVC: UIViewController {
     private lazy var changePasswordStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [newPasswordField, newPasswordConfirmField])
         stackView.axis = .vertical
-        stackView.spacing = 8
         
         return stackView
     }()
@@ -112,6 +110,8 @@ class SecuritySettingsVC: UIViewController {
         super.viewDidLoad()
         setupViews()
         navigationController?.navigationBar.isHidden = true
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+
     }
     
     override func viewWillAppear(_ animated: Bool) {

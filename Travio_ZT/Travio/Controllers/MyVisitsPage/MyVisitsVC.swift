@@ -113,7 +113,7 @@ extension MyVisitsVC {
         
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.orthogonalScrollingBehavior = .none
-        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 45, leading: 0, bottom: 0, trailing: 0)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 55, leading: 0, bottom: 20, trailing: 0)
         
         layoutSection.interGroupSpacing = 16
         

@@ -35,7 +35,7 @@ class SettingsVC: UIViewController, EditProfileDelegate {
         return collectionView
     }()
     
-   
+    
     private lazy var profileImage : UIImageView = {
         let profileImage = UIImageView()
         profileImage.image = UIImage(named: "img_profile")
@@ -55,15 +55,32 @@ class SettingsVC: UIViewController, EditProfileDelegate {
         return button
     }()
     
-    @objc func buttonEditProfileTapped() {
-        let editProfileVC = EditProfileVC()
-            editProfileVC.delegate = self
-            present(editProfileVC, animated: true)
+    private func showAlert(message: String) {
+        let alertController = UIAlertController(title: "Uyarı", message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "İptal Et", style: .cancel, handler: nil)
+        let logoutAction = UIAlertAction(title: "Çıkış Yap", style: .destructive) { _ in
+            AccessManager.shared.deleteToken(accountIdentifier: "access-token")
+            let vc = LoginVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(logoutAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
     
-    @objc override func buttonTapped(){
-        print("Logout işlemi")
+    
+    @objc func buttonEditProfileTapped() {
+        let editProfileVC = EditProfileVC()
+        editProfileVC.delegate = self
+        present(editProfileVC, animated: true)
     }
+    
+    @objc override func buttonTapped() {
+        showAlert(message: "Çıkış yapmak istediğinize emin misiniz?")
+    }
+    
     
     private func createLabel(text: String, color: String, textSize: CGFloat, fontName: String, alignment: NSTextAlignment) -> UILabel {
         let label = UILabel()
@@ -75,38 +92,39 @@ class SettingsVC: UIViewController, EditProfileDelegate {
     }
     private func updateUI(with profile: ProfileResponse) {
         profileText.text = profile.full_name ?? "Default Name"
-
+        
         if let imageUrl = profile.pp_url, let url = URL(string: imageUrl) {
             let options: KingfisherOptionsInfo = [
                 .transition(.fade(0.2)),
                 .cacheOriginalImage
             ]
-
+            
             profileImage.kf.setImage(with: url, options: options)
         }
     }
     
-   
+    
     private lazy var profileText = createLabel(text: "Bruce Wills", color: "textColor", textSize: 16, fontName: "Poppins-SemiBold", alignment: .center)
     
     private lazy var editProfileText = createLabel(text: "Edit Profile", color: "seeAllColor", textSize: 12, fontName: "Poppins-SemiBold", alignment: .center)
     
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = true
         setupViews()
-        
+        navigationController?.isNavigationBarHidden = true
+
         settingsVM.myProfile()
         settingsVM.dataTransfer = { [weak self] profile in
-                    self?.updateUI(with: profile)
-                }
+            self?.updateUI(with: profile)
+        }
     }
     
+
     func profileDidUpdate(fullName: String, image: UIImage) {
-           profileText.text = fullName
-           profileImage.image = image
-       }
+        profileText.text = fullName
+        profileImage.image = image
+    }
     
     
     func setupViews() {
@@ -138,7 +156,7 @@ class SettingsVC: UIViewController, EditProfileDelegate {
             make.centerX.equalToSuperview()
         })
         
-    
+        
     }
 }
 
@@ -161,8 +179,8 @@ extension SettingsVC: UICollectionViewDataSource {
                 let securitySettings = SecuritySettingsVC()
                 navigationController?.pushViewController(securitySettings, animated: true)
             case 1: break
-//                let appDefaults = EditProfileVC()
-//                navigationController?.pushViewController(appDefaults, animated: true)
+                //                let appDefaults = EditProfileVC()
+                //                navigationController?.pushViewController(appDefaults, animated: true)
             case 2:
                 let myAdded = MyAddedPlacesVC()
                 navigationController?.pushViewController(myAdded, animated: true)

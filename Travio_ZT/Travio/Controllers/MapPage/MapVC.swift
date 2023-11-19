@@ -44,7 +44,7 @@ class MapVC: UIViewController {
     
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.placeholder = "Nereye gitmek istiyorsunuz"
+        searchBar.placeholder = "Nereye gitmek istiyorsunuz?"
         searchBar.delegate = self
         searchBar.searchBarStyle = .minimal
         return searchBar
