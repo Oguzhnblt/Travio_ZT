@@ -27,6 +27,9 @@ class HomeCollectionViewCell: UICollectionViewCell {
         subtitleLabel.text = place.place
     }
 
+
+
+
     private lazy var backView: UIView = {
         let backView = UIView()
         backView.clipsToBounds = true
