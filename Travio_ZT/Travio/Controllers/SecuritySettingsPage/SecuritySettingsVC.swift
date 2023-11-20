@@ -119,6 +119,7 @@ class SecuritySettingsVC: UIViewController {
                 if granted {
                     sender.isOn = true
                 } else {
+                    sender.isOn = false
                     showPermissionAlert(for: privacyType)
                 }
             }
