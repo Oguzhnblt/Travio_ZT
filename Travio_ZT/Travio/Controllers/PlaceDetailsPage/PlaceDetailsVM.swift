@@ -75,15 +75,4 @@ class PlaceDetailsVM {
             }
         })
     }
-    
-    func updatePlace(placeId: String, params: [String: Any]) {
-        NetworkingHelper.shared.fetchData(urlRequest: .updatePlace(placeId: placeId, params: params), completion: {(result: Result<UpdatePlaceResponse, Error>)in
-            switch result {
-                case .success(_): break
-                case .failure(let failure):
-                    print(failure.localizedDescription)
-            }
-        })
-    }
-    
 }

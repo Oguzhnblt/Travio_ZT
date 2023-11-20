@@ -94,18 +94,9 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
             }
         }
 
-//        let updateAction = UIAlertAction(title: "Güncelle", style: .default) { _ in
-//            if let selectedPlaceID = self.selectedPlace?.id,
-//               self.userID.contains(where: { $0.id == selectedPlaceID }) {
-//                self.viewModel.updatePlace(placeId: selectedPlaceID, params: [String : Any])
-//                self.collectionView.reloadData()
-//            }
-//        }
-//
         let cancelAction = UIAlertAction(title: "İptal Et", style: .cancel, handler: nil)
 
         menu.addAction(deleteAction)
-//        menu.addAction(updateAction)
         menu.addAction(cancelAction)
 
         self.present(menu, animated: true, completion: nil)
