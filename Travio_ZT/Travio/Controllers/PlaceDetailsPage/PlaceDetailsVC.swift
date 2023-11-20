@@ -58,14 +58,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         return pageControl
     }()
     
-    private func showAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title,message: message,preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Tamam",style: .default,handler: nil)
-
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
-
+    
     @objc private func pageControlValueChanged() {
         let indexPath = IndexPath(item: pageControl.currentPage, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
@@ -90,7 +83,9 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
             if let selectedPlaceID = self!.selectedPlace?.id,
                self!.userID.contains(where: { $0.id == selectedPlaceID }) {
                 self?.viewModel.deletePlace(placeId: selectedPlaceID)
+                self?.navigationController?.popToRootViewController(animated: true)
                 self?.collectionView.reloadData()
+
             }
         }
 

@@ -103,15 +103,7 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         stack.spacing = 8
         return stack
     }
-    
-    private func showAlert(message: String) {
-        let alertController = UIAlertController(title: "Uyarı", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Tamam", style: .default)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    
+   
     private lazy var adminCell = editingProfileCell(labelText: "Admin", imageName: "img_admin")
     private lazy var signCell = editingProfileCell(labelText: "2 Kasım 2023", imageName: "img_sign")
     
@@ -157,13 +149,13 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
 
         guard let fullName = fullNameField.textField.text,
               let email = emailField.textField.text else {
-            showAlert(message: "Lütfen geçerli bir ad ve e-posta girin.")
+            showAlert(title: "Uyarı", message: "Lütfen geçerli bir ad ve e-posta girin.")
                     showIndicator(state: .stop)
             return }
         let validationResult = viewModel.validateInputs(fullName: fullName, email: email)
 
             if !validationResult.isValid {
-                showAlert(message: validationResult.errorMessage)
+                showAlert(title: "Uyarı", message: validationResult.errorMessage)
                 showIndicator(state: .stop)
                 return
             }
@@ -176,7 +168,7 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         profileName.text = fullName
         
         viewModel.showAlertVM = { message in
-            self.showAlert(message: message)
+            self.showAlert(title: "Uyarı", message: message)
             self.showIndicator(state: .stop)
             
             if let fullName = self.fullNameField.textField.text {

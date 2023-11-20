@@ -89,7 +89,7 @@ class LoginVC: UIViewController {
         else {return}
         
         guard viewModel.isValidEmail(email) else {
-                    showAlert(message: "Geçersiz email")
+            showAlert(title: "Hata", message: "Geçersiz email")
                     return
                 }
         
@@ -99,7 +99,7 @@ class LoginVC: UIViewController {
             self.navigateToHomeVC()
         }
         viewModel.showAlertFailure = { message in
-            self.showAlert(message: message)
+            self.showAlert(title: "Hata", message: message)
         }
     }
     
@@ -109,14 +109,6 @@ class LoginVC: UIViewController {
         navigationController.modalPresentationStyle = .fullScreen
         self.present(navigationController, animated: true, completion: nil)
     }
-    
-    private func showAlert(message: String) {
-        let alertController = UIAlertController(title: "Hata", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Tamam", style: .default, handler: nil)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

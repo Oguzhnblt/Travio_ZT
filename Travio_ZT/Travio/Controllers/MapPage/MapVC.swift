@@ -50,12 +50,6 @@ class MapVC: UIViewController {
         return searchBar
     }()
     
-    func showAlert(message: String) {
-        let alertController = UIAlertController(title: "Hata", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Tamam", style: .default, handler: nil)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
     
     private func tapGestureMethods() {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
@@ -77,10 +71,7 @@ class MapVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        mapData()
-
-        collectionView.reloadData()
-        
+        mapData()        
     }
     
     // MARK: - Setup
@@ -293,7 +284,7 @@ extension MapVC {
         let search = MKLocalSearch(request: request)
         search.start { (response, error) in
             guard let response = response else {
-                self.showAlert(message: "\(query) bulunamadı.")
+                self.showAlert(title: "Hata", message: "\(query) bulunamadı.")
                 return
             }
             

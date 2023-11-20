@@ -65,17 +65,17 @@ class SignUpVC: UIViewController {
         else { return }
         
         guard viewModel.validateEmail(email) else {
-                showAlert(message: "Geçersiz email")
+            showAlert(title: "Hata", message: "Geçersiz email")
                 return
             }
         
        viewModel.signUp(fullName: fullName, email: email, password: password, confirmPassword: confirmPassword)
         viewModel.showAlertSuccess = { message in
-                self.showAlert(message: message)
+            self.showAlert(title: "Başarılı", message: message)
             }
 
         viewModel.showAlertFailure = { message in
-            self.showAlert(message: message)
+            self.showAlert(title: "Hata", message: message)
         }
         updateSignUpButtonState()
 
@@ -84,14 +84,7 @@ class SignUpVC: UIViewController {
 
     
     // MARK: ShowAlert
-    
-    private func showAlert(message: String) {
-        let alertController = UIAlertController(title: "Uyarı", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Tamam", style: .default)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    
+  
     private func navigateToLoginViewController() {
         if let navigationController = navigationController {
             navigationController.popViewController(animated: true)

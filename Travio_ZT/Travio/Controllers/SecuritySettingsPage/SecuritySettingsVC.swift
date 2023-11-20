@@ -7,16 +7,20 @@
 
 import UIKit
 import SnapKit
+import AVFoundation
+import CoreLocation
+import Photos
 
 class SecuritySettingsVC: UIViewController {
+    
     private lazy var viewModel = SecuritySettingsVM()
+    private lazy var privacyManager = PrivacyManager.shared
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.isScrollEnabled = true
         scrollView.isUserInteractionEnabled = true
         scrollView.contentInsetAdjustmentBehavior = .always
-        
         return scrollView
     }()
     
@@ -26,18 +30,33 @@ class SecuritySettingsVC: UIViewController {
         return containerView
     }()
     
-    
-    private let headerLabel = ["Change Password","Privacy"]
+    private let headerLabel = ["Change Password", "Privacy"]
     private let passwordItems = ["New Password", "New Password Confirm"]
-    private let privacyItems = ["Camera", "Photo Library","Location"]
+    private let privacyItems = ["Camera", "Photo Library", "Location"]
     
     private lazy var newPasswordField = CommonTextField(labelText: passwordItems[0], textFieldPlaceholder: "******", isSecure: true)
     private lazy var newPasswordConfirmField = CommonTextField(labelText: passwordItems[1], textFieldPlaceholder: "******", isSecure: true)
     
+    private lazy var camera: PrivacyField = {
+        let field = PrivacyField(labelText: privacyItems[0], isOn: false)
+        field.toggleSwitch.tag = 0
+        field.toggleSwitch.addTarget(self, action: #selector(privacySwitchValueChanged), for: .valueChanged)
+        return field
+    }()
     
-    private lazy var camera = PrivacyField(labelText: privacyItems[0], isOn: false)
-    private lazy var photoLibrary = PrivacyField(labelText: privacyItems[1], isOn: false)
-    private lazy var location = PrivacyField(labelText: privacyItems[2], isOn: false)
+    private lazy var photoLibrary: PrivacyField = {
+        let field = PrivacyField(labelText: privacyItems[1], isOn: false)
+        field.toggleSwitch.tag = 1
+        field.toggleSwitch.addTarget(self, action: #selector(privacySwitchValueChanged), for: .valueChanged)
+        return field
+    }()
+    
+    private lazy var location: PrivacyField = {
+        let field = PrivacyField(labelText: privacyItems[2], isOn: false)
+        field.toggleSwitch.tag = 2
+        field.toggleSwitch.addTarget(self, action: #selector(privacySwitchValueChanged), for: .valueChanged)
+        return field
+    }()
     
     private lazy var passwordHeaderLabel: UILabel = {
         let label = UILabel()
@@ -55,18 +74,15 @@ class SecuritySettingsVC: UIViewController {
         return label
     }()
     
-    
     private lazy var privacyStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [camera, photoLibrary, location])
         stackView.axis = .vertical
-        
         return stackView
     }()
     
     private lazy var changePasswordStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [newPasswordField, newPasswordConfirmField])
         stackView.axis = .vertical
-        
         return stackView
     }()
     
@@ -80,100 +96,65 @@ class SecuritySettingsVC: UIViewController {
         return saveButton
     }()
     
-    
-    @objc func saveButtonTapped() {
+    @objc private func saveButtonTapped() {
         let validation = viewModel.validatePasswordFields(newPassword: newPasswordField.textField.text, confirmPassword: newPasswordConfirmField.textField.text)
         
         switch validation {
-            case .success:
-                guard let new_password = newPasswordField.textField.text else {return}
-                viewModel.changePassword(ChangePasswordRequest(new_password: new_password))
-                viewModel.successAlert = { message in
-                    self.showAlert(message: message)
-                }
-            case .failure(let errorMessage):
-                showAlert(message: errorMessage)
-        }
-    }
-    
-    
-    private func showAlert(message: String) {
-        let alertController = UIAlertController(title: "Uyarı", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Tamam", style: .default, handler: nil)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    
-    private func userPermissions() {
-        camera.switchChanged = { [weak self] isOn in
-
-            if isOn {
-                self?.requestCameraPermission()
-            } else {
-               
+        case .success:
+            guard let new_password = newPasswordField.textField.text else { return }
+            viewModel.changePassword(ChangePasswordRequest(new_password: new_password))
+            viewModel.successAlert = { message in
+                self.showAlert(title: "Uyarı", message: message)
             }
+        case .failure(let errorMessage):
+                showAlert(title: "Uyarı", message: errorMessage)
         }
     }
-    private func updateCameraSwitchState() {
-        AVCaptureDevice.requestAccess(for: .video) { [weak self] response in
-            DispatchQueue.main.async {
-                self?.camera.toggleSwitch.isOn = response
-            }
-        }
-    }
+    
+    @objc private func privacySwitchValueChanged(sender: UISwitch) {
+        guard let privacyType = privacyManager.switchTagToPrivacyType(sender.tag) else { return }
 
-    private func requestCameraPermission() {
-        AVCaptureDevice.requestAccess(for: .video) { response in
-            if response {
-            } else {
-      
-                DispatchQueue.main.async {
-                    self.showCameraPermissionAlert()
+        if sender.isOn {
+            privacyManager.requestPermission(for: privacyType) { [self] granted in
+                if granted {
+                    sender.isOn = true
+                } else {
+                    showPermissionAlert(for: privacyType)
                 }
             }
+        } else {
+            privacyManager.updatePermission(for: privacyType, isEnabled: false)
+            privacyManager.openAppSettings()
         }
     }
     
-    private func showCameraPermissionAlert() {
-        let alertController = UIAlertController(
-            title: "Kamera İzni Reddedildi",
-            message: "Kamera izni reddedildi. Ayarlara giderek izni açabilirsiniz.",
-            preferredStyle: .alert
-        )
+    private func observePermissionChanges() {
+        NotificationCenter.default.addObserver(self, selector: #selector(permissionStatusChanged(_:)), name: PrivacyManager.permissionStatusChangedNotification, object: nil)
+    }
+
+    @objc private func permissionStatusChanged(_ notification: Notification) {
         
-        let settingsAction = UIAlertAction(title: "Ayarlar", style: .default) { _ in
-            if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
-            }
-        }
-        
-        let cancelAction = UIAlertAction(title: "İptal", style: .cancel, handler: {_ in 
-            self.camera.toggleSwitch.isOn = false
-        })
-        
-        alertController.addAction(settingsAction)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
     }
     
+    private func updatePrivacySwitches() {
+        camera.toggleSwitch.isOn = privacyManager.isPermissionGranted(for: .camera)
+        photoLibrary.toggleSwitch.isOn = privacyManager.isPermissionGranted(for: .photoLibrary)
+        location.toggleSwitch.isOn = privacyManager.isPermissionGranted(for: .location)
+    }
+    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         navigationController?.navigationBar.isHidden = true
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        
-        userPermissions()
-        
-        
+        updatePrivacySwitches()
+        observePermissionChanges()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
-        updateCameraSwitchState()
-
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -186,10 +167,9 @@ class SecuritySettingsVC: UIViewController {
         setupView(title: "Security Settings", buttonImage: UIImage(named: "leftArrowIcon"), buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [scrollView])
         
         scrollView.addSubviews(containerView)
-        containerView.addSubviews(passwordHeaderLabel,privacyHeaderLabel,changePasswordStackView,privacyStackView, saveButton)
+        containerView.addSubviews(passwordHeaderLabel, privacyHeaderLabel, changePasswordStackView, privacyStackView, saveButton)
         
-        
-        scrollView.snp.makeConstraints({make in
+        scrollView.snp.makeConstraints({ make in
             make.edges.equalToSuperview()
         })
         
@@ -219,7 +199,6 @@ class SecuritySettingsVC: UIViewController {
             make.bottom.equalTo(privacyStackView.snp.top)
             make.left.equalToSuperview().offset(16)
         })
-        
         
         saveButton.snp.makeConstraints({ make in
             make.bottom.equalToSuperview().offset(-55)
