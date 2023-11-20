@@ -10,6 +10,9 @@ import SnapKit
 
 class PrivacyField: UIView {
     
+    var switchChanged: ((Bool) -> Void)?
+
+    
     private lazy var backView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.white
@@ -29,8 +32,13 @@ class PrivacyField: UIView {
     lazy var toggleSwitch: UISwitch = {
         let toggle = UISwitch()
         toggle.isOn = false
+        toggle.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
         return toggle
     }()
+    
+    @objc private func switchValueChanged(_ sender: UISwitch) {
+        switchChanged?(sender.isOn)
+        }
     
     private func setupViews() {
         self.addSubview(backView)

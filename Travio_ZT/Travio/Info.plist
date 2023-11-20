@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleGetInfoString</key>
 	<string></string>
+	<key>NSCameraUsageDescription</key>
+	<string>Bu uygulama kamerayı kullanarak fotoğraf çekmeyi desteklemektedir.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Poppins-Regular.ttf</string>

@@ -107,6 +107,7 @@
 		12F85D872AF9148000FB7CBD /* SignUpVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D862AF9148000FB7CBD /* SignUpVM.swift */; };
 		12F85D892AF9149E00FB7CBD /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D882AF9149E00FB7CBD /* LoginVM.swift */; };
 		12F85D8B2AF915C200FB7CBD /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D8A2AF915C200FB7CBD /* SettingsVC.swift */; };
+		12F8CCB52B0B7A4D00F95124 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F8CCB42B0B7A4D00F95124 /* PermissionManager.swift */; };
 		FF0B44B42AF2A74800586EA7 /* GetPlaceByIdResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B44B32AF2A74800586EA7 /* GetPlaceByIdResponseModel.swift */; };
 		FF0B44B62AF2AAAB00586EA7 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B44B52AF2AAAB00586EA7 /* Place.swift */; };
 		FF0B44B92AF2AD6A00586EA7 /* GetAllPlacesForUserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B44B82AF2AD6A00586EA7 /* GetAllPlacesForUserResponseModel.swift */; };
@@ -225,6 +226,7 @@
 		12F85D862AF9148000FB7CBD /* SignUpVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVM.swift; sourceTree = "<group>"; };
 		12F85D882AF9149E00FB7CBD /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
 		12F85D8A2AF915C200FB7CBD /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		12F8CCB42B0B7A4D00F95124 /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 		FF0B44B32AF2A74800586EA7 /* GetPlaceByIdResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPlaceByIdResponseModel.swift; sourceTree = "<group>"; };
 		FF0B44B52AF2AAAB00586EA7 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		FF0B44B82AF2AD6A00586EA7 /* GetAllPlacesForUserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllPlacesForUserResponseModel.swift; sourceTree = "<group>"; };
@@ -556,6 +558,7 @@
 				127249C22AF2282200CEAA64 /* SecuritySettingsVC.swift */,
 				127249D02AF2BF4700CEAA64 /* PrivacyField.swift */,
 				0FB69B0A2B02081500F476B7 /* SecuritySettingsVM.swift */,
+				12F8CCB42B0B7A4D00F95124 /* PermissionManager.swift */,
 			);
 			path = SecuritySettingsPage;
 			sourceTree = "<group>";
@@ -926,6 +929,7 @@
 				0FB84E052AF286CC0071A559 /* PostPlaceResponseModel.swift in Sources */,
 				12F5C1B82B021F37007FB53A /* PlaceDetailsVM.swift in Sources */,
 				FF0B44BC2AF2AFE600586EA7 /* GetPopularPlacesResponseModel.swift in Sources */,
+				12F8CCB52B0B7A4D00F95124 /* PermissionManager.swift in Sources */,
 				0FB84E082AF287840071A559 /* UpdatePlaceRequestModel.swift in Sources */,
 				125754362AFD7A9800AD003B /* AddNewPlaceVC.swift in Sources */,
 				1278062A2AF7EC840085D31F /* MyVisitsViewCell.swift in Sources */,

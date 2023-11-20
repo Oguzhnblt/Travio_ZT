@@ -105,18 +105,75 @@ class SecuritySettingsVC: UIViewController {
     }
     
     
+    private func userPermissions() {
+        camera.switchChanged = { [weak self] isOn in
+
+            if isOn {
+                self?.requestCameraPermission()
+            } else {
+               
+            }
+        }
+    }
+    private func updateCameraSwitchState() {
+        AVCaptureDevice.requestAccess(for: .video) { [weak self] response in
+            DispatchQueue.main.async {
+                self?.camera.toggleSwitch.isOn = response
+            }
+        }
+    }
+
+    private func requestCameraPermission() {
+        AVCaptureDevice.requestAccess(for: .video) { response in
+            if response {
+            } else {
+      
+                DispatchQueue.main.async {
+                    self.showCameraPermissionAlert()
+                }
+            }
+        }
+    }
+    
+    private func showCameraPermissionAlert() {
+        let alertController = UIAlertController(
+            title: "Kamera İzni Reddedildi",
+            message: "Kamera izni reddedildi. Ayarlara giderek izni açabilirsiniz.",
+            preferredStyle: .alert
+        )
+        
+        let settingsAction = UIAlertAction(title: "Ayarlar", style: .default) { _ in
+            if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "İptal", style: .cancel, handler: {_ in 
+            self.camera.toggleSwitch.isOn = false
+        })
+        
+        alertController.addAction(settingsAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         navigationController?.navigationBar.isHidden = true
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-
+        
+        userPermissions()
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
+        updateCameraSwitchState()
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -177,6 +234,7 @@ class SecuritySettingsVC: UIViewController {
 
 #if DEBUG
 import SwiftUI
+import AVFoundation
 
 @available(iOS 13, *)
 struct SecuritySettingsVC_Preview: PreviewProvider {
