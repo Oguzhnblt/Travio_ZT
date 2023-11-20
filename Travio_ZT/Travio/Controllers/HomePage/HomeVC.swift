@@ -78,8 +78,7 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
         setupViews()
         navigationController?.navigationBar.isHidden = true
-        lastPlacesData()
-        popularPlacesData()
+      
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -87,7 +86,8 @@ class HomeVC: UIViewController {
         addNewPlace.completedAddPlace = {
             self.collectionView.reloadData()
         }
-        
+        lastPlacesData()
+        popularPlacesData()
         myAddedPlacesData()
     }
     

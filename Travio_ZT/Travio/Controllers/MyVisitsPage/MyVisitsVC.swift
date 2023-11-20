@@ -28,7 +28,7 @@ class MyVisitsVC: UIViewController {
     
     private lazy var noDataLabel: UILabel = {
         let label = UILabel()
-        label.text = "Ziyaret edilen yer yoktur."
+        label.text = "Henüz ziyaret edilen yer yok."
         label.textColor = .gray
         label.font = UIFont(name: "Poppins-Regular", size: 14)
         label.isHidden = true
@@ -63,11 +63,11 @@ class MyVisitsVC: UIViewController {
     }
     
     private func setupLayouts() {
-        noDataLabel.snp.makeConstraints({make in
+        noDataLabel.snp.makeConstraints({ make in
             make.center.equalToSuperview()
         })
         
-        collectionView.snp.makeConstraints({make in
+        collectionView.snp.makeConstraints({ make in
             make.top.equalToSuperview()
             make.left.right.equalToSuperview().inset(24)
             make.bottom.equalToSuperview()

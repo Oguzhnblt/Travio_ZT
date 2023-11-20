@@ -73,11 +73,12 @@ class MapVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        mapData()
         tapGestureMethods()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        mapData()
+
         collectionView.reloadData()
         
     }
