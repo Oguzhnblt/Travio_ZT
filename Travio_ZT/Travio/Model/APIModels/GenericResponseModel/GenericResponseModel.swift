@@ -7,9 +7,7 @@
 
 import Foundation
 
-struct GenericResponse: Codable {
-    
+struct GenericResponseModel: Codable {
     var message: String?
     var status: String?
-    
 }

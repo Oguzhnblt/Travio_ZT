@@ -25,7 +25,7 @@ class PlaceDetailsVM {
     }
     
     func postVisit(params: [String: Any?]) {
-        NetworkingHelper.shared.fetchData(urlRequest: .postVisit(params: params as Parameters), completion: {(result: Result<GenericResponse,Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .postVisit(params: params as Parameters), completion: {(result: Result<GenericResponseModel,Error>) in
            switch result {
                case .success(_): break
                case .failure(let failure):
@@ -35,7 +35,7 @@ class PlaceDetailsVM {
    }
     
     func deleteVisit(placeID: String?) {
-        NetworkingHelper.shared.fetchData(urlRequest: .deleteVisitByPlaceId(placeId: placeID!), completion: {(result: Result<GenericResponse,Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .deleteVisitByPlaceId(placeId: placeID!), completion: {(result: Result<GenericResponseModel,Error>) in
            switch result {
                case .success(_): break
                case .failure(let failure):
@@ -45,7 +45,7 @@ class PlaceDetailsVM {
    }
     
     func checkVisitsById(placeID: String) {
-        NetworkingHelper.shared.fetchData(urlRequest: .checkVisitByPlaceId(placeId: placeID), completion: { [self](result: Result<GenericResponse, Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .checkVisitByPlaceId(placeId: placeID), completion: { [self](result: Result<GenericResponseModel, Error>) in
             switch result {
                 case .success(let success):
                     checking?(success.status!)

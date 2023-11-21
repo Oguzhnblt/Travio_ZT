@@ -42,7 +42,7 @@ class AddNewPlaceVM {
     
     func postGalleryImage(params: [String: Any]) {
         
-        NetworkingHelper.shared.fetchData(urlRequest: .postGalleryImage(params: params), completion: {(result: Result<GenericResponse, Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .postGalleryImage(params: params), completion: {(result: Result<GenericResponseModel, Error>) in
             switch result {
                 case .success(let success):
                     print(success.message!)
