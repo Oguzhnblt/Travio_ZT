@@ -46,7 +46,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         return button
     }()
     
-
+    
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.currentPage = 0
@@ -77,26 +77,15 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     }
     
     @objc func menuButtonTapped() {
-        let menu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-        let deleteAction = UIAlertAction(title: "Sil", style: .destructive) { [weak self] _ in
-            if let selectedPlaceID = self!.selectedPlace?.id,
-               self!.userID.contains(where: { $0.id == selectedPlaceID }) {
-                self?.viewModel.deletePlace(placeId: selectedPlaceID)
-                self?.navigationController?.popToRootViewController(animated: true)
-                self?.collectionView.reloadData()
-
+        Alerts.showAlert(from: self, title: "Uyarı", message: "Silmek istediğinize emin misiniz?", actionTitle: "Sil", cancelTitle: "İptal Et") {
+            if let selectedPlaceID = self.selectedPlace?.id,
+                self.userID.contains(where: { $0.id == selectedPlaceID }) {
+                self.viewModel.deletePlace(placeId: selectedPlaceID)
+                self.navigationController?.popToRootViewController(animated: true)
             }
         }
-
-        let cancelAction = UIAlertAction(title: "İptal Et", style: .cancel, handler: nil)
-
-        menu.addAction(deleteAction)
-        menu.addAction(cancelAction)
-
-        self.present(menu, animated: true, completion: nil)
     }
-
+    
     
     private lazy var bookmarkButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -111,12 +100,12 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         
         if isBookmarked {
             let formattedDate = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withInternetDateTime, .withFractionalSeconds])
-
+            
             let params = ["place_id": selectedPlace?.id, "visited_at": formattedDate]
             viewModel.postVisit(params: params)
             Alerts.showAlert(from: self, title: "💖", message: "Ziyaretlere eklendi.", actionTitle: "Tamam")
             
-
+            
         } else {
             viewModel.deleteVisit(placeID: selectedPlace?.id)
             Alerts.showAlert(from: self, title: "💔", message: "Ziyaretlerden kaldırıldı.", actionTitle: "Tamam")
@@ -144,41 +133,41 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     }
     
     private func checkPlaceForUser() {
-
-            viewModel.userCheck = { [weak self] user in
-                guard let self = self else { return }
-                
-                self.userID.append(contentsOf: user)
-                
-                if let selectedPlaceID = self.selectedPlace?.id, self.userID.contains(where: { $0.id == selectedPlaceID }) {
-                    self.menuButton.isHidden = false
-                } else {
-                    self.menuButton.isHidden = true
-                }
-            }
+        
+        viewModel.userCheck = { [weak self] user in
+            guard let self = self else { return }
             
-            viewModel.checkForUser()
-        }
-    
-  
-    private func galleryImages() {
-            guard let placeId = selectedPlace?.id else { return }
-
-            viewModel.getAllGalleries(placeId: placeId)
-            viewModel.imageData = { [weak self] placeImages in
-                guard let self = self else { return }
-
-                if placeImages.isEmpty {
-                    self.setDefaultImage()
-                } else {
-                    let imageURLs = placeImages.compactMap { $0.image_url }
-                    self.imageURLs.append(contentsOf: imageURLs)
-
-                    self.pageControl.numberOfPages = self.imageURLs.count
-                    self.collectionView.reloadData()
-                }
+            self.userID.append(contentsOf: user)
+            
+            if let selectedPlaceID = self.selectedPlace?.id, self.userID.contains(where: { $0.id == selectedPlaceID }) {
+                self.menuButton.isHidden = false
+            } else {
+                self.menuButton.isHidden = true
             }
         }
+        
+        viewModel.checkForUser()
+    }
+    
+    
+    private func galleryImages() {
+        guard let placeId = selectedPlace?.id else { return }
+        
+        viewModel.getAllGalleries(placeId: placeId)
+        viewModel.imageData = { [weak self] placeImages in
+            guard let self = self else { return }
+            
+            if placeImages.isEmpty {
+                self.setDefaultImage()
+            } else {
+                let imageURLs = placeImages.compactMap { $0.image_url }
+                self.imageURLs.append(contentsOf: imageURLs)
+                
+                self.pageControl.numberOfPages = self.imageURLs.count
+                self.collectionView.reloadData()
+            }
+        }
+    }
     
     
     private func setDefaultImage() {
@@ -293,7 +282,7 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
                     
                     let annotation = MapAnnotation(coordinate: targetCoordinate, image: UIImage(named: "icon_map_mark"))
                     cell.mapView.addAnnotation(annotation)
-                
+                    
                 }
                 
                 return cell

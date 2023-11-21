@@ -87,7 +87,7 @@ class SecuritySettingsVC: UIViewController {
     }()
     
     private lazy var saveButton: UIButton = {
-        let saveButton = UIButton()
+        let saveButton = UIButton(type: .custom)
         saveButton.setTitle("Save", for: .normal)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.layer.cornerRadius = 16
@@ -205,10 +205,9 @@ class SecuritySettingsVC: UIViewController {
         })
         
         saveButton.snp.makeConstraints({ make in
-            make.bottom.equalToSuperview().offset(-55)
+            make.top.equalTo(privacyStackView.snp.bottom).offset(60)
             make.left.right.equalToSuperview().inset(16)
-            make.width.equalTo(342)
-            make.height.equalTo(54)
+            make.bottom.equalToSuperview().offset(-60)
         })
     }
 }

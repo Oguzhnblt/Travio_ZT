@@ -22,7 +22,6 @@ class MapVC: UIViewController {
         collectionView.isScrollEnabled = false
         collectionView.register(MapViewCell.self, forCellWithReuseIdentifier: MapViewCell.identifier)
         collectionView.dataSource = self
-        collectionView.delegate = self
         return collectionView
     }()
     
@@ -197,13 +196,7 @@ extension MapVC: MKMapViewDelegate {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension MapVC: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
-    }
-    
-    
-}
+
 
 // MARK: - UICollectionViewDataSource
 

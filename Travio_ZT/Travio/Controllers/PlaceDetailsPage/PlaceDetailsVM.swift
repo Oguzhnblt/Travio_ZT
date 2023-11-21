@@ -12,6 +12,7 @@ class PlaceDetailsVM {
     var imageData: (([PlaceImage]) -> Void)?
     var checking: ((String) -> Void)?
     var userCheck: (([Place]) -> Void)?
+    var showAlert: ((String) -> Void)?
 
      func getAllGalleries(placeId: String) {
          NetworkingHelper.shared.fetchData(urlRequest: .getAllGalleryByPlaceId(placeId: placeId), completion: {(result: Result<GetAllGalleryByPlaceIdResponse,Error>) in
@@ -67,9 +68,10 @@ class PlaceDetailsVM {
     }
     
     func deletePlace(placeId: String) {
-        NetworkingHelper.shared.fetchData(urlRequest: .deletePlace(placeId: placeId), completion: {(result: Result<GenericResponse, Error>)in
+        NetworkingHelper.shared.fetchData(urlRequest: .deletePlace(placeId: placeId), completion: {(result: Result<GenericResponseModel, Error>)in
             switch result {
-                case .success(_): break
+                case .success(let success):
+                    self.showAlert?(success.message!)
                 case .failure(let failure):
                     print(failure.localizedDescription)
             }
