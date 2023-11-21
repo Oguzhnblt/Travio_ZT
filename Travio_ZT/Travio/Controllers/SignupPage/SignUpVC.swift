@@ -27,18 +27,7 @@ class SignUpVC: UIViewController {
     }()
     
    
-    private lazy var signUpButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Sign Up", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Poppins-SemiBold", size: 16)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.layer.cornerRadius = 12
-        button.layer.backgroundColor = UIColor(named: "signUpColor")?.cgColor
-        button.isEnabled = false
-        button.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
-        
-        return button
-    }()
+    private lazy var signUpButton = ButtonUtility.createButton(from: self, title: "Sign Up", action: #selector(signUpButtonTapped), isEnabled: false)
     
     private func updateSignUpButtonState() {
             let isFormValid = !fullNameField.textField.text!.isEmpty &&

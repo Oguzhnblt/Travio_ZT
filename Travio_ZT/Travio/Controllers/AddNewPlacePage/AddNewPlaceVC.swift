@@ -15,7 +15,6 @@ class AddNewPlaceVC: UIViewController {
     private lazy var viewModel = AddNewPlaceVM()
     var completedAddPlace: (() -> Void)?
 
-    // MARK: UI Elements
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .medium)
         indicator.color = .black
@@ -32,14 +31,6 @@ class AddNewPlaceVC: UIViewController {
         return label
     }()
 
-    private lazy var addPlaceButton: UIButton = {
-        let saveButton = UIButton()
-        saveButton.setTitle("Add Place", for: .normal)
-        saveButton.addTarget(self, action: #selector(addPlaceButtonTapped), for: .touchUpInside)
-        saveButton.layer.cornerRadius = 12
-        saveButton.backgroundColor = UIColor(named: "backgroundColor")
-        return saveButton
-    }()
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: addNewPageLayout())
@@ -52,6 +43,8 @@ class AddNewPlaceVC: UIViewController {
         collectionView.delegate = self
         return collectionView
     }()
+    
+    private lazy var addPlaceButton = ButtonUtility.createButton(from: self, title: "Add Place", action: #selector(addPlaceButtonTapped))
 
     // MARK: Lifecycle Methods
     override func viewDidLoad() {

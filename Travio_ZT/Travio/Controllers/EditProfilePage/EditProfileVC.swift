@@ -60,15 +60,8 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         present(imagePicker, animated: true, completion: nil)
     }
     
-    private lazy var changePhotoButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Change Photo", for: .normal)
-        button.setTitleColor(UIColor(named: "backgroundColor"), for: .normal)
-        button.titleLabel?.font = UIFont(name: "Poppins-Regular", size: 12)
-        button.addTarget(self, action: #selector(changePhotoTapped), for: .touchUpInside)
-        
-        return button
-    }()
+   
+    private lazy var changePhotoButton = ButtonUtility.createButton(from: self, title: "Change Photo", action: #selector(changePhotoTapped), titleColor: UIColor(named: "backgroundColor"), backgroundColor: nil)
     
     private lazy var saveButton: UIButton = {
         

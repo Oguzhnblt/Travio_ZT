@@ -86,15 +86,7 @@ class SecuritySettingsVC: UIViewController {
         return stackView
     }()
     
-    private lazy var saveButton: UIButton = {
-        let saveButton = UIButton(type: .custom)
-        saveButton.setTitle("Save", for: .normal)
-        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
-        saveButton.layer.cornerRadius = 16
-        saveButton.clipsToBounds = true
-        saveButton.backgroundColor = UIColor(named: "backgroundColor")
-        return saveButton
-    }()
+    private lazy var saveButton = ButtonUtility.createButton(from: self, title: "Save", action: #selector(saveButtonTapped))
     
     @objc private func saveButtonTapped() {
         let validation = viewModel.validatePasswordFields(newPassword: newPasswordField.textField.text, confirmPassword: newPasswordConfirmField.textField.text)

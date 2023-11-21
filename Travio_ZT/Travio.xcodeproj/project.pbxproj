@@ -80,6 +80,7 @@
 		127806282AF7EC740085D31F /* MyVisitsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127806272AF7EC740085D31F /* MyVisitsVC.swift */; };
 		1278062A2AF7EC840085D31F /* MyVisitsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127806292AF7EC840085D31F /* MyVisitsViewCell.swift */; };
 		12827B7A2B0C9CBE00AA0283 /* GenericResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12827B792B0C9CBE00AA0283 /* GenericResponseModel.swift */; };
+		12827B7C2B0CCF9100AA0283 /* ButtonUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12827B7B2B0CCF9100AA0283 /* ButtonUtility.swift */; };
 		129A8B002AFC18070073CE6E /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129A8AFF2AFC18070073CE6E /* MapVC.swift */; };
 		129A8B022AFC2A020073CE6E /* MapPageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129A8B012AFC2A020073CE6E /* MapPageLayout.swift */; };
 		12A009412AEFA58500D2AD14 /* GenericPlacesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A009402AEFA58500D2AD14 /* GenericPlacesVC.swift */; };
@@ -192,6 +193,7 @@
 		127806272AF7EC740085D31F /* MyVisitsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyVisitsVC.swift; sourceTree = "<group>"; };
 		127806292AF7EC840085D31F /* MyVisitsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyVisitsViewCell.swift; sourceTree = "<group>"; };
 		12827B792B0C9CBE00AA0283 /* GenericResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponseModel.swift; sourceTree = "<group>"; };
+		12827B7B2B0CCF9100AA0283 /* ButtonUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonUtility.swift; sourceTree = "<group>"; };
 		129A8AFF2AFC18070073CE6E /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		129A8B012AFC2A020073CE6E /* MapPageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPageLayout.swift; sourceTree = "<group>"; };
 		12A009402AEFA58500D2AD14 /* GenericPlacesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPlacesVC.swift; sourceTree = "<group>"; };
@@ -591,6 +593,7 @@
 				12BA00C12AFFDCDB0097275C /* CommonSetupBackView.swift */,
 				12EAA9E72B001550006DCD42 /* CommonTextField.swift */,
 				125D4EF82B0C857B003C2C7E /* Alerts.swift */,
+				12827B7B2B0CCF9100AA0283 /* ButtonUtility.swift */,
 			);
 			path = CommonElement;
 			sourceTree = "<group>";
@@ -888,6 +891,7 @@
 				FF9BD5672AF2F6BA0072BBA0 /* GetAllVisitsResponseModel.swift in Sources */,
 				0F866E142AFA136F000C784A /* MapAnnotation.swift in Sources */,
 				12F85D892AF9149E00FB7CBD /* LoginVM.swift in Sources */,
+				12827B7C2B0CCF9100AA0283 /* ButtonUtility.swift in Sources */,
 				0F6E232B2AF236B800F843C6 /* LoginRequestModel.swift in Sources */,
 				0F5CB3152AF2681D00B9F13F /* RefreshRequestModel.swift in Sources */,
 				12E0A3652B00357000F1F8D1 /* EditProfileVM.swift in Sources */,

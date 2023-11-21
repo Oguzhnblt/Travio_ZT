@@ -54,18 +54,6 @@ class LoginVC: UIViewController {
         return label
     }
     
-   
-    private func createButton() -> UIButton {
-        let button = UIButton(type: .system)
-        button.setTitle("Login", for: .normal)
-        button.titleLabel?.font = UIFont(name: "Poppins-SemiBold", size: 16)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.layer.cornerRadius = 12
-        button.layer.backgroundColor = UIColor(named: "backgroundColor")?.cgColor
-        button.addTarget(self, action: #selector(buttonLoginTapped), for: .touchUpInside)
-        return button
-    }
-    
     private lazy var signUpButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
@@ -127,7 +115,7 @@ class LoginVC: UIViewController {
     
     private lazy var passwordTextField = CommonTextField(labelText: "Password", textFieldPlaceholder: "************", isSecure: true)
     
-    private lazy var loginButton = createButton()
+    private lazy var loginButton = ButtonUtility.createButton(from: self, title: "Login", action: #selector(buttonLoginTapped))
     
     private func setupViews() {
         
