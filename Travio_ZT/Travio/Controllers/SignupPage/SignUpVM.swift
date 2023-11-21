@@ -31,7 +31,7 @@ class SignUpVM {
         
         let params = ["full_name": fullName,"email": email,"password": password]
         
-        NetworkingHelper.shared.fetchData(urlRequest: .register(params: params)) { [weak self] (result: Result<RegisterResponse, Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .register(params: params)) { [weak self] (result: Result<GenericResponse, Error>) in
             switch result {
                 case .success(_):
                     self?.showAlertSuccess!("Kayıt işlemi başarılı")
