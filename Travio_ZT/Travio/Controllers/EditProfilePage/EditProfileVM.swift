@@ -48,7 +48,7 @@ class EditProfileVM {
     func changeMyProfile(profile: EditProfileRequest) {
             let params = ["full_name": profile.full_name, "email": profile.email, "pp_url": profile.pp_url]
 
-            NetworkingHelper.shared.fetchData(urlRequest: .editProfile(params: params as Parameters)) { [weak self] (result: Result<GenericResponse, Error>) in
+            NetworkingHelper.shared.fetchData(urlRequest: .editProfile(params: params as Parameters)) { [weak self] (result: Result<GenericResponseModel, Error>) in
                 switch result {
                 case .success(_):
                     let successMessage = "Profil başarıyla güncellendi."

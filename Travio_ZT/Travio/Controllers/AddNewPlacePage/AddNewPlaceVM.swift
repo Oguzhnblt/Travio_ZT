@@ -16,7 +16,7 @@ class AddNewPlaceVM {
     
     
     func addPlace(params: [String: Any]) {
-        NetworkingHelper.shared.fetchData(urlRequest: .postPlace(params: params)) {(result: Result<GenericResponse, Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .postPlace(params: params)) {(result: Result<GenericResponseModel, Error>) in
             switch result {
                 case .success(let success):
                     self.transferPlaceID?(success.message!)
