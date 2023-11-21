@@ -11,7 +11,7 @@ import SnapKit
 
 extension UIViewController {
     
-    func setupView(title: String?, buttonImage: UIImage?, buttonPosition: ButtonPosition?, headerLabelPosition: HeaderLabelPosition, headerLabelTopOffset: CGFloat = -15,buttonAction: Selector?, itemsView: [UIView], buttonTintColor: UIColor? = nil) {
+    func setupView(title: String?, buttonImage: UIImage?, buttonPosition: ButtonPosition?, headerLabelPosition: HeaderLabelPosition, headerLabelTopOffset: CGFloat = -15,buttonAction: Selector?, itemsView: [UIView], itemColor: UIColor? = (UIColor(named: "contentColor"))) {
         
         lazy var headerLabel = UILabel()
         headerLabel.textColor = .black
@@ -23,14 +23,13 @@ extension UIViewController {
         containerView.backgroundColor = UIColor(named: "backgroundColor")
         
         lazy var itemView = UIView()
-        itemView.backgroundColor = UIColor(named: "contentColor")
+        itemView.backgroundColor = itemColor
         itemView.clipsToBounds = true
         itemView.layer.cornerRadius = 80
         itemView.layer.maskedCorners = .layerMinXMinYCorner
         
         lazy var button = UIButton(type: .custom)
         button.setImage(buttonImage, for: .normal)
-        button.tintColor = buttonTintColor
         if let action = buttonAction {
             button.addTarget(self, action: action, for: .touchUpInside)
         }
