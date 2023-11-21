@@ -66,7 +66,7 @@ class TermsOfUseVC: UIViewController {
                     self.termsTextView.text = data
                 }
             case .failure(let error):
-                print("Şartlar verisi çekme hatası: \(error)")
+                print("Veri çekme hatası: \(error)")
             }
         }
     }
