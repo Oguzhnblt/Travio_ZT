@@ -167,48 +167,55 @@ class SecuritySettingsVC: UIViewController {
     }
     
     private func setupViews() {
-        
-        setupView(title: "Security Settings", buttonImage: UIImage(named: "leftArrowIcon"), buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [scrollView])
-        
+        setupView(
+            title: "Security Settings",
+            buttonImage: UIImage(named: "leftArrowIcon"),
+            buttonPosition: .left,
+            headerLabelPosition: .center,
+            buttonAction: #selector(buttonTapped),
+            itemsView: [scrollView]
+        )
+
         scrollView.addSubviews(containerView)
         containerView.addSubviews(passwordHeaderLabel, privacyHeaderLabel, changePasswordStackView, privacyStackView, saveButton)
-        
-        scrollView.snp.makeConstraints({ make in
+
+        scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-        })
-        
-        containerView.snp.makeConstraints({ make in
             make.height.equalToSuperview()
+        }
+
+        containerView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.height.equalToSuperview().offset(self.view.frame.minY)
             make.width.equalToSuperview()
-            make.top.bottom.equalToSuperview()
-            make.left.right.equalToSuperview()
-        })
-        
-        changePasswordStackView.snp.makeConstraints({ make in
+        }
+
+
+        passwordHeaderLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(55)
-            make.left.right.equalToSuperview().inset(8)
-        })
-        
-        privacyStackView.snp.makeConstraints({ make in
-            make.top.equalTo(changePasswordStackView.snp.bottom).offset(55)
-            make.left.right.equalToSuperview().inset(8)
-        })
-        
-        passwordHeaderLabel.snp.makeConstraints({ make in
-            make.bottom.equalTo(changePasswordStackView.snp.top)
-            make.left.equalToSuperview().offset(16)
-        })
-        
-        privacyHeaderLabel.snp.makeConstraints({ make in
-            make.bottom.equalTo(privacyStackView.snp.top)
-            make.left.equalToSuperview().offset(16)
-        })
-        
-        saveButton.snp.makeConstraints({ make in
-            make.top.equalTo(privacyStackView.snp.bottom).offset(60)
             make.left.right.equalToSuperview().inset(16)
-            make.bottom.equalToSuperview().offset(-60)
-        })
+        }
+
+        changePasswordStackView.snp.makeConstraints { make in
+            make.top.equalTo(passwordHeaderLabel.snp.bottom)
+            make.leading.trailing.equalToSuperview().inset(8)
+        }
+
+        privacyHeaderLabel.snp.makeConstraints { make in
+            make.top.equalTo(changePasswordStackView.snp.bottom).offset(30)
+            make.leading.trailing.equalToSuperview().inset(16)
+        }
+
+        privacyStackView.snp.makeConstraints { make in
+            make.top.equalTo(privacyHeaderLabel.snp.bottom)
+            make.leading.trailing.equalToSuperview().inset(8)
+        }
+
+        saveButton.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.bottom.greaterThanOrEqualToSuperview().offset(-20)
+            make.height.equalTo(54)
+        }
     }
 }
 
