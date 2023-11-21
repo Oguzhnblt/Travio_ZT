@@ -15,14 +15,11 @@ class TermsOfUseVC: UIViewController {
     private var termsTextView: UITextView = {
         let textView = UITextView()
         textView.isEditable = false
-        textView.textColor = .black
-        textView.backgroundColor = UIColor(named: "contentColor")
         return textView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(named: "backgroundColor")
         setupViews()
         fetchTermsData()
     }
@@ -38,23 +35,25 @@ class TermsOfUseVC: UIViewController {
     }
 
     private func setupViews() {
-        view.addSubview(termsTextView)
+         setupView(
+             title: "Terms of Use",
+             buttonImage: UIImage(named: "leftArrowIcon"),
+             buttonPosition: .left,
+             headerLabelPosition: .center,
+             buttonAction: #selector(buttonTapped),
+             itemsView: [termsTextView],
+             itemColor: UIColor.white
+         )
+         
         setupLayouts()
     }
 
     private func setupLayouts() {
+       
         termsTextView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(96)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.top.equalToSuperview().offset(25)
+            make.leading.trailing.bottom.equalToSuperview().inset(8)
         }
-        setupView(
-            title: "Terms of Use",
-            buttonImage: UIImage(named: "leftArrowIcon"),
-            buttonPosition: .left,
-            headerLabelPosition: .center,
-            buttonAction: #selector(buttonTapped),
-            itemsView: [termsTextView]
-        )
     }
 
     private func fetchTermsData() {
