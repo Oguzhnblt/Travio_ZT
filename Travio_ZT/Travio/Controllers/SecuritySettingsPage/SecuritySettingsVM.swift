@@ -44,7 +44,7 @@ class SecuritySettingsVM {
     func changePassword(_ profile: ChangePasswordRequest) {
         let params = ["new_password": profile.new_password]
         
-        NetworkingHelper.shared.fetchData(urlRequest: .changePassword(params: params as Parameters)) { (result: Result<ChangePasswordResponse, Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .changePassword(params: params as Parameters)) { (result: Result<GenericResponse, Error>) in
             switch result {
                 case .success(_):
                     let message = "Şifreniz başarıyla değiştirildi."

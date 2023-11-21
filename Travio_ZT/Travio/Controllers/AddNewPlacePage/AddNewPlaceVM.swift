@@ -16,7 +16,7 @@ class AddNewPlaceVM {
     
     
     func addPlace(params: [String: Any]) {
-        NetworkingHelper.shared.fetchData(urlRequest: .postPlace(params: params)) {(result: Result<PostPlaceResponse, Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .postPlace(params: params)) {(result: Result<GenericResponse, Error>) in
             switch result {
                 case .success(let success):
                     self.transferPlaceID?(success.message!)
@@ -42,7 +42,7 @@ class AddNewPlaceVM {
     
     func postGalleryImage(params: [String: Any]) {
         
-        NetworkingHelper.shared.fetchData(urlRequest: .postGalleryImage(params: params), completion: {(result: Result<PostGalleryImageResponse, Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .postGalleryImage(params: params), completion: {(result: Result<GenericResponse, Error>) in
             switch result {
                 case .success(let success):
                     print(success.message!)
