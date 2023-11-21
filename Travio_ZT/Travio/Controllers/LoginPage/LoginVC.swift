@@ -89,7 +89,7 @@ class LoginVC: UIViewController {
         else {return}
         
         guard viewModel.isValidEmail(email) else {
-            showAlert(title: "Hata", message: "Geçersiz email")
+            Alerts.showAlert(from: self, title: "Hata", message: "Geçersiz email", actionTitle: "Tamam")
                     return
                 }
         
@@ -99,7 +99,7 @@ class LoginVC: UIViewController {
             self.navigateToHomeVC()
         }
         viewModel.showAlertFailure = { message in
-            self.showAlert(title: "Hata", message: message)
+            Alerts.showAlert(from: self, title: "Hata", message: message, actionTitle: "Tamam")
         }
     }
     

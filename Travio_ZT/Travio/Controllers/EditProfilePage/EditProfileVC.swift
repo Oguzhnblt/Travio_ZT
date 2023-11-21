@@ -149,13 +149,13 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
 
         guard let fullName = fullNameField.textField.text,
               let email = emailField.textField.text else {
-            showAlert(title: "Uyarı", message: "Lütfen geçerli bir ad ve e-posta girin.")
+            Alerts.showAlert(from: self, title: "Uyarı", message: "Lütfen geçerli bir ad ve e-posta girin.", actionTitle: "Tamam")
                     showIndicator(state: .stop)
             return }
         let validationResult = viewModel.validateInputs(fullName: fullName, email: email)
 
             if !validationResult.isValid {
-                showAlert(title: "Uyarı", message: validationResult.errorMessage)
+                Alerts.showAlert(from: self, title: "Uyarı", message: validationResult.errorMessage, actionTitle: "Tamam")
                 showIndicator(state: .stop)
                 return
             }
@@ -168,7 +168,7 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         profileName.text = fullName
         
         viewModel.showAlertVM = { message in
-            self.showAlert(title: "Uyarı", message: message)
+            Alerts.showAlert(from: self, title: "Uyarı", message: message, actionTitle: "Tamam")
             self.showIndicator(state: .stop)
             
             if let fullName = self.fullNameField.textField.text {

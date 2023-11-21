@@ -284,7 +284,7 @@ extension MapVC {
         let search = MKLocalSearch(request: request)
         search.start { (response, error) in
             guard let response = response else {
-                self.showAlert(title: "Hata", message: "\(query) bulunamadı.")
+                Alerts.showAlert(from: self, title: "Hata", message: "\(query) bulunamadı.", actionTitle: "Tamam")
                 return
             }
             

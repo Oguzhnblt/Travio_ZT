@@ -65,26 +65,23 @@ class SignUpVC: UIViewController {
         else { return }
         
         guard viewModel.validateEmail(email) else {
-            showAlert(title: "Hata", message: "Geçersiz email")
+            Alerts.showAlert(from: self, title: "Hata", message: "Geçersiz email", actionTitle: "Tamam")
                 return
             }
         
        viewModel.signUp(fullName: fullName, email: email, password: password, confirmPassword: confirmPassword)
         viewModel.showAlertSuccess = { message in
-            self.showAlert(title: "Başarılı", message: message)
+            Alerts.showAlert(from: self, title: "Başarılı", message: message, actionTitle: "Tamam")
             }
 
         viewModel.showAlertFailure = { message in
-            self.showAlert(title: "Hata", message: message)
+            Alerts.showAlert(from: self, title: "Hata", message: message, actionTitle: "Tamam")
         }
         updateSignUpButtonState()
 
 
     }
-
-    
-    // MARK: ShowAlert
-  
+      
     private func navigateToLoginViewController() {
         if let navigationController = navigationController {
             navigationController.popViewController(animated: true)
@@ -92,7 +89,6 @@ class SignUpVC: UIViewController {
             dismiss(animated: true, completion: nil)
         }
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,6 +100,7 @@ class SignUpVC: UIViewController {
            passwordField.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
            passwordConfirmField.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
     }
+    
     @objc private func textFieldDidChange() {
         updateSignUpButtonState()
     }

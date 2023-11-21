@@ -75,6 +75,7 @@
 		125754382AFD841D00AD003B /* AddNewPlaceLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125754372AFD841D00AD003B /* AddNewPlaceLayout.swift */; };
 		1257543A2AFE2C8100AD003B /* AddPhotoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125754392AFE2C8100AD003B /* AddPhotoViewCell.swift */; };
 		125B445B2AE944F00047248D /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125B445A2AE944F00047248D /* HomeVC.swift */; };
+		125D4EF92B0C857B003C2C7E /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125D4EF82B0C857B003C2C7E /* Alerts.swift */; };
 		127249C32AF2282200CEAA64 /* SecuritySettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249C22AF2282200CEAA64 /* SecuritySettingsVC.swift */; };
 		127249D12AF2BF4700CEAA64 /* PrivacyField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249D02AF2BF4700CEAA64 /* PrivacyField.swift */; };
 		127249D42AF2CDC700CEAA64 /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127249D32AF2CDC700CEAA64 /* EditProfileVC.swift */; };
@@ -196,6 +197,7 @@
 		125754372AFD841D00AD003B /* AddNewPlaceLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewPlaceLayout.swift; sourceTree = "<group>"; };
 		125754392AFE2C8100AD003B /* AddPhotoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoViewCell.swift; sourceTree = "<group>"; };
 		125B445A2AE944F00047248D /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		125D4EF82B0C857B003C2C7E /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		127249C22AF2282200CEAA64 /* SecuritySettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsVC.swift; sourceTree = "<group>"; };
 		127249D02AF2BF4700CEAA64 /* PrivacyField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyField.swift; sourceTree = "<group>"; };
 		127249D32AF2CDC700CEAA64 /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
@@ -621,6 +623,7 @@
 			children = (
 				12BA00C12AFFDCDB0097275C /* CommonSetupBackView.swift */,
 				12EAA9E72B001550006DCD42 /* CommonTextField.swift */,
+				125D4EF82B0C857B003C2C7E /* Alerts.swift */,
 			);
 			path = CommonElement;
 			sourceTree = "<group>";
@@ -975,6 +978,7 @@
 				1257543A2AFE2C8100AD003B /* AddPhotoViewCell.swift in Sources */,
 				0F5CB3232AF2792200B9F13F /* ChangePasswordRequestModel.swift in Sources */,
 				FF9BD55C2AF2F3800072BBA0 /* GetAllGalleryByPlaceIdResponseModel.swift in Sources */,
+				125D4EF92B0C857B003C2C7E /* Alerts.swift in Sources */,
 				12BA00C52AFFDE880097275C /* TermsOfUseVC.swift in Sources */,
 				12F85D832AF9123500FB7CBD /* SectionHeaderView.swift in Sources */,
 				FF0B44B62AF2AAAB00586EA7 /* Place.swift in Sources */,

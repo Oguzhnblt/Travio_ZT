@@ -114,12 +114,12 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
 
             let params = ["place_id": selectedPlace?.id, "visited_at": formattedDate]
             viewModel.postVisit(params: params)
-            showAlert(title: "💖", message: "Ziyaretlere eklendi.")
+            Alerts.showAlert(from: self, title: "💖", message: "Ziyaretlere eklendi.", actionTitle: "Tamam")
             
 
         } else {
             viewModel.deleteVisit(placeID: selectedPlace?.id)
-            showAlert(title: "💔", message: "Ziyaretlerden kaldırıldı.")
+            Alerts.showAlert(from: self, title: "💔", message: "Ziyaretlerden kaldırıldı.", actionTitle: "Tamam")
         }
         
         let image = isBookmarked ? UIImage(named: "icon_bookmark_fill") : UIImage(named: "icon_bookmark")

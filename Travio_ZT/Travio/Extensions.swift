@@ -517,38 +517,8 @@ extension UIColor {
     }
 }
 
-import UIKit
 
-extension UIViewController {
-    func showAlert(title: String, message: String, completion: (() -> Void)? = nil) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Tamam", style: .default) { _ in
-            completion?()
-        }
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    func showPermissionAlert(for privacyType: PrivacyManager.PrivacyType, completion: (() -> Void)? = nil) {
-        let alertController = UIAlertController(
-            title: "Permission Required",
-            message: "Please go to settings and enable \(privacyType.rawValue) permissions.",
-            preferredStyle: .alert
-        )
-        
-        let settingsAction = UIAlertAction(title: "Settings", style: .default) { _ in
-            PrivacyManager.shared.openAppSettings()
-            completion?()
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alertController.addAction(settingsAction)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
-    }
-}
+
 
 
 

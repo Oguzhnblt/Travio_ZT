@@ -104,10 +104,10 @@ class SecuritySettingsVC: UIViewController {
             guard let new_password = newPasswordField.textField.text else { return }
             viewModel.changePassword(ChangePasswordRequest(new_password: new_password))
             viewModel.successAlert = { message in
-                self.showAlert(title: "Uyarı", message: message)
+                Alerts.showAlert(from: self, title: "Uyarı", message: message, actionTitle: "Tamam")
             }
         case .failure(let errorMessage):
-                showAlert(title: "Uyarı", message: errorMessage)
+                Alerts.showAlert(from: self, title: "Uyarı", message: errorMessage, actionTitle: "Tamam")
         }
     }
     
@@ -115,12 +115,15 @@ class SecuritySettingsVC: UIViewController {
         guard let privacyType = privacyManager.switchTagToPrivacyType(sender.tag) else { return }
 
         if sender.isOn {
-            privacyManager.requestPermission(for: privacyType) { [self] granted in
+            privacyManager.requestPermission(for: privacyType) { granted in
                 if granted {
                     sender.isOn = true
                 } else {
                     sender.isOn = false
-                    showPermissionAlert(for: privacyType)
+                    Alerts.showAlert(from: self, title: "Permission Required", message: "Please go to settings and enable \(privacyType.rawValue) permissions.", actionTitle: "Settings", cancelTitle: "Cancel") {
+                        self.privacyManager.openAppSettings()
+
+                    }
                 }
             }
         } else {

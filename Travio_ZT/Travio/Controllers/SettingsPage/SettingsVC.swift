@@ -55,25 +55,7 @@ class SettingsVC: UIViewController, EditProfileDelegate {
         return button
     }()
     
-    private func showAlert(message: String) {
-        let alertController = UIAlertController(title: "Uyarı", message: message, preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "İptal Et", style: .cancel, handler: nil)
-        
-        let logoutAction = UIAlertAction(title: "Çıkış Yap", style: .destructive) { _ in
-            AccessManager.shared.deleteToken(accountIdentifier: "access-token")
-            let loginVC = LoginVC()
-            let navigationController = UINavigationController(rootViewController: loginVC)
-            navigationController.modalPresentationStyle = .fullScreen
-            self.present(navigationController, animated: true, completion: nil)
-        }
-        
-        alertController.addAction(cancelAction)
-        alertController.addAction(logoutAction)
-        
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    
+
     @objc func buttonEditProfileTapped() {
         let editProfileVC = EditProfileVC()
         editProfileVC.delegate = self
@@ -81,7 +63,13 @@ class SettingsVC: UIViewController, EditProfileDelegate {
     }
     
     @objc override func buttonTapped() {
-        showAlert(message: "Çıkış yapmak istediğinize emin misiniz?")
+        Alerts.showAlert(from: self, title: "Uyarı", message: "Çıkış yapmak istediğinize emin misiniz?", actionTitle: "Çıkış yap", cancelTitle: "İptal Et") {
+            AccessManager.shared.deleteToken(accountIdentifier: "access-token")
+            let loginVC = LoginVC()
+            let navigationController = UINavigationController(rootViewController: loginVC)
+            navigationController.modalPresentationStyle = .fullScreen
+            self.present(navigationController, animated: true, completion: nil)
+        }
     }
     
     

@@ -143,7 +143,7 @@ class AddNewPlaceVC: UIViewController {
                placeDescriptionCell.textView.text?.isEmpty ?? true ||
                locationCell.textView.text?.isEmpty ?? true {
 
-               displayAlert(message: "Lütfen tüm alanları doldurunuz.")
+            Alerts.showAlert(from: self, title: "Uyaru", message: "Lütfen tüm alanları doldurun.", actionTitle: "Tamam")
                return
            }
         
@@ -180,13 +180,6 @@ class AddNewPlaceVC: UIViewController {
             }
             viewModel.addPlace(params: params)
         }
-    }
-    
-    private func displayAlert(message: String) {
-        let alert = UIAlertController(title: "Uyarı", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Tamam", style: .default, handler: nil)
-        alert.addAction(okAction)
-        present(alert, animated: true, completion: nil)
     }
 }
 
