@@ -72,43 +72,29 @@ class SettingsVC: UIViewController, EditProfileDelegate {
         }
     }
     
-    
-    private func createLabel(text: String, color: String, textSize: CGFloat, fontName: String, alignment: NSTextAlignment) -> UILabel {
-        let label = UILabel()
-        label.text = text
-        label.textColor = UIColor(named: color)
-        label.textAlignment = alignment
-        label.font = UIFont(name: fontName, size: textSize)
-        return label
-    }
     private func updateUI(with profile: ProfileResponse) {
         profileText.text = profile.full_name ?? "Default Name"
         
         if let imageUrl = profile.pp_url, let url = URL(string: imageUrl) {
-            let options: KingfisherOptionsInfo = [
-                .transition(.fade(0.2)),
-                .cacheOriginalImage
-            ]
-            
-            profileImage.kf.setImage(with: url, options: options)
+            profileImage.kf.setImage(with: url)
         }
     }
     
     
-    private lazy var profileText = createLabel(text: "Bruce Wills", color: "textColor", textSize: 16, fontName: "Poppins-SemiBold", alignment: .center)
+    private lazy var profileText = LabelUtility.createLabel(text: "Bruce Wills", color: "textColor", textSize: 16, fontName: "Poppins-SemiBold", alignment: .center)
     
-    private lazy var editProfileText = createLabel(text: "Edit Profile", color: "seeAllColor", textSize: 12, fontName: "Poppins-SemiBold", alignment: .center)
+    private lazy var editProfileText = LabelUtility.createLabel(text: "Edit Profile", color: "seeAllColor", textSize: 12, fontName: "Poppins-SemiBold", alignment: .center)
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         navigationController?.isNavigationBarHidden = true
-
         settingsVM.myProfile()
         settingsVM.dataTransfer = { [weak self] profile in
             self?.updateUI(with: profile)
         }
+
     }
     
 

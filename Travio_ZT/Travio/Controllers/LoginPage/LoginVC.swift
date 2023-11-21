@@ -44,16 +44,6 @@ class LoginVC: UIViewController {
         return imageView
     }()
     
-    private func createLabel(text: String, color: String, textSize: CGFloat, fontName: String, alignment: NSTextAlignment) -> UILabel {
-        let label = UILabel()
-        label.text = text
-        label.textColor = UIColor(named: color)
-        label.numberOfLines = 1
-        label.textAlignment = alignment
-        label.font = UIFont(name: fontName, size: textSize)
-        return label
-    }
-    
     private lazy var signUpButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
@@ -107,10 +97,11 @@ class LoginVC: UIViewController {
     
     private lazy var loginİtemStackView = createStackView(axis: .vertical, spacing: 24)
     private lazy var signUpStackView = createStackView(axis: .horizontal, spacing: 4)
+
+    private lazy var accountLabel = LabelUtility.createLabel(text: "Don’t have any account?", color: "textColor" , textSize: 14, fontName: "Poppins-SemiBold", alignment: .center)
     
-    private lazy var welcomeLabelText = createLabel(text: "Welcome to Travio", color: "textColor" , textSize: 24, fontName: "Poppins-Regular", alignment: .center)
-    private lazy var accountLabel = createLabel(text: "Don’t have any account?", color: "textColor" , textSize: 14, fontName: "Poppins-SemiBold", alignment: .center)
-    
+    private lazy var welcomeLabelText = LabelUtility.createLabel(text: "Welcome to Travio", color: "textColor", textSize: 24, fontName: "Poppins-Regular", alignment: .center)
+        
     private lazy var emailTextField = CommonTextField(labelText: "Email", textFieldPlaceholder: "deneme@example.com", isSecure: false)
     
     private lazy var passwordTextField = CommonTextField(labelText: "Password", textFieldPlaceholder: "************", isSecure: true)
@@ -131,25 +122,25 @@ class LoginVC: UIViewController {
     }
     
     private func setupLayouts() {
-        loginView.snp.makeConstraints { view in
-            view.edges.equalToSuperview()
+        loginView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
         
-        imageView.snp.makeConstraints { image in
-            image.width.equalTo(149)
-            image.height.equalTo(178)
-            image.centerX.equalTo(loginView)
-            image.top.equalTo(self.view.safeAreaLayoutGuide)
-            image.bottom.equalTo(loginItemView.snp.top).offset(-24)
+        imageView.snp.makeConstraints { make in
+            make.width.equalTo(149)
+            make.height.equalTo(178)
+            make.centerX.equalTo(loginView)
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.bottom.equalTo(loginItemView.snp.top).offset(-24)
         }
         
-        loginItemView.snp.makeConstraints { viewField in
-            viewField.width.height.equalToSuperview()
+        loginItemView.snp.makeConstraints { make in
+            make.width.height.equalToSuperview()
         }
         
-        welcomeLabelText.snp.makeConstraints { text in
-            text.top.equalTo(loginItemView).offset(64)
-            text.leading.trailing.equalTo(loginItemView)
+        welcomeLabelText.snp.makeConstraints { make in
+            make.top.equalTo(loginItemView).offset(64)
+            make.leading.trailing.equalTo(loginItemView)
         }
         
         
@@ -162,21 +153,20 @@ class LoginVC: UIViewController {
         }
 
         loginİtemStackView.dropShadow()
-        loginİtemStackView.snp.makeConstraints { textField in
-            textField.top.equalTo(welcomeLabelText.snp.bottom).offset(41)
-            textField.left.right.equalTo(loginButton)
+        loginİtemStackView.snp.makeConstraints { make in
+            make.top.equalTo(welcomeLabelText.snp.bottom).offset(41)
+            make.left.right.equalTo(loginButton)
         }
         
-        loginButton.snp.makeConstraints { button in
-            button.top.equalTo(loginİtemStackView.snp.bottom).offset(48)
-            button.leading.trailing.equalToSuperview().inset(24)
-            button.height.equalTo(54)
-            button.width.equalTo(342)
+        loginButton.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(24)
+            make.bottom.equalTo(signUpStackView.snp.top).offset(-30)
+            make.height.equalTo(54)
         }
         
-        signUpStackView.snp.makeConstraints { sign in
-            sign.centerX.equalToSuperview()
-            sign.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        signUpStackView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
     

@@ -26,27 +26,25 @@ class SignUpVC: UIViewController {
         return stackView
     }()
     
-   
+    
     private lazy var signUpButton = ButtonUtility.createButton(from: self, title: "Sign Up", action: #selector(signUpButtonTapped), isEnabled: false)
     
     private func updateSignUpButtonState() {
-            let isFormValid = !fullNameField.textField.text!.isEmpty &&
-                              !emailField.textField.text!.isEmpty &&
-                              !passwordField.textField.text!.isEmpty &&
-                              !passwordConfirmField.textField.text!.isEmpty
-
-            signUpButton.isEnabled = isFormValid
-
-            if isFormValid {
-                signUpButton.backgroundColor = UIColor(named: "backgroundColor")
-            } else {
-                signUpButton.backgroundColor = UIColor(named: "signUpColor")
-            }
+        let isFormValid = !fullNameField.textField.text!.isEmpty &&
+        !emailField.textField.text!.isEmpty &&
+        !passwordField.textField.text!.isEmpty &&
+        !passwordConfirmField.textField.text!.isEmpty
+        
+        signUpButton.isEnabled = isFormValid
+        
+        if isFormValid {
+            signUpButton.backgroundColor = UIColor(named: "backgroundColor")
+        } else {
+            signUpButton.backgroundColor = UIColor(named: "signUpColor")
         }
-    
+    }
     
     @objc func signUpButtonTapped() {
-        
         guard let fullName = fullNameField.textField.text,
               let email = emailField.textField.text,
               let password = passwordField.textField.text,
@@ -55,22 +53,28 @@ class SignUpVC: UIViewController {
         
         guard viewModel.validateEmail(email) else {
             Alerts.showAlert(from: self, title: "Hata", message: "Geçersiz email", actionTitle: "Tamam")
-                return
-            }
+            return
+        }
         
-       viewModel.signUp(fullName: fullName, email: email, password: password, confirmPassword: confirmPassword)
+        viewModel.signUp(fullName: fullName, email: email, password: password, confirmPassword: confirmPassword)
         viewModel.showAlertSuccess = { message in
             Alerts.showAlert(from: self, title: "Başarılı", message: message, actionTitle: "Tamam")
-            }
-
+            self.navigateToLoginViewController()
+        }
+        
         viewModel.showAlertFailure = { message in
             Alerts.showAlert(from: self, title: "Hata", message: message, actionTitle: "Tamam")
         }
-        updateSignUpButtonState()
-
-
     }
-      
+    
+    private func textFieldChanged() {
+        fullNameField.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        emailField.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        passwordField.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        passwordConfirmField.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+    }
+    
+    
     private func navigateToLoginViewController() {
         if let navigationController = navigationController {
             navigationController.popViewController(animated: true)
@@ -84,11 +88,10 @@ class SignUpVC: UIViewController {
         navigationController?.isNavigationBarHidden = true
         setupViews()
         
-        fullNameField.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-           emailField.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-           passwordField.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-           passwordConfirmField.textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        textFieldChanged()
+        updateSignUpButtonState()
     }
+    
     
     @objc private func textFieldDidChange() {
         updateSignUpButtonState()
@@ -105,8 +108,8 @@ class SignUpVC: UIViewController {
         })
         
         signUpButton.snp.makeConstraints({make in
-            make.bottom.centerX.equalTo(self.view.safeAreaLayoutGuide)
-            make.width.equalTo(342)
+            make.left.right.equalToSuperview().inset(16)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-30)
             make.height.equalTo(54)
         })
         

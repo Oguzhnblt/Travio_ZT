@@ -14,21 +14,19 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "places"
     private lazy var viewModel = HomeVM()
-
+    
     func configurePlaces(with place: Place) {
-
-        if let urlString = place.cover_image_url, let url = URL(string: urlString), !urlString.isEmpty {
-            viewModel.imageCorrect(imageView: imageView, url: url)
-        } else {
+        imageView.kf.indicatorType = .activity
+        
+        guard let urlString = place.cover_image_url, let url = URL(string: urlString), !urlString.isEmpty else {
             imageView.image = UIImage(named: "img_default")
+            return
         }
 
+        imageView.kf.setImage(with: url, placeholder: UIImage(named: "img_default"), options: [.transition(.flipFromLeft(0.5))])
         titleLabel.text = place.title
         subtitleLabel.text = place.place
     }
-
-
-
 
     private lazy var backView: UIView = {
         let backView = UIView()

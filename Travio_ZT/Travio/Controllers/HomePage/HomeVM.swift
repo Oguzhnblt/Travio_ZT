@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 class HomeVM {
         
@@ -43,21 +42,6 @@ class HomeVM {
                     self.addedPlacesTransfer?((object.data?.places)!)
                 case .failure(let failure):
                     print("Error: \(failure.localizedDescription)")
-            }
-        }
-    }
-    
-    func imageCorrect(imageView: UIImageView, url: URL?) {
-        guard let url = url else {
-            return
-        }
-
-        imageView.kf.setImage(with: url) { result in
-            switch result {
-            case .success(_):
-                break
-            case .failure(_):
-                imageView.image = UIImage(named: "img_default")
             }
         }
     }

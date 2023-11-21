@@ -78,7 +78,6 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
         setupViews()
         navigationController?.navigationBar.isHidden = true
-      
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -91,7 +91,7 @@
 		12B3630D2AFC15CA00B84AEF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 12B3630C2AFC15CA00B84AEF /* Kingfisher */; };
 		12BA00BD2AFF99710097275C /* HelpSupportTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00BC2AFF99710097275C /* HelpSupportTableCell.swift */; };
 		12BA00BF2AFF99820097275C /* HelpSupportTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00BE2AFF99820097275C /* HelpSupportTableVC.swift */; };
-		12BA00C22AFFDCDB0097275C /* CommonSetupBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00C12AFFDCDB0097275C /* CommonSetupBackView.swift */; };
+		12BA00C22AFFDCDB0097275C /* SetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00C12AFFDCDB0097275C /* SetupView.swift */; };
 		12BA00C52AFFDE880097275C /* TermsOfUseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00C42AFFDE880097275C /* TermsOfUseVC.swift */; };
 		12BA00C82AFFE2020097275C /* AboutUsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12BA00C72AFFE2020097275C /* AboutUsVC.swift */; };
 		12E0A3652B00357000F1F8D1 /* EditProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E0A3642B00357000F1F8D1 /* EditProfileVM.swift */; };
@@ -99,6 +99,8 @@
 		12E0A3742B01101F00F1F8D1 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 12E0A3732B01101F00F1F8D1 /* IQKeyboardManagerSwift */; };
 		12E1FD502AF38AAB00B89F81 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */; };
 		12EAA9E82B001550006DCD42 /* CommonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EAA9E72B001550006DCD42 /* CommonTextField.swift */; };
+		12EB08402B0D339000BAC739 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EB083F2B0D339000BAC739 /* Place.swift */; };
+		12EB08422B0D362F00BAC739 /* LabelUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EB08412B0D362F00BAC739 /* LabelUtility.swift */; };
 		12F5C1B82B021F37007FB53A /* PlaceDetailsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F5C1B72B021F37007FB53A /* PlaceDetailsVM.swift */; };
 		12F85D832AF9123500FB7CBD /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D822AF9123500FB7CBD /* SectionHeaderView.swift */; };
 		12F85D872AF9148000FB7CBD /* SignUpVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D862AF9148000FB7CBD /* SignUpVM.swift */; };
@@ -106,7 +108,6 @@
 		12F85D8B2AF915C200FB7CBD /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D8A2AF915C200FB7CBD /* SettingsVC.swift */; };
 		12F8CCB52B0B7A4D00F95124 /* PrivacyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F8CCB42B0B7A4D00F95124 /* PrivacyManager.swift */; };
 		FF0B44B42AF2A74800586EA7 /* GetPlaceByIdResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B44B32AF2A74800586EA7 /* GetPlaceByIdResponseModel.swift */; };
-		FF0B44B62AF2AAAB00586EA7 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B44B52AF2AAAB00586EA7 /* Place.swift */; };
 		FF0B44B92AF2AD6A00586EA7 /* GetAllPlacesForUserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B44B82AF2AD6A00586EA7 /* GetAllPlacesForUserResponseModel.swift */; };
 		FF0B44BC2AF2AFE600586EA7 /* GetPopularPlacesResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B44BB2AF2AFE600586EA7 /* GetPopularPlacesResponseModel.swift */; };
 		FF0B44BF2AF2B24100586EA7 /* GetLastPlacesResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0B44BE2AF2B24100586EA7 /* GetLastPlacesResponseModel.swift */; };
@@ -203,13 +204,15 @@
 		12B363092AFC002C00B84AEF /* MapVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVM.swift; sourceTree = "<group>"; };
 		12BA00BC2AFF99710097275C /* HelpSupportTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportTableCell.swift; sourceTree = "<group>"; };
 		12BA00BE2AFF99820097275C /* HelpSupportTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportTableVC.swift; sourceTree = "<group>"; };
-		12BA00C12AFFDCDB0097275C /* CommonSetupBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonSetupBackView.swift; sourceTree = "<group>"; };
+		12BA00C12AFFDCDB0097275C /* SetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupView.swift; sourceTree = "<group>"; };
 		12BA00C42AFFDE880097275C /* TermsOfUseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseVC.swift; sourceTree = "<group>"; };
 		12BA00C72AFFE2020097275C /* AboutUsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsVC.swift; sourceTree = "<group>"; };
 		12E0A3642B00357000F1F8D1 /* EditProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVM.swift; sourceTree = "<group>"; };
 		12E0A3682B00D8E000F1F8D1 /* AccessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessManager.swift; sourceTree = "<group>"; };
 		12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		12EAA9E72B001550006DCD42 /* CommonTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTextField.swift; sourceTree = "<group>"; };
+		12EB083F2B0D339000BAC739 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		12EB08412B0D362F00BAC739 /* LabelUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelUtility.swift; sourceTree = "<group>"; };
 		12F5C1B72B021F37007FB53A /* PlaceDetailsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsVM.swift; sourceTree = "<group>"; };
 		12F85D822AF9123500FB7CBD /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		12F85D862AF9148000FB7CBD /* SignUpVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVM.swift; sourceTree = "<group>"; };
@@ -217,7 +220,6 @@
 		12F85D8A2AF915C200FB7CBD /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
 		12F8CCB42B0B7A4D00F95124 /* PrivacyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyManager.swift; sourceTree = "<group>"; };
 		FF0B44B32AF2A74800586EA7 /* GetPlaceByIdResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPlaceByIdResponseModel.swift; sourceTree = "<group>"; };
-		FF0B44B52AF2AAAB00586EA7 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		FF0B44B82AF2AD6A00586EA7 /* GetAllPlacesForUserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllPlacesForUserResponseModel.swift; sourceTree = "<group>"; };
 		FF0B44BB2AF2AFE600586EA7 /* GetPopularPlacesResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPopularPlacesResponseModel.swift; sourceTree = "<group>"; };
 		FF0B44BE2AF2B24100586EA7 /* GetLastPlacesResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLastPlacesResponseModel.swift; sourceTree = "<group>"; };
@@ -351,7 +353,7 @@
 				0FB84E0E2AF288930071A559 /* GetAllPlacesModels */,
 				0FB84E062AF287400071A559 /* UpdatePlaceModels */,
 				0FB84E012AF284CD0071A559 /* PostPlaceModels */,
-				FF0B44B52AF2AAAB00586EA7 /* Place.swift */,
+				12EB083F2B0D339000BAC739 /* Place.swift */,
 			);
 			path = PlacesModels;
 			sourceTree = "<group>";
@@ -590,10 +592,11 @@
 		12BA00C02AFFDCC80097275C /* CommonElement */ = {
 			isa = PBXGroup;
 			children = (
-				12BA00C12AFFDCDB0097275C /* CommonSetupBackView.swift */,
+				12BA00C12AFFDCDB0097275C /* SetupView.swift */,
 				12EAA9E72B001550006DCD42 /* CommonTextField.swift */,
 				125D4EF82B0C857B003C2C7E /* Alerts.swift */,
 				12827B7B2B0CCF9100AA0283 /* ButtonUtility.swift */,
+				12EB08412B0D362F00BAC739 /* LabelUtility.swift */,
 			);
 			path = CommonElement;
 			sourceTree = "<group>";
@@ -838,6 +841,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FB84E122AF289160071A559 /* GetAllPlacesResponseModel.swift in Sources */,
+				12EB08422B0D362F00BAC739 /* LabelUtility.swift in Sources */,
 				1255D80A2ADAC7BD00FB6638 /* LoginVC.swift in Sources */,
 				12272FD92B082AC800A359C2 /* MyAddedPlacesVM.swift in Sources */,
 				127806202AF7CC260085D31F /* HelpSupportModel.swift in Sources */,
@@ -846,6 +850,7 @@
 				1255D8062ADAC7BD00FB6638 /* AppDelegate.swift in Sources */,
 				12A009412AEFA58500D2AD14 /* GenericPlacesVC.swift in Sources */,
 				0F866E182AFA3107000C784A /* MapViewCell.swift in Sources */,
+				12EB08402B0D339000BAC739 /* Place.swift in Sources */,
 				0F6E23272AF2343200F843C6 /* RegisterRequestModel.swift in Sources */,
 				12EAA9E82B001550006DCD42 /* CommonTextField.swift in Sources */,
 				FF0B44B42AF2A74800586EA7 /* GetPlaceByIdResponseModel.swift in Sources */,
@@ -898,7 +903,7 @@
 				123C61082B055F9B0013C00D /* AddNewPlaceVM.swift in Sources */,
 				FF9BD5522AF2F0E00072BBA0 /* PostGalleryImageRequestModel.swift in Sources */,
 				FF9BD5652AF2F5FF0072BBA0 /* VisitModel.swift in Sources */,
-				12BA00C22AFFDCDB0097275C /* CommonSetupBackView.swift in Sources */,
+				12BA00C22AFFDCDB0097275C /* SetupView.swift in Sources */,
 				129A8B022AFC2A020073CE6E /* MapPageLayout.swift in Sources */,
 				FF0B44B92AF2AD6A00586EA7 /* GetAllPlacesForUserResponseModel.swift in Sources */,
 				0FB84E032AF285080071A559 /* PostPlaceRequestModel.swift in Sources */,
@@ -915,12 +920,9 @@
 				125D4EF92B0C857B003C2C7E /* Alerts.swift in Sources */,
 				12BA00C52AFFDE880097275C /* TermsOfUseVC.swift in Sources */,
 				12F85D832AF9123500FB7CBD /* SectionHeaderView.swift in Sources */,
-				FF0B44B62AF2AAAB00586EA7 /* Place.swift in Sources */,
-				FF0B44B62AF2AAAB00586EA7 /* Place.swift in Sources */,
 				12BA00C82AFFE2020097275C /* AboutUsVC.swift in Sources */,
 				125754342AFD6AD800AD003B /* AddNewPlaceViewCell.swift in Sources */,
 				0FA0784F2B04DC41008FAFC9 /* SettingsVM.swift in Sources */,
-				FF0B44B62AF2AAAB00586EA7 /* Place.swift in Sources */,
 				12BA00BF2AFF99820097275C /* HelpSupportTableVC.swift in Sources */,
 				0F5CB3192AF2697C00B9F13F /* RefreshResponseModel.swift in Sources */,
 				125754312AFD5DAD00AD003B /* PlaceDetailsLayout.swift in Sources */,

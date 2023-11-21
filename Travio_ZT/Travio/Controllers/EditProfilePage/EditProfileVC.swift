@@ -186,12 +186,12 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         super.viewDidLoad()
         setupViews()
         
+        viewModel.myProfile()
         viewModel.dataTransfer = { [weak self] profile in
             self?.profileUpdated(with: profile)
             
         }
         
-        viewModel.myProfile()
         
         navigationController?.navigationBar.isHidden = true
         
@@ -257,6 +257,7 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
         if let selectedImage = info[.originalImage] as? UIImage {
             profileImage.image = selectedImage
             imageDatas.append(selectedImage)
+            
             
             dismiss(animated: true, completion: nil)
         }

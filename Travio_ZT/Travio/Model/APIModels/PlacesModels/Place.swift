@@ -1,8 +1,8 @@
 //
-//  PlaceModel.swift
+//  Place.swift
 //  Travio
 //
-//  Created by HIKMET KURU on 1.11.2023.
+//  Created by Oğuz on 21.11.2023.
 //
 
 import Foundation
@@ -19,4 +19,3 @@ struct Place: Codable,Identifiable {
     var created_at: String?
     var updated_at: String?
 }
-

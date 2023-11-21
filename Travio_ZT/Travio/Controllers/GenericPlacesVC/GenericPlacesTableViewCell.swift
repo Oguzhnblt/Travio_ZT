@@ -14,13 +14,14 @@ class GenericPlacesTableViewCell: UITableViewCell {
     private lazy var viewModel = GenericPlacesVM()
     
     func configure(with place: Place) {
-
-        if let urlString = place.cover_image_url, let url = URL(string: urlString), !urlString.isEmpty {
-            viewModel.imageCorrect(imageView: imageViews, url: url)
-        } else {
+        imageViews.kf.indicatorType = .activity
+        
+        guard let urlString = place.cover_image_url, let url = URL(string: urlString), !urlString.isEmpty else {
             imageViews.image = UIImage(named: "img_default")
+            return
         }
 
+        imageViews.kf.setImage(with: url, placeholder: UIImage(named: "img_default"), options: [.transition(.flipFromLeft(0.5))])
         titleLabel.text = place.title
         subtitleLabel.text = place.place
     }

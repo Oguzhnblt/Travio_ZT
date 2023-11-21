@@ -37,7 +37,6 @@ class PlaceBottomView: UICollectionViewCell {
     lazy var dateTitle: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.black
-        label.text = "10 Kasım 2023"
         label.font = UIFont(name: "Poppins-Regular", size: 14)
         return label
     }()
@@ -45,7 +44,6 @@ class PlaceBottomView: UICollectionViewCell {
     lazy var authorTitle: UILabel = {
         let label = UILabel()
         label.textColor = .gray
-        label.text = "Oğuzhan Bolat"
         label.font = UIFont(name: "Poppins-Regular", size: 10)
         return label
     }()
@@ -70,7 +68,6 @@ class PlaceBottomView: UICollectionViewCell {
     lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.text = "Lorem ipsum dolor sit amet"
         label.font = UIFont(name: "Poppins-Regular", size: 12)
         label.numberOfLines = 0
         return label

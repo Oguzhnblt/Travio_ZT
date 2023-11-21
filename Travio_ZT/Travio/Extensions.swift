@@ -138,75 +138,6 @@ extension UIView {
     
 }
 
-// MARK: - UITextField
-extension UITextField {
-    
-    enum TextType {
-        case emailAddress
-        case password
-        case generic
-    }
-    
-    var textType: TextType {
-        get {
-            if keyboardType == .emailAddress {
-                return .emailAddress
-            } else if isSecureTextEntry {
-                return .password
-            }
-            return .generic
-        }
-        set {
-            switch newValue {
-                case .emailAddress:
-                    keyboardType = .emailAddress
-                    autocorrectionType = .no
-                    autocapitalizationType = .none
-                    isSecureTextEntry = false
-                    
-                case .password:
-                    keyboardType = .asciiCapable
-                    autocorrectionType = .no
-                    autocapitalizationType = .none
-                    isSecureTextEntry = true
-                    
-                case .generic:
-                    isSecureTextEntry = false
-            }
-        }
-    }
-    
-    
-    
-    var hasValidEmail: Bool {
-        
-        return text!.range(of: "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}",
-                           options: String.CompareOptions.regularExpression,
-                           range: nil, locale: nil) != nil
-    }
-    
-    var leftViewTintColor: UIColor? {
-        get {
-            guard let iconView = leftView as? UIImageView else { return nil }
-            return iconView.tintColor
-        }
-        set {
-            guard let iconView = leftView as? UIImageView else { return }
-            iconView.image = iconView.image?.withRenderingMode(.alwaysTemplate)
-            iconView.tintColor = newValue
-        }
-    }
-    
-    func addPaddingLeftIcon(_ image: UIImage, padding: CGFloat) {
-        let iconView = UIView(frame: CGRect(x: 0, y: 0, width: 18 + padding, height: 18))
-        let imageView = UIImageView(image: image)
-        imageView.frame = iconView.bounds
-        imageView.contentMode = .scaleAspectFit
-        iconView.addSubview(imageView)
-        leftView = iconView
-        leftViewMode = .always
-    }
-}
 
 
 // MARK: - UIViewController
@@ -448,12 +379,16 @@ extension UITabBar {
 extension UIWindow {
     static var key: UIWindow? {
         if #available(iOS 13, *) {
-            return UIApplication.shared.windows.first { $0.isKeyWindow }
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                return windowScene.windows.first { $0.isKeyWindow }
+            }
         } else {
             return UIApplication.shared.keyWindow
         }
+        return nil
     }
 }
+
 
 extension UIView {
     func dropShadow() {

@@ -5,7 +5,7 @@
 //  Created by Oğuz on 1.11.2023.
 //
 
-import UIKit
+import UIKit 
 import SnapKit
 import AVFoundation
 import CoreLocation
@@ -18,15 +18,11 @@ class SecuritySettingsVC: UIViewController {
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.isScrollEnabled = true
-        scrollView.isUserInteractionEnabled = true
-        scrollView.contentInsetAdjustmentBehavior = .always
         return scrollView
     }()
     
     private lazy var containerView: UIView = {
         let containerView = UIView()
-        containerView.clipsToBounds = true
         return containerView
     }()
     

@@ -13,6 +13,4 @@ struct ProfileResponse: Codable{
     var pp_url: String?
     var role: String?
     var created_at: String?
-    
-    
 }

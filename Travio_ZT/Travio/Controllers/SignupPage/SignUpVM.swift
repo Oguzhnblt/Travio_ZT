@@ -9,11 +9,8 @@ import Foundation
 
 class SignUpVM {
     
-    
-    
     var showAlertSuccess: ((String) -> Void)?
     var showAlertFailure: ((String) -> Void)?
-    
     
     func signUp(fullName: String,email: String, password: String, confirmPassword: String) {
         guard !fullName.isEmpty, !email.isEmpty, !password.isEmpty, !confirmPassword.isEmpty
@@ -21,7 +18,6 @@ class SignUpVM {
             showAlertFailure?("Lütfen tüm alanları doldurunuz.")
             return
         }
-        
         
         if password != confirmPassword {
             showAlertFailure?("Parolalar eşleşmiyor")
@@ -40,6 +36,7 @@ class SignUpVM {
             }
         }
     }
+    
     func validateEmail(_ email: String) -> Bool {
         let emailRegex = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
         let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
