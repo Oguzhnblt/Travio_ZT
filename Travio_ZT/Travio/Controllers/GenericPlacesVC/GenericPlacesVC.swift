@@ -146,10 +146,10 @@ extension GenericPlacesVC: UITableViewDelegate, UITableViewDataSource {
         showDetailViewController(with: selectedPlace)
     }
     
-    private func showDetailViewController(with place: Any) {
+    private func showDetailViewController(with place: Place?) {
         let detailVC = PlaceDetailsVC()
         
-        if let selectedPlace = place as? Place {
+        if let selectedPlace = place {
             detailVC.selectedPlace = selectedPlace
         }
         

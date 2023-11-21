@@ -265,17 +265,17 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
             case 1:
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlaceBottomView.identifier, for: indexPath) as! PlaceBottomView
                 
-                if let selectedLocation = selectedPlace {
-                    cell.placeTitle.text = selectedLocation.place
-                    cell.descriptionLabel.text = selectedLocation.description
-                    cell.authorTitle.text = selectedLocation.creator
+                if let selectedItem = selectedPlace {
+                    cell.placeTitle.text = selectedItem.place
+                    cell.descriptionLabel.text = selectedItem.description
+                    cell.authorTitle.text = selectedItem.creator
                     
-                    if let formattedDate = DateFormatter.formattedDate(from: selectedLocation.created_at!, originalFormat: FormatType.longFormat.rawValue, targetFormat: FormatType.stringFormat.rawValue, localeIdentifier: "tr_TR") {
+                    if let formattedDate = DateFormatter.formattedDate(from: selectedItem.created_at!, originalFormat: FormatType.longFormat.rawValue, targetFormat: FormatType.stringFormat.rawValue, localeIdentifier: "tr_TR") {
                         cell.dateTitle.text = formattedDate
                     }
                     
-                    let targetCoordinate = CLLocationCoordinate2D(latitude: selectedLocation.latitude!, longitude: selectedLocation.longitude!)
-                    let region = MKCoordinateRegion(center: targetCoordinate, latitudinalMeters: 250, longitudinalMeters: 250)
+                    let targetCoordinate = CLLocationCoordinate2D(latitude: selectedItem.latitude!, longitude: selectedItem.longitude!)
+                    let region = MKCoordinateRegion(center: targetCoordinate, latitudinalMeters: 500, longitudinalMeters: 500)
                     
                     cell.mapView.setCenter(targetCoordinate, animated: false)
                     cell.mapView.region = region

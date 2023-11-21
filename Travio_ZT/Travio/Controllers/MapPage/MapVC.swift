@@ -14,14 +14,15 @@ class MapVC: UIViewController {
     // MARK: - Properties
     
     let viewModel = MapVM()
-    private var mapPlaces = [Place]()
+    private var mapPlaces: [Place] = []
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: MapPageLayout.shared.mapLayout())
-        collectionView.backgroundColor = UIColor.clear
+        collectionView.backgroundColor = UIColor.red
         collectionView.isScrollEnabled = false
         collectionView.register(MapViewCell.self, forCellWithReuseIdentifier: MapViewCell.identifier)
         collectionView.dataSource = self
+        collectionView.delegate = self
         return collectionView
     }()
     
@@ -66,11 +67,13 @@ class MapVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        mapData()
+
         tapGestureMethods()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        mapData()        
+        collectionView.reloadData()
     }
     
     // MARK: - Setup
@@ -103,7 +106,6 @@ class MapVC: UIViewController {
     
     private func mapData() {
         viewModel.mapPlaces()
-        
         viewModel.dataTransfer = { [weak self] places in
             self?.mapPlaces = places
             self?.updateMapAndCollection()
@@ -194,9 +196,6 @@ extension MapVC: MKMapViewDelegate {
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
-
-
 
 // MARK: - UICollectionViewDataSource
 
@@ -221,6 +220,19 @@ extension MapVC: UICollectionViewDataSource {
         return cell
     }
     
+    @objc private func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
+        if gesture.state == .ended {
+            if let cell = gesture.view as? MapViewCell, let indexPath = collectionView.indexPath(for: cell) {
+                let selectedPlace = mapPlaces[indexPath.item]
+                let coordinate = CLLocationCoordinate2D(latitude: selectedPlace.latitude!, longitude: selectedPlace.longitude!)
+                let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+                mapView.setRegion(region, animated: true)
+            }
+        }
+    }
+}
+
+extension MapVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedPlace = mapPlaces[indexPath.item]
         showDetailViewController(with: selectedPlace)
@@ -231,19 +243,6 @@ extension MapVC: UICollectionViewDataSource {
         detailVC.selectedPlace = place
         detailVC.selectedCoordinates = CLLocationCoordinate2D(latitude: place.latitude!, longitude: place.longitude!)
         navigationController?.pushViewController(detailVC, animated: true)
-    }
-    
-    
-    
-    @objc private func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
-        if gesture.state == .ended {
-            if let cell = gesture.view as? MapViewCell, let indexPath = collectionView.indexPath(for: cell) {
-                let selectedPlace = mapPlaces[indexPath.item]
-                let coordinate = CLLocationCoordinate2D(latitude: selectedPlace.latitude!, longitude: selectedPlace.longitude!)
-                let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
-                mapView.setRegion(region, animated: true)
-            }
-        }
     }
 }
 

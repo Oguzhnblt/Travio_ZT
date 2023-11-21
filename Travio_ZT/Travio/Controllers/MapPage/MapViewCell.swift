@@ -17,11 +17,9 @@ class MapViewCell: UICollectionViewCell {
     
     func configure(with place: Place) {
 
-           if let urlString = place.cover_image_url, let url = URL(string: urlString), !urlString.isEmpty {
-               viewModel.imageCorrect(imageView: imageView, url: url)
-           } else {
-               imageView.image = UIImage(named: "img_default")
-           }
+        if let urlString = place.cover_image_url, let url = URL(string: urlString), !urlString.isEmpty {
+            imageView.kf.setImage(with: url)
+        }
 
            titleLabel.text = place.title
            subtitleLabel.text = place.place
