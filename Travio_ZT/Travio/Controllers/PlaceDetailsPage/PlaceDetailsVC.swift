@@ -11,7 +11,7 @@ import SnapKit
 import Kingfisher
 import MapKit
 
-class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
+class PlaceDetailsVC: UIViewController {
     
     var selectedPlace: Place? 
     var userID: [Place] = []
@@ -70,7 +70,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return button
     }()
-    
+        
     
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
@@ -99,9 +99,9 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         
         
         if isBookmarked {
-            let formattedDate = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withInternetDateTime, .withFractionalSeconds])
+            let visitedAt = DateFormatter.formattedString()
             
-            let params = ["place_id": selectedPlace?.id, "visited_at": formattedDate]
+            let params = ["place_id": selectedPlace?.id, "visited_at": visitedAt]
             viewModel.postVisit(params: params)
             Alerts.showAlert(from: self, title: "💖", message: "Ziyaretlere eklendi.", actionTitle: "Tamam")
             
@@ -270,7 +270,10 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
                     cell.descriptionLabel.text = selectedItem.description
                     cell.authorTitle.text = selectedItem.creator
                     
-                    if let formattedDate = DateFormatter.formattedDate(from: selectedItem.created_at!, originalFormat: FormatType.longFormat.rawValue, targetFormat: FormatType.stringFormat.rawValue, localeIdentifier: "tr_TR") {
+                    if let formattedDate = DateFormatter.formattedDate(
+                        from: selectedItem.created_at!,
+                        originalFormat: .longFormat,
+                        targetFormat: .stringFormat) {
                         cell.dateTitle.text = formattedDate
                     }
                     
@@ -294,7 +297,7 @@ extension PlaceDetailsVC: UICollectionViewDataSource {
 }
 
 
-extension PlaceDetailsVC {
+extension PlaceDetailsVC: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let visibleIndexPaths = collectionView.indexPathsForVisibleItems

@@ -19,7 +19,7 @@ enum IndicatorState {
 }
 
 
-class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class EditProfileVC: UIViewController {
     
     weak var delegate: EditProfileDelegate?
     
@@ -118,9 +118,8 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
               let createdAt = profileInfo.created_at,
               let formattedDate = DateFormatter.formattedDate(
                 from: createdAt,
-                originalFormat: FormatType.longFormat.rawValue,
-                targetFormat: FormatType.stringFormat.rawValue,
-                localeIdentifier: "tr_TR")
+                originalFormat: .longFormat,
+                targetFormat: .stringFormat)
         else {return}
         
         profileName.text = fullName
@@ -252,6 +251,9 @@ class EditProfileVC: UIViewController, UIImagePickerControllerDelegate & UINavig
             
         })
     }
+}
+
+extension EditProfileVC: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {

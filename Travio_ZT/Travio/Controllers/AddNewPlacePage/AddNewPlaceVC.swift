@@ -177,6 +177,7 @@ class AddNewPlaceVC: UIViewController {
 }
 
 // MARK: UICollectionViewDataSource
+
 extension AddNewPlaceVC: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 4
@@ -222,6 +223,7 @@ extension AddNewPlaceVC: UICollectionViewDataSource {
 }
 
 // MARK: UICollectionViewDelegate
+
 extension AddNewPlaceVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
@@ -241,6 +243,7 @@ extension AddNewPlaceVC: UICollectionViewDelegate {
 }
 
 // MARK: UIImagePickerControllerDelegate
+
 extension AddNewPlaceVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         guard let selectedImage = info[.originalImage] as? UIImage else {
@@ -259,6 +262,7 @@ extension AddNewPlaceVC: UIImagePickerControllerDelegate, UINavigationController
 }
 
 // MARK: Compositional Layout
+
 extension AddNewPlaceVC {
     func addNewPageLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, _) -> NSCollectionLayoutSection? in
@@ -267,7 +271,6 @@ extension AddNewPlaceVC {
     }
 }
 
-// MARK: SwiftUI Preview
 #if DEBUG
 import SwiftUI
 

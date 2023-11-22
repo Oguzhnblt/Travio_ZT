@@ -11,7 +11,7 @@ import SwiftUI
 import SnapKit
 
 // MARK: - Format Type
-enum FormatType:String {
+enum FormatType: String {
     case longFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     case longWithoutZone = "yyyy-MM-dd'T'HH:mm:ss"
     case withoutYear = "dd MMMM"
@@ -20,6 +20,7 @@ enum FormatType:String {
     case dateAndTime = "dd.MM.yyyy'T'HH:mm"
     case time = "HH:mm"
     case stringFormat = "dd MMMM yyyy"
+    case customFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
 }
 
 // MARK: - Font Type
@@ -183,77 +184,9 @@ extension UIViewController {
         view.removeFromSuperview()
         removeFromParent()
     }
-    
-    
-    //    func playLoading(){
-    //        let view = BLLoadingIndicator()
-    //        view.addLoading(to: self)
-    //        self.view.bringSubviewToFront(view)
-    //    }
-    //
-    //    func stopLoading(){
-    //        self.view.subviews.forEach({ view in
-    //            guard let loading = view as? BLLoadingIndicator else { return }
-    //            loading.removeFromSuperview()
-    //        })
-    //    }
-    
 }
 
-// MARK: - String
-extension String {
-    
-    func capitalizingFirstLetter() -> String {
-        return prefix(1).capitalized + dropFirst()
-    }
-    
-    mutating func capitalizeFirstLetter() {
-        self = self.capitalizingFirstLetter()
-    }
-    
-    
-    func maskToPhoneNumber() -> String {
-        let isMoreThanTenDigit = self.count > 10
-        _ = self.startIndex
-        var newstr = ""
-        if isMoreThanTenDigit {
-            newstr = "\(self.dropFirst(self.count - 10))"
-        }
-        else if self.count == 10{
-            newstr = "\(self)"
-        }
-        else {
-            return "number has only \(self.count) digits"
-        }
-        
-        if  newstr.count == 10 {
-            let internationalString = "\(newstr.dropLast(7)) \(newstr.dropLast(4).dropFirst(3)) \(newstr.dropFirst(6).dropLast(2)) \(newstr.dropFirst(8))"
-            newstr = internationalString
-        }
-        
-        return newstr
-    }
-    
-    /// It formats a String Value to Date easily.
-    /// - Parameter formatType: If method is called without parameters, it formats string with standard format style(dd.MM.yyyy). If you want to define another format you can it.
-    /// .standard = dd.MM.yyyy -> 28.02.2020
-    /// .longDate = yyyy-MM-dd'T'HH:mm:ss.SSSZ -> 2021-01-28 14:00:00.000
-    /// .withoutYear = "dd MMMM" -> 27 April
-    /// .dateAndTime = "dd.MM.yyyy'T'HH:mm" 27.01.2021 14:00
-    /// - Returns: Method returns formatted date from String that define by user.
-    func formatToDate(formatType: FormatType = .localeStandard)-> Date?{
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "tr")
-        dateFormatter.timeZone = .current
-        dateFormatter.dateFormat = formatType.rawValue
-        let date = dateFormatter.date(from: self)
-        
-        return date
-        
-    }
-    
-}
+
 
 // MARK: - User Defaults
 extension UserDefaults {
@@ -294,30 +227,6 @@ extension UIDatePicker {
     }
 }
 
-// MARK: - Date
-extension Date {
-    
-    var startOfMonth: Date {
-        let calendar = Calendar(identifier: .gregorian)
-        var components = calendar.dateComponents([.year, .month], from: self)
-        components.hour = 3
-        return  calendar.date(from: components)!
-    }
-    var endOfMonth: Date {
-        var components = DateComponents()
-        components.month = 1
-        components.second = -1
-        return Calendar(identifier: .gregorian).date(byAdding: components, to: startOfMonth)!
-    }
-    
-    
-    func formatToString(formatType:FormatType = .localeStandard)-> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = formatType.rawValue
-        formatter.locale = Locale(identifier: "tr")
-        return formatter.string(from: self)
-    }
-}
 
 // MARK: - Optional
 extension Optional {
@@ -348,34 +257,6 @@ extension UIImageView{
     }
 }
 
-// MARK: -UIImage
-extension UIImage {
-    
-    class func colorToImage(color: UIColor) -> UIImage {
-        let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 2.0)
-        UIGraphicsBeginImageContext(rect.size)
-        let context = UIGraphicsGetCurrentContext()
-        
-        context!.setFillColor(color.cgColor)
-        context!.fill(rect)
-        
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return image!
-    }
-}
-
-// MARK: - UITabBar
-extension UITabBar {
-    //    override open func sizeThatFits(_ size: CGSize) -> CGSize {
-    //        super.sizeThatFits(size)
-    //        var sizeThatFits = super.sizeThatFits(size)
-    //        sizeThatFits.height = 78
-    //        return sizeThatFits
-    //    }
-}
-
 extension UIWindow {
     static var key: UIWindow? {
         if #available(iOS 13, *) {
@@ -402,23 +283,40 @@ extension UIView {
 
 
 extension DateFormatter {
-    static func formattedDate(from originalDateString: String, originalFormat: String, targetFormat: String, localeIdentifier: String? = nil) -> String? {
+    static func formattedDate(from originalDateString: String? = nil, originalDate: Date? = nil, originalFormat: FormatType, targetFormat: FormatType, localeIdentifier: String? = "tr-TR") -> String? {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = originalFormat
+        dateFormatter.dateFormat = originalFormat.rawValue
         
         if let localeIdentifier = localeIdentifier {
             dateFormatter.locale = Locale(identifier: localeIdentifier)
         }
         
-        if let date = dateFormatter.date(from: originalDateString) {
-            dateFormatter.dateFormat = targetFormat
-            return dateFormatter.string(from: date)
+        if let originalDateString = originalDateString {
+            if let date = dateFormatter.date(from: originalDateString) {
+                dateFormatter.dateFormat = targetFormat.rawValue
+                return dateFormatter.string(from: date)
+            } else {
+                print("Invalid date format")
+                return nil
+            }
+        } else if let originalDate = originalDate {
+            dateFormatter.dateFormat = targetFormat.rawValue
+            return dateFormatter.string(from: originalDate)
         } else {
-            print("Geçersiz tarih formatı")
+            print("Invalid input")
             return nil
         }
     }
+    
+    static func formattedString(from date: Date = Date(), timeZone: TimeZone = .current, formatOptions: ISO8601DateFormatter.Options = [.withInternetDateTime, .withFractionalSeconds]) -> String {
+        let isoFormatter = ISO8601DateFormatter()
+        isoFormatter.timeZone = timeZone
+        isoFormatter.formatOptions = formatOptions
+        return isoFormatter.string(from: date)
+    }
 }
+
+
 
 extension Data {
     init?(base64URLEncoded: String) {
@@ -426,7 +324,6 @@ extension Data {
             .replacingOccurrences(of: "-", with: "+")
             .replacingOccurrences(of: "_", with: "/")
 
-        // Add padding to make it a multiple of 4
         let paddedLength = (4 - base64.count % 4) % 4
         base64 += String(repeating: "=", count: paddedLength)
 

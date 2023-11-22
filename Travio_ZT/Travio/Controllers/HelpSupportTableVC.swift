@@ -14,7 +14,7 @@ enum CellState {
     case expanded
 }
 
-class HelpSupportTableVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HelpSupportTableVC: UIViewController {
 
     private var cellStates: [IndexPath: CellState] = [:]
     private var selectedIndexPath: IndexPath?
@@ -72,7 +72,9 @@ class HelpSupportTableVC: UIViewController, UITableViewDelegate, UITableViewData
             make.left.equalToSuperview().offset(16)
         })
     }
+}
 
+extension HelpSupportTableVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return helpItems.count
     }
@@ -92,8 +94,9 @@ class HelpSupportTableVC: UIViewController, UITableViewDelegate, UITableViewData
 
         return cell
     }
-    
+}
 
+extension HelpSupportTableVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             let cellState = cellStates[indexPath]
             return cellState == .expanded ? expandedHeight : collapsedHeight
