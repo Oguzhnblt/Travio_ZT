@@ -109,7 +109,6 @@ class LoginVC: UIViewController {
     private lazy var loginButton = ButtonUtility.createButton(from: self, title: "Login", action: #selector(buttonLoginTapped))
     
     private func setupViews() {
-        
         self.view.addSubviews(loginView,loginItemView,imageView)
         
         loginItemView.addSubviews(loginİtemStackView,welcomeLabelText,signUpStackView,loginButton)
@@ -122,16 +121,21 @@ class LoginVC: UIViewController {
     }
     
     private func setupLayouts() {
-        loginView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        let squareRatio: CGFloat = 0.35
+
+        let squareSize = min(screenWidth, screenHeight) * squareRatio
         
         imageView.snp.makeConstraints { make in
-            make.width.equalTo(149)
-            make.height.equalTo(178)
+            make.size.equalTo(squareSize)
             make.centerX.equalTo(loginView)
             make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.bottom.equalTo(loginItemView.snp.top).offset(-24)
+        }
+
+        loginView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
         
         loginItemView.snp.makeConstraints { make in

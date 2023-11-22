@@ -38,7 +38,7 @@ class LoginVM {
                     AccessManager.shared.saveToken(loginResponse.accessToken, accountIdentifier: "access-token")
                     self?.navigateToViewController?()
                 case .failure(_):
-                    self?.showAlertFailure!("Email ve şifre hatalı.")
+                    self?.showAlertFailure!("Email veya şifre hatalı.")
             }
         }
     }

@@ -12,7 +12,7 @@ class MyAddedPlacesVC: UIViewController {
     
     private lazy var viewModel = MyAddedPlacesVM()
     private var myAddedPlaces: [Place] = []
-    private var isSortingAscending = true
+    private var isSorted = true
     
     private lazy var collectionView: UICollectionView = {
         
@@ -39,22 +39,20 @@ class MyAddedPlacesVC: UIViewController {
     
     
     @objc func sortDown() {
-        isSortingAscending.toggle()
-        updateSortButtonImage()
-        // FIXME: -- Logic eklenecek
+        isSorted.toggle()
         
-    }
-    
-    @objc func sortUp() {
-        isSortingAscending.toggle()
-        updateSortButtonImage()
-        // FIXME: -- Logic eklenecek
-    }
-    
-    private func updateSortButtonImage() {
-        let imageName = isSortingAscending ? "img_a_z" : "img_z_a"
+        let imageName = isSorted ? "img_a_z" : "img_z_a"
         sortButton.setImage(UIImage(named: imageName), for: .normal)
+        
+        if isSorted {
+            myAddedPlaces.sort { $0.title!.localizedCompare($1.title!) == .orderedAscending }
+        } else {
+            myAddedPlaces.sort { $0.title!.localizedCompare($1.title!) == .orderedDescending }
+        }
+        
+        collectionView.reloadData()
     }
+
     
     
     private func myAdded() {
@@ -86,7 +84,7 @@ class MyAddedPlacesVC: UIViewController {
     
     private func setupViews() {
         setupView(title: "My Added Places",buttonImage: UIImage(named: "leftArrowIcon"), buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [collectionView, sortButton])
-
+        
         setupLayouts()
         
     }
@@ -95,8 +93,8 @@ class MyAddedPlacesVC: UIViewController {
         
         collectionView.dropShadow()
         collectionView.snp.makeConstraints({make in
-            make.top.bottom.equalToSuperview().offset(50)
-            make.left.right.equalToSuperview()
+            make.top.equalToSuperview().offset(50)
+            make.left.right.bottom.equalToSuperview().inset(16)
             
         })
         sortButton.snp.makeConstraints({make in
@@ -104,14 +102,7 @@ class MyAddedPlacesVC: UIViewController {
             make.top.equalToSuperview().offset(20)
         })
         
-       
-    }
-}
-
-extension MyAddedPlacesVC: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+        
     }
 }
 
@@ -129,10 +120,12 @@ extension MyAddedPlacesVC: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyAddedPlacesViewCell.identifier, for: indexPath) as! MyAddedPlacesViewCell
         
         cell.cellData = myAddedPlaces[indexPath.row]
-    
+        
         return cell
     }
-    
+}
+
+extension MyAddedPlacesVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailsVC = PlaceDetailsVC()
         
@@ -141,6 +134,7 @@ extension MyAddedPlacesVC: UICollectionViewDataSource {
         navigationController?.pushViewController(detailsVC, animated: true)
     }
 }
+
 
 extension MyAddedPlacesVC {
     
@@ -153,13 +147,12 @@ extension MyAddedPlacesVC {
     private func myAddedPlacesLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 0)
         
         let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.17))
         let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [layoutItem])
         
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 100, trailing: 0)
+        layoutSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 30, trailing: 0)
         layoutSection.orthogonalScrollingBehavior  = .none
         
         return layoutSection

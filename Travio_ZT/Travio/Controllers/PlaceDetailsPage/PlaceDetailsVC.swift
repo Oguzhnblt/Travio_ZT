@@ -13,7 +13,7 @@ import MapKit
 
 class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
     
-    var selectedPlace: Place?
+    var selectedPlace: Place? 
     var userID: [Place] = []
     var imageURLs: [String] = []
     var selectedCoordinates: CLLocationCoordinate2D?
@@ -220,7 +220,7 @@ class PlaceDetailsVC: UIViewController, UICollectionViewDelegate {
         })
         
         menuButton.snp.makeConstraints({ make in
-            make.top.equalTo(pageControl.snp.bottom).offset(70)
+            make.top.equalTo(pageControl.snp.bottom).offset(-20)
             make.right.equalToSuperview().offset(-24)
             make.left.equalTo(pageControl.snp.right)
             make.size.equalTo(20)
