@@ -55,6 +55,10 @@ class LoginVC: UIViewController {
     
     @objc private func signUpTapped() {
         let vc = SignUpVC()
+        vc.signUpSuccessCallback = { [weak self] (email, password) in
+                    self?.emailTextField.textField.text = email
+                    self?.passwordTextField.textField.text = password
+                }
         self.navigationController?.pushViewController(vc, animated: true)
         
     }

@@ -11,6 +11,8 @@ import SnapKit
 
 class SignUpVC: UIViewController {
     
+    var signUpSuccessCallback: ((String, String) -> Void)?
+    
     private lazy var viewModel = SignUpVM()
     
     private lazy var fullNameField = CommonTextField(labelText: "Username", textFieldPlaceholder: "bilge_adam", isSecure: false)
@@ -59,12 +61,15 @@ class SignUpVC: UIViewController {
         viewModel.signUp(fullName: fullName, email: email, password: password, confirmPassword: confirmPassword)
         viewModel.showAlertSuccess = { message in
             Alerts.showAlert(from: self, title: "Başarılı", message: message, actionTitle: "Tamam")
-            self.navigateToLoginViewController()
+            self.signUpSuccessCallback?(email, password)
+
+                    self.navigateToLoginViewController()
         }
         
         viewModel.showAlertFailure = { message in
             Alerts.showAlert(from: self, title: "Hata", message: message, actionTitle: "Tamam")
         }
+       
     }
     
     private func textFieldChanged() {
