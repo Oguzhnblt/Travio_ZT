@@ -99,7 +99,8 @@ class MapVC: UIViewController {
         })
 
         collectionView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().offset(view.frame.height * 0.7)
+            make.top.equalToSuperview().offset(view.frame.height * 0.65)
+            make.bottom.equalToSuperview().offset(view.frame.height * 0.75)
             make.left.right.equalToSuperview()
         }
     }

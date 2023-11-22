@@ -125,15 +125,8 @@ class LoginVC: UIViewController {
     }
     
     private func setupLayouts() {
-        let screenWidth = UIScreen.main.bounds.width
-        let screenHeight = UIScreen.main.bounds.height
-        let squareRatio: CGFloat = 0.35
-
-        let squareSize = min(screenWidth, screenHeight) * squareRatio
-        
         imageView.snp.makeConstraints { make in
-            make.size.equalTo(squareSize)
-            make.centerX.equalTo(loginView)
+            make.centerX.equalToSuperview()
             make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.bottom.equalTo(loginItemView.snp.top).offset(-24)
         }
@@ -168,7 +161,7 @@ class LoginVC: UIViewController {
         
         loginButton.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(24)
-            make.bottom.equalTo(signUpStackView.snp.top).offset(-30)
+            make.bottom.equalTo(signUpStackView.snp.top).offset(-10)
             make.height.equalTo(54)
         }
         
@@ -187,7 +180,7 @@ import SwiftUI
 struct LoginVC_Preview: PreviewProvider {
     static var previews: some View{
         
-        LoginVC().showPreview()
+        LoginVC().showPreview().ignoresSafeArea()
     }
 }
 #endif
