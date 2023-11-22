@@ -105,7 +105,7 @@ class PlaceBottomView: UICollectionViewCell {
         mapView.snp.makeConstraints { make in
             make.top.equalTo(stackView.snp.bottom).offset(9)
             make.leading.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(200)
+            make.height.equalTo(220)
         }
 
         descriptionLabel.snp.makeConstraints { make in

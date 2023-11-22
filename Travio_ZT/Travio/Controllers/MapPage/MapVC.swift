@@ -18,12 +18,18 @@ class MapVC: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: MapPageLayout.shared.mapLayout())
-        collectionView.backgroundColor = UIColor.red
+        collectionView.backgroundColor = UIColor.clear
         collectionView.isScrollEnabled = false
         collectionView.register(MapViewCell.self, forCellWithReuseIdentifier: MapViewCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
         return collectionView
+    }()
+    
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        view.clipsToBounds = true
+        return view
     }()
     
     private lazy var backView: UIView = {
@@ -79,7 +85,7 @@ class MapVC: UIViewController {
     // MARK: - Setup
     
     private func setupViews() {
-        view.addSubviews(mapView, collectionView, searchBar)
+        view.addSubviews(mapView, collectionView,searchBar)
         setupLayout()
     }
     
@@ -87,18 +93,17 @@ class MapVC: UIViewController {
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
         searchBar.snp.makeConstraints({ make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.left.right.equalToSuperview()
         })
-        
-        
+
         collectionView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().offset(550)
+            make.top.bottom.equalToSuperview().offset(view.frame.height * 0.7)
             make.left.right.equalToSuperview()
         }
     }
+
     
     
     
@@ -168,14 +173,15 @@ class MapVC: UIViewController {
 
 extension MapVC: MKMapViewDelegate {
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard let coordinate = view.annotation?.coordinate else { return }
-        if let index = mapPlaces.firstIndex(where: { $0.latitude == coordinate.latitude && $0.longitude == coordinate.longitude }) {
-            let indexPath = IndexPath(item: index, section: 0)
-            collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
-        }
-    }
     
+      func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+          guard let coordinate = view.annotation?.coordinate else { return }
+          if let index = mapPlaces.firstIndex(where: { $0.latitude == coordinate.latitude && $0.longitude == coordinate.longitude }) {
+              let indexPath = IndexPath(item: index, section: 0)
+              collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredVertically)
+          }
+      }
+
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MapAnnotation else {
             return nil
@@ -200,6 +206,7 @@ extension MapVC: MKMapViewDelegate {
 // MARK: - UICollectionViewDataSource
 
 extension MapVC: UICollectionViewDataSource {
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
