@@ -181,20 +181,42 @@ class EditProfileVC: UIViewController {
     }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         setupViews()
-        
+
         viewModel.myProfile()
+
         viewModel.dataTransfer = { [weak self] profile in
             self?.profileUpdated(with: profile)
-            
+
+            if let fullName = profile.full_name {
+                self?.fullNameField.textField.text = fullName
+            }
+            if let email = profile.email {
+                self?.emailField.textField.text = email
+            }
+
+            if let ppUrlString = profile.pp_url, let imageUrl = URL(string: ppUrlString) {
+                self?.profileImage.kf.setImage(with: imageUrl) { _ in
+                    self?.showIndicator(state: .stop)
+                }
+            }
+
+            if let role = profile.role {
+                self?.adminCell.label.text = role
+            }
+            if let createdAt = profile.created_at, let formattedDate = DateFormatter.formattedDate(
+                from: createdAt,
+                originalFormat: .longFormat,
+                targetFormat: .stringFormat) {
+                self?.signCell.label.text = formattedDate
+            }
         }
-        
-        
+
         navigationController?.navigationBar.isHidden = true
-        
     }
+
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
