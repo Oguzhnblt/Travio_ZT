@@ -7,12 +7,12 @@
 
 import UIKit
 
-class ButtonUtility {
-    static func createButton(from viewController: UIViewController, title: String, action: Selector, titleColor: UIColor? = UIColor.white, backgroundColor: UIColor? = UIColor(named: "backgroundColor"), isEnabled: Bool = true) -> UIButton {
+class ButtonManager {
+    static func createButton(from viewController: UIViewController, title: String, action: Selector, titleColor: UIColor? = UIColor.white, backgroundColor: UIColor? = UIColor(named: "backgroundColor"), isEnabled: Bool = true, font: AppTheme.FontType? = AppTheme.FontType.semibold, size: AppTheme.FontSize? = AppTheme.FontSize.size16) -> UIButton {
         
         let button = UIButton(type: .system)
         button.setTitle(title, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Poppins-SemiBold", size: 16)
+        button.titleLabel?.font = AppTheme.getFont(name: font!, size: size!)
         button.setTitleColor(titleColor, for: .normal)
         button.layer.cornerRadius = 16
         button.layer.backgroundColor = backgroundColor?.cgColor
@@ -22,7 +22,6 @@ class ButtonUtility {
         return button
     }
 
-    @objc static func buttonTapped() {
-    }
+    @objc static func buttonTapped() {}
 }
 

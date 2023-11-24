@@ -21,11 +21,14 @@ class LoginVC: UIViewController {
         return stackView
     }
     
+    private lazy var activityIndicator = ActivityIndicatorManager()
+    
     private lazy var loginView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "backgroundColor")
         return view
     }()
+    
     
     private lazy var loginItemView: UIView = {
         let view = UIView()
@@ -40,7 +43,6 @@ class LoginVC: UIViewController {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "travio_icon")
-        
         return imageView
     }()
     
@@ -56,9 +58,9 @@ class LoginVC: UIViewController {
     @objc private func signUpTapped() {
         let vc = SignUpVC()
         vc.signUpSuccessCallback = { [weak self] (email, password) in
-                    self?.emailTextField.textField.text = email
-                    self?.passwordTextField.textField.text = password
-                }
+            self?.emailTextField.textField.text = email
+            self?.passwordTextField.textField.text = password
+        }
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
@@ -67,26 +69,29 @@ class LoginVC: UIViewController {
         
         guard let email = emailTextField.textField.text,
               let password = passwordTextField.textField.text
-                
         else {return}
         
         guard viewModel.isValidEmail(email) else {
             Alerts.showAlert(from: self, title: "Hata", message: "Geçersiz email", actionTitle: "Tamam")
-                    return
-                }
+            return
+        }
         
         viewModel.login(email: email, password: password)
+        activityIndicator.showIndicator(in: view, text: "Giriş Yapılıyor...")
         
         viewModel.navigateToViewController = { [weak self] in
             self?.navigateToHomeVC()
+            self?.activityIndicator.hideIndicator()
         }
+        
         viewModel.showAlertFailure = { message in
+            self.activityIndicator.hideIndicator()
             Alerts.showAlert(from: self, title: "Hata", message: message, actionTitle: "Tamam")
         }
     }
     
     private func navigateToHomeVC() {
-        let homeVC = MainTabbarVC() 
+        let homeVC = MainTabbarVC()
         let navigationController = UINavigationController(rootViewController: homeVC)
         navigationController.modalPresentationStyle = .fullScreen
         self.present(navigationController, animated: true, completion: nil)
@@ -101,16 +106,16 @@ class LoginVC: UIViewController {
     
     private lazy var loginİtemStackView = createStackView(axis: .vertical, spacing: 24)
     private lazy var signUpStackView = createStackView(axis: .horizontal, spacing: 4)
-
-    private lazy var accountLabel = LabelUtility.createLabel(text: "Don’t have any account?", color: "textColor" , textSize: .size14, fontType: .semibold, alignment: .center)
     
-    private lazy var welcomeLabelText = LabelUtility.createLabel(text: "Welcome to Travio", color: "textColor", textSize: .size24, fontType: .medium, alignment: .center)
-        
+    private lazy var accountLabel = LabelManager.createLabel(text: "Don’t have any account?", color: "textColor" , textSize: .size14, fontType: .semibold, alignment: .center)
+    
+    private lazy var welcomeLabelText = LabelManager.createLabel(text: "Welcome to Travio", color: "textColor", textSize: .size24, fontType: .medium, alignment: .center)
+    
     private lazy var emailTextField = CommonTextField(labelText: "Email", textFieldPlaceholder: "deneme@example.com", isSecure: false)
     
     private lazy var passwordTextField = CommonTextField(labelText: "Password", textFieldPlaceholder: "************", isSecure: true)
     
-    private lazy var loginButton = ButtonUtility.createButton(from: self, title: "Login", action: #selector(buttonLoginTapped))
+    private lazy var loginButton = ButtonManager.createButton(from: self, title: "Login", action: #selector(buttonLoginTapped))
     
     private func setupViews() {
         self.view.addSubviews(loginView,loginItemView,imageView)
@@ -120,19 +125,21 @@ class LoginVC: UIViewController {
         loginİtemStackView.addArrangedSubviews(emailTextField,passwordTextField)
         signUpStackView.addArrangedSubviews(accountLabel,signUpButton)
         
-        
         setupLayouts()
     }
     
     private func setupLayouts() {
         imageView.snp.makeConstraints { make in
-            let size = self.view.frame.height * 0.15
-            make.size.equalTo(size)
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(loginItemView.snp.top).offset(-24)
+            
+            let imageSizePercentage: CGFloat = 0.15
+            make.width.equalTo(view.snp.height).multipliedBy(imageSizePercentage)
+            make.height.equalTo(view.snp.height).multipliedBy(imageSizePercentage * (178.0 / 149.0))
+          
         }
-
+        
         loginView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -146,7 +153,6 @@ class LoginVC: UIViewController {
             make.leading.trailing.equalTo(loginItemView)
         }
         
-        
         emailTextField.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
         }
@@ -154,7 +160,7 @@ class LoginVC: UIViewController {
         passwordTextField.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
         }
-
+        
         loginİtemStackView.dropShadow()
         loginİtemStackView.snp.makeConstraints { make in
             make.top.equalTo(welcomeLabelText.snp.bottom).offset(41)
@@ -172,7 +178,6 @@ class LoginVC: UIViewController {
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
-    
 }
 
 #if DEBUG

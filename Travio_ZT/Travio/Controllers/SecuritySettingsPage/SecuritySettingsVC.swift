@@ -82,7 +82,7 @@ class SecuritySettingsVC: UIViewController {
         return stackView
     }()
     
-    private lazy var saveButton = ButtonUtility.createButton(from: self, title: "Save", action: #selector(saveButtonTapped))
+    private lazy var saveButton = ButtonManager.createButton(from: self, title: "Save", action: #selector(saveButtonTapped))
     
     @objc private func saveButtonTapped() {
         let validation = viewModel.validatePasswordFields(newPassword: newPasswordField.textField.text, confirmPassword: newPasswordConfirmField.textField.text)

@@ -29,7 +29,7 @@ class SignUpVC: UIViewController {
     }()
     
     
-    private lazy var signUpButton = ButtonUtility.createButton(from: self, title: "Sign Up", action: #selector(signUpButtonTapped), isEnabled: false)
+    private lazy var signUpButton = ButtonManager.createButton(from: self, title: "Sign Up", action: #selector(signUpButtonTapped), isEnabled: false)
     
     private func updateSignUpButtonState() {
         let isFormValid = !fullNameField.textField.text!.isEmpty &&

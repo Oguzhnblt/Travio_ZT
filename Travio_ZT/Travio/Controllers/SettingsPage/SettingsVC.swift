@@ -39,21 +39,14 @@ class SettingsVC: UIViewController, EditProfileDelegate {
     private lazy var profileImage : UIImageView = {
         let profileImage = UIImageView()
         profileImage.image = UIImage(named: "img_profile")
+        profileImage.frame.size = CGSize(width: 120, height: 120)
         profileImage.contentMode = .scaleAspectFill
         profileImage.layer.masksToBounds = true
-        profileImage.layer.cornerRadius = 50
+        profileImage.layer.cornerRadius = 60
         return profileImage
     }()
     
-    
-    private lazy var editProfileButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Edit Profile", for: .normal)
-        button.setTitleColor(UIColor(named: "background"), for: .normal)
-        button.addTarget(self, action: #selector(buttonEditProfileTapped), for: .touchUpInside)
-        
-        return button
-    }()
+    private lazy var editProfileButton = ButtonManager.createButton(from: self, title: "Edit Profile", action: #selector(buttonEditProfileTapped), titleColor: .background, backgroundColor: nil, font: .regular, size: .size12)
     
 
     @objc func buttonEditProfileTapped() {
@@ -82,9 +75,9 @@ class SettingsVC: UIViewController, EditProfileDelegate {
     }
     
     
-    private lazy var profileText = LabelUtility.createLabel(text: "Bruce Wills", color: "textColor", textSize: .size16, fontType: .semibold, alignment: .center)
+    private lazy var profileText = LabelManager.createLabel(text: "Bruce Wills", color: "textColor", textSize: .size16, fontType: .semibold, alignment: .center)
     
-    private lazy var editProfileText = LabelUtility.createLabel(text: "Edit Profile", color: "seeAllColor", textSize: .size14, fontType: .regular, alignment: .center)
+    private lazy var editProfileText = LabelManager.createLabel(text: "Edit Profile", color: "seeAllColor", textSize: .size14, fontType: .regular, alignment: .center)
     
     
     override func viewDidLoad() {
@@ -121,7 +114,7 @@ class SettingsVC: UIViewController, EditProfileDelegate {
         profileImage.snp.makeConstraints({make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(24)
-            make.size.equalTo(120)
+            make.size.equalTo(profileImage.frame.size)
         })
         
         profileText.snp.makeConstraints({make in

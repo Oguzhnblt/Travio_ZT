@@ -9,28 +9,17 @@ class AddNewPlaceVC: UIViewController {
     private lazy var placeDescriptionIndexPath = IndexPath(item: 0, section: 1)
     private lazy var locationIndexPath = IndexPath(item: 0, section: 2)
     
-    private var blurEffectView: UIVisualEffectView?
     var selectedCoordinate: CLLocationCoordinate2D?
     private lazy var addPlaceImages: [UIImage] = []
     private lazy var viewModel = AddNewPlaceVM()
     var completedAddPlace: (() -> Void)?
     
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .medium)
-        indicator.color = .black
-        indicator.hidesWhenStopped = true
-        return indicator
+    private lazy var activityIndicator: ActivityIndicatorManager = {
+        let manager = ActivityIndicatorManager()
+        return manager
     }()
-    
-    private lazy var activityIndicatorLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.text = "Yeni yer ekleniyor lütfen bekleyiniz."
-        label.textAlignment = .center
-        label.font = AppTheme.getFont(name: .regular, size: .size14)
-        return label
-    }()
-    
+
+   
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: addNewPageLayout())
@@ -44,34 +33,24 @@ class AddNewPlaceVC: UIViewController {
         return collectionView
     }()
     
-    private lazy var addPlaceButton = ButtonUtility.createButton(from: self, title: "Add Place", action: #selector(addPlaceButtonTapped))
+    private lazy var addPlaceButton = ButtonManager.createButton(from: self, title: "Add Place", action: #selector(addPlaceButtonTapped))
     
     // MARK: Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         updateLocationInfo()
-        hideBlurEffect()
     }
     
     // MARK: Private Methods
     private func setupViews() {
-        view.addSubviews(collectionView, addPlaceButton, activityIndicator)
-        activityIndicator.addSubview(activityIndicatorLabel)
+        view.addSubviews(collectionView, addPlaceButton)
+
         
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        activityIndicator.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-90)
-        }
-        
-        activityIndicatorLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(activityIndicator.snp.bottom).offset(8)
-        }
+      
         
         addPlaceButton.snp.makeConstraints { make in
             make.bottom.equalTo(collectionView.snp.bottom).offset(-50)
@@ -80,32 +59,8 @@ class AddNewPlaceVC: UIViewController {
             make.height.equalTo(54)
         }
     }
+   
     
-    private func showIndicator(state: IndicatorState) {
-        switch state {
-            case .start:
-                activityIndicator.startAnimating()
-                showBlurEffect()
-            case .stop:
-                activityIndicator.stopAnimating()
-                hideBlurEffect()
-        }
-    }
-    
-    private func showBlurEffect() {
-        let blurEffect = UIBlurEffect(style: .prominent)
-        blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView?.frame = view.bounds
-        blurEffectView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        view.addSubview(blurEffectView!)
-        
-        blurEffectView?.contentView.addSubview(activityIndicator)
-    }
-    
-    private func hideBlurEffect() {
-        blurEffectView?.removeFromSuperview()
-        blurEffectView = nil
-    }
     
     private func updateLocationInfo() {
         guard let selectedCoordinate = selectedCoordinate else { return }
@@ -138,17 +93,17 @@ class AddNewPlaceVC: UIViewController {
             return
         }
         
-        showIndicator(state: .start)
         
         let place = locationCell.textView.text ?? ""
         let title = placeNameCell.textView.text ?? ""
         let description = placeDescriptionCell.textView.text ?? ""
         
         viewModel.uploadImage(images: addPlaceImages)
-        
+        activityIndicator.showIndicator(in: view, text: "Yeni yer ekleniyor. Lütfen bekleyiniz.")
+
         viewModel.transferURLs = { [weak self] urls in
             guard let self = self else { return }
-            
+
             let params: [String: Any] = [
                 "place": place,
                 "title": title,
@@ -168,7 +123,7 @@ class AddNewPlaceVC: UIViewController {
               
             }
             completedAddPlace?()
-            showIndicator(state: .stop)
+            activityIndicator.hideIndicator()
             dismiss(animated: true, completion: nil)
         }
     }

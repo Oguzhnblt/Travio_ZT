@@ -13,44 +13,26 @@ protocol EditProfileDelegate: AnyObject {
     func profileDidUpdate(fullName: String, image: UIImage)
 }
 
-enum IndicatorState {
-    case start
-    case stop
-}
-
-
 class EditProfileVC: UIViewController {
     
     weak var delegate: EditProfileDelegate?
     
     private lazy var viewModel = EditProfileVM()
     private var imageDatas: [UIImage] = []
-    private func showIndicator(state: IndicatorState) {
-        switch state {
-            case .start:
-                profileImage.subviews.compactMap { $0 as? UIActivityIndicatorView }.first?.startAnimating()
-            case .stop:
-                profileImage.subviews.compactMap { $0 as? UIActivityIndicatorView }.first?.stopAnimating()
-        }
-    }
+    
+    private lazy var activityIndicator = ActivityIndicatorManager()
     
     private lazy var profileImage: UIImageView = {
         let image = UIImageView()
+        image.frame.size = CGSize(width: 120, height: 120)
         image.image = UIImage(named: "img_profile")
         image.contentMode = .scaleAspectFill
-        image.layer.masksToBounds = true
-        image.layer.cornerRadius = 50
-        
-        let activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.hidesWhenStopped = true
-        image.addSubview(activityIndicator)
-        
-        activityIndicator.snp.makeConstraints({ make in
-            make.center.equalToSuperview()
-        })
-        
+        image.layer.cornerRadius = 60
+        image.clipsToBounds = true
         return image
     }()
+    
+    
     
     
     private func imagePicker() {
@@ -61,7 +43,7 @@ class EditProfileVC: UIViewController {
     }
     
     
-    private lazy var changePhotoButton = ButtonUtility.createButton(from: self, title: "Change Photo", action: #selector(changePhotoTapped), titleColor: UIColor(named: "backgroundColor"), backgroundColor: nil)
+    private lazy var changePhotoButton = ButtonManager.createButton(from: self, title: "Change Photo", action: #selector(changePhotoTapped), titleColor: UIColor(named: "backgroundColor"), backgroundColor: nil, font: .regular, size: .size12)
     
     private lazy var saveButton: UIButton = {
         
@@ -111,20 +93,26 @@ class EditProfileVC: UIViewController {
     
     
     @objc func saveButtonTapped() {
-        showIndicator(state: .start)
+        activityIndicator.showIndicator(in: profileImage, text: "Loading...")
         
         guard let fullName = fullNameField.textField.text,
-              let email = emailField.textField.text else {
-            Alerts.showAlert(from: self, title: "Uyarı", message: "Lütfen geçerli bir ad ve e-posta girin.", actionTitle: "Tamam")
-            showIndicator(state: .stop)
-            return }
+              let email = emailField.textField.text
+        else {
+            Alerts.showAlert(from: self, title: "Uyarı", message: "Lütfen geçerli bir ad ve e-posta girin.", actionTitle: "Tamam") {
+                self.activityIndicator.hideIndicator()
+            }
+            return
+        }
+        
         let validationResult = viewModel.validateInputs(fullName: fullName, email: email)
         
         if !validationResult.isValid {
-            Alerts.showAlert(from: self, title: "Uyarı", message: validationResult.errorMessage, actionTitle: "Tamam")
-            showIndicator(state: .stop)
+            Alerts.showAlert(from: self, title: "Uyarı", message: validationResult.errorMessage, actionTitle: "Tamam") {
+                self.activityIndicator.hideIndicator()
+            }
             return
         }
+        
         viewModel.uploadImage(images: imageDatas)
         viewModel.transferURLs = { [weak self] url in
             let pp_url = url.first
@@ -134,8 +122,9 @@ class EditProfileVC: UIViewController {
         profileName.text = fullName
         
         viewModel.showAlertVM = { message in
-            Alerts.showAlert(from: self, title: "Uyarı", message: message, actionTitle: "Tamam")
-            self.showIndicator(state: .stop)
+            Alerts.showAlert(from: self, title: "Uyarı", message: message, actionTitle: "Tamam") {
+                self.activityIndicator.hideIndicator()
+            }
             
             if let fullName = self.fullNameField.textField.text {
                 self.delegate?.profileDidUpdate(fullName: fullName, image: self.profileImage.image ?? UIImage())
@@ -168,8 +157,6 @@ class EditProfileVC: UIViewController {
         super.viewDidLoad()
         setupViews()
         me()
-        
-        
         navigationController?.navigationBar.isHidden = true
     }
     
@@ -189,19 +176,21 @@ class EditProfileVC: UIViewController {
         if let fullName = profile.full_name {
             fullNameField.textField.text = fullName
         }
+        
         if let email = profile.email {
             emailField.textField.text = email
         }
         
         if let ppUrlString = profile.pp_url, let imageUrl = URL(string: ppUrlString) {
             profileImage.kf.setImage(with: imageUrl) { _ in
-                self.showIndicator(state: .stop)
+                self.activityIndicator.hideIndicator()
             }
         }
         
         if let role = profile.role {
             adminCell.label.text = role
         }
+        
         if let createdAt = profile.created_at, let formattedDate = DateFormatter.formattedDate(
             from: createdAt,
             originalFormat: .longFormat,
@@ -220,12 +209,13 @@ class EditProfileVC: UIViewController {
     }
     
     private func setupLayouts() {
-        
-        profileImage.snp.makeConstraints({make in
+        profileImage.snp.makeConstraints({ make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(24)
-            make.size.equalTo(120)
+            make.size.equalTo(profileImage.frame.size)
         })
+        
+        
         
         changePhotoButton.snp.makeConstraints({make in
             make.top.equalTo(profileImage.snp.bottom)
@@ -248,7 +238,6 @@ class EditProfileVC: UIViewController {
             make.left.right.equalToSuperview().inset(24)
             make.width.equalTo(342)
             make.height.equalTo(51)
-            
         })
     }
 }
@@ -259,8 +248,6 @@ extension EditProfileVC: UINavigationControllerDelegate, UIImagePickerController
         if let selectedImage = info[.originalImage] as? UIImage {
             profileImage.image = selectedImage
             imageDatas.append(selectedImage)
-            
-            
             dismiss(animated: true, completion: nil)
         }
     }

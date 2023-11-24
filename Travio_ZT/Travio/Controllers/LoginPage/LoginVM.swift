@@ -20,16 +20,7 @@ class LoginVM {
         }
     
     func login(email: String, password: String) {
-        guard !email.isEmpty, !password.isEmpty else {
-                   showAlertFailure?("Email ve şifre boş bırakılamaz.")
-                   return
-               }
-
-        guard !email.isEmpty, !password.isEmpty else {
-            showAlertFailure?("Email ve şifre boş bırakılamaz.")
-            return
-        }
-        
+       
         let params = ["email": email, "password": password]
         
         NetworkingHelper.shared.fetchData(urlRequest: .login(params: params)) { [weak self] (result: Result<LoginResponse, Error>) in

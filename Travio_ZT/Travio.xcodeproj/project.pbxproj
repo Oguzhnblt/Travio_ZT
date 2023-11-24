@@ -29,6 +29,7 @@
 		0FC9671D2AEA4B5D009FB26B /* MainTabbarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */; };
 		120490772AFCD6020076A0AA /* PlaceBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120490762AFCD6020076A0AA /* PlaceBottomView.swift */; };
 		120DCD192B108AB0003A6C51 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120DCD182B108AB0003A6C51 /* AppTheme.swift */; };
+		120DCD1D2B10D10D003A6C51 /* ActivityIndicatorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 120DCD1C2B10D10D003A6C51 /* ActivityIndicatorManager.swift */; };
 		1214274F2ADC25E700CA1D10 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1214274E2ADC25E700CA1D10 /* SignUpVC.swift */; };
 		12272FD92B082AC800A359C2 /* MyAddedPlacesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12272FD82B082AC800A359C2 /* MyAddedPlacesVM.swift */; };
 		122DB68A2AFADD2C001CDE5A /* GenericPlacesVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122DB6892AFADD2C001CDE5A /* GenericPlacesVM.swift */; };
@@ -69,7 +70,7 @@
 		127806282AF7EC740085D31F /* MyVisitsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127806272AF7EC740085D31F /* MyVisitsVC.swift */; };
 		1278062A2AF7EC840085D31F /* MyVisitsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 127806292AF7EC840085D31F /* MyVisitsViewCell.swift */; };
 		12827B7A2B0C9CBE00AA0283 /* GenericResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12827B792B0C9CBE00AA0283 /* GenericResponseModel.swift */; };
-		12827B7C2B0CCF9100AA0283 /* ButtonUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12827B7B2B0CCF9100AA0283 /* ButtonUtility.swift */; };
+		12827B7C2B0CCF9100AA0283 /* ButtonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12827B7B2B0CCF9100AA0283 /* ButtonManager.swift */; };
 		129A8B002AFC18070073CE6E /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129A8AFF2AFC18070073CE6E /* MapVC.swift */; };
 		129A8B022AFC2A020073CE6E /* MapPageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129A8B012AFC2A020073CE6E /* MapPageLayout.swift */; };
 		12A009412AEFA58500D2AD14 /* GenericPlacesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A009402AEFA58500D2AD14 /* GenericPlacesVC.swift */; };
@@ -89,7 +90,7 @@
 		12E1FD502AF38AAB00B89F81 /* TextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */; };
 		12EAA9E82B001550006DCD42 /* CommonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EAA9E72B001550006DCD42 /* CommonTextField.swift */; };
 		12EB08402B0D339000BAC739 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EB083F2B0D339000BAC739 /* Place.swift */; };
-		12EB08422B0D362F00BAC739 /* LabelUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EB08412B0D362F00BAC739 /* LabelUtility.swift */; };
+		12EB08422B0D362F00BAC739 /* LabelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12EB08412B0D362F00BAC739 /* LabelManager.swift */; };
 		12F5C1B82B021F37007FB53A /* PlaceDetailsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F5C1B72B021F37007FB53A /* PlaceDetailsVM.swift */; };
 		12F85D832AF9123500FB7CBD /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D822AF9123500FB7CBD /* SectionHeaderView.swift */; };
 		12F85D872AF9148000FB7CBD /* SignUpVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F85D862AF9148000FB7CBD /* SignUpVM.swift */; };
@@ -131,6 +132,7 @@
 		0FC9671C2AEA4B5D009FB26B /* MainTabbarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarVC.swift; sourceTree = "<group>"; };
 		120490762AFCD6020076A0AA /* PlaceBottomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceBottomView.swift; sourceTree = "<group>"; };
 		120DCD182B108AB0003A6C51 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		120DCD1C2B10D10D003A6C51 /* ActivityIndicatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorManager.swift; sourceTree = "<group>"; };
 		1214274E2ADC25E700CA1D10 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		12272FD82B082AC800A359C2 /* MyAddedPlacesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAddedPlacesVM.swift; sourceTree = "<group>"; };
 		122DB6892AFADD2C001CDE5A /* GenericPlacesVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPlacesVM.swift; sourceTree = "<group>"; };
@@ -172,7 +174,7 @@
 		127806272AF7EC740085D31F /* MyVisitsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyVisitsVC.swift; sourceTree = "<group>"; };
 		127806292AF7EC840085D31F /* MyVisitsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyVisitsViewCell.swift; sourceTree = "<group>"; };
 		12827B792B0C9CBE00AA0283 /* GenericResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponseModel.swift; sourceTree = "<group>"; };
-		12827B7B2B0CCF9100AA0283 /* ButtonUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonUtility.swift; sourceTree = "<group>"; };
+		12827B7B2B0CCF9100AA0283 /* ButtonManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonManager.swift; sourceTree = "<group>"; };
 		129A8AFF2AFC18070073CE6E /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		129A8B012AFC2A020073CE6E /* MapPageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPageLayout.swift; sourceTree = "<group>"; };
 		12A009402AEFA58500D2AD14 /* GenericPlacesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericPlacesVC.swift; sourceTree = "<group>"; };
@@ -190,7 +192,7 @@
 		12E1FD4F2AF38AAB00B89F81 /* TextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCell.swift; sourceTree = "<group>"; };
 		12EAA9E72B001550006DCD42 /* CommonTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTextField.swift; sourceTree = "<group>"; };
 		12EB083F2B0D339000BAC739 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
-		12EB08412B0D362F00BAC739 /* LabelUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelUtility.swift; sourceTree = "<group>"; };
+		12EB08412B0D362F00BAC739 /* LabelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelManager.swift; sourceTree = "<group>"; };
 		12F5C1B72B021F37007FB53A /* PlaceDetailsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsVM.swift; sourceTree = "<group>"; };
 		12F85D822AF9123500FB7CBD /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		12F85D862AF9148000FB7CBD /* SignUpVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVM.swift; sourceTree = "<group>"; };
@@ -432,9 +434,8 @@
 				1255D8072ADAC7BD00FB6638 /* SceneDelegate.swift */,
 				1248ED322AED310400777E98 /* Model */,
 				125B445C2AE971580047248D /* Controllers */,
-				1255D8192ADACC6400FB6638 /* Extensions.swift */,
 				12E0A36A2B00E02B00F1F8D1 /* Helper */,
-				12BA00C02AFFDCC80097275C /* CommonElement */,
+				12BA00C02AFFDCC80097275C /* CommonElements */,
 				1255D80E2ADAC7BE00FB6638 /* Assets.xcassets */,
 				1255D8102ADAC7BE00FB6638 /* LaunchScreen.storyboard */,
 				1255D8132ADAC7BE00FB6638 /* Info.plist */,
@@ -555,17 +556,19 @@
 			path = PlaceDetailsPage;
 			sourceTree = "<group>";
 		};
-		12BA00C02AFFDCC80097275C /* CommonElement */ = {
+		12BA00C02AFFDCC80097275C /* CommonElements */ = {
 			isa = PBXGroup;
 			children = (
+				1255D8192ADACC6400FB6638 /* Extensions.swift */,
 				12BA00C12AFFDCDB0097275C /* SetupView.swift */,
 				12EAA9E72B001550006DCD42 /* CommonTextField.swift */,
 				125D4EF82B0C857B003C2C7E /* Alerts.swift */,
-				12827B7B2B0CCF9100AA0283 /* ButtonUtility.swift */,
-				12EB08412B0D362F00BAC739 /* LabelUtility.swift */,
+				12827B7B2B0CCF9100AA0283 /* ButtonManager.swift */,
+				12EB08412B0D362F00BAC739 /* LabelManager.swift */,
 				120DCD182B108AB0003A6C51 /* AppTheme.swift */,
+				120DCD1C2B10D10D003A6C51 /* ActivityIndicatorManager.swift */,
 			);
-			path = CommonElement;
+			path = CommonElements;
 			sourceTree = "<group>";
 		};
 		12BA00C32AFFDE780097275C /* TermsOfUse */ = {
@@ -796,7 +799,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FB84E122AF289160071A559 /* GetAllPlacesResponseModel.swift in Sources */,
-				12EB08422B0D362F00BAC739 /* LabelUtility.swift in Sources */,
+				12EB08422B0D362F00BAC739 /* LabelManager.swift in Sources */,
 				1255D80A2ADAC7BD00FB6638 /* LoginVC.swift in Sources */,
 				12272FD92B082AC800A359C2 /* MyAddedPlacesVM.swift in Sources */,
 				127806202AF7CC260085D31F /* HelpSupportModel.swift in Sources */,
@@ -851,10 +854,11 @@
 				FF9BD5672AF2F6BA0072BBA0 /* GetAllVisitsResponseModel.swift in Sources */,
 				0F866E142AFA136F000C784A /* MapAnnotation.swift in Sources */,
 				12F85D892AF9149E00FB7CBD /* LoginVM.swift in Sources */,
-				12827B7C2B0CCF9100AA0283 /* ButtonUtility.swift in Sources */,
+				12827B7C2B0CCF9100AA0283 /* ButtonManager.swift in Sources */,
 				0F6E232B2AF236B800F843C6 /* LoginRequestModel.swift in Sources */,
 				0F5CB3152AF2681D00B9F13F /* RefreshRequestModel.swift in Sources */,
 				12E0A3652B00357000F1F8D1 /* EditProfileVM.swift in Sources */,
+				120DCD1D2B10D10D003A6C51 /* ActivityIndicatorManager.swift in Sources */,
 				123C61082B055F9B0013C00D /* AddNewPlaceVM.swift in Sources */,
 				FF9BD5522AF2F0E00072BBA0 /* PostGalleryImageRequestModel.swift in Sources */,
 				FF9BD5652AF2F5FF0072BBA0 /* VisitModel.swift in Sources */,

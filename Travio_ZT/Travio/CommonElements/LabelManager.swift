@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class LabelUtility {
+class LabelManager {
     static func createLabel(text: String, color: String, textSize: AppTheme.FontSize, fontType: AppTheme.FontType, alignment: NSTextAlignment) -> UILabel {
         let label = UILabel()
         label.text = text
