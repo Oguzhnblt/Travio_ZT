@@ -110,32 +110,6 @@ class EditProfileVC: UIViewController {
     private lazy var stackViews = stackView(axis: .vertical, views: [cellStackView, fieldStackView])
     
     
-    func profileUpdated(with profileInfo: ProfileResponse) {
-        showIndicator(state: .start)
-        guard let fullName = profileInfo.full_name,
-              let ppUrlString = profileInfo.pp_url,
-              let imageUrl = URL(string: ppUrlString),
-              let createdAt = profileInfo.created_at,
-              let formattedDate = DateFormatter.formattedDate(
-                from: createdAt,
-                originalFormat: .longFormat,
-                targetFormat: .stringFormat)
-        else {return}
-        
-        profileName.text = fullName
-        profileImage.kf.setImage(with: imageUrl) {_ in
-            self.showIndicator(state: .stop)
-        }
-    
-        adminCell.label.text = profileInfo.role ?? "User"
-        signCell.label.text = formattedDate
-        emailField.textField.text = profileInfo.email ?? ""
-        fullNameField.textField.text = fullName
-        
-        
-    }
-    
-    
     @objc func saveButtonTapped() {
         showIndicator(state: .start)
 
@@ -181,20 +155,44 @@ class EditProfileVC: UIViewController {
     }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         setupViews()
-        
+
         viewModel.myProfile()
+
         viewModel.dataTransfer = { [weak self] profile in
-            self?.profileUpdated(with: profile)
-            
+            self?.updatePage(with: profile)
         }
-        
-        
+
         navigationController?.navigationBar.isHidden = true
-        
     }
+    
+    private func updatePage(with profile: ProfileResponse) {
+        if let fullName = profile.full_name {
+            fullNameField.textField.text = fullName
+        }
+        if let email = profile.email {
+            emailField.textField.text = email
+        }
+
+        if let ppUrlString = profile.pp_url, let imageUrl = URL(string: ppUrlString) {
+            profileImage.kf.setImage(with: imageUrl) { _ in
+                self.showIndicator(state: .stop)
+            }
+        }
+
+        if let role = profile.role {
+            adminCell.label.text = role
+        }
+        if let createdAt = profile.created_at, let formattedDate = DateFormatter.formattedDate(
+            from: createdAt,
+            originalFormat: .longFormat,
+            targetFormat: .stringFormat) {
+            signCell.label.text = formattedDate
+        }
+    }
+
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
