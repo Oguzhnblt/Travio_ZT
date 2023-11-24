@@ -25,7 +25,7 @@ class PrivacyField: UIView {
         let label = UILabel()
         label.textAlignment = .left
         label.textColor = .black
-        label.font = UIFont(name: "Poppins-Regular", size: 14)
+        label.font = AppTheme.getFont(name: .medium, size: .size14)
         return label
     }()
     

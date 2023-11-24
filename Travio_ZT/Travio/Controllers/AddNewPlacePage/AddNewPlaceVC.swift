@@ -27,7 +27,7 @@ class AddNewPlaceVC: UIViewController {
         label.textColor = .black
         label.text = "Yeni yer ekleniyor lütfen bekleyiniz."
         label.textAlignment = .center
-        label.font = UIFont(name: "Poppins-Regular", size: 12)
+        label.font = AppTheme.getFont(name: .regular, size: .size14)
         return label
     }()
     
@@ -254,7 +254,7 @@ extension AddNewPlaceVC: UIImagePickerControllerDelegate, UINavigationController
             cell.imageView.image = selectedImage
             
             if indexPath.item < addPlaceImages.count { 
-                (addPlaceImages[indexPath.item] = selectedImage)
+                addPlaceImages[indexPath.item] = selectedImage
             }
             else {
                 addPlaceImages.append(selectedImage)

@@ -29,7 +29,7 @@ class PlaceBottomView: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .black
         label.text = "Türkiye"
-        label.font = UIFont(name: "Poppins-SemiBold", size: 30)
+        label.font = AppTheme.getFont(name: .semibold, size: .size30)
         label.numberOfLines = -1
         return label
     }()
@@ -37,14 +37,14 @@ class PlaceBottomView: UICollectionViewCell {
     lazy var dateTitle: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.black
-        label.font = UIFont(name: "Poppins-Regular", size: 14)
+        label.font = AppTheme.getFont(name: .regular, size: .size14)
         return label
     }()
 
     lazy var authorTitle: UILabel = {
         let label = UILabel()
         label.textColor = .gray
-        label.font = UIFont(name: "Poppins-Regular", size: 10)
+        label.font = AppTheme.getFont(name: .regular, size: .size10)
         return label
     }()
 
@@ -68,7 +68,7 @@ class PlaceBottomView: UICollectionViewCell {
     lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont(name: "Poppins-Regular", size: 12)
+        label.font = AppTheme.getFont(name: .regular, size: .size12)
         label.numberOfLines = 0
         return label
     }()

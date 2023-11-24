@@ -2,16 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationUsageDescription</key>
-	<string>İstediğiniz yeri bulmanız için konumlara izin vermeniz gerekmektedir.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photo library to...</string>
 	<key>CFBundleGetInfoString</key>
 	<string></string>
-	<key>NSCameraUsageDescription</key>
-	<string>Bu uygulama kamerayı kullanarak fotoğraf çekmeyi desteklemektedir.</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Poppins-Medium.ttf</string>
 		<string>Poppins-Regular.ttf</string>
 		<string>Poppins-Thin.ttf</string>
 		<string>Poppins-SemiBold.ttf</string>

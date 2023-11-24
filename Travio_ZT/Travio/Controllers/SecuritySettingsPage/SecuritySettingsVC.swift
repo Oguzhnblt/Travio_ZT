@@ -58,7 +58,7 @@ class SecuritySettingsVC: UIViewController {
         let label = UILabel()
         label.text = headerLabel[0]
         label.textColor = UIColor(named: "backgroundColor")
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = AppTheme.getFont(name: .semibold, size: .size16)
         return label
     }()
     
@@ -66,7 +66,7 @@ class SecuritySettingsVC: UIViewController {
         let label = UILabel()
         label.text = headerLabel[1]
         label.textColor = UIColor(named: "backgroundColor")
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = AppTheme.getFont(name: .semibold, size: .size16)
         return label
     }()
     

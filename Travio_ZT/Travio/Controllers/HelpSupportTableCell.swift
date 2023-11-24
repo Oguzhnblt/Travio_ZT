@@ -23,14 +23,14 @@ class HelpSupportTableCell: UITableViewCell {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-Regular", size: 14)
+        label.font = AppTheme.getFont(name: .medium, size: .size14)
         label.numberOfLines = 0
         return label
     }()
     
     let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-Regular", size: 10)
+        label.font = AppTheme.getFont(name: .light, size: .size14)
         label.numberOfLines = -1
         label.textColor = .gray
         return label

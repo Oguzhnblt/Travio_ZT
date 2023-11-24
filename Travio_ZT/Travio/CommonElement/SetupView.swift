@@ -17,7 +17,7 @@ extension UIViewController {
         headerLabel.textColor = .black
         headerLabel.text = title
         headerLabel.textColor = .white
-        headerLabel.font = UIFont(name: "Poppins-SemiBold", size: 32)
+        headerLabel.font = AppTheme.getFont(name: .semibold, size: .size34)
         
         lazy var containerView = UIView()
         containerView.backgroundColor = UIColor(named: "backgroundColor")

@@ -77,7 +77,7 @@ class EditProfileVC: UIViewController {
     
     private lazy var profileName: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-SemiBold", size: 24)
+        label.font = AppTheme.getFont(name: .semibold, size: .size24)
         label.textAlignment = .center
         
         return label

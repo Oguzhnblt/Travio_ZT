@@ -53,14 +53,14 @@ class MyVisitsViewCell: UICollectionViewCell {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-SemiBold", size: 24)
+        label.font = AppTheme.getFont(name: .semibold, size: .size30)
         label.textColor = .white
         return label
     }()
     
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-SemiBold", size: 14)
+        label.font = AppTheme.getFont(name: .light, size: .size16)
         label.textColor = .white
         return label
     }()

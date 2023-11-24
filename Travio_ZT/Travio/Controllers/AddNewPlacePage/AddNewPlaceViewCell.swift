@@ -25,7 +25,7 @@ class AddNewPlaceViewCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .black
         label.numberOfLines = 0
-        label.font = UIFont(name: "Poppins-Regular", size: 14)
+        label.font = AppTheme.getFont(name: .medium, size: .size14)
         return label
     }()
     
@@ -33,7 +33,7 @@ class AddNewPlaceViewCell: UICollectionViewCell {
         let textField = UITextView()
         textField.textColor = UIColor.gray
         textField.backgroundColor = UIColor.white
-        textField.font = UIFont(name: "Poppins-Regular", size: 12)
+        textField.font = AppTheme.getFont(name: .regular, size: .size14)
         
         return textField
     }()

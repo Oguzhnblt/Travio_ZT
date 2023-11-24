@@ -22,7 +22,7 @@ class CommonTextField: UIView {
     lazy var label: UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont(name: "Poppins-Regular", size: 14)
+        label.font = AppTheme.getFont(name: .medium, size: .size14)
         label.textAlignment = .left
         return label
     }()
@@ -39,6 +39,7 @@ class CommonTextField: UIView {
         stackView.spacing = 8
         return stackView
     }()
+    
     
     private func setupViews() {
         addSubview(backView)

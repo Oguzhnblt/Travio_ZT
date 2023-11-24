@@ -37,13 +37,13 @@ class GenericPlacesTableViewCell: UITableViewCell {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-SemiBold", size: 16)
+        label.font = AppTheme.getFont(name: .semibold, size: .size24)
         return label
     }()
     
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-Thin", size: 14)
+        label.font = AppTheme.getFont(name: .light, size: .size14)
         return label
     }()
     
@@ -104,8 +104,8 @@ class GenericPlacesTableViewCell: UITableViewCell {
         })
         
         imageIconView.snp.makeConstraints({make in
-            make.width.equalTo(12)
-            make.height.equalTo(18)
+            make.width.equalTo(10)
+            make.height.equalTo(17)
         })
         
         

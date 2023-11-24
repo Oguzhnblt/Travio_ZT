@@ -37,13 +37,13 @@ class MyAddedPlacesViewCell: UICollectionViewCell {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-SemiBold", size: 16)
+        label.font = AppTheme.getFont(name: .semibold, size: .size24)
         return label
     }()
     
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-Thin", size: 14)
+        label.font = AppTheme.getFont(name: .light, size: .size14)
         return label
     }()
     

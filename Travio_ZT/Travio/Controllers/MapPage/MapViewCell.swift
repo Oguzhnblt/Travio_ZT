@@ -42,14 +42,14 @@ class MapViewCell: UICollectionViewCell {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-SemiBold", size: 20)
+        label.font = AppTheme.getFont(name: .semibold, size: .size24)
         label.textColor = .white
         return label
     }()
     
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-SemiBold", size: 14)
+        label.font = AppTheme.getFont(name: .light, size: .size14)
         label.textColor = .white
         return label
     }()
@@ -84,7 +84,7 @@ class MapViewCell: UICollectionViewCell {
         }
         
         imageIconView.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom)
+            make.top.equalTo(titleLabel.snp.bottom).offset(3)
             make.bottom.equalToSuperview().offset(-16)
             make.left.equalToSuperview().offset(16)
             

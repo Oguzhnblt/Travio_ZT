@@ -48,7 +48,7 @@ class LoginVC: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
         button.setTitleColor(UIColor(named: "textColor"), for: .normal)
-        button.titleLabel?.font = UIFont(name: "Poppins-SemiBold", size: 14)
+        button.titleLabel?.font = AppTheme.getFont(name: .semibold, size: .size14)
         button.addTarget(self, action: #selector(signUpTapped), for: .touchUpInside)
         return button
     }()
@@ -102,9 +102,9 @@ class LoginVC: UIViewController {
     private lazy var loginİtemStackView = createStackView(axis: .vertical, spacing: 24)
     private lazy var signUpStackView = createStackView(axis: .horizontal, spacing: 4)
 
-    private lazy var accountLabel = LabelUtility.createLabel(text: "Don’t have any account?", color: "textColor" , textSize: 14, fontName: "Poppins-SemiBold", alignment: .center)
+    private lazy var accountLabel = LabelUtility.createLabel(text: "Don’t have any account?", color: "textColor" , textSize: .size14, fontType: .semibold, alignment: .center)
     
-    private lazy var welcomeLabelText = LabelUtility.createLabel(text: "Welcome to Travio", color: "textColor", textSize: 24, fontName: "Poppins-Regular", alignment: .center)
+    private lazy var welcomeLabelText = LabelUtility.createLabel(text: "Welcome to Travio", color: "textColor", textSize: .size24, fontType: .medium, alignment: .center)
         
     private lazy var emailTextField = CommonTextField(labelText: "Email", textFieldPlaceholder: "deneme@example.com", isSecure: false)
     
@@ -126,8 +126,10 @@ class LoginVC: UIViewController {
     
     private func setupLayouts() {
         imageView.snp.makeConstraints { make in
+            let size = self.view.frame.height * 0.15
+            make.size.equalTo(size)
             make.centerX.equalToSuperview()
-            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(loginItemView.snp.top).offset(-24)
         }
 

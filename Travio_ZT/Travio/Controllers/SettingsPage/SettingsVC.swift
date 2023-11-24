@@ -82,9 +82,9 @@ class SettingsVC: UIViewController, EditProfileDelegate {
     }
     
     
-    private lazy var profileText = LabelUtility.createLabel(text: "Bruce Wills", color: "textColor", textSize: 16, fontName: "Poppins-SemiBold", alignment: .center)
+    private lazy var profileText = LabelUtility.createLabel(text: "Bruce Wills", color: "textColor", textSize: .size16, fontType: .semibold, alignment: .center)
     
-    private lazy var editProfileText = LabelUtility.createLabel(text: "Edit Profile", color: "seeAllColor", textSize: 12, fontName: "Poppins-SemiBold", alignment: .center)
+    private lazy var editProfileText = LabelUtility.createLabel(text: "Edit Profile", color: "seeAllColor", textSize: .size14, fontType: .regular, alignment: .center)
     
     
     override func viewDidLoad() {

@@ -21,7 +21,7 @@ class EditingProfileCell: UIView {
         let label = UILabel()
         label.textAlignment = .left
         label.textColor = .black
-        label.font = UIFont(name: "Poppins-Regular", size: 12)
+        label.font = AppTheme.getFont(name: .regular, size: .size14)
         return label
     }()
     
