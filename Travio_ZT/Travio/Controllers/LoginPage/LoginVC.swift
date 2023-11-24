@@ -52,6 +52,14 @@ class LoginVC: UIViewController {
         button.addTarget(self, action: #selector(signUpTapped), for: .touchUpInside)
         return button
     }()
+    private lazy var passwordVisibilityButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "eye"), for: .normal)
+        button.setImage(UIImage(systemName: "eye.fill"), for: .selected)
+        button.tintColor = UIColor(named: "textColor")
+        button.addTarget(self, action: #selector(passwordVisibility), for: .touchUpInside)
+        return button
+    }()
     
     @objc private func signUpTapped() {
         let vc = SignUpVC()
@@ -86,7 +94,7 @@ class LoginVC: UIViewController {
     }
     
     private func navigateToHomeVC() {
-        let homeVC = MainTabbarVC() 
+        let homeVC = MainTabbarVC()
         let navigationController = UINavigationController(rootViewController: homeVC)
         navigationController.modalPresentationStyle = .fullScreen
         self.present(navigationController, animated: true, completion: nil)
@@ -108,7 +116,17 @@ class LoginVC: UIViewController {
         
     private lazy var emailTextField = CommonTextField(labelText: "Email", textFieldPlaceholder: "deneme@example.com", isSecure: false)
     
-    private lazy var passwordTextField = CommonTextField(labelText: "Password", textFieldPlaceholder: "************", isSecure: true)
+    private lazy var passwordTextField: CommonTextField = {
+        let textField = CommonTextField(labelText: "Şifre", textFieldPlaceholder: "************", isSecure: true)
+    textField.textField.rightView = passwordVisibilityButton
+    textField.textField.rightViewMode = .always
+        return textField
+    }()
+    
+    @objc private func passwordVisibility(sender: UIButton) {
+        passwordTextField.textField.isSecureTextEntry.toggle()
+        sender.isSelected = !sender.isSelected
+    }
     
     private lazy var loginButton = ButtonUtility.createButton(from: self, title: "Login", action: #selector(buttonLoginTapped))
     
@@ -125,6 +143,8 @@ class LoginVC: UIViewController {
     }
     
     private func setupLayouts() {
+        
+        
         imageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(self.view.safeAreaLayoutGuide)
@@ -184,3 +204,4 @@ struct LoginVC_Preview: PreviewProvider {
     }
 }
 #endif
+
