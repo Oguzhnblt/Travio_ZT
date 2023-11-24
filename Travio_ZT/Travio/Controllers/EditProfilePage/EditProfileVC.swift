@@ -27,10 +27,10 @@ class EditProfileVC: UIViewController {
     private var imageDatas: [UIImage] = []
     private func showIndicator(state: IndicatorState) {
         switch state {
-        case .start:
-            profileImage.subviews.compactMap { $0 as? UIActivityIndicatorView }.first?.startAnimating()
-        case .stop:
-            profileImage.subviews.compactMap { $0 as? UIActivityIndicatorView }.first?.stopAnimating()
+            case .start:
+                profileImage.subviews.compactMap { $0 as? UIActivityIndicatorView }.first?.startAnimating()
+            case .stop:
+                profileImage.subviews.compactMap { $0 as? UIActivityIndicatorView }.first?.stopAnimating()
         }
     }
     
@@ -60,7 +60,7 @@ class EditProfileVC: UIViewController {
         present(imagePicker, animated: true, completion: nil)
     }
     
-   
+    
     private lazy var changePhotoButton = ButtonUtility.createButton(from: self, title: "Change Photo", action: #selector(changePhotoTapped), titleColor: UIColor(named: "backgroundColor"), backgroundColor: nil)
     
     private lazy var saveButton: UIButton = {
@@ -96,7 +96,7 @@ class EditProfileVC: UIViewController {
         stack.spacing = 8
         return stack
     }
-   
+    
     private lazy var adminCell = editingProfileCell(labelText: "Admin", imageName: "img_admin")
     private lazy var signCell = editingProfileCell(labelText: "2 Kasım 2023", imageName: "img_sign")
     
@@ -112,19 +112,19 @@ class EditProfileVC: UIViewController {
     
     @objc func saveButtonTapped() {
         showIndicator(state: .start)
-
+        
         guard let fullName = fullNameField.textField.text,
               let email = emailField.textField.text else {
             Alerts.showAlert(from: self, title: "Uyarı", message: "Lütfen geçerli bir ad ve e-posta girin.", actionTitle: "Tamam")
-                    showIndicator(state: .stop)
+            showIndicator(state: .stop)
             return }
         let validationResult = viewModel.validateInputs(fullName: fullName, email: email)
-
-            if !validationResult.isValid {
-                Alerts.showAlert(from: self, title: "Uyarı", message: validationResult.errorMessage, actionTitle: "Tamam")
-                showIndicator(state: .stop)
-                return
-            }
+        
+        if !validationResult.isValid {
+            Alerts.showAlert(from: self, title: "Uyarı", message: validationResult.errorMessage, actionTitle: "Tamam")
+            showIndicator(state: .stop)
+            return
+        }
         viewModel.uploadImage(images: imageDatas)
         viewModel.transferURLs = { [weak self] url in
             let pp_url = url.first
@@ -138,9 +138,16 @@ class EditProfileVC: UIViewController {
             self.showIndicator(state: .stop)
             
             if let fullName = self.fullNameField.textField.text {
-            self.delegate?.profileDidUpdate(fullName: fullName, image: self.profileImage.image ?? UIImage())
+                self.delegate?.profileDidUpdate(fullName: fullName, image: self.profileImage.image ?? UIImage())
+            }
         }
-
+    }
+    
+    private func me() {
+        viewModel.myProfile()
+        
+        viewModel.dataTransfer = { [weak self] profile in
+            self?.updatePage(with: profile)
         }
     }
     
@@ -149,6 +156,9 @@ class EditProfileVC: UIViewController {
     }
     
     
+    @objc override func buttonTapped() {
+        self.dismiss(animated: true)
+    }
     
     @objc func exitButtonTapped() {
         navigationController?.popToRootViewController(animated: true)
@@ -157,42 +167,11 @@ class EditProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-
-        viewModel.myProfile()
-
-        viewModel.dataTransfer = { [weak self] profile in
-            self?.updatePage(with: profile)
-        }
-
+        me()
+        
+        
         navigationController?.navigationBar.isHidden = true
     }
-    
-    private func updatePage(with profile: ProfileResponse) {
-        if let fullName = profile.full_name {
-            fullNameField.textField.text = fullName
-        }
-        if let email = profile.email {
-            emailField.textField.text = email
-        }
-
-        if let ppUrlString = profile.pp_url, let imageUrl = URL(string: ppUrlString) {
-            profileImage.kf.setImage(with: imageUrl) { _ in
-                self.showIndicator(state: .stop)
-            }
-        }
-
-        if let role = profile.role {
-            adminCell.label.text = role
-        }
-        if let createdAt = profile.created_at, let formattedDate = DateFormatter.formattedDate(
-            from: createdAt,
-            originalFormat: .longFormat,
-            targetFormat: .stringFormat) {
-            signCell.label.text = formattedDate
-        }
-    }
-
-
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -205,16 +184,39 @@ class EditProfileVC: UIViewController {
         tabBarController?.tabBar.isHidden = false
     }
     
+    
+    private func updatePage(with profile: ProfileResponse) {
+        if let fullName = profile.full_name {
+            fullNameField.textField.text = fullName
+        }
+        if let email = profile.email {
+            emailField.textField.text = email
+        }
+        
+        if let ppUrlString = profile.pp_url, let imageUrl = URL(string: ppUrlString) {
+            profileImage.kf.setImage(with: imageUrl) { _ in
+                self.showIndicator(state: .stop)
+            }
+        }
+        
+        if let role = profile.role {
+            adminCell.label.text = role
+        }
+        if let createdAt = profile.created_at, let formattedDate = DateFormatter.formattedDate(
+            from: createdAt,
+            originalFormat: .longFormat,
+            targetFormat: .stringFormat) {
+            signCell.label.text = formattedDate
+        }
+    }
+    
+    
     private func setupViews() {
         self.view.backgroundColor = UIColor(named: "backgroundColor")
         
         setupView(title: "Edit Profile", buttonImage: UIImage(named: "img_exit"), buttonPosition: .right, headerLabelPosition: .left, headerLabelTopOffset: 20, buttonAction: #selector(buttonTapped), itemsView: [profileImage, changePhotoButton, profileName, stackViews, saveButton])
         
         setupLayouts()
-    }
-    
-    @objc override func buttonTapped() {
-        self.dismiss(animated: true)
     }
     
     private func setupLayouts() {
