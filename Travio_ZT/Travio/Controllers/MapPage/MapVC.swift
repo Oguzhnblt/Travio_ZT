@@ -13,9 +13,8 @@ class MapVC: UIViewController {
     
     // MARK: - Properties
     
-    let viewModel = MapVM()
-    private var mapPlaces: [Place] = []
-    
+    private lazy var viewModel = MapVM()
+    private lazy var mapPlaces: [Place] = []
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: MapPageLayout.shared.mapLayout())
         collectionView.backgroundColor = UIColor.clear
@@ -56,30 +55,42 @@ class MapVC: UIViewController {
         return searchBar
     }()
     
+    private lazy var doubleTapGesture: UITapGestureRecognizer = {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
+        gesture.numberOfTapsRequired = 2
+        return gesture
+    }()
     
+    private lazy var longPressGesture: UILongPressGestureRecognizer = {
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        return gesture
+    }()
+
+    private lazy var tapGesture: UITapGestureRecognizer = {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOutsideSearchBar))
+        gesture.cancelsTouchesInView = false
+        return gesture
+    }()
+
     private func tapGestureMethods() {
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         mapView.addGestureRecognizer(longPressGesture)
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOutsideSearchBar))
-        tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
     }
+
     
     // MARK: - Lifecycle
     
-  
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        mapData()
-
         tapGestureMethods()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        collectionView.reloadData()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        mapData()
     }
     
     // MARK: - Setup
@@ -97,16 +108,13 @@ class MapVC: UIViewController {
             make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.left.right.equalToSuperview()
         })
-
+        
         collectionView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(view.frame.height * 0.65)
             make.bottom.equalToSuperview().offset(view.frame.height * 0.75)
             make.left.right.equalToSuperview()
         }
     }
-
-    
-    
     
     // MARK: - Data Handling
     
@@ -116,30 +124,31 @@ class MapVC: UIViewController {
             self?.mapPlaces = places
             self?.updateMapAndCollection()
         }
-        
-        updateMapAndCollection()
     }
     
     private func updateMapAndCollection() {
+        mapView.removeAnnotations(mapView.annotations)
+
         for place in mapPlaces {
             if let latitude = place.latitude, let longitude = place.longitude {
                 let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 addCustomPinToMap(at: coordinate)
             }
         }
-        
         collectionView.reloadData()
     }
-    
 
+    
+    
+    
     // MARK: - Map Functions
     
     private func addCustomPinToMap(at coordinate: CLLocationCoordinate2D) {
         let annotation = MapAnnotation(coordinate: coordinate, image: UIImage(named: "icon_map_mark"))
         mapView.addAnnotation(annotation)
     }
- 
-  
+    
+    
     // MARK: - Popup
     
     private func showPopup(at coordinate: CLLocationCoordinate2D) {
@@ -175,14 +184,14 @@ class MapVC: UIViewController {
 extension MapVC: MKMapViewDelegate {
     
     
-      func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-          guard let coordinate = view.annotation?.coordinate else { return }
-          if let index = mapPlaces.firstIndex(where: { $0.latitude == coordinate.latitude && $0.longitude == coordinate.longitude }) {
-              let indexPath = IndexPath(item: index, section: 0)
-              collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredVertically)
-          }
-      }
-
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let coordinate = view.annotation?.coordinate else { return }
+        if let index = mapPlaces.firstIndex(where: { $0.latitude == coordinate.latitude && $0.longitude == coordinate.longitude }) {
+            let indexPath = IndexPath(item: index, section: 0)
+            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredVertically)
+        }
+    }
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is MapAnnotation else {
             return nil
@@ -201,6 +210,7 @@ extension MapVC: MKMapViewDelegate {
 
         return annotationView
     }
+
 }
 
 
@@ -221,10 +231,8 @@ extension MapVC: UICollectionViewDataSource {
         let object = mapPlaces[indexPath.item]
         cell.configure(with: object)
         
-        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
-        doubleTapGesture.numberOfTapsRequired = 2
         cell.addGestureRecognizer(doubleTapGesture)
-        
+ 
         return cell
     }
     
@@ -244,6 +252,7 @@ extension MapVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedPlace = mapPlaces[indexPath.item]
         showDetailViewController(with: selectedPlace)
+        
     }
     
     private func showDetailViewController(with place: Place) {

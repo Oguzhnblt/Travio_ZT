@@ -11,7 +11,7 @@ import SnapKit
 
 class LoginVC: UIViewController {
     private let viewModel = LoginVM()
-    
+    weak var previousViewController: UIViewController?
     private func createStackView(axis: NSLayoutConstraint.Axis, spacing: CGFloat ) -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = axis
@@ -77,8 +77,8 @@ class LoginVC: UIViewController {
         
         viewModel.login(email: email, password: password)
         
-        viewModel.navigateToViewController = {
-            self.navigateToHomeVC()
+        viewModel.navigateToViewController = { [weak self] in
+            self?.navigateToHomeVC()
         }
         viewModel.showAlertFailure = { message in
             Alerts.showAlert(from: self, title: "Hata", message: message, actionTitle: "Tamam")

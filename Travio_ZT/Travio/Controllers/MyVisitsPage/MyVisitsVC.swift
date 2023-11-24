@@ -46,10 +46,10 @@ class MyVisitsVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
 
-        viewModel.visitsTransfer = { [self] visits in
-            self.myVisits = visits
-            collectionView.reloadData()
-            noDataLabel.isHidden = !myVisits.isEmpty
+        viewModel.visitsTransfer = { [weak self] visits in
+            self?.myVisits = visits
+            self?.collectionView.reloadData()
+            self?.noDataLabel.isHidden = ((self?.myVisits.isEmpty) != nil)
         }
         
         viewModel.getAllVisits()

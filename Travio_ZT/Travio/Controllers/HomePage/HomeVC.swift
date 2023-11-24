@@ -28,6 +28,7 @@ enum SectionType: Int, CaseIterable {
 
 class HomeVC: UIViewController {
     
+    weak var previousViewController: UIViewController?
     private lazy var viewModel = HomeVM()
     
     private lazy var popularPlaces = [Place]()
@@ -81,9 +82,11 @@ class HomeVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        previousViewController = nil
+
         let addNewPlace = AddNewPlaceVC()
-        addNewPlace.completedAddPlace = {
-            self.collectionView.reloadData()
+        addNewPlace.completedAddPlace = { [weak self] in
+            self?.collectionView.reloadData()
         }
         lastPlacesData()
         popularPlacesData()
@@ -198,6 +201,9 @@ extension HomeVC: UICollectionViewDataSource {
         }
 
         let placeDetailsVC = PlaceDetailsVC()
+        placeDetailsVC.previousViewController = self
+
+
 
         switch sectionType {
             case .popularPlaces:
@@ -240,8 +246,9 @@ extension HomeVC: UICollectionViewDataSource {
         guard let sectionType = SectionType(rawValue: sender.tag) else {
             return
         }
-
-        let genericPlacesVC = GenericPlacesVC()
+        
+        lazy var genericPlacesVC = GenericPlacesVC()
+        genericPlacesVC.previousViewController = self
         
         switch sectionType {
             case .popularPlaces:

@@ -27,10 +27,10 @@ class SettingsVC: UIViewController, EditProfileDelegate {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.backgroundColor = .clear
-        
-        collectionView.register(SettingsCollectionViewCell.self, forCellWithReuseIdentifier: SettingsCollectionViewCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        collectionView.register(SettingsCollectionViewCell.self, forCellWithReuseIdentifier: SettingsCollectionViewCell.identifier)
         
         return collectionView
     }()
@@ -66,6 +66,7 @@ class SettingsVC: UIViewController, EditProfileDelegate {
         Alerts.showAlert(from: self, title: "Uyarı", message: "Çıkış yapmak istediğinize emin misiniz?", actionTitle: "Çıkış yap", cancelTitle: "İptal Et") {
             AccessManager.shared.deleteToken(accountIdentifier: "access-token")
             let loginVC = LoginVC()
+            loginVC.previousViewController = nil
             let navigationController = UINavigationController(rootViewController: loginVC)
             navigationController.modalPresentationStyle = .fullScreen
             self.present(navigationController, animated: true, completion: nil)
@@ -150,8 +151,12 @@ extension SettingsVC: UICollectionViewDataSource {
         
         return cell
     }
+}
+
+extension SettingsVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.item {
+                
             case 0:
                 let securitySettings = SecuritySettingsVC()
                 navigationController?.pushViewController(securitySettings, animated: true)
@@ -170,13 +175,8 @@ extension SettingsVC: UICollectionViewDataSource {
             default:
                 let termsOfUse = TermsOfUseVC()
                 navigationController?.pushViewController(termsOfUse, animated: true)
-                
         }
     }
-}
-
-extension SettingsVC: UICollectionViewDelegate {
-    
 }
 
 extension SettingsVC {

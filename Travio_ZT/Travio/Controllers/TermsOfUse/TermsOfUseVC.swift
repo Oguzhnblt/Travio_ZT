@@ -57,13 +57,13 @@ class TermsOfUseVC: UIViewController {
     }
 
     private func fetchTermsData() {
-        AF.request("https://api.iosclass.live/terms").responseString { response in
+        AF.request("https://api.iosclass.live/terms").responseString { [weak self] response in
             switch response.result {
             case .success(let data):
-                if let attributedString = self.attributedString(from: data) {
-                    self.termsTextView.attributedText = attributedString
+                if let attributedString = self?.attributedString(from: data) {
+                    self?.termsTextView.attributedText = attributedString
                 } else {
-                    self.termsTextView.text = data
+                    self?.termsTextView.text = data
                 }
             case .failure(let error):
                 print("Veri çekme hatası: \(error)")

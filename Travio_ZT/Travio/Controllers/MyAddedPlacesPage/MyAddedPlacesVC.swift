@@ -56,9 +56,9 @@ class MyAddedPlacesVC: UIViewController {
     
     
     private func myAdded() {
-        viewModel.myAddedTransfer = { myAdded in
-            self.myAddedPlaces = myAdded
-            self.collectionView.reloadData()
+        viewModel.myAddedTransfer = { [weak self] myAdded in
+            self?.myAddedPlaces = myAdded
+            self?.collectionView.reloadData()
         }
         viewModel.getMyAddedPlaces()
     }

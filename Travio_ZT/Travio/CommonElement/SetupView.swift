@@ -77,7 +77,7 @@ extension UIViewController {
     }
     
     @objc func buttonTapped() {
-        navigationController?.popViewController(animated: true)
+        navigationController?.popToRootViewController(animated: true)
     }
 }
 

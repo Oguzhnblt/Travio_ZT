@@ -8,16 +8,16 @@
 import Foundation
 
 class HomeVM {
-        
+    
     var popularPlacesTransfer: (([Place]) -> Void)?
     var lastPlacesTransfer: (([Place]) -> Void)?
     var addedPlacesTransfer: (([Place]) -> Void)?
     
     func popularPlaces() {
-        NetworkingHelper.shared.fetchData(urlRequest: .getPopularPlaces(limit: 3)) { [self] (result: Result<GetPopularPlacesResponse, Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .getPopularPlaces(limit: 3)) { [weak self] (result: Result<GetPopularPlacesResponse, Error>) in
             switch result {
                 case .success(let object):
-                    self.popularPlacesTransfer?((object.data?.places!)!)
+                    self?.popularPlacesTransfer?((object.data?.places!)!)
                 case .failure(let failure):
                     print("Error: \(failure.localizedDescription)")
             }
@@ -25,10 +25,10 @@ class HomeVM {
     }
     
     func newPlaces() {
-        NetworkingHelper.shared.fetchData(urlRequest: .getLastPlaces(limit: 3)) { [self] (result: Result<GetLastPlacesResponse, Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .getLastPlaces(limit: 3)) { [weak self] (result: Result<GetLastPlacesResponse, Error>) in
             switch result {
                 case .success(let object):
-                    self.lastPlacesTransfer?((object.data?.places)!)
+                    self?.lastPlacesTransfer?((object.data?.places)!)
                 case .failure(let failure):
                     print("Error: \(failure.localizedDescription)")
             }
@@ -36,10 +36,10 @@ class HomeVM {
     }
     
     func myAddedPlaces() {
-        NetworkingHelper.shared.fetchData(urlRequest: .getAllPlacesForUser) { [self] (result: Result<GetAllPlacesForUserResponse, Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .getAllPlacesForUser) { [weak self] (result: Result<GetAllPlacesForUserResponse, Error>) in
             switch result {
                 case .success(let object):
-                    self.addedPlacesTransfer?((object.data?.places)!)
+                    self?.addedPlacesTransfer?((object.data?.places)!)
                 case .failure(let failure):
                     print("Error: \(failure.localizedDescription)")
             }

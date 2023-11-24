@@ -17,7 +17,8 @@ class PlaceDetailsVC: UIViewController {
     var userID: [Place] = []
     var imageURLs: [String] = []
     var selectedCoordinates: CLLocationCoordinate2D?
-    
+    weak var previousViewController: UIViewController?
+
     let placeBottomView = PlaceBottomView()
     private lazy var viewModel = PlaceDetailsVM()
     
@@ -73,6 +74,7 @@ class PlaceDetailsVC: UIViewController {
         
     
     @objc private func backButtonTapped() {
+        previousViewController = nil
         navigationController?.popViewController(animated: true)
     }
     
@@ -81,8 +83,8 @@ class PlaceDetailsVC: UIViewController {
             if let selectedPlaceID = self.selectedPlace?.id,
                 self.userID.contains(where: { $0.id == selectedPlaceID }) {
                 self.viewModel.deletePlace(placeId: selectedPlaceID)
-                self.navigationController?.popToRootViewController(animated: true)
             }
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -187,8 +189,6 @@ class PlaceDetailsVC: UIViewController {
         
         navigationController?.navigationBar.isHidden = true
     }
-    
-    
     
     private func setupViews() {
         self.view.backgroundColor = .white

@@ -44,11 +44,11 @@ class SecuritySettingsVM {
     func changePassword(_ profile: ChangePasswordRequest) {
         let params = ["new_password": profile.new_password]
         
-        NetworkingHelper.shared.fetchData(urlRequest: .changePassword(params: params as Parameters)) { (result: Result<GenericResponseModel, Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .changePassword(params: params as Parameters)) {[weak self] (result: Result<GenericResponseModel, Error>) in
             switch result {
                 case .success(_):
                     let message = "Şifreniz başarıyla değiştirildi."
-                    self.successAlert?(message)
+                    self?.successAlert?(message)
                 case .failure(let failure):
                     print(failure.localizedDescription)
             }

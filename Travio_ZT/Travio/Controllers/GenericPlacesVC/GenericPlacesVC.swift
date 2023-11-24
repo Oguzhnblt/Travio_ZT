@@ -14,6 +14,8 @@ class GenericPlacesVC: UIViewController {
     var places = [Place]()
     var sectionType: SectionType?
     
+    weak var previousViewController: UIViewController?
+    
     
     private var isSorted = false
     private lazy var tableView: UITableView = {
@@ -56,8 +58,8 @@ class GenericPlacesVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
         navigationController?.navigationBar.isHidden = true
+        setupViews()
         fetchData()
     }
     
@@ -69,8 +71,9 @@ class GenericPlacesVC: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
+        previousViewController = nil
     }
-    
+  
     func fetchData() {
         switch sectionType {
             case .popularPlaces:
@@ -148,6 +151,7 @@ extension GenericPlacesVC: UITableViewDelegate, UITableViewDataSource {
     
     private func showDetailViewController(with place: Place?) {
         let detailVC = PlaceDetailsVC()
+        detailVC.previousViewController = self
         
         if let selectedPlace = place {
             detailVC.selectedPlace = selectedPlace

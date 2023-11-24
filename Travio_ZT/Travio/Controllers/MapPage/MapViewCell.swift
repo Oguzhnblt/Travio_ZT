@@ -16,17 +16,15 @@ class MapViewCell: UICollectionViewCell {
     private lazy var viewModel = MapVM()
     
     func configure(with place: Place) {
-
+        
         if let urlString = place.cover_image_url, let url = URL(string: urlString), !urlString.isEmpty {
+            imageView.kf.indicatorType = .activity
             imageView.kf.setImage(with: url)
         }
-
-           titleLabel.text = place.title
-           subtitleLabel.text = place.place
-       }
-
-        
-   
+        titleLabel.text = place.title
+        subtitleLabel.text = place.place
+    }
+    
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -69,7 +67,7 @@ class MapViewCell: UICollectionViewCell {
     }
     
     private func setupLayouts() {
-       
+        
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -96,7 +94,7 @@ class MapViewCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
 }
 
 

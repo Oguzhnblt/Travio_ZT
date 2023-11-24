@@ -10,6 +10,7 @@ import Alamofire
 import UIKit
 
 class NetworkingHelper{
+    
     static let shared = NetworkingHelper()
     
     typealias CallBack<T:Codable> = (Result<T,Error>)->Void

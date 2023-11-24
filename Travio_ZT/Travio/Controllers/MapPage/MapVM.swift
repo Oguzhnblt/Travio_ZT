@@ -13,10 +13,10 @@ class MapVM {
     var dataTransfer: (([Place]) -> Void)?
     
     func mapPlaces() {
-        NetworkingHelper.shared.fetchData(urlRequest: .getAllPlaces) { [self] (result: Result<GetAllPlacesResponse, Error>) in
+        NetworkingHelper.shared.fetchData(urlRequest: .getAllPlaces) { [weak self] (result: Result<GetAllPlacesResponse, Error>) in
             switch result {
                 case .success(let object):
-                    self.dataTransfer?((object.data?.places)!)
+                    self?.dataTransfer?((object.data?.places)!)
                 case .failure(let failure):
                     print("Error: \(failure.localizedDescription)")
             }
@@ -33,7 +33,7 @@ class MapVM {
                 case .success(_):
                     break
                 case .failure(_):
-                    imageView.image = UIImage(named: "img_default")
+                    imageView.image = UIImage(named: "img_default") ?? UIImage()
                 }
             }
         }
