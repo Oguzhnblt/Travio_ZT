@@ -18,11 +18,11 @@ class SectionHeaderView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
                 
-        title.textColor = .black
-        title.font = UIFont(name: "Poppins-Regular", size: 20)
+        title.textColor = AppTheme.getColor(name: .general)
+        title.font = AppTheme.getFont(name: .medium, size: .size20)
         
-        button.setTitleColor(UIColor(named: "backgroundColor"), for: .normal)
-        button.titleLabel?.font = UIFont(name: "Poppins-Regular", size: 14)
+        button.setTitleColor(AppTheme.getColor(name: .seeButton), for: .normal)
+        button.titleLabel?.font = AppTheme.getFont(name: .medium, size: .size14)
         
         
         let stackView = UIStackView(arrangedSubviews: [title, button])

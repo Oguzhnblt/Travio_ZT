@@ -30,7 +30,7 @@ class MyAddedPlacesViewCell: UICollectionViewCell {
     private lazy var backView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
-        view.backgroundColor = UIColor(named: "contentColor")
+        view.backgroundColor = AppTheme.getColor(name: .content)
         view.layer.cornerRadius = 16
         return view
     }()
@@ -38,12 +38,14 @@ class MyAddedPlacesViewCell: UICollectionViewCell {
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = AppTheme.getFont(name: .semibold, size: .size24)
+        label.textColor = AppTheme.getColor(name: .general)
         return label
     }()
     
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = AppTheme.getFont(name: .light, size: .size14)
+        label.textColor = AppTheme.getColor(name: .general)
         return label
     }()
     

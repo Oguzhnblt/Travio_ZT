@@ -18,7 +18,7 @@ class MyVisitsVC: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: myVisitsLayout())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = UIColor(named: "contentColor")
+        collectionView.backgroundColor = AppTheme.getColor(name: .content)
         collectionView.register(MyVisitsViewCell.self, forCellWithReuseIdentifier: MyVisitsViewCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self

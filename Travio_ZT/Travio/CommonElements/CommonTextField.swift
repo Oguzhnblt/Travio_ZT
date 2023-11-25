@@ -21,7 +21,7 @@ class CommonTextField: UIView {
     
     lazy var label: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = AppTheme.getColor(name: .general)
         label.font = AppTheme.getFont(name: .medium, size: .size14)
         label.textAlignment = .left
         return label

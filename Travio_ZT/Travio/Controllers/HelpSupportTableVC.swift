@@ -28,16 +28,16 @@ class HelpSupportTableVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(HelpSupportTableCell.self, forCellReuseIdentifier: HelpSupportTableCell.cellReuseIdentifier)
-        tableView.backgroundColor = UIColor(named: "contentColor")
+        tableView.backgroundColor = AppTheme.getColor(name: .content)
         tableView.separatorStyle = .none
         return tableView
     }()
 
     private lazy var contentLabel: UILabel = {
         let headerLabel = UILabel()
-        headerLabel.textColor = UIColor(named: "backgroundColor")
+        headerLabel.textColor = AppTheme.getColor(name: .background)
         headerLabel.text = "FAQ"
-        headerLabel.font = UIFont(name: "Poppins-SemiBold", size: 24)
+        headerLabel.font = AppTheme.getFont(name: .semibold, size: .size24)
         return headerLabel
     }()
 
@@ -86,7 +86,7 @@ extension HelpSupportTableVC: UITableViewDataSource {
         cell.titleLabel.text = item.title
         cell.subtitleLabel.text = item.subtitle
         
-        cell.backgroundColor = UIColor(named: "contentColor")
+        cell.backgroundColor = AppTheme.getColor(name: .content)
         cell.selectionStyle = .none
 
         let cellState = cellStates[indexPath]

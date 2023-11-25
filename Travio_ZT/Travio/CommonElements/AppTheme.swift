@@ -8,6 +8,22 @@
 import UIKit
 
 class AppTheme {
+    
+    enum ColorType: String {
+        case background
+        case content
+        case general
+        case seeButton
+    }
+    
+    enum FontType: String {
+        case thin = "Poppins-Thin" // weight = 100
+        case light = "Poppins-Light" // weight = 300
+        case regular = "Poppins-Regular" // weight = 400
+        case medium = "Poppins-Medium" // weight = 500
+        case semibold = "Poppins-SemiBold" // weight = 600
+    }
+    
     enum FontSize: CGFloat {
         case size10 = 10
         case size12 = 12
@@ -24,13 +40,6 @@ class AppTheme {
         case size34 = 34
     }
     
-    enum FontType: String {
-        case thin = "Poppins-Thin" // weight = 100
-        case light = "Poppins-Light" // weight = 300
-        case regular = "Poppins-Regular" // weight = 400
-        case medium = "Poppins-Medium" // weight = 500
-        case semibold = "Poppins-SemiBold" // weight = 600
-    }
     
     static func getFont(name: FontType, size: FontSize) -> UIFont {
         if let font = UIFont(name: name.rawValue, size: size.rawValue) {
@@ -40,5 +49,20 @@ class AppTheme {
             return UIFont.systemFont(ofSize: size.rawValue)
         }
     }
+    
+    static func getColor(name: ColorType) -> UIColor {
+        switch name {
+            case .background:
+                return UIColor(named: "backgroundColor") ?? UIColor.systemGreen
+            case .content:
+                return UIColor(named: "contentColor") ?? UIColor.systemGray
+            case .general:
+                return UIColor(named: "generalColor") ?? UIColor.systemGray
+            case .seeButton:
+                return UIColor(named: "seeAllColor") ?? UIColor.systemGray
 
+
+        }
+    }
+    
 }

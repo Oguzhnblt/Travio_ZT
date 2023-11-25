@@ -57,7 +57,7 @@ class SecuritySettingsVC: UIViewController {
     private lazy var passwordHeaderLabel: UILabel = {
         let label = UILabel()
         label.text = headerLabel[0]
-        label.textColor = UIColor(named: "backgroundColor")
+        label.textColor = AppTheme.getColor(name: .background)
         label.font = AppTheme.getFont(name: .semibold, size: .size16)
         return label
     }()
@@ -65,7 +65,7 @@ class SecuritySettingsVC: UIViewController {
     private lazy var privacyHeaderLabel: UILabel = {
         let label = UILabel()
         label.text = headerLabel[1]
-        label.textColor = UIColor(named: "backgroundColor")
+        label.textColor = AppTheme.getColor(name: .background)
         label.font = AppTheme.getFont(name: .semibold, size: .size16)
         return label
     }()

@@ -11,16 +11,15 @@ import SnapKit
 
 extension UIViewController {
     
-    func setupView(title: String?, buttonImage: UIImage?, buttonPosition: ButtonPosition?, headerLabelPosition: HeaderLabelPosition, headerLabelTopOffset: CGFloat = -15,buttonAction: Selector?, itemsView: [UIView], itemColor: UIColor? = (UIColor(named: "contentColor"))) {
+    func setupView(title: String?, buttonImage: UIImage?, buttonPosition: ButtonPosition?, headerLabelPosition: HeaderLabelPosition, headerLabelTopOffset: CGFloat = -15,buttonAction: Selector?, itemsView: [UIView], itemColor: UIColor? = AppTheme.getColor(name: .content)) {
         
         lazy var headerLabel = UILabel()
-        headerLabel.textColor = .black
         headerLabel.text = title
         headerLabel.textColor = .white
         headerLabel.font = AppTheme.getFont(name: .semibold, size: .size34)
         
         lazy var containerView = UIView()
-        containerView.backgroundColor = UIColor(named: "backgroundColor")
+        containerView.backgroundColor = AppTheme.getColor(name: .background)
         
         lazy var itemView = UIView()
         itemView.backgroundColor = itemColor

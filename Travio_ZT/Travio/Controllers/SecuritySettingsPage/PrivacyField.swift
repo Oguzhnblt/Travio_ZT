@@ -24,7 +24,7 @@ class PrivacyField: UIView {
     lazy var label: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.textColor = .black
+        label.textColor = AppTheme.getColor(name: .general)
         label.font = AppTheme.getFont(name: .medium, size: .size14)
         return label
     }()

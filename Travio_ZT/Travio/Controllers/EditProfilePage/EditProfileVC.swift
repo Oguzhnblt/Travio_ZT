@@ -43,7 +43,7 @@ class EditProfileVC: UIViewController {
     }
     
     
-    private lazy var changePhotoButton = ButtonManager.createButton(from: self, title: "Change Photo", action: #selector(changePhotoTapped), titleColor: UIColor(named: "backgroundColor"), backgroundColor: nil, font: .regular, size: .size12)
+    private lazy var changePhotoButton = ButtonManager.createButton(from: self, title: "Change Photo", action: #selector(changePhotoTapped), titleColor: AppTheme.getColor(name: .seeButton), backgroundColor: nil, font: .regular, size: .size12)
     
     private lazy var saveButton: UIButton = {
         
@@ -52,7 +52,7 @@ class EditProfileVC: UIViewController {
         saveButton.setTitleColor(UIColor.white, for: .normal)
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         saveButton.layer.cornerRadius = 12
-        saveButton.backgroundColor = UIColor(named: "backgroundColor")
+        saveButton.backgroundColor = AppTheme.getColor(name: .background)
         return saveButton
     }()
     
@@ -72,6 +72,7 @@ class EditProfileVC: UIViewController {
         cell.signImage.image = UIImage(named: imageName)
         return cell
     }
+    
     private func stackView(axis: NSLayoutConstraint.Axis, views: [UIView]) -> UIStackView {
         let stack = UIStackView(arrangedSubviews: views)
         stack.axis = axis
@@ -132,6 +133,33 @@ class EditProfileVC: UIViewController {
         }
     }
     
+    private func updatePage(with profile: ProfileResponse) {
+        if let fullName = profile.full_name {
+            fullNameField.textField.text = fullName
+        }
+        
+        if let email = profile.email {
+            emailField.textField.text = email
+        }
+        
+        if let ppUrlString = profile.pp_url, let imageUrl = URL(string: ppUrlString) {
+            profileImage.kf.setImage(with: imageUrl) { _ in
+                self.activityIndicator.hideIndicator()
+            }
+        }
+        
+        if let role = profile.role {
+            adminCell.label.text = role
+        }
+        
+        if let createdAt = profile.created_at, let formattedDate = DateFormatter.formattedDate(
+            from: createdAt,
+            originalFormat: .longFormat,
+            targetFormat: .stringFormat) {
+            signCell.label.text = formattedDate
+        }
+    }
+    
     private func me() {
         viewModel.myProfile()
         
@@ -170,36 +198,7 @@ class EditProfileVC: UIViewController {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
     }
-    
-    
-    private func updatePage(with profile: ProfileResponse) {
-        if let fullName = profile.full_name {
-            fullNameField.textField.text = fullName
-        }
-        
-        if let email = profile.email {
-            emailField.textField.text = email
-        }
-        
-        if let ppUrlString = profile.pp_url, let imageUrl = URL(string: ppUrlString) {
-            profileImage.kf.setImage(with: imageUrl) { _ in
-                self.activityIndicator.hideIndicator()
-            }
-        }
-        
-        if let role = profile.role {
-            adminCell.label.text = role
-        }
-        
-        if let createdAt = profile.created_at, let formattedDate = DateFormatter.formattedDate(
-            from: createdAt,
-            originalFormat: .longFormat,
-            targetFormat: .stringFormat) {
-            signCell.label.text = formattedDate
-        }
-    }
-    
-    
+  
     private func setupViews() {
         self.view.backgroundColor = UIColor(named: "backgroundColor")
         

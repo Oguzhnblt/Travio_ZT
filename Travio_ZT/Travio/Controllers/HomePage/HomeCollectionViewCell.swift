@@ -50,14 +50,14 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-SemiBold", size: 20)
+        label.font = AppTheme.getFont(name: .semibold, size: .size24)
         label.textColor = .white
         return label
     }()
     
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "Poppins-SemiBold", size: 14)
+        label.font = AppTheme.getFont(name: .light, size: .size14)
         label.textColor = .white
         return label
     }()

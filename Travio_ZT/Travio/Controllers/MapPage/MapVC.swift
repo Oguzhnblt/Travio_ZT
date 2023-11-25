@@ -24,13 +24,7 @@ class MapVC: UIViewController {
         collectionView.delegate = self
         return collectionView
     }()
-    
-    private lazy var contentView: UIView = {
-        let view = UIView()
-        view.clipsToBounds = true
-        return view
-    }()
-    
+ 
     private lazy var backView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
@@ -79,8 +73,6 @@ class MapVC: UIViewController {
 
     
     // MARK: - Lifecycle
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -25,14 +25,14 @@ class LoginVC: UIViewController {
     
     private lazy var loginView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: "backgroundColor")
+        view.backgroundColor = AppTheme.getColor(name: .background)
         return view
     }()
     
     
     private lazy var loginItemView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: "contentColor")
+        view.backgroundColor = AppTheme.getColor(name: .content)
         view.clipsToBounds = true
         view.layer.cornerRadius = 80
         view.layer.maskedCorners = .layerMinXMinYCorner
@@ -49,7 +49,7 @@ class LoginVC: UIViewController {
     private lazy var signUpButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Sign Up", for: .normal)
-        button.setTitleColor(UIColor(named: "textColor"), for: .normal)
+        button.setTitleColor(AppTheme.getColor(name: .general), for: .normal)
         button.titleLabel?.font = AppTheme.getFont(name: .semibold, size: .size14)
         button.addTarget(self, action: #selector(signUpTapped), for: .touchUpInside)
         return button
@@ -107,9 +107,9 @@ class LoginVC: UIViewController {
     private lazy var loginİtemStackView = createStackView(axis: .vertical, spacing: 24)
     private lazy var signUpStackView = createStackView(axis: .horizontal, spacing: 4)
     
-    private lazy var accountLabel = LabelManager.createLabel(text: "Don’t have any account?", color: "textColor" , textSize: .size14, fontType: .semibold, alignment: .center)
+    private lazy var accountLabel = LabelManager.createLabel(text: "Don’t have any account?" , textSize: .size14, fontType: .semibold, alignment: .center)
     
-    private lazy var welcomeLabelText = LabelManager.createLabel(text: "Welcome to Travio", color: "textColor", textSize: .size24, fontType: .medium, alignment: .center)
+    private lazy var welcomeLabelText = LabelManager.createLabel(text: "Welcome to Travio", textSize: .size24, fontType: .medium, alignment: .center)
     
     private lazy var emailTextField = CommonTextField(labelText: "Email", textFieldPlaceholder: "deneme@example.com", isSecure: false)
     

@@ -22,8 +22,8 @@ class TextFieldCell: UIView {
     lazy var fieldLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.textColor = .black
-        label.font = UIFont(name: "Poppins-Regular", size: 14)
+        label.textColor = AppTheme.getColor(name: .general)
+        label.font = AppTheme.getFont(name: .medium, size: .size14)
         label.textAlignment = .left
         return label
     }()
@@ -31,7 +31,6 @@ class TextFieldCell: UIView {
      lazy var textField: UITextField = {
         let textField = UITextField()
         textField.layer.cornerRadius = 8.0
-        textField.layer.borderColor = UIColor.gray.cgColor
         return textField
     }()
     

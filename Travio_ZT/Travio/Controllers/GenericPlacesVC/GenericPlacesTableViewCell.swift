@@ -37,12 +37,14 @@ class GenericPlacesTableViewCell: UITableViewCell {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
+        label.textColor = AppTheme.getColor(name: .general)
         label.font = AppTheme.getFont(name: .semibold, size: .size24)
         return label
     }()
     
     lazy var subtitleLabel: UILabel = {
         let label = UILabel()
+        label.textColor = AppTheme.getColor(name: .general)
         label.font = AppTheme.getFont(name: .light, size: .size14)
         return label
     }()

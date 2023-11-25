@@ -25,7 +25,7 @@ class AddNewPlaceVC: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: addNewPageLayout())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = UIColor(named: "contentColor")
+        collectionView.backgroundColor = AppTheme.getColor(name: .content)
         collectionView.register(AddNewPlaceViewCell.self, forCellWithReuseIdentifier: AddNewPlaceViewCell.identifier)
         collectionView.register(AddPhotoViewCell.self, forCellWithReuseIdentifier: AddPhotoViewCell.identifier)
         collectionView.dataSource = self
@@ -45,13 +45,11 @@ class AddNewPlaceVC: UIViewController {
     // MARK: Private Methods
     private func setupViews() {
         view.addSubviews(collectionView, addPlaceButton)
-
         
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
       
-        
         addPlaceButton.snp.makeConstraints { make in
             make.bottom.equalTo(collectionView.snp.bottom).offset(-50)
             make.centerX.equalToSuperview()
@@ -60,8 +58,6 @@ class AddNewPlaceVC: UIViewController {
         }
     }
    
-    
-    
     private func updateLocationInfo() {
         guard let selectedCoordinate = selectedCoordinate else { return }
         
@@ -89,7 +85,7 @@ class AddNewPlaceVC: UIViewController {
         if placeNameCell.textView.text?.isEmpty ?? true ||
             placeDescriptionCell.textView.text?.isEmpty ?? true ||
             locationCell.textView.text?.isEmpty ?? true {
-            Alerts.showAlert(from: self, title: "Uyaru", message: "Lütfen tüm alanları doldurun.", actionTitle: "Tamam")
+            Alerts.showAlert(from: self, title: "Uyarı", message: "Lütfen tüm alanları doldurun.", actionTitle: "Tamam")
             return
         }
         

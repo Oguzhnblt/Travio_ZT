@@ -23,7 +23,7 @@ class GenericPlacesVC: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor(named: "contentColor")
+        tableView.backgroundColor = AppTheme.getColor(name: .content)
         tableView.register(GenericPlacesTableViewCell.self, forCellReuseIdentifier: GenericPlacesTableViewCell.identifier)
         tableView.dataSource = self
         tableView.delegate = self
@@ -138,7 +138,7 @@ extension GenericPlacesVC: UITableViewDelegate, UITableViewDataSource {
         let object = places[indexPath.row]
         cell.configure(with: object)
         
-        cell.backgroundColor = UIColor(named: "contentColor")
+        cell.backgroundColor = AppTheme.getColor(name: .content)
         cell.selectionStyle = .none
         
         return cell

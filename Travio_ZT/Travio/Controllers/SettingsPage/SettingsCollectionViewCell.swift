@@ -42,7 +42,7 @@ class SettingsCollectionViewCell: UICollectionViewCell {
     lazy var label: UILabel = {
         let label = UILabel()
         label.font = AppTheme.getFont(name: .light, size: .size14)
-        label.textColor = UIColor(named: "textColor")
+        label.textColor = AppTheme.getColor(name: .general)
         return label
     }()
     

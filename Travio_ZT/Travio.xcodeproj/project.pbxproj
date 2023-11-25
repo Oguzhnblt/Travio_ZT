@@ -51,7 +51,6 @@
 		1255D8682ADB155E00FB6638 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1255D8552ADB155E00FB6638 /* OFL.txt */; };
 		1255D8692ADB155E00FB6638 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D8562ADB155E00FB6638 /* Poppins-Regular.ttf */; };
 		1255D86B2ADB155E00FB6638 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D8582ADB155E00FB6638 /* Poppins-Bold.ttf */; };
-		1255D86D2ADB155E00FB6638 /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D85A2ADB155E00FB6638 /* Poppins-Thin.ttf */; };
 		1255D86E2ADB155E00FB6638 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1255D85B2ADB155E00FB6638 /* Poppins-SemiBold.ttf */; };
 		125754312AFD5DAD00AD003B /* PlaceDetailsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125754302AFD5DAD00AD003B /* PlaceDetailsLayout.swift */; };
 		125754342AFD6AD800AD003B /* AddNewPlaceViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125754332AFD6AD800AD003B /* AddNewPlaceViewCell.swift */; };
@@ -155,7 +154,6 @@
 		1255D8552ADB155E00FB6638 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		1255D8562ADB155E00FB6638 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		1255D8582ADB155E00FB6638 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
-		1255D85A2ADB155E00FB6638 /* Poppins-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Thin.ttf"; sourceTree = "<group>"; };
 		1255D85B2ADB155E00FB6638 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		125754302AFD5DAD00AD003B /* PlaceDetailsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsLayout.swift; sourceTree = "<group>"; };
 		125754332AFD6AD800AD003B /* AddNewPlaceViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewPlaceViewCell.swift; sourceTree = "<group>"; };
@@ -451,7 +449,6 @@
 				1255D8552ADB155E00FB6638 /* OFL.txt */,
 				1255D8562ADB155E00FB6638 /* Poppins-Regular.ttf */,
 				1255D8582ADB155E00FB6638 /* Poppins-Bold.ttf */,
-				1255D85A2ADB155E00FB6638 /* Poppins-Thin.ttf */,
 				1255D85B2ADB155E00FB6638 /* Poppins-SemiBold.ttf */,
 			);
 			path = Poppins;
@@ -780,7 +777,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1255D8622ADB155E00FB6638 /* Poppins-Light.ttf in Resources */,
-				1255D86D2ADB155E00FB6638 /* Poppins-Thin.ttf in Resources */,
 				1255D86E2ADB155E00FB6638 /* Poppins-SemiBold.ttf in Resources */,
 				1255D86B2ADB155E00FB6638 /* Poppins-Bold.ttf in Resources */,
 				1255D8682ADB155E00FB6638 /* OFL.txt in Resources */,

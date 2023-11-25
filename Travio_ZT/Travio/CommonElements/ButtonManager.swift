@@ -8,7 +8,7 @@
 import UIKit
 
 class ButtonManager {
-    static func createButton(from viewController: UIViewController, title: String, action: Selector, titleColor: UIColor? = UIColor.white, backgroundColor: UIColor? = UIColor(named: "backgroundColor"), isEnabled: Bool = true, font: AppTheme.FontType? = AppTheme.FontType.semibold, size: AppTheme.FontSize? = AppTheme.FontSize.size16) -> UIButton {
+    static func createButton(from viewController: UIViewController, title: String, action: Selector, titleColor: UIColor? = UIColor.white, backgroundColor: UIColor? = AppTheme.getColor(name: .background), isEnabled: Bool = true, font: AppTheme.FontType? = AppTheme.FontType.semibold, size: AppTheme.FontSize? = AppTheme.FontSize.size16) -> UIButton {
         
         let button = UIButton(type: .system)
         button.setTitle(title, for: .normal)

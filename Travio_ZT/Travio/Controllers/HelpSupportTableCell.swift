@@ -23,6 +23,7 @@ class HelpSupportTableCell: UITableViewCell {
     
     let titleLabel: UILabel = {
         let label = UILabel()
+        label.textColor = AppTheme.getColor(name: .general)
         label.font = AppTheme.getFont(name: .medium, size: .size14)
         label.numberOfLines = 0
         return label
@@ -30,9 +31,9 @@ class HelpSupportTableCell: UITableViewCell {
     
     let subtitleLabel: UILabel = {
         let label = UILabel()
-        label.font = AppTheme.getFont(name: .light, size: .size14)
+        label.font = AppTheme.getFont(name: .light, size: .size10)
         label.numberOfLines = -1
-        label.textColor = .gray
+        label.textColor = AppTheme.getColor(name: .general)
         return label
     }()
     

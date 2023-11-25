@@ -21,7 +21,6 @@ class AboutUsVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(named: "backgroundColor")
         setupViews()
         fetchTermsData()
     }

@@ -27,7 +27,7 @@ class PlaceBottomView: UICollectionViewCell {
 
     lazy var placeTitle: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = AppTheme.getColor(name: .general)
         label.text = "Türkiye"
         label.font = AppTheme.getFont(name: .semibold, size: .size30)
         label.numberOfLines = -1
@@ -36,7 +36,7 @@ class PlaceBottomView: UICollectionViewCell {
 
     lazy var dateTitle: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor.black
+        label.textColor = AppTheme.getColor(name: .general)
         label.font = AppTheme.getFont(name: .regular, size: .size14)
         return label
     }()

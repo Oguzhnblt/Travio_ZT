@@ -82,64 +82,7 @@ extension UIView {
         return view
     }
     
-    func addLabel(text:String? = nil, fontSize: CGFloat = 14, fontType:FontType = .medium, color:UIColor = .black, align:NSTextAlignment = .left) ->UILabel {
-        let label = UILabel()
-        label.font = UIFont(name: "Poppins-SemiBold", size: fontSize)
-        label.textColor = color
-        label.text = text
-        self.addSubview(label)
-        return label
-    }
-    
-    func roundAllCorners(radius: CGFloat) {
-        let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: radius, height: radius))
-        let mask = CAShapeLayer()
-        mask.path = path.cgPath
-        layer.mask = mask
-    }
-    
-    func animateBorderColor(toColor: UIColor, duration: Double) {
-        let animation:CABasicAnimation = CABasicAnimation(keyPath: "borderColor")
-        animation.fromValue = layer.borderColor
-        animation.toValue = toColor.cgColor
-        animation.duration = duration
-        layer.add(animation, forKey: "borderColor")
-        layer.borderColor = toColor.cgColor
-    }
-    
-    func addDashedBorder(color: UIColor) {
-        let color = color.cgColor
-        
-        let shapeLayer: CAShapeLayer = CAShapeLayer()
-        let frameSize = self.frame.size
-        let shapeRect = CGRect(x: 0, y: 0, width: frameSize.width-2, height: frameSize.height)
-        
-        shapeLayer.bounds = shapeRect
-        shapeLayer.position = CGPoint(x: (frameSize.width / 2), y: frameSize.height / 2)
-        shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.strokeColor = color
-        shapeLayer.lineWidth = 1.5
-        shapeLayer.lineJoin = CAShapeLayerLineJoin.round
-        shapeLayer.lineDashPattern = [4, 4]
-        shapeLayer.path = UIBezierPath(roundedRect: shapeRect, cornerRadius: 0).cgPath
-        self.layer.addSublayer(shapeLayer)
-    }
-    
-    
-    
-    func rotate(angle: CGFloat) {
-        let radians = angle / 180.0 * CGFloat.pi
-        let rotation = self.transform.rotated(by: radians)
-        self.transform = rotation
-    }
-    
-    var globalPoint :CGPoint? {
-        return self.superview?.convert(self.frame.origin, to: nil)
-    }
-    
 }
-
-
 
 // MARK: - UIViewController
 extension UIViewController {
@@ -224,15 +167,6 @@ extension UIDatePicker {
         let remainingSeconds = referenceTimeInterval.truncatingRemainder(dividingBy: TimeInterval(minuteInterval*60))
         let timeRoundedToInterval = referenceTimeInterval - remainingSeconds
         return Date(timeIntervalSinceReferenceDate: timeRoundedToInterval)
-    }
-}
-
-
-// MARK: - Optional
-extension Optional {
-    
-    func ifNil(_ default:Wrapped) -> Wrapped {
-        return self ?? `default`
     }
 }
 

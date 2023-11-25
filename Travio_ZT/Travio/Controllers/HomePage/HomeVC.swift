@@ -61,7 +61,7 @@ class HomeVC: UIViewController {
    
     private lazy var homeItemView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(named: "contentColor")
+        view.backgroundColor = AppTheme.getColor(name: .content)
         view.clipsToBounds = true
         view.layer.cornerRadius = 80
         view.layer.maskedCorners = .layerMinXMinYCorner
@@ -118,7 +118,7 @@ class HomeVC: UIViewController {
     }
    
     private func setupViews() {
-        self.view.backgroundColor = UIColor(named: "backgroundColor")
+        self.view.backgroundColor = AppTheme.getColor(name: .background)
         self.view.addSubviews(homeItemView,imageView)
         homeItemView.addSubviews(collectionView)
         

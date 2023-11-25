@@ -75,10 +75,8 @@ class SettingsVC: UIViewController, EditProfileDelegate {
     }
     
     
-    private lazy var profileText = LabelManager.createLabel(text: "Bruce Wills", color: "textColor", textSize: .size16, fontType: .semibold, alignment: .center)
-    
-    private lazy var editProfileText = LabelManager.createLabel(text: "Edit Profile", color: "seeAllColor", textSize: .size14, fontType: .regular, alignment: .center)
-    
+    private lazy var profileText = LabelManager.createLabel(text: "Bruce Wills", textSize: .size16, fontType: .semibold, alignment: .center)
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -154,8 +152,7 @@ extension SettingsVC: UICollectionViewDelegate {
                 let securitySettings = SecuritySettingsVC()
                 navigationController?.pushViewController(securitySettings, animated: true)
             case 1: break
-                //                let appDefaults = EditProfileVC()
-                //                navigationController?.pushViewController(appDefaults, animated: true)
+       
             case 2:
                 let myAdded = MyAddedPlacesVC()
                 navigationController?.pushViewController(myAdded, animated: true)
