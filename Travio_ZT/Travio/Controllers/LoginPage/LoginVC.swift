@@ -114,7 +114,9 @@ class LoginVC: UIViewController {
     
     private lazy var emailTextField = CommonTextField(labelText: "Email", textFieldPlaceholder: "deneme@example.com", isSecure: false)
     
-    private lazy var passwordTextField = CommonTextField(labelText: "Password", textFieldPlaceholder: "************", isSecure: true)
+    private lazy var passwordTextField = CommonTextField (labelText: "Şifre", textFieldPlaceholder: "************", isSecure: true)
+    
+    
     
     private lazy var loginButton = createButton(title: "Login", action: #selector(buttonLoginTapped))
     
@@ -130,6 +132,8 @@ class LoginVC: UIViewController {
     }
     
     private func setupLayouts() {
+        
+        
         imageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -192,3 +196,4 @@ struct LoginVC_Preview: PreviewProvider {
     }
 }
 #endif
+
