@@ -24,7 +24,7 @@ class MapVC: UIViewController {
         collectionView.delegate = self
         return collectionView
     }()
- 
+    
     private lazy var backView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
@@ -49,28 +49,32 @@ class MapVC: UIViewController {
         return searchBar
     }()
     
-    private lazy var doubleTapGesture: UITapGestureRecognizer = {
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
-        gesture.numberOfTapsRequired = 2
-        return gesture
-    }()
+    
     
     private lazy var longPressGesture: UILongPressGestureRecognizer = {
         let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         return gesture
     }()
-
+    
     private lazy var tapGesture: UITapGestureRecognizer = {
         let gesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOutsideSearchBar))
         gesture.cancelsTouchesInView = false
         return gesture
     }()
-
+    
+    private lazy var zoomPress: UILongPressGestureRecognizer = {
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressOnCell(_:)))
+        gesture.minimumPressDuration = 0.5
+        return gesture
+    }()
+    
     private func tapGestureMethods() {
         mapView.addGestureRecognizer(longPressGesture)
         view.addGestureRecognizer(tapGesture)
     }
-
+    
+    
+    
     
     // MARK: - Lifecycle
     
@@ -120,7 +124,7 @@ class MapVC: UIViewController {
     
     private func updateMapAndCollection() {
         mapView.removeAnnotations(mapView.annotations)
-
+        
         for place in mapPlaces {
             if let latitude = place.latitude, let longitude = place.longitude {
                 let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -129,7 +133,7 @@ class MapVC: UIViewController {
         }
         collectionView.reloadData()
     }
-
+    
     
     
     
@@ -188,21 +192,21 @@ extension MapVC: MKMapViewDelegate {
         guard annotation is MapAnnotation else {
             return nil
         }
-
+        
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MapAnnotation.identifier)
-
+        
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: MapAnnotation.identifier)
             annotationView!.canShowCallout = false
         } else {
             annotationView!.annotation = annotation
         }
-
+        
         annotationView!.image = (annotation as? MapAnnotation)?.image
-
+        
         return annotationView
     }
-
+    
 }
 
 
@@ -223,18 +227,24 @@ extension MapVC: UICollectionViewDataSource {
         let object = mapPlaces[indexPath.item]
         cell.configure(with: object)
         
-        cell.addGestureRecognizer(doubleTapGesture)
- 
         return cell
     }
     
-    @objc private func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
-        if gesture.state == .ended {
+    func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) {
+            
+            cell.addGestureRecognizer(zoomPress)
+        }
+    }
+    
+    @objc private func handleLongPressOnCell(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
             if let cell = gesture.view as? MapViewCell, let indexPath = collectionView.indexPath(for: cell) {
                 let selectedPlace = mapPlaces[indexPath.item]
-                let coordinate = CLLocationCoordinate2D(latitude: selectedPlace.latitude!, longitude: selectedPlace.longitude!)
-                let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
-                mapView.setRegion(region, animated: true)
+                if let latitude = selectedPlace.latitude, let longitude = selectedPlace.longitude {
+                    let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                    let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 1200, longitudinalMeters: 1200)
+                    mapView.setRegion(region, animated: true)                    }
             }
         }
     }

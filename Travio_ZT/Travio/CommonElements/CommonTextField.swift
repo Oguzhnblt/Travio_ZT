@@ -32,19 +32,31 @@ class CommonTextField: UIView {
         textField.autocapitalizationType = .none
         return textField
     }()
+    
     lazy var passwordVisibilityButton: UIButton = {
-            let button = UIButton(type: .system)
-            button.setImage(UIImage(systemName: "eye"), for: .normal)
-            button.setImage(UIImage(systemName: "eye.fill"), for: .selected)
-            button.tintColor = UIColor(named: "textColor")
-            button.addTarget(self, action: #selector(passwordVisibility), for: .touchUpInside)
-            return button
-        }()
-        
-        @objc private func passwordVisibility(sender: UIButton) {
-            textField.isSecureTextEntry.toggle()
-            sender.isSelected = !sender.isSelected
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "eye"), for: .normal)
+        button.setImage(UIImage(systemName: "eye.fill"), for: .selected)
+        button.tintColor = AppTheme.getColor(name: .general)
+        button.addTarget(self, action: #selector(passwordVisibility), for: .touchUpInside)
+        return button
+    }()
+    
+    private func visibilityButton() {
+        if textField.isSecureTextEntry {
+            textField.rightView = passwordVisibilityButton
+            textField.rightViewMode = .always
         }
+        else {
+            textField.rightViewMode = .never
+        }
+    }
+    
+    
+    @objc private func passwordVisibility(sender: UIButton) {
+        textField.isSecureTextEntry.toggle()
+        sender.isSelected = !sender.isSelected
+    }
     
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [label, textField])
@@ -67,23 +79,20 @@ class CommonTextField: UIView {
             make.edges.equalToSuperview().inset(12)
         }
         
-        if textField.isSecureTextEntry {
-            textField.rightView = passwordVisibilityButton
-            textField.rightViewMode = .always
-        }
-        
         dropShadow()
+        
+        visibilityButton()
     }
-
-
+    
+    
     init(labelText: String, textFieldPlaceholder: String, isSecure: Bool) {
         super.init(frame: .zero)
         label.text = labelText
         textField.placeholder = textFieldPlaceholder
         textField.isSecureTextEntry = isSecure
+        
         setupViews()
     }
-    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
