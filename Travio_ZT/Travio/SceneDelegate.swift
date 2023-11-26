@@ -32,7 +32,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
-       
+   
     }
 
     private func showLoginScreen() {
@@ -42,33 +42,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func isUserAlreadyLoggedIn() -> Bool {
-        return isTokenValid(token: AccessManager.shared.getToken(accountIdentifier: "access-token") ?? "")
-    }
-
-    func isTokenValid(token: String) -> Bool {
-        guard let jwtPayload = decodeJWT(token: token) else {
-            return false
-        }
-
-        if let expirationDate = jwtPayload["exp"] as? TimeInterval {
-            let currentDate = Date().timeIntervalSince1970
-            return currentDate < expirationDate
-        }
-
-        return false
-    }
-
-    func decodeJWT(token: String) -> [String: Any]? {
-        let tokenParts = token.components(separatedBy: ".")
-        guard tokenParts.count == 3,
-              let payloadData = Data(base64Encoded: tokenParts[1]),
-              let payload = try? JSONSerialization.jsonObject(with: payloadData, options: []) as? [String: Any] else {
-            return nil
-        }
-        return payload
+        return AccessManager.shared.getToken(accountIdentifier: "access-token") != nil
     }
 
 
+   
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
