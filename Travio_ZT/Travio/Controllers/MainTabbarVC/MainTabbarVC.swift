@@ -14,7 +14,7 @@ class MainTabbarVC: UITabBarController {
 
         self.viewControllers = setupControllers()
         self.selectedIndex = 0
-        self.tabBar.tintColor = #colorLiteral(red: 0.2196078431, green: 0.6784313725, blue: 0.662745098, alpha: 1)
+        self.tabBar.tintColor = AppTheme.getColor(name: .background)
         self.tabBar.unselectedItemTintColor = #colorLiteral(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
         self.tabBar.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         self.tabBar.isTranslucent = true

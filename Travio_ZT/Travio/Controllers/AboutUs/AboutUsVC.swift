@@ -38,8 +38,18 @@ class AboutUsVC: UIViewController {
 
     
     private func setupViews() {
-        setupView(title: "About Us",buttonImage: UIImage(named: "leftArrowIcon"), buttonPosition: .left, headerLabelPosition: .center, buttonAction: #selector(buttonTapped), itemsView: [termsTextView],itemColor: UIColor.white)
+        setupView(
+            title: "About Us",
+            buttonImage: UIImage(named: "leftArrowIcon"),
+            buttonPosition: .left,
+            headerLabelPosition: .center,
+            buttonAction: #selector(buttonTapped),
+            itemsView: [termsTextView],
+            itemColor: UIColor.white
+        )
+        
         setupLayouts()
+        
     }
     
     private func setupLayouts() {

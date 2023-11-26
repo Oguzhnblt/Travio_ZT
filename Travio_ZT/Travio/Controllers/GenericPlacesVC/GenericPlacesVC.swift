@@ -82,7 +82,7 @@ class GenericPlacesVC: UIViewController {
                     self?.updateTableView()
                 }
                 viewModel.popularPlaces()
-            case .newPlaces:
+            case .lastPlaces:
                 viewModel.lastPlacesTransfer = { [weak self] place in
                     self?.places = place
                     self?.updateTableView()

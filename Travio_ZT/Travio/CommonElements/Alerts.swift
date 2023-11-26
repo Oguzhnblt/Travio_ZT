@@ -5,11 +5,10 @@
 //  Created by Oğuz on 21.11.2023.
 //
 
-import Foundation
 import UIKit
 
-class Alerts {
-    static func showAlert(from viewController: UIViewController, title: String, message: String, actionTitle: String? = nil, cancelTitle: String? = nil, completion: (() -> Void)? = nil) {
+extension UIViewController {
+    func showAlert(title: String, message: String, actionTitle: String? = nil, cancelTitle: String? = nil, completion: (() -> Void)? = nil) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         let okAction = UIAlertAction(title: actionTitle, style: .default) { _ in
@@ -23,6 +22,6 @@ class Alerts {
             alertController.addAction(cancelAction)
         }
         
-        viewController.present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true, completion: nil)
     }
 }

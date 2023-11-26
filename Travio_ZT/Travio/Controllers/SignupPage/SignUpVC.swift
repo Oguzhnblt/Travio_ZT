@@ -29,7 +29,7 @@ class SignUpVC: UIViewController {
     }()
     
     
-    private lazy var signUpButton = ButtonManager.createButton(from: self, title: "Sign Up", action: #selector(signUpButtonTapped), isEnabled: false)
+    private lazy var signUpButton = createButton(title: "Sign Up", action: #selector(signUpButtonTapped), isEnabled: false)
     
     private func updateSignUpButtonState() {
         let isFormValid = !fullNameField.textField.text!.isEmpty &&
@@ -54,20 +54,20 @@ class SignUpVC: UIViewController {
         else { return }
         
         guard viewModel.validateEmail(email) else {
-            Alerts.showAlert(from: self, title: "Hata", message: "Geçersiz email", actionTitle: "Tamam")
+           showAlert(title: "Hata", message: "Geçersiz email", actionTitle: "Tamam")
             return
         }
         
         viewModel.signUp(fullName: fullName, email: email, password: password, confirmPassword: confirmPassword)
         viewModel.showAlertSuccess = { message in
-            Alerts.showAlert(from: self, title: "Başarılı", message: message, actionTitle: "Tamam")
+            self.showAlert(title: "Başarılı", message: message, actionTitle: "Tamam")
             self.signUpSuccessCallback?(email, password)
 
                     self.navigateToLoginViewController()
         }
         
         viewModel.showAlertFailure = { message in
-            Alerts.showAlert(from: self, title: "Hata", message: message, actionTitle: "Tamam")
+            self.showAlert(title: "Hata", message: message, actionTitle: "Tamam")
         }
        
     }

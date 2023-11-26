@@ -46,7 +46,7 @@ class SettingsVC: UIViewController, EditProfileDelegate {
         return profileImage
     }()
     
-    private lazy var editProfileButton = ButtonManager.createButton(from: self, title: "Edit Profile", action: #selector(buttonEditProfileTapped), titleColor: .background, backgroundColor: nil, font: .regular, size: .size12)
+    private lazy var editProfileButton = createButton(title: "Edit Profile", action: #selector(buttonEditProfileTapped), titleColor: .background, backgroundColor: nil, font: .regular, size: .size12)
     
 
     @objc func buttonEditProfileTapped() {
@@ -56,7 +56,7 @@ class SettingsVC: UIViewController, EditProfileDelegate {
     }
     
     @objc override func buttonTapped() {
-        Alerts.showAlert(from: self, title: "Uyarı", message: "Çıkış yapmak istediğinize emin misiniz?", actionTitle: "Çıkış yap", cancelTitle: "İptal Et") {
+        showAlert(title: "Uyarı", message: "Çıkış yapmak istediğinize emin misiniz?", actionTitle: "Çıkış yap", cancelTitle: "İptal Et") {
             AccessManager.shared.deleteToken(accountIdentifier: "access-token")
             let loginVC = LoginVC()
             loginVC.previousViewController = nil
@@ -75,7 +75,7 @@ class SettingsVC: UIViewController, EditProfileDelegate {
     }
     
     
-    private lazy var profileText = LabelManager.createLabel(text: "Bruce Wills", textSize: .size16, fontType: .semibold, alignment: .center)
+    private lazy var profileText = createLabel(text: "Bruce Wills", textSize: .size16, fontType: .semibold, alignment: .center)
   
     
     override func viewDidLoad() {

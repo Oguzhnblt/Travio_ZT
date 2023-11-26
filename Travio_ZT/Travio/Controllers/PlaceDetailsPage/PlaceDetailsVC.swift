@@ -79,7 +79,7 @@ class PlaceDetailsVC: UIViewController {
     }
     
     @objc func menuButtonTapped() {
-        Alerts.showAlert(from: self, title: "Uyarı", message: "Silmek istediğinize emin misiniz?", actionTitle: "Sil", cancelTitle: "İptal Et") {
+        showAlert(title: "Uyarı", message: "Silmek istediğinize emin misiniz?", actionTitle: "Sil", cancelTitle: "İptal Et") {
             if let selectedPlaceID = self.selectedPlace?.id,
                 self.userID.contains(where: { $0.id == selectedPlaceID }) {
                 self.viewModel.deletePlace(placeId: selectedPlaceID)
@@ -105,12 +105,12 @@ class PlaceDetailsVC: UIViewController {
             
             let params = ["place_id": selectedPlace?.id, "visited_at": visitedAt]
             viewModel.postVisit(params: params)
-            Alerts.showAlert(from: self, title: "💖", message: "Ziyaretlere eklendi.", actionTitle: "Tamam")
+           showAlert(title: "💖", message: "Ziyaretlere eklendi.", actionTitle: "Tamam")
             
             
         } else {
             viewModel.deleteVisit(placeID: selectedPlace?.id)
-            Alerts.showAlert(from: self, title: "💔", message: "Ziyaretlerden kaldırıldı.", actionTitle: "Tamam")
+            showAlert(title: "💔", message: "Ziyaretlerden kaldırıldı.", actionTitle: "Tamam")
         }
         
         let image = isBookmarked ? UIImage(named: "icon_bookmark_fill") : UIImage(named: "icon_bookmark")

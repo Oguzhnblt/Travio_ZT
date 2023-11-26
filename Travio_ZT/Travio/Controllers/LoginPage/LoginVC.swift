@@ -10,8 +10,11 @@ import UIKit
 import SnapKit
 
 class LoginVC: UIViewController {
+    
     private let viewModel = LoginVM()
     weak var previousViewController: UIViewController?
+    private lazy var activityIndicator = ActivityIndicatorManager()
+
     private func createStackView(axis: NSLayoutConstraint.Axis, spacing: CGFloat ) -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = axis
@@ -20,8 +23,6 @@ class LoginVC: UIViewController {
         stackView.alignment = .center
         return stackView
     }
-    
-    private lazy var activityIndicator = ActivityIndicatorManager()
     
     private lazy var loginView: UIView = {
         let view = UIView()
@@ -72,21 +73,21 @@ class LoginVC: UIViewController {
         else {return}
         
         guard viewModel.isValidEmail(email) else {
-            Alerts.showAlert(from: self, title: "Hata", message: "Geçersiz email", actionTitle: "Tamam")
+            showAlert(title: "Hata", message: "Geçersiz email", actionTitle: "Tamam")
             return
         }
         
         viewModel.login(email: email, password: password)
-        activityIndicator.showIndicator(in: view, text: "Giriş Yapılıyor...")
+        activityIndicator.start(in: view, text: "Giriş Yapılıyor...")
         
         viewModel.navigateToViewController = { [weak self] in
             self?.navigateToHomeVC()
-            self?.activityIndicator.hideIndicator()
+            self?.activityIndicator.stop()
         }
         
         viewModel.showAlertFailure = { message in
-            self.activityIndicator.hideIndicator()
-            Alerts.showAlert(from: self, title: "Hata", message: message, actionTitle: "Tamam")
+            self.activityIndicator.stop()
+            self.showAlert(title: "Hata", message: message, actionTitle: "Tamam")
         }
     }
     
@@ -104,25 +105,25 @@ class LoginVC: UIViewController {
     }
     
     
-    private lazy var loginİtemStackView = createStackView(axis: .vertical, spacing: 24)
+    private lazy var loginItemStackView = createStackView(axis: .vertical, spacing: 24)
     private lazy var signUpStackView = createStackView(axis: .horizontal, spacing: 4)
     
-    private lazy var accountLabel = LabelManager.createLabel(text: "Don’t have any account?" , textSize: .size14, fontType: .semibold, alignment: .center)
+    private lazy var accountLabel = createLabel(text: "Don’t have any account?" , textSize: .size14, fontType: .semibold, alignment: .center)
     
-    private lazy var welcomeLabelText = LabelManager.createLabel(text: "Welcome to Travio", textSize: .size24, fontType: .medium, alignment: .center)
+    private lazy var welcomeLabelText = createLabel(text: "Welcome to Travio", textSize: .size24, fontType: .medium, alignment: .center)
     
     private lazy var emailTextField = CommonTextField(labelText: "Email", textFieldPlaceholder: "deneme@example.com", isSecure: false)
     
     private lazy var passwordTextField = CommonTextField(labelText: "Password", textFieldPlaceholder: "************", isSecure: true)
     
-    private lazy var loginButton = ButtonManager.createButton(from: self, title: "Login", action: #selector(buttonLoginTapped))
+    private lazy var loginButton = createButton(title: "Login", action: #selector(buttonLoginTapped))
     
     private func setupViews() {
         self.view.addSubviews(loginView,loginItemView,imageView)
         
-        loginItemView.addSubviews(loginİtemStackView,welcomeLabelText,signUpStackView,loginButton)
+        loginItemView.addSubviews(loginItemStackView,welcomeLabelText,signUpStackView,loginButton)
         
-        loginİtemStackView.addArrangedSubviews(emailTextField,passwordTextField)
+        loginItemStackView.addArrangedSubviews(emailTextField,passwordTextField)
         signUpStackView.addArrangedSubviews(accountLabel,signUpButton)
         
         setupLayouts()
@@ -161,8 +162,8 @@ class LoginVC: UIViewController {
             make.left.right.equalToSuperview()
         }
         
-        loginİtemStackView.dropShadow()
-        loginİtemStackView.snp.makeConstraints { make in
+        loginItemStackView.dropShadow()
+        loginItemStackView.snp.makeConstraints { make in
             make.top.equalTo(welcomeLabelText.snp.bottom).offset(41)
             make.left.right.equalTo(loginButton)
         }

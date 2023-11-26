@@ -32,7 +32,7 @@ class HelpSupportTableCell: UITableViewCell {
     let subtitleLabel: UILabel = {
         let label = UILabel()
         label.font = AppTheme.getFont(name: .light, size: .size10)
-        label.numberOfLines = -1
+        label.numberOfLines = 0
         label.textColor = AppTheme.getColor(name: .general)
         return label
     }()
@@ -43,6 +43,7 @@ class HelpSupportTableCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
            super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -72,7 +73,7 @@ class HelpSupportTableCell: UITableViewCell {
         
         iconImageView.snp.makeConstraints { (make) in
             make.centerY.equalTo(titleLabel)
-            make.leading.equalTo(titleLabel.snp.trailing).offset(8)
+            make.leading.equalTo(titleLabel.snp.trailing).inset(20)
             make.trailing.lessThanOrEqualToSuperview().inset(16)
             make.width.height.equalTo(15)
         }

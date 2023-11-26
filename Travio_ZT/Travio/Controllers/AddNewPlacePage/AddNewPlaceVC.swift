@@ -33,7 +33,7 @@ class AddNewPlaceVC: UIViewController {
         return collectionView
     }()
     
-    private lazy var addPlaceButton = ButtonManager.createButton(from: self, title: "Add Place", action: #selector(addPlaceButtonTapped))
+    private lazy var addPlaceButton = createButton(title: "Add Place", action: #selector(addPlaceButtonTapped))
     
     // MARK: Lifecycle Methods
     override func viewDidLoad() {
@@ -85,7 +85,7 @@ class AddNewPlaceVC: UIViewController {
         if placeNameCell.textView.text?.isEmpty ?? true ||
             placeDescriptionCell.textView.text?.isEmpty ?? true ||
             locationCell.textView.text?.isEmpty ?? true {
-            Alerts.showAlert(from: self, title: "Uyarı", message: "Lütfen tüm alanları doldurun.", actionTitle: "Tamam")
+            showAlert(title: "Uyarı", message: "Lütfen tüm alanları doldurun.", actionTitle: "Tamam")
             return
         }
         
@@ -95,7 +95,7 @@ class AddNewPlaceVC: UIViewController {
         let description = placeDescriptionCell.textView.text ?? ""
         
         viewModel.uploadImage(images: addPlaceImages)
-        activityIndicator.showIndicator(in: view, text: "Yeni yer ekleniyor. Lütfen bekleyiniz.")
+        activityIndicator.start(in: view, text: "Yeni yer ekleniyor. Lütfen bekleyiniz.")
 
         viewModel.transferURLs = { [weak self] urls in
             guard let self = self else { return }
@@ -119,8 +119,9 @@ class AddNewPlaceVC: UIViewController {
               
             }
             completedAddPlace?()
-            activityIndicator.hideIndicator()
+            activityIndicator.stop()
             dismiss(animated: true, completion: nil)
+
         }
     }
 }

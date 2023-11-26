@@ -37,7 +37,7 @@ class MyAddedPlacesViewCell: UICollectionViewCell {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = AppTheme.getFont(name: .semibold, size: .size24)
+        label.font = AppTheme.getFont(name: .semibold, size: .size16)
         label.textColor = AppTheme.getColor(name: .general)
         return label
     }()

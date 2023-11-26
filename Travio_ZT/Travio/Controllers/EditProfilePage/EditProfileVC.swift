@@ -43,7 +43,7 @@ class EditProfileVC: UIViewController {
     }
     
     
-    private lazy var changePhotoButton = ButtonManager.createButton(from: self, title: "Change Photo", action: #selector(changePhotoTapped), titleColor: AppTheme.getColor(name: .seeButton), backgroundColor: nil, font: .regular, size: .size12)
+    private lazy var changePhotoButton = createButton(title: "Change Photo", action: #selector(changePhotoTapped), titleColor: AppTheme.getColor(name: .seeButton), backgroundColor: nil, font: .regular, size: .size12)
     
     private lazy var saveButton: UIButton = {
         
@@ -94,13 +94,13 @@ class EditProfileVC: UIViewController {
     
     
     @objc func saveButtonTapped() {
-        activityIndicator.showIndicator(in: profileImage, text: "Loading...")
+        activityIndicator.start(in: profileImage, text: "Loading...")
         
         guard let fullName = fullNameField.textField.text,
               let email = emailField.textField.text
         else {
-            Alerts.showAlert(from: self, title: "Uyarı", message: "Lütfen geçerli bir ad ve e-posta girin.", actionTitle: "Tamam") {
-                self.activityIndicator.hideIndicator()
+            showAlert(title: "Uyarı", message: "Lütfen geçerli bir ad ve e-posta girin.", actionTitle: "Tamam") {
+                self.activityIndicator.stop()
             }
             return
         }
@@ -108,8 +108,8 @@ class EditProfileVC: UIViewController {
         let validationResult = viewModel.validateInputs(fullName: fullName, email: email)
         
         if !validationResult.isValid {
-            Alerts.showAlert(from: self, title: "Uyarı", message: validationResult.errorMessage, actionTitle: "Tamam") {
-                self.activityIndicator.hideIndicator()
+            showAlert(title: "Uyarı", message: validationResult.errorMessage, actionTitle: "Tamam") {
+                self.activityIndicator.stop()
             }
             return
         }
@@ -123,8 +123,8 @@ class EditProfileVC: UIViewController {
         profileName.text = fullName
         
         viewModel.showAlertVM = { message in
-            Alerts.showAlert(from: self, title: "Uyarı", message: message, actionTitle: "Tamam") {
-                self.activityIndicator.hideIndicator()
+            self.showAlert(title: "Uyarı", message: message, actionTitle: "Tamam") {
+                self.activityIndicator.stop()
             }
             
             if let fullName = self.fullNameField.textField.text {
@@ -143,8 +143,9 @@ class EditProfileVC: UIViewController {
         }
         
         if let ppUrlString = profile.pp_url, let imageUrl = URL(string: ppUrlString) {
+            profileImage.kf.indicatorType = .activity
             profileImage.kf.setImage(with: imageUrl) { _ in
-                self.activityIndicator.hideIndicator()
+                self.activityIndicator.stop()
             }
         }
         

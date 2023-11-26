@@ -82,7 +82,7 @@ class SecuritySettingsVC: UIViewController {
         return stackView
     }()
     
-    private lazy var saveButton = ButtonManager.createButton(from: self, title: "Save", action: #selector(saveButtonTapped))
+    private lazy var saveButton = createButton(title: "Save", action: #selector(saveButtonTapped))
     
     @objc private func saveButtonTapped() {
         let validation = viewModel.validatePasswordFields(newPassword: newPasswordField.textField.text, confirmPassword: newPasswordConfirmField.textField.text)
@@ -92,10 +92,10 @@ class SecuritySettingsVC: UIViewController {
             guard let new_password = newPasswordField.textField.text else { return }
             viewModel.changePassword(ChangePasswordRequest(new_password: new_password))
             viewModel.successAlert = { message in
-                Alerts.showAlert(from: self, title: "Uyarı", message: message, actionTitle: "Tamam")
+                self.showAlert(title: "Uyarı", message: message, actionTitle: "Tamam")
             }
         case .failure(let errorMessage):
-                Alerts.showAlert(from: self, title: "Uyarı", message: errorMessage, actionTitle: "Tamam")
+                showAlert(title: "Uyarı", message: errorMessage, actionTitle: "Tamam")
         }
     }
     
@@ -108,7 +108,7 @@ class SecuritySettingsVC: UIViewController {
                     sender.isOn = true
                 } else {
                     sender.isOn = false
-                    Alerts.showAlert(from: self, title: "Permission Required", message: "Please go to settings and enable \(privacyType.rawValue) permissions.", actionTitle: "Settings", cancelTitle: "Cancel") {
+                    self.showAlert(title: "Permission Required", message: "Please go to settings and enable \(privacyType.rawValue) permissions.", actionTitle: "Settings", cancelTitle: "Cancel") {
                         self.privacyManager.openAppSettings()
 
                     }

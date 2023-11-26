@@ -20,8 +20,8 @@ class HelpSupportTableVC: UIViewController {
     private var selectedIndexPath: IndexPath?
     private var isExpanded: Bool = false
 
-    private lazy var expandedHeight: CGFloat = 160
-    private lazy var collapsedHeight: CGFloat = 60
+    private lazy var collapsedHeight: CGFloat = 65
+    private lazy var expandedHeight: CGFloat = UITableView.automaticDimension
 
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -30,6 +30,8 @@ class HelpSupportTableVC: UIViewController {
         tableView.register(HelpSupportTableCell.self, forCellReuseIdentifier: HelpSupportTableCell.cellReuseIdentifier)
         tableView.backgroundColor = AppTheme.getColor(name: .content)
         tableView.separatorStyle = .none
+        tableView.rowHeight = UITableView.automaticDimension
+
         return tableView
     }()
 
@@ -86,6 +88,12 @@ extension HelpSupportTableVC: UITableViewDataSource {
         cell.titleLabel.text = item.title
         cell.subtitleLabel.text = item.subtitle
         
+        cell.subtitleLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(cell.titleLabel.snp.bottom).offset(4)
+            make.leading.trailing.bottom.equalToSuperview().inset(16)
+        }
+
+        
         cell.backgroundColor = AppTheme.getColor(name: .content)
         cell.selectionStyle = .none
 
@@ -99,7 +107,7 @@ extension HelpSupportTableVC: UITableViewDataSource {
 extension HelpSupportTableVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             let cellState = cellStates[indexPath]
-            return cellState == .expanded ? expandedHeight : collapsedHeight
+        return cellState == .expanded ? expandedHeight : collapsedHeight
         }
 
 

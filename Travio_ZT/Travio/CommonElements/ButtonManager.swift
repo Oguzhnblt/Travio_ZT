@@ -7,8 +7,8 @@
 
 import UIKit
 
-class ButtonManager {
-    static func createButton(from viewController: UIViewController, title: String, action: Selector, titleColor: UIColor? = UIColor.white, backgroundColor: UIColor? = AppTheme.getColor(name: .background), isEnabled: Bool = true, font: AppTheme.FontType? = AppTheme.FontType.semibold, size: AppTheme.FontSize? = AppTheme.FontSize.size16) -> UIButton {
+extension UIViewController {
+    func createButton(title: String, action: Selector, titleColor: UIColor? = UIColor.white, backgroundColor: UIColor? = AppTheme.getColor(name: .background), isEnabled: Bool = true, font: AppTheme.FontType? = AppTheme.FontType.semibold, size: AppTheme.FontSize? = AppTheme.FontSize.size16) -> UIButton {
         
         let button = UIButton(type: .system)
         button.setTitle(title, for: .normal)
@@ -16,12 +16,10 @@ class ButtonManager {
         button.setTitleColor(titleColor, for: .normal)
         button.layer.cornerRadius = 16
         button.layer.backgroundColor = backgroundColor?.cgColor
-        button.isEnabled = isEnabled 
-        button.addTarget(viewController.self, action: action, for: .touchUpInside)
+        button.isEnabled = isEnabled
+        button.addTarget(self, action: action, for: .touchUpInside)
         
         return button
     }
-
-    @objc static func buttonTapped() {}
 }
 

@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 
-class LabelManager {
-    static func createLabel(text: String, textSize: AppTheme.FontSize, fontType: AppTheme.FontType, alignment: NSTextAlignment) -> UILabel {
+extension UIViewController {
+    func createLabel(text: String, textSize: AppTheme.FontSize, fontType: AppTheme.FontType, alignment: NSTextAlignment) -> UILabel {
         let label = UILabel()
         label.text = text
         label.textColor = AppTheme.getColor(name: .general)

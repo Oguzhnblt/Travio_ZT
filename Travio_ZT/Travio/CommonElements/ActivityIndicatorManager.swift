@@ -13,7 +13,7 @@ class ActivityIndicatorManager {
     private var indicator: UIActivityIndicatorView?
     private var label: UILabel?
 
-    func showIndicator(in view: UIView, text: String? = nil) {
+    func start(in view: UIView, text: String? = nil) {
         showBlurEffect(in: view)
 
         indicator = createActivityIndicator()
@@ -26,7 +26,7 @@ class ActivityIndicatorManager {
         }
     }
 
-    func hideIndicator() {
+    func stop() {
         indicator?.stopAnimating()
         indicator?.removeFromSuperview()
 
@@ -47,7 +47,7 @@ class ActivityIndicatorManager {
 
     private func createActivityIndicator() -> UIActivityIndicatorView {
         let indicator = UIActivityIndicatorView(style: .medium)
-        indicator.color = .black
+        indicator.color = AppTheme.getColor(name: .general)
         indicator.hidesWhenStopped = true
         indicator.center = blurEffectView!.center
         return indicator
@@ -56,7 +56,7 @@ class ActivityIndicatorManager {
     private func createLabel(with text: String) -> UILabel {
         let label = UILabel()
         label.text = text
-        label.textColor = .background
+        label.textColor = AppTheme.getColor(name: .background)
         label.textAlignment = .center
         label.font = AppTheme.getFont(name: .medium, size: .size14)
         
