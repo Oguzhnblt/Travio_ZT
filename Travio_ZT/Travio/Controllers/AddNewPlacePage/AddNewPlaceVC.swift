@@ -87,6 +87,7 @@ class AddNewPlaceVC: UIViewController {
             make.bottom.equalToSuperview()
             make.height.equalTo(54)
             make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(370)
             
         })
     }
