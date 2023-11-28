@@ -20,6 +20,8 @@ extension UIViewController {
         
         lazy var containerView = UIView()
         containerView.backgroundColor = AppTheme.getColor(name: .background)
+        containerView.clipsToBounds = true
+        
         
         lazy var itemView = UIView()
         itemView.backgroundColor = itemColor

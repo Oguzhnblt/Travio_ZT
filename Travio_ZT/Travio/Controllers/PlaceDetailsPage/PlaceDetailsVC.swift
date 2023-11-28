@@ -39,7 +39,6 @@ class PlaceDetailsVC: UIViewController {
         return collectionView
     }()
     
-    
     private lazy var menuButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "icon_three_dot"), for: .normal)

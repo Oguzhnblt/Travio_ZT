@@ -17,7 +17,8 @@ class HomeVM {
         NetworkingHelper.shared.fetchData(urlRequest: .getPopularPlaces(limit: 3)) { [weak self] (result: Result<GetPopularPlacesResponse, Error>) in
             switch result {
                 case .success(let object):
-                    self?.popularPlacesTransfer?((object.data?.places!)!)
+                    guard let places = object.data?.places else {return}
+                    self?.popularPlacesTransfer?(places)
                 case .failure(let failure):
                     print("Error: \(failure.localizedDescription)")
             }
@@ -28,7 +29,8 @@ class HomeVM {
         NetworkingHelper.shared.fetchData(urlRequest: .getLastPlaces(limit: 3)) { [weak self] (result: Result<GetLastPlacesResponse, Error>) in
             switch result {
                 case .success(let object):
-                    self?.lastPlacesTransfer?((object.data?.places)!)
+                    guard let places = object.data?.places else {return}
+                    self?.lastPlacesTransfer?(places)
                 case .failure(let failure):
                     print("Error: \(failure.localizedDescription)")
             }
@@ -39,7 +41,8 @@ class HomeVM {
         NetworkingHelper.shared.fetchData(urlRequest: .getAllPlacesForUser) { [weak self] (result: Result<GetAllPlacesForUserResponse, Error>) in
             switch result {
                 case .success(let object):
-                    self?.addedPlacesTransfer?((object.data?.places)!)
+                    guard let places = object.data?.places else {return}
+                    self?.addedPlacesTransfer?(places)
                 case .failure(let failure):
                     print("Error: \(failure.localizedDescription)")
             }

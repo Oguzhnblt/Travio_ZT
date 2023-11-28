@@ -12,10 +12,18 @@ import SnapKit
 
 class HelpSupportTableCell: UITableViewCell {
     static let cellReuseIdentifier = "cell"
-
-   private lazy var backView: UIView = {
+    
+    func configure(_ model: HelpSupportModel) {
+        
+        titleLabel.text = model.title
+        subtitleLabel.text = model.subtitle
+        subtitleLabel.isHidden = !model.isExpanded
+        iconImageView.image = (model.isExpanded ? UIImage(named: "img_arrow") : UIImage(named: "img_right_arrow"))
+    }
+    
+    private lazy var backView: UIView = {
         let view = UIView()
-       view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.white
         view.layer.cornerRadius = 16
         
         return view
@@ -26,6 +34,7 @@ class HelpSupportTableCell: UITableViewCell {
         label.textColor = AppTheme.getColor(name: .general)
         label.font = AppTheme.getFont(name: .medium, size: .size14)
         label.numberOfLines = 0
+        
         return label
     }()
     
@@ -34,6 +43,7 @@ class HelpSupportTableCell: UITableViewCell {
         label.font = AppTheme.getFont(name: .light, size: .size10)
         label.numberOfLines = 0
         label.textColor = AppTheme.getColor(name: .general)
+        label.isHidden = true
         return label
     }()
     
@@ -44,45 +54,50 @@ class HelpSupportTableCell: UITableViewCell {
         return imageView
     }()
     
+    private lazy var mainStackView: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [titleLabel,iconImageView])
+        stack.axis = .horizontal
+        stack.spacing = 12
+        stack.alignment = .center
+        return stack
+    }()
+    
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [mainStackView, subtitleLabel])
+        stackView.axis = .vertical
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.spacing = 12
+       
+        return  stackView
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-           super.init(style: style, reuseIdentifier: reuseIdentifier)
-           setupUI()
-       }
-
-       required init?(coder aDecoder: NSCoder) {
-           super.init(coder: aDecoder)
-           setupUI()
-       }
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupUI()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupUI()
+    }
     
     func setupUI() {
-        addSubview(backView)
-        
-        backView.addSubviews(titleLabel, subtitleLabel, iconImageView)
-        
+        contentView.addSubview(backView)
         backView.dropShadow()
-        backView.snp.makeConstraints { (make) in
-            make.top.bottom.equalToSuperview().inset(8)
-            make.left.right.equalToSuperview().inset(8)
-        }
+        backView.addSubviews(stackView)
         
-        titleLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(12)
-            make.left.right.equalToSuperview().inset(16)
-        }
+        backView.snp.makeConstraints({ make in
+            make.edges.equalToSuperview().inset(8)
+        })
         
-        iconImageView.snp.makeConstraints { (make) in
-            make.centerY.equalTo(titleLabel)
-            make.leading.equalTo(titleLabel.snp.trailing).inset(20)
-            make.trailing.lessThanOrEqualToSuperview().inset(16)
-            make.width.height.equalTo(15)
-        }
+        stackView.snp.makeConstraints({ make in
+            make.top.equalToSuperview().inset(16)
+            make.left.equalToSuperview().inset(12)
+            make.right.equalToSuperview().inset(18)
+            make.bottom.equalToSuperview().inset(15)
+        })
         
-        subtitleLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(4)
-            make.leading.trailing.bottom.equalToSuperview().inset(16)
-        }
-        
+        iconImageView.snp.makeConstraints({$0.size.equalTo(18)})
     }
 }
 

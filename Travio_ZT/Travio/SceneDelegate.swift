@@ -42,8 +42,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func isUserAlreadyLoggedIn() -> Bool {
-        return AccessManager.shared.getToken(accountIdentifier: "access-token") != nil
+        let accessManager = AccessManager.shared
+        
+        if let token = accessManager.getToken(accountIdentifier: "access-token") {
+            return token.count != 10
+        }
+        
+        return true
     }
+
 
 
    

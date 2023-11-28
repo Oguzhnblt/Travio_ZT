@@ -33,8 +33,30 @@ class AddNewPlaceVC: UIViewController {
         return collectionView
     }()
     
-    private lazy var addPlaceButton = createButton(title: "Add Place", action: #selector(addPlaceButtonTapped))
+    private lazy var contentViewSize: CGSize = {
+        let width = self.view.frame.width
+        let height = self.view.frame.height
+        return CGSize(width: width, height: height)
+    }()
+        
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView(frame: .zero)
+        scrollView.contentSize = contentViewSize
+        scrollView.backgroundColor = AppTheme.getColor(name: .content)
+        scrollView.showsHorizontalScrollIndicator = true
+        scrollView.bounces = true
+        return scrollView
+    }()
     
+    private lazy var containerView: UIView = {
+        let containerView = UIView()
+        containerView.frame.size = contentViewSize
+        return containerView
+    }()
+
+    
+    private lazy var addPlaceButton = createButton(title: "Add Place", action: #selector(addPlaceButtonTapped))
+        
     // MARK: Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,20 +65,32 @@ class AddNewPlaceVC: UIViewController {
     }
     
     // MARK: Private Methods
+    
     private func setupViews() {
-        view.addSubviews(collectionView, addPlaceButton)
+        view.addSubviews(scrollView)
+        scrollView.addSubviews(containerView, addPlaceButton)
+        containerView.addSubviews(collectionView)
         
-        collectionView.snp.makeConstraints { make in
+        scrollView.snp.makeConstraints({ make in
             make.edges.equalToSuperview()
-        }
-      
-        addPlaceButton.snp.makeConstraints { make in
-            make.bottom.equalTo(collectionView.snp.bottom).offset(-50)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(342)
+        })
+
+
+        collectionView.snp.makeConstraints({ make in
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        })
+
+        addPlaceButton.snp.makeConstraints({ make in
+            make.top.equalTo(collectionView.snp.bottom)
+            make.left.right.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview()
             make.height.equalTo(54)
-        }
+            make.centerX.equalToSuperview()
+            
+        })
     }
+
    
     private func updateLocationInfo() {
         guard let selectedCoordinate = selectedCoordinate else { return }
