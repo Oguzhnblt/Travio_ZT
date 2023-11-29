@@ -46,7 +46,7 @@ class SettingsVC: UIViewController, EditProfileDelegate {
         return profileImage
     }()
     
-    private lazy var editProfileButton = createButton(title: "Edit Profile", action: #selector(buttonEditProfileTapped), titleColor: .background, backgroundColor: nil, font: .regular, size: .size12)
+    private lazy var editProfileButton = createButton(title: "Edit Profile", action: #selector(buttonEditProfileTapped), titleColor: UIColor(named: "background"), backgroundColor: nil, font: .regular, size: .size12)
     
 
     @objc func buttonEditProfileTapped() {

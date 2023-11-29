@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 class HelpSupportTableVC: UIViewController {
+    
+    private var viewModel = HelpSupportVM()
 
     private var selectedIndexPath: IndexPath?
 
@@ -66,33 +68,29 @@ class HelpSupportTableVC: UIViewController {
 }
 
 extension HelpSupportTableVC: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return helpItems.count
-    }
+       func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+           return viewModel.helpItems.count
+       }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: HelpSupportTableCell.cellReuseIdentifier, for: indexPath) as! HelpSupportTableCell
-        
-        cell.configure(helpItems[indexPath.row])
+       func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+           let cell = tableView.dequeueReusableCell(withIdentifier: HelpSupportTableCell.cellReuseIdentifier, for: indexPath) as! HelpSupportTableCell
 
-        
-        cell.backgroundColor = AppTheme.getColor(name: .content)
-        cell.selectionStyle = .none
-        
-        return cell
-    }
-}
+           cell.configure(viewModel.helpItems[indexPath.row])
+
+           cell.backgroundColor = AppTheme.getColor(name: .content)
+           cell.selectionStyle = .none
+
+           return cell
+       }
+   }
 
 extension HelpSupportTableVC: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        UITableView.automaticDimension
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            viewModel.helpItems[indexPath.row].isExpanded.toggle()
+            tableView.reloadRows(at: [indexPath], with: .fade)
+        }
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        helpItems[indexPath.row].isExpanded.toggle()
-        tableView.reloadRows(at: [indexPath], with: .fade)
-    }
-}
 
 
 

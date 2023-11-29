@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0F34F45F2AEA580A007189BE /* NetworkingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F34F45E2AEA580A007189BE /* NetworkingHelper.swift */; };
+		0F4C78512B174BD8005042E3 /* HelpSupportVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F4C78502B174BD8005042E3 /* HelpSupportVM.swift */; };
 		0F5CB3152AF2681D00B9F13F /* RefreshRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5CB3142AF2681D00B9F13F /* RefreshRequestModel.swift */; };
 		0F5CB3192AF2697C00B9F13F /* RefreshResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5CB3182AF2697C00B9F13F /* RefreshResponseModel.swift */; };
 		0F5CB31B2AF26C6700B9F13F /* UploadResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5CB31A2AF26C6700B9F13F /* UploadResponseModel.swift */; };
@@ -111,6 +112,7 @@
 
 /* Begin PBXFileReference section */
 		0F34F45E2AEA580A007189BE /* NetworkingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingHelper.swift; sourceTree = "<group>"; };
+		0F4C78502B174BD8005042E3 /* HelpSupportVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpSupportVM.swift; sourceTree = "<group>"; };
 		0F5CB3142AF2681D00B9F13F /* RefreshRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshRequestModel.swift; sourceTree = "<group>"; };
 		0F5CB3182AF2697C00B9F13F /* RefreshResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshResponseModel.swift; sourceTree = "<group>"; };
 		0F5CB31A2AF26C6700B9F13F /* UploadResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadResponseModel.swift; sourceTree = "<group>"; };
@@ -608,6 +610,7 @@
 				12BA00BE2AFF99820097275C /* HelpSupportTableVC.swift */,
 				12BA00BC2AFF99710097275C /* HelpSupportTableCell.swift */,
 				1278061F2AF7CC260085D31F /* HelpSupportModel.swift */,
+				0F4C78502B174BD8005042E3 /* HelpSupportVM.swift */,
 			);
 			name = HelpSupport;
 			sourceTree = "<group>";
@@ -846,6 +849,7 @@
 				1255D81A2ADACC6400FB6638 /* Extensions.swift in Sources */,
 				12480C442AF0EC0B00549C42 /* SettingsCollectionViewCell.swift in Sources */,
 				0F5CB31F2AF277C900B9F13F /* EditProfileRequestModel.swift in Sources */,
+				0F4C78512B174BD8005042E3 /* HelpSupportVM.swift in Sources */,
 				12B3630A2AFC002C00B84AEF /* MapVM.swift in Sources */,
 				FF9BD5672AF2F6BA0072BBA0 /* GetAllVisitsResponseModel.swift in Sources */,
 				0F866E142AFA136F000C784A /* MapAnnotation.swift in Sources */,
