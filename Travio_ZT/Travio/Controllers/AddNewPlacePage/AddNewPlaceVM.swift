@@ -21,7 +21,7 @@ class AddNewPlaceVM {
                 case .success(let success):
                     self.transferPlaceID?(success.message!)
                 case .failure(let err):
-                    print(err.localizedDescription)
+                    self.showAlertVM!(err.localizedDescription)
             }
         }
     }
@@ -43,8 +43,7 @@ class AddNewPlaceVM {
     func postGalleryImage(params: [String: Any]) {
         NetworkingHelper.shared.fetchData(urlRequest: .postGalleryImage(params: params), completion: {(result: Result<GenericResponseModel, Error>) in
             switch result {
-                case .success(let success):
-                    print(success.message!)
+                case .success(_): break
                 case .failure(let failure):
                     print(failure.localizedDescription)
             }

@@ -15,6 +15,7 @@ class MapVC: UIViewController {
     
     private lazy var viewModel = MapVM()
     private lazy var mapPlaces: [Place] = []
+    
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: MapPageLayout.shared.mapLayout())
         collectionView.backgroundColor = UIColor.clear

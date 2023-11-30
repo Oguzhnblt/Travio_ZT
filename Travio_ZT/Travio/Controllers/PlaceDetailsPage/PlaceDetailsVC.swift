@@ -97,27 +97,25 @@ class PlaceDetailsVC: UIViewController {
     
     @objc private func bookMarkTapped() {
         isBookmarked.toggle()
-        
-        
+        guard let placeId = selectedPlace?.id else {return}
+
         if isBookmarked {
-            let visitedAt = DateFormatter.formattedString()
-            
-            let params = ["place_id": selectedPlace?.id, "visited_at": visitedAt]
-            viewModel.postVisit(params: params)
-           showAlert(title: "💖", message: "Ziyaretlere eklendi.", actionTitle: "Tamam")
-            
-            
+            viewModel.postVisit(placeId: placeId)
         } else {
             viewModel.deleteVisit(placeID: selectedPlace?.id)
-            showAlert(title: "💔", message: "Ziyaretlerden kaldırıldı.", actionTitle: "Tamam")
+        }
+
+        viewModel.successMessage = { message, title in
+            self.showAlert(title: title!, message: message, actionTitle: "Tamam")
+        }
+        viewModel.errorMessage = { message in
+            self.showAlert(title: "Hata", message: message, actionTitle: "Tamam")
         }
         
         let image = isBookmarked ? UIImage(named: "icon_bookmark_fill") : UIImage(named: "icon_bookmark")
         bookmarkButton.setImage(image, for: .normal)
     }
-    
-    
-    
+
     private func checkBookmark() {
         guard let placeID = selectedPlace?.id else { return }
         

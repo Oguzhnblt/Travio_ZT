@@ -11,7 +11,13 @@ import SnapKit
 
 extension UIViewController {
     
-    func setupView(title: String?, buttonImage: UIImage?, buttonPosition: ButtonPosition?, headerLabelPosition: HeaderLabelPosition, headerLabelTopOffset: CGFloat = -15,buttonAction: Selector?, itemsView: [UIView], itemColor: UIColor? = AppTheme.getColor(name: .content)) {
+    func setupView(title: String?,
+                   buttonImage: UIImage?,
+                   buttonPosition: ButtonPosition = .left,
+                   headerLabelPosition: HeaderLabelPosition = .center,
+                   headerLabelTopOffset: CGFloat = -15,
+                   buttonAction: Selector?,
+                   itemsView: [UIView]) {
         
         lazy var headerLabel = UILabel()
         headerLabel.text = title
@@ -24,7 +30,7 @@ extension UIViewController {
         
         
         lazy var itemView = UIView()
-        itemView.backgroundColor = itemColor
+        itemView.backgroundColor = AppTheme.getColor(name: .content)
         itemView.clipsToBounds = true
         itemView.layer.cornerRadius = 80
         itemView.layer.maskedCorners = .layerMinXMinYCorner
@@ -51,28 +57,26 @@ extension UIViewController {
         
         headerLabel.snp.makeConstraints { make in
             switch headerLabelPosition {
-            case .left:
+                case .left:
                     make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(headerLabelTopOffset)
-                make.leading.equalToSuperview().offset(24)
-            case .right:
-                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(-15)
-                make.trailing.equalToSuperview().offset(-24)
-            case .center:
-                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(-15)
+                    make.leading.equalToSuperview().offset(24)
+                case .right:
+                    make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(-15)
+                    make.trailing.equalToSuperview().offset(-24)
+                case .center:
+                    make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(-15)
                     make.centerX.equalToSuperview().offset(10)
             }
         }
         
         button.snp.makeConstraints { make in
             switch buttonPosition {
-            case .left:
-                make.centerY.equalTo(headerLabel.snp.centerY)
-                make.leading.equalToSuperview().offset(24)
-            case .right:
-                make.centerY.equalTo(headerLabel.snp.centerY)
-                make.trailing.equalToSuperview().offset(-24)
-            case .none:
-                make.top.equalToSuperview()
+                case .left:
+                    make.centerY.equalTo(headerLabel.snp.centerY)
+                    make.leading.equalToSuperview().offset(24)
+                case .right:
+                    make.centerY.equalTo(headerLabel.snp.centerY)
+                    make.trailing.equalToSuperview().offset(-24)
             }
         }
     }

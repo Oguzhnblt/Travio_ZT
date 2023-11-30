@@ -29,9 +29,8 @@ class MyVisitsVC: UIViewController {
     private lazy var noDataLabel: UILabel = {
         let label = UILabel()
         label.text = "Henüz ziyaret edilen yer yok."
-        label.textColor = .gray
-        label.font = AppTheme.getFont(name: .regular, size: .size14)
-        label.isHidden = true
+        label.textColor = AppTheme.getColor(name: .general)
+        label.font = AppTheme.getFont(name: .light, size: .size14)
         label.textAlignment = .center
         return label
     }()
@@ -45,21 +44,28 @@ class MyVisitsVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-
         viewModel.visitsTransfer = { [weak self] visits in
             self?.myVisits = visits
             self?.collectionView.reloadData()
-            self?.noDataLabel.isHidden = ((self?.myVisits.isEmpty) != nil)
+            
+            guard let isEmpty = self?.myVisits.isEmpty else {return}
+            
+            self?.noDataLabel.isHidden = !isEmpty
         }
-        
+
         viewModel.getAllVisits()
     }
-    
+
     private func setupViews() {
-        setupView(title: "My Visits", buttonImage: nil, buttonPosition: nil, headerLabelPosition: .left, buttonAction: nil, itemsView: [collectionView])
+        
+        setupView(title: "My Visits",
+                  buttonImage: nil,
+                  headerLabelPosition: .left,
+                  buttonAction: nil,
+                  itemsView: [collectionView])
+        
         view.addSubviews(noDataLabel)
         setupLayouts()
-        
     }
     
     private func setupLayouts() {

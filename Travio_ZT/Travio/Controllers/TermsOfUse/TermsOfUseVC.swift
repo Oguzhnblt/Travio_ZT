@@ -41,8 +41,7 @@ class TermsOfUseVC: UIViewController {
              buttonPosition: .left,
              headerLabelPosition: .center,
              buttonAction: #selector(buttonTapped),
-             itemsView: [termsTextView],
-             itemColor: UIColor.white
+             itemsView: [termsTextView]
          )
          
         setupLayouts()
