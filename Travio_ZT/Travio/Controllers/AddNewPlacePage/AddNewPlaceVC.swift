@@ -14,12 +14,13 @@ class AddNewPlaceVC: UIViewController {
     private lazy var viewModel = AddNewPlaceVM()
     var completedAddPlace: (() -> Void)?
     
+    
     private lazy var activityIndicator: ActivityIndicatorManager = {
         let manager = ActivityIndicatorManager()
         return manager
     }()
-
-   
+    
+    
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: addNewPageLayout())
@@ -38,7 +39,7 @@ class AddNewPlaceVC: UIViewController {
         let height = self.view.frame.height
         return CGSize(width: width, height: height)
     }()
-        
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
         scrollView.contentSize = contentViewSize
@@ -53,10 +54,10 @@ class AddNewPlaceVC: UIViewController {
         containerView.frame.size = contentViewSize
         return containerView
     }()
-
+    
     
     private lazy var addPlaceButton = createButton(title: "Add Place", action: #selector(addPlaceButtonTapped))
-        
+    
     // MARK: Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,13 +75,13 @@ class AddNewPlaceVC: UIViewController {
         scrollView.snp.makeConstraints({ make in
             make.edges.equalToSuperview()
         })
-
-
+        
+        
         collectionView.snp.makeConstraints({ make in
             make.top.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
         })
-
+        
         addPlaceButton.snp.makeConstraints({ make in
             make.top.equalTo(collectionView.snp.bottom)
             make.left.right.equalToSuperview().inset(16)
@@ -91,8 +92,8 @@ class AddNewPlaceVC: UIViewController {
             
         })
     }
-
-   
+    
+    
     private func updateLocationInfo() {
         guard let selectedCoordinate = selectedCoordinate else { return }
         
@@ -124,17 +125,25 @@ class AddNewPlaceVC: UIViewController {
             return
         }
         
-        
         let place = locationCell.textView.text ?? ""
         let title = placeNameCell.textView.text ?? ""
         let description = placeDescriptionCell.textView.text ?? ""
         
-        viewModel.uploadImage(images: addPlaceImages)
         activityIndicator.start(in: view, text: "Yeni yer ekleniyor. Lütfen bekleyiniz.")
-
+        viewModel.uploadImage(images: addPlaceImages)
+        
+        viewModel.showAlertVM = { [weak self] message in
+            guard let self = self else { return }
+            
+            self.activityIndicator.stop()
+            self.showAlert(title: "Hata", message: message, actionTitle: "Tamam") {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+        
         viewModel.transferURLs = { [weak self] urls in
             guard let self = self else { return }
-
+            
             let params: [String: Any] = [
                 "place": place,
                 "title": title,
@@ -143,20 +152,20 @@ class AddNewPlaceVC: UIViewController {
                 "latitude": self.selectedCoordinate!.latitude as Double,
                 "longitude": self.selectedCoordinate!.longitude as Double
             ]
-            viewModel.addPlace(params: params)
             
             viewModel.transferPlaceID = { [weak self] placeId in
                 guard let self = self else { return }
+                
                 for imageUrl in urls {
                     let params = ["place_id": placeId, "image_url": imageUrl]
                     viewModel.postGalleryImage(params: params)
                 }
-              
+                
+                self.completedAddPlace?()
+                self.dismiss(animated: true, completion: nil)
+                
             }
-            completedAddPlace?()
-            activityIndicator.stop()
-            dismiss(animated: true, completion: nil)
-
+            viewModel.addPlace(params: params)
         }
     }
 }
@@ -240,7 +249,7 @@ extension AddNewPlaceVC: UIImagePickerControllerDelegate, UINavigationController
         if let cell = collectionView.cellForItem(at: indexPath) as? AddPhotoViewCell {
             cell.imageView.image = selectedImage
             
-            if indexPath.item < addPlaceImages.count { 
+            if indexPath.item < addPlaceImages.count {
                 addPlaceImages[indexPath.item] = selectedImage
             }
             else {

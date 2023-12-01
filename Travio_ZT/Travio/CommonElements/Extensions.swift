@@ -214,7 +214,11 @@ extension UIView {
     }
 }
 
-
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return emailPredicate.evaluate(with: email)
+    }
 
 extension DateFormatter {
     static func formattedDate(from originalDateString: String? = nil, originalDate: Date? = nil, originalFormat: FormatType, targetFormat: FormatType, localeIdentifier: String? = "tr-TR") -> String? {

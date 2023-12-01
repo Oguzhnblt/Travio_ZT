@@ -13,12 +13,12 @@ import MapKit
 
 class PlaceDetailsVC: UIViewController {
     
-    var selectedPlace: Place? 
+    var selectedPlace: Place?
     var userID: [Place] = []
     var imageURLs: [String] = []
     var selectedCoordinates: CLLocationCoordinate2D?
     weak var previousViewController: UIViewController?
-
+    
     let placeBottomView = PlaceBottomView()
     private lazy var viewModel = PlaceDetailsVM()
     
@@ -70,7 +70,7 @@ class PlaceDetailsVC: UIViewController {
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return button
     }()
-        
+    
     
     @objc private func backButtonTapped() {
         previousViewController = nil
@@ -80,7 +80,7 @@ class PlaceDetailsVC: UIViewController {
     @objc func menuButtonTapped() {
         showAlert(title: "Uyarı", message: "Silmek istediğinize emin misiniz?", actionTitle: "Sil", cancelTitle: "İptal Et") {
             if let selectedPlaceID = self.selectedPlace?.id,
-                self.userID.contains(where: { $0.id == selectedPlaceID }) {
+               self.userID.contains(where: { $0.id == selectedPlaceID }) {
                 self.viewModel.deletePlace(placeId: selectedPlaceID)
             }
             self.navigationController?.popViewController(animated: true)
@@ -98,16 +98,18 @@ class PlaceDetailsVC: UIViewController {
     @objc private func bookMarkTapped() {
         isBookmarked.toggle()
         guard let placeId = selectedPlace?.id else {return}
-
+        
         if isBookmarked {
             viewModel.postVisit(placeId: placeId)
         } else {
             viewModel.deleteVisit(placeID: selectedPlace?.id)
         }
-
+        
         viewModel.successMessage = { message, title in
-            self.showAlert(title: title!, message: message, actionTitle: "Tamam")
+            guard let title = title else {return}
+            self.showAlert(title: title, message: message, actionTitle: "Tamam")
         }
+        
         viewModel.errorMessage = { message in
             self.showAlert(title: "Hata", message: message, actionTitle: "Tamam")
         }
@@ -115,7 +117,7 @@ class PlaceDetailsVC: UIViewController {
         let image = isBookmarked ? UIImage(named: "icon_bookmark_fill") : UIImage(named: "icon_bookmark")
         bookmarkButton.setImage(image, for: .normal)
     }
-
+    
     private func checkBookmark() {
         guard let placeID = selectedPlace?.id else { return }
         

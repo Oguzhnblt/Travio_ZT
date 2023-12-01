@@ -72,7 +72,7 @@ class LoginVC: UIViewController {
               let password = passwordTextField.textField.text
         else {return}
         
-        guard viewModel.isValidEmail(email) else {
+        guard isValidEmail(email) else {
             showAlert(title: "Hata", message: "Geçersiz email", actionTitle: "Tamam")
             return
         }

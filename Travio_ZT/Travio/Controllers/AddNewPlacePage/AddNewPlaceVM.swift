@@ -20,12 +20,14 @@ class AddNewPlaceVM {
             switch result {
                 case .success(let success):
                     self.transferPlaceID?(success.message!)
-                case .failure(let err):
-                    self.showAlertVM!(err.localizedDescription)
+                    if success.status == "fail" {
+                        let message = "Yer eklenirken bir hata oluştu. Lütfen tekrar deneyiniz."
+                        self.showAlertVM?(message)
+                    }
+                case .failure(_): break
             }
         }
     }
-    
     
     func uploadImage(images: [UIImage]) {
         let urlRequest = Router.upload(params: ["file": images])
@@ -34,8 +36,7 @@ class AddNewPlaceVM {
             switch result {
                 case .success(let success):
                     self?.transferURLs?(success.urls)
-                case .failure(let failure):
-                    print(failure.localizedDescription)
+                case .failure(_): break
             }
         })
     }
@@ -44,8 +45,7 @@ class AddNewPlaceVM {
         NetworkingHelper.shared.fetchData(urlRequest: .postGalleryImage(params: params), completion: {(result: Result<GenericResponseModel, Error>) in
             switch result {
                 case .success(_): break
-                case .failure(let failure):
-                    print(failure.localizedDescription)
+                case .failure(_): break
             }
         })
     }

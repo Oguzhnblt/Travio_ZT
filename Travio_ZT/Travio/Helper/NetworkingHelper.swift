@@ -8,6 +8,33 @@
 import Foundation
 import Alamofire
 import UIKit
+import SystemConfiguration
+
+class Reachability {
+    static func isConnectedToNetwork() -> Bool {
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        
+        guard let defaultRouteReachability = withUnsafePointer(to: &zeroAddress, {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+                SCNetworkReachabilityCreateWithAddress(nil, $0)
+            }
+        }) else {
+            return false
+        }
+        
+        var flags: SCNetworkReachabilityFlags = []
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability, &flags) {
+            return false
+        }
+        
+        let isReachable = flags.contains(.reachable)
+        let needsConnection = flags.contains(.connectionRequired)
+        
+        return isReachable && !needsConnection
+    }
+}
 
 class NetworkingHelper{
     
@@ -17,11 +44,16 @@ class NetworkingHelper{
     
     func fetchData<T: Decodable>(urlRequest: Router, completion: @escaping (Result<T, Error>) -> Void) {
         AF.request(urlRequest).responseDecodable(of: T.self) { response in
-            switch response.result {
-                case .success(let data):
-                    completion(.success(data))
-                case .failure(let error):
-                    completion(.failure(error))
+            if Reachability.isConnectedToNetwork() {
+                switch response.result {
+                    case .success(let data):
+                        completion(.success(data))
+                    case .failure(let error):
+                        completion(.failure(error))
+                }
+            } else {
+                let error = NSError(domain: NSURLErrorDomain, code: URLError.notConnectedToInternet.rawValue, userInfo: nil)
+                completion(.failure(error))
             }
         }
     }
@@ -52,5 +84,5 @@ class NetworkingHelper{
             }
         }
     }
- 
-    }
+    
+}
