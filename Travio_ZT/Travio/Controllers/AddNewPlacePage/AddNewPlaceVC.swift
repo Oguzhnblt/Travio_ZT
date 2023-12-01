@@ -160,12 +160,11 @@ class AddNewPlaceVC: UIViewController {
                     let params = ["place_id": placeId, "image_url": imageUrl]
                     viewModel.postGalleryImage(params: params)
                 }
-                
-                self.completedAddPlace?()
-                self.dismiss(animated: true, completion: nil)
-                
             }
+            
             viewModel.addPlace(params: params)
+            completedAddPlace?()
+            dismiss(animated: true, completion: nil)
         }
     }
 }
